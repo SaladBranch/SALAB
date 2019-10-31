@@ -61,11 +61,11 @@
         <div id="enroll-form" class="modal-form">
             <div class="modal-form-content">
                 <form action="enroll.do" name="signupForm" class="signup-form" method="post">
-                    <button class="google-login"><img src="resources/img/google_logo.png">Sign up with Google</button>
+                    <button class="google-login"><img src="/salab/resources/img/google_logo.png">Sign up with Google</button>
                     <p>or</p>
-                    <input type="email" name="useremail" placeholder="이메일">
-                    <input type="password" name="userpwd" placeholder="비밀번호">
-                    <input type="text" name="userphone" placeholder="전화번호('-'제외)">
+                    <input type="email" name="useremail" placeholder="이메일" required>
+                    <input type="password" name="userpwd" placeholder="비밀번호" required>
+                    <input type="text" name="userphone" placeholder="전화번호('-'제외)" onkeypress="onlyNumber();" required>
                     <button class="enroll-btn" type="submit" onclick="enrollValid(this);">회원가입</button>
                     <p class="signup-ment">
                         계정이 있으신가요? <a class="login-link">로그인</a>
@@ -180,11 +180,11 @@
         <div class="row">
             <h2>Salab 시작하기</h2>
             <form action="enroll.do" name="signupForm" class="signup-form" method="post">
-                <button class="google-login"><img src="resources/img/google_logo.png">Sign up with Google</button>
+                <button class="google-login"><img src="/salab/resources/img/google_logo.png">Sign up with Google</button>
                 <p>or</p>
-                <input type="email" name="useremail" placeholder="이메일">
-                <input type="password" name="userpwd" placeholder="비밀번호">
-                <input type="text" name="userphone" placeholder="전화번호('-'제외)">
+                <input type="email" name="useremail" placeholder="이메일" required>
+                <input type="password" name="userpwd" placeholder="비밀번호" required>
+                <input type="text" name="userphone" placeholder="전화번호('-'제외)" onkeypress="onlyNumber();" required>
                 <button class="enroll-btn" type="submit" onclick="enrollValid(this);">회원가입</button>
                 <p class="signup-ment">
                     계정이 있으신가요? <a class="login-link">로그인</a>

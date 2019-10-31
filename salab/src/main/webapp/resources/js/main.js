@@ -78,26 +78,73 @@ function enrollValid(button){
     var password = form.userpwd;
     var phone = form.userphone;
     
-    if(email.value == ""){
-        event.preventDefault();
-        alertDangerToast("이메일을 입력해주세요", email);
-        return false;
-    }
-    if(password.value == ""){
-        event.preventDefault();
-        alertDangerToast("비밀번호를 입력해주세요", password);
-        return false;
-    }
-    if(phone.value == ""){
-        event.preventDefault();
-        alertDangerToast("전화번호를 입력해주세요", phone);
+    if(isValidEmail(email) && isValidPwd(password) && isValidPhone(phone)){
+        return true;
+    }else{
         return false;
     }
 }
 
 function isValidEmail(email){
     var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    return regExp.test(emailAddress);
+    var result = true;
+    if(email.value == ""){
+        event.preventDefault();
+        alertDangerToast("이메일을 입력해주세요", email);
+        result = false;
+    }else{
+        if(regExp.test(email.value)){
+            result = true;
+        }else{
+            event.preventDefault();
+            alertDangerToast("이메일 양식에 맞게 입력해주세요", email);
+            result = false;
+        }
+    }
+    return result;
+}
+
+function isValidPwd(password){
+    var regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
+    var result = true;
+    if(password.value == ""){
+        event.preventDefault();
+        alertDangerToast("비밀번호를 입력해주세요", password);
+        result = false;
+    }else{
+        if(regExp.test(password.value))
+            result = true;
+        else{
+            event.preventDefault();
+            alertDangerToast("비밀번호는 6~20자리로, 숫자나 특수문자를 포함해야 합니다.");
+            result = false;
+        }
+    }
+    return result;
+}
+function isValidPhone(phone){
+    var regExp = /^\d{3}\d{3,4}\d{4}$/;
+    var result = true;
+    if(phone.value == ""){
+        event.preventDefault();
+        alertDangerToast("전화번호를 입력해주세요", phone);
+        return result;
+    }else{
+        if(regExp.test(phone.value))
+            result = true;
+        else{
+            var checkDash = phone.value.search(/-/);
+            if(checkDash > 0){
+                event.preventDefault();
+                alertDangerToast("'-'없이 입력해 주세요", phone);
+            }else{
+                event.preventDefault();
+                alertDangerToast("전화번호 양식에 맞게 입력해 주세요", phone);
+            }
+            result = false;
+        }
+    }
+    return result;
 }
     
 function alertDangerToast(msg, inputType){
@@ -106,4 +153,12 @@ function alertDangerToast(msg, inputType){
         type: 'danger'
     });
     inputType.focus();
+}
+
+function onlyNumber(){
+    console.log(event.keyCode);
+    if((event.keyCode<48)||(event.keyCode > 57)){
+        console.log(event.keyCode);
+        event.returnValue = false;
+    }
 }

@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+/*-------------------------*/
+/* footer */
+/*-------------------------*/
+footer{
+    background-color: #1d1d1d;
+    color: #f0f0f0;
+    padding: 40px 0;
+}
+.address li{
+    font-size: 0.7rem;
+    font-weight: 300;
+    margin: 5px 0;
+}
+.social-links li{
+    display: inline-block;
+    margin-right: 10px;
+    transition: color 0.2s linear;
+}
+.social-links li:hover{
+    color: #00a8ff;
+}
+.copyright{
+    text-align: right;
+    font-size: 0.8rem;
+}

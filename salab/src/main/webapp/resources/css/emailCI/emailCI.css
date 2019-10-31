@@ -1,0 +1,16 @@
+.section-noti{padding-top: 65px;}
+.notification{
+    margin: 120px auto;
+    text-align: center;
+}
+.uemail{font-weight: 500;}
+.notification p{margin-bottom: 30px;}
+.notification a{margin-right: 15px;}
+.btn-ghost{
+    background: #fff;
+}
+.to-main{
+    margin-left: 15px;
+    width: 250px;
+}
+

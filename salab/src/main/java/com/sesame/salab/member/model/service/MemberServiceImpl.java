@@ -27,4 +27,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.updateEmailChecked(member);
 	}
 
+	@Override
+	public int isExistEmail(String useremail) {
+		return memberDao.isExistEmail(useremail);
+	}
+
 }

@@ -1,6 +1,10 @@
 package com.sesame.salab.member.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -87,5 +91,35 @@ public class MemberController {
 			session.invalidate();
 		}
 		return "main";
+	}
+	
+	@RequestMapping(value="isExistEmail.do", method=RequestMethod.POST)
+	public void isExistEmailMethod(Member member, HttpServletResponse response) throws IOException {
+		logger.info("등록된 이메일인지 확인 중..." + member.getUseremail());
+		
+		int result = memberService.isExistEmail(member.getUseremail());
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.append("exist");
+			out.flush();
+		}else {
+			out.append("none");
+			out.flush();
+		}
+		out.close();
+	}
+	@RequestMapping(value="pwdCheck.do", method=RequestMethod.POST)
+	public void pwdCheckMethod(Member member, HttpServletResponse response) throws IOException{
+		logger.info("비밀번호 일치 확인 중..." + member.toString());
+		Member loginMember = memberService.loginCheck(member);
+		PrintWriter out = response.getWriter();
+		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())){
+			out.append("correct");
+			out.flush();
+		}else {
+			out.append("incorrect");
+			out.flush();
+		}
+		out.close();
 	}
 }

@@ -30,4 +30,7 @@
 	<select id="loginCheck" parameterType="Member" resultType="Member">
 		SELECT * FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'Y'
 	</select>
+	<select id="isExistEmail" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE USEREMAIL = #{useremail}
+	</select>
 </mapper>

@@ -23,5 +23,9 @@ public class MemberDao {
 	public Member loginCheck(Member member) {
 		return sqlSession.selectOne("memberMapper.loginCheck", member);
 	}
+
+	public int isExistEmail(String useremail) {
+		return sqlSession.selectOne("memberMapper.isExistEmail", useremail);
+	}
 	
 }

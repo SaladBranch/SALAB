@@ -78,10 +78,36 @@ function enrollValid(button){
     var password = form.userpwd;
     var phone = form.userphone;
     
-    if(isValidEmail(email) && isValidPwd(password) && isValidPhone(phone)){
-        return true;
-    }else{
+    //유효성 검사를 통과하지 못하거나 등록된 이메일이 존재한다면
+    if(!(isValidEmail(email) && isValidPwd(password) && isValidPhone(phone))){
         return false;
+    }else if(isExistEmail(email) == "exist"){
+    	event.preventDefault();
+    	alertDangerToast("이미 등록된 이메일입니다.", email);
+    	return false;
+    }else{
+    	return true;
+    }
+}
+/* Login validation */
+function loginValid(button){
+    var index = $('.login-btn').index(button);
+    var form = document.loginForm[index];
+    
+    var email = form.useremail;
+    var password = form.userpwd;
+    if(!(isValidEmail(email) && isValidPwd(password))){
+        return false;
+    }else if(isExistEmail(email) == "none"){
+    	event.preventDefault();
+    	alertDangerToast("등록되지 않은 이메일입니다.", email);
+    	return false;
+    }else if(pwdCheck(email, password) == "incorrect"){
+    	event.preventDefault();
+    	alertDangerToast("비밀번호가 일치하지 않습니다.", password);
+    	return false;
+    }else{
+    	return true;
     }
 }
 
@@ -116,7 +142,7 @@ function isValidPwd(password){
             result = true;
         else{
             event.preventDefault();
-            alertDangerToast("비밀번호는 6~20자리로, 숫자나 특수문자를 포함해야 합니다.");
+            alertDangerToast("비밀번호 양식에 맞게 입력해 주세요");
             result = false;
         }
     }
@@ -145,6 +171,38 @@ function isValidPhone(phone){
         }
     }
     return result;
+}
+function isExistEmail(email){
+	var result = "";
+	$.ajax({
+		url: "isExistEmail.do",
+		data: {useremail: email.value},
+		type: "post",
+		async: false,
+		success: function(data){
+			result = data;
+		},
+		error: function(request, status, errorData){
+			console.log("error code :" + request.status + " \n Message: " + request.responseText + "\n Error : " + errorData);
+		}
+	});
+	return result;
+}
+function pwdCheck(email, password){
+	var result = "";
+	$.ajax({
+		url: "pwdCheck.do",
+		data: {useremail: email.value, userpwd: password.value},
+		type: "post",
+		async: false,
+		success: function(data){
+			result = data;
+		},
+		error: function(request, status, errorData){
+			console.log("error code :" + request.status + " \n Message: " + request.responseText + "\n Error : " + errorData);
+		}
+	});
+	return result;
 }
     
 function alertDangerToast(msg, inputType){

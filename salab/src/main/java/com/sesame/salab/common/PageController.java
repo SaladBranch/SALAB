@@ -13,4 +13,14 @@ public class PageController {
 	public String toRecentFileMethod() {
 		return "recentFile/recentFile";
 	}
+	
+	@RequestMapping(value="privateFile.do")
+	public String toPrivateFileMethod() {
+		return "privateFile/privateFile";
+	}
+	
+	@RequestMapping(value="trashCan.do")
+	public String toTrashCanMethod() {
+		return "trashCan/trashCan";
+	}
 }

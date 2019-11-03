@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
-    <title>최근 파일 | Salab</title>
+    <title>개인 파일 | Salab</title>
 </head>
 <body>
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText">개인 파일</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -64,11 +64,11 @@
                 <i class="fas fa-search" id="search-icon"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
-            <div class="recent-file active-menu">
+            <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
                 <a href="recentFile.do">최근 파일</a>
             </div>
-            <div class="private-file">
+            <div class="private-file active-menu">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
                 <a href="privateFile.do">개인 파일</a>
             </div>

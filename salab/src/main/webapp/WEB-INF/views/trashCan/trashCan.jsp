@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
-    <title>최근 파일 | Salab</title>
+    <title>휴지통 | Salab</title>
 </head>
 <body>
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText">휴지통</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -64,7 +64,7 @@
                 <i class="fas fa-search" id="search-icon"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
-            <div class="recent-file active-menu">
+            <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
                 <a href="recentFile.do">최근 파일</a>
             </div>
@@ -72,7 +72,7 @@
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
                 <a href="privateFile.do">개인 파일</a>
             </div>
-            <div class="trashcan">
+            <div class="trashcan active-menu">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
                 <a href="trashCan.do">휴지통</a>
             </div>
@@ -86,17 +86,14 @@
     </div>
     <div id="right-click-menu" class="right-click-menu">
         <ul>
-            <li><a href="#">파일열기</a></li>
-            <li><a href="#">파일 정보 설정</a></li>
-            <li><a href="#">사본만들기</a></li>
-            <li><a href="#">웹테스트</a></li>
-            <li><a href="#">삭제</a></li>
+            <li><a href="#">파일복구</a></li>
+            <li><a href="#">파일 영구 삭제</a></li>
         </ul>
     </div>
     <div id="multi-right-click-menu" class="multi-right-click-menu">
         <ul>
-            <li><a href="#"><span></span>개 파일 사본만들기</a></li>
-            <li><a href="#"><span></span>개 파일 삭제</a></li>
+            <li><a href="#"><span></span>개 파일 복구</a></li>
+            <li><a href="#"><span></span>개 파일 영구 삭제</a></li>
         </ul>
     </div>
     <div class="right-main-side">
@@ -104,14 +101,15 @@
         <div class="sort-standard">
             <div class="sort-by">
                 <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">최근 본 파일</span>
+                <i class="fas fa-chevron-down"></i><span id="span-content">파일 삭제 일자</span>
                 </div>
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="#" class="sort-active">최근 본 파일</a></li>
+                    <li><a href="#" class="sort-active">파일 삭제 일자</a></li>
                     <li><a href="#">파일 명</a></li>
                     <li><a href="#">파일 생성 일자</a></li>
+                    <li><a href="#">최근 수정 일자</a></li>
                 </ul>
             </div>
         </div>

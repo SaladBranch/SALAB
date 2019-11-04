@@ -28,7 +28,7 @@
                     <h1><a href="main.do" class="logo">Salab</a></h1>
                     <ul class="nav-menu">
                         <li><a href="#">기능</a></li>
-                        <li><a href="#">상품</a></li>
+                        <li><a href="test.do">상품</a></li>
                        	<li><button class="nav-login" onclick="modalOpen('login')">로그인</button></li>
                         <li><button class="nav-signup btn btn-full" onclick="modalOpen('enroll')">회원가입</button></li>
                     </ul>

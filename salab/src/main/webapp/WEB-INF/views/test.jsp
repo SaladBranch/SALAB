@@ -7,10 +7,12 @@
 	<meta name="viewport" content="width:device-width, initial-scale:1.0;">
 	<link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 <title>Insert title here</title>
+<script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.2.min.js" type="application/javascript"></script>
 <script type="text/javascript">
 function payTest(){
 	var d = new Date;
+	console.log('${loginMember.useremail}');
 	
 	BootPay.request({
 		price: 0, // 0으로 해야 한다.
@@ -20,9 +22,7 @@ function payTest(){
 		method: 'card_rebill', // 빌링키를 받기 위한 결제 수단
 		show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
 		user_info: {
-			username: '',
-			email: ${loginMember.useremail},
-			addr: '',
+			email: '${loginMember.useremail}',
 			phone: ${loginMember.userphone}
 		},
 		order_id: 'order_id_'+ d.getTime(), //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
@@ -39,8 +39,8 @@ function payTest(){
 			url: 'pm_comp.do',
 			data: {
 				billing_key : data.billing_key,
-				order_id : 'order_id_',
-				u_no : ${loginMember.userno},
+				order_id : 'order_id_' + d.getTime(),
+				userno : '${loginMember.userno}'
 			},
 			type: 'POST',
 			success: function(){
@@ -55,6 +55,6 @@ function payTest(){
 </script>
 </head>
 <body>
-
+	<button onclick="payTest();">결제</button>
 </body>
 </html>

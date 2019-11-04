@@ -1,5 +1,10 @@
 package com.sesame.salab.payment.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,27 +14,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sesame.salab.common.bootpay.javaApache.BootpayApi;
 import com.sesame.salab.common.bootpay.javaApache.model.request.SubscribeBilling;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.payment.model.vo.Payment;
 import com.sesame.salab.payment.service.PaymentService;
 
 @Controller
 public class PaymentController {
 	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass()); 
+	
 	@Autowired
 	private PaymentService pmService;
+	
+	@RequestMapping("test.do")
+	public String returntestPage() {
+		return "test";
+	}
 	
 	@RequestMapping(value="pm_comp.do", method=RequestMethod.POST)
 	public String paymentCompMethod(@RequestParam("billing_key") String billingKey, @RequestParam("userno") String userno, @RequestParam("order_id") String orderid) {
 		//결제 성공시 값 넘기는 ajax를 통해 넘긴값 객체에 저장
+		Date d = new Date();
+		SimpleDateFormat date = new SimpleDateFormat("dd");
 		Member member = new Member();
 		member.setBillingkey(billingKey);
 		member.setUserno(Integer.parseInt(userno));
+		member.setPaymentdate(Integer.parseInt(date.format(d)));
+		logger.info(member.toString());
+		logger.info(orderid);
+		logger.info(date.format(d));
 		
 		//빌링키를 맴버테이블에 저장
 		int result = pmService.insertBilling(member);
-		
+		logger.info(String.valueOf(result));
 		//빌링키 저장이 성공하면 바로 결제
 		if(result > 0) {
-			BootpayApi bootpay = new BootpayApi("5d5a6ed20627a800303d1954", "/5Qc/8x1aqIjmW0DoloUMMr1SNvoPYNN9K0dT7Lh9nI=");
+			BootpayApi bootpay = new BootpayApi("5d5a6ed20627a800303d1954", "neJWvNvI9giAwmfjHyVS6UbU1XsnI8JxXxYHVC7WnG0=");
 			SubscribeBilling bill = new SubscribeBilling();
 			
 			bill.billing_key = billingKey;
@@ -37,20 +56,23 @@ public class PaymentController {
 			bill.price = 9900;
 			bill.pg = "danal";
 			bill.item_name = "Premium Service";
-			
+			logger.info("check");
 			if(bill.order_id != null && bill.price != 0 && bill.item_name != null) {
 				try {
+					logger.info("check2");
 					bootpay.getAccessToken();
 					bootpay.subscribe_billing(bill);
-					
+					Payment payment = new Payment();
+					payment.setPaymentoid(orderid);
+					payment.setUserno(Integer.parseInt(userno));
+					int result2 = pmService.insertPayment(payment);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			
 		}
-		
-		return "";
+		logger.info("check3");
+		return "payment/paymentComplete";
 	}
 	
 }

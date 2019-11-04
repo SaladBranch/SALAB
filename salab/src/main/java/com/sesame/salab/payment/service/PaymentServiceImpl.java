@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.payment.dao.PaymentDao;
+import com.sesame.salab.payment.model.vo.Payment;
 
 @Service("PaymentService")
 public class PaymentServiceImpl implements PaymentService {
@@ -15,6 +16,12 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public int insertBilling(Member member) {
 		return pdao.insertBilling(member);
+	}
+
+	@Override
+	public int insertPayment(Payment payment) {
+		//결제내역 db에 저장하는 메소드
+		return pdao.insertPayment(payment);
 	}
 
 }

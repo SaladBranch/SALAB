@@ -58,4 +58,4 @@ public class PageController {
    	public String toUserAccountUpgradeMethod() {
     	  return "userPage/userUpgrade";
    	}
-
+}

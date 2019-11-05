@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paymentMapper">
+	
+	<update id="insertBilling" parameterType="Member">
+		update member set billingkey = #{billingkey}, paymentdate = #{paymentdate} where userno = #{userno}
+	</update>
+	
+	<insert id="insertPayment" parameterType="Payment">
+		insert into payment values(SEQ_PAYMENTNO.NEXTVAL, #{userno}, (select useremail from member where userno = #{userno}), #{paymentoid})
+	</insert>
+	
+	<select id="selectPaymentUser" parameterType="int" resultType="Member">
+		select * from member where userno = #{userno} 
+	</select>
+	
+</mapper>

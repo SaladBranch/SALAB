@@ -21,6 +21,11 @@ public class PaymentDao {
 	//결제내역 db 저장용
 	public int insertPayment(Payment payment) {
 		return sqlSession.insert("paymentMapper.insertPayment", payment);
+	}
+
+	public Member selectPaymentUser(String userno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("paymentMapper.selectPaymentUser", Integer.parseInt(userno));
 	}		
 
 }

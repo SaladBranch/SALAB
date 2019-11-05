@@ -1,3 +1,4 @@
+
 package com.sesame.salab.common;
 
 import org.slf4j.Logger;
@@ -14,6 +15,15 @@ public class PageController {
 		return "recentFile/recentFile";
 	}
 	
+	@RequestMapping(value="userNotice.do")
+	public String toUserNoticeMethod() {
+		return "help/userNotice";
+	}
+	
+	@RequestMapping(value="userQnA.do")
+	public String toUserQnAMethod() {
+		return "help/userQnA";
+	}
 	@RequestMapping(value="privateFile.do")
 	public String toPrivateFileMethod() {
 		return "privateFile/privateFile";
@@ -23,8 +33,8 @@ public class PageController {
 	public String toTrashCanMethod() {
 		return "trashCan/trashCan";
 	}
-	
-	@RequestMapping(value="epFile.do")
+  
+  @RequestMapping(value="epFile.do")
 	public String toEditPrivateFileMethod() {
 		return "editPrivateFile/editPrivateFile";
 	}
@@ -34,4 +44,18 @@ public class PageController {
 	public String toTestSEUNGJIN() {
 		return "testSEUNGJIN";
 	}
-}
+
+	//건우
+	  @RequestMapping(value="usermain.do")
+  	 public String toUserPageMainMethod() {
+  	    return "userPage/userPageMain";
+ 	  }
+   	@RequestMapping(value="pwdchange.do")
+   	public String toUserChangePwdMethod() {
+   	   return "userPage/userChangePwd";
+   	}
+   	@RequestMapping(value="upgrade.do")
+   	public String toUserAccountUpgradeMethod() {
+    	  return "userPage/userUpgrade";
+   	}
+

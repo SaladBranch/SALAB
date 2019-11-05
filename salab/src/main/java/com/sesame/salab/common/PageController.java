@@ -24,6 +24,10 @@ public class PageController {
 		return "trashCan/trashCan";
 	}
 	
+	@RequestMapping(value="epFile.do")
+	public String toEditPrivateFileMethod() {
+		return "editPrivateFile/editPrivateFile";
+	}
 
 	// 승진 테스트페이지 이동
 	@RequestMapping(value="testSEUNGJIN.do")

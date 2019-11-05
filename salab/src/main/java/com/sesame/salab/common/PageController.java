@@ -23,4 +23,11 @@ public class PageController {
 	public String toTrashCanMethod() {
 		return "trashCan/trashCan";
 	}
+	
+
+	// 승진 테스트페이지 이동
+	@RequestMapping(value="testSEUNGJIN.do")
+	public String toTestSEUNGJIN() {
+		return "testSEUNGJIN";
+	}
 }

@@ -1,4 +1,4 @@
-package com.sesame.salab.common;
+﻿package com.sesame.salab.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,5 +38,19 @@ public class PageController {
 	public String toTestSEUNGJIN() {
 		return "testSEUNGJIN";
 	}
+
+	//건우
+	  @RequestMapping(value="usermain.do")
+  	 public String toUserPageMainMethod() {
+  	    return "userPage/userPageMain";
+ 	  }
+   	@RequestMapping(value="pwdchange.do")
+   	public String toUserChangePwdMethod() {
+   	   return "userPage/userChangePwd";
+   	}
+   	@RequestMapping(value="upgrade.do")
+   	public String toUserAccountUpgradeMethod() {
+    	  return "userPage/userUpgrade";
+   	}
   
 }

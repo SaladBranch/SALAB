@@ -2,90 +2,123 @@
 /*id="ipersonalInfo"*/
 /*-------------------------*/
 
-#ipersonalInfo {
-    width: 70%;
-    margin: 20px auto;
-}
+
+
+
+#ipersonalInfo {}
 
 #pImage {
-    width: 170px;
-    height: 170px;
+    width: 130px;
+    height: 130px;
     outline: none;
     background-color: brown;
     border-radius: 100%;
+    padding-top: 100px;
+}
+
+#pImage > span {}
+
+.inputImg {
     display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 10px;
 }
 
 #userEmail {
     display: inline-block;
+
 }
 
-/* img �궫�엯*/
+#userEmail {
+    clear: both;
+}
+
+/* img 삽입*/
 #userImg label {
-    margin-top: 140px;
-    display: inline-block;
     font-size: 0.7em;
     color: #ebe2e1;
     cursor: pointer;
-    width: 170px;
-    padding: 0px auto;
-    text-align: center;
-    vertical-align: bottom;
+    width: 100%;
+}
+
+#pImage > span {
+    margin-top: 140px;
 }
 
 #userImg input[type="file"] {
     display: none;
 }
 
+#id-info {}
 
-#id-info {
-    margin:  15px 0px;
-    border: 0.5px solid gray;
-    background-color: white;
-    width: 85%;
-    height: auto;
-    color: #8c8c8c;
+
+.box-content{
+    margin: 20px 10px;
+    font-size: 0.8em;
 }
-
-#info-title {
-    background-color: #e8e8e8;
-    height: 44px;
-    padding:  10px 20px;
-    border-left: 0.5px solid gray;
+ul>li{
+    padding: 2px 0px;
+    font-size: 0.7em;
+    font-weight: 600;
 }
-
+ul>li::before{
+    content: "- ";
+}
 #id-changeBox {
     margin: 30px 10px;
 }
-#userid{
-    margin: 10px 10px;
+#id-changeBox:nth-child(1){
+    margin-bottom: 5px;
 }
-#id-change{
-    width: 80%;
-    padding-left: 10px;
-}
-#id-change-btn{
-    border-radius: 3px;
-    background-color: white;
-    border-style: outset;
-    cursor: pointer;
-    min-height: 24px;
-    padding:  6px 14px;
-    color: gray;
-    font-size: 0.7em;
-    font-weight: 300;
-}
+
+
+
 
 /*-------------------------*/
 /*delete info*/
 /*-------------------------*/
-#delete-id{
+#delete-id {
     margin: 10px;
     font-size: 0.6em;
     text-decoration-line: underline;
-    cursor: pointer; 
+    cursor: pointer;
+}
+.highlight{
+    color: dimgrey;
+    font-weight: 500;
 }
 
 #deleteAccount {
-   /*display: none; */
+    margin-bottom: 40px;
+    display: none;
+}
+.box-content li :nth-last-child(){
+    font-size: 0.6em;
+}
+.text-box{
+    margin: 4px 15px;
+    display: block;
+    height: 28px;
+    width: 300px;
+}
+input[type="checkbox"]{
+    margin-left: 15px;
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+}
+
+.box-content>span{
+    font-size: 0.8em;
+}
+
+#delete-title {
+    background-color: #ffb48f;
+}
+.box-content{
+    padding:  10px 5px;
+}
+.section-grid{
+    margin-top: 60px;
 }

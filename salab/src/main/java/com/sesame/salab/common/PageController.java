@@ -14,6 +14,15 @@ public class PageController {
 		return "recentFile/recentFile";
 	}
 	
+	@RequestMapping(value="userNotice.do")
+	public String toUserNoticeMethod() {
+		return "help/userNotice";
+	}
+	
+	@RequestMapping(value="userQnA.do")
+	public String toUserQnAMethod() {
+		return "help/userQnA";
+	}
 	@RequestMapping(value="privateFile.do")
 	public String toPrivateFileMethod() {
 		return "privateFile/privateFile";
@@ -23,11 +32,11 @@ public class PageController {
 	public String toTrashCanMethod() {
 		return "trashCan/trashCan";
 	}
-	
 
 	// 승진 테스트페이지 이동
 	@RequestMapping(value="testSEUNGJIN.do")
 	public String toTestSEUNGJIN() {
 		return "testSEUNGJIN";
 	}
+  
 }

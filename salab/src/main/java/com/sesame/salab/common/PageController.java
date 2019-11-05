@@ -13,4 +13,17 @@ public class PageController {
 	public String toRecentFileMethod() {
 		return "recentFile/recentFile";
 	}
+	
+	@RequestMapping(value="usermain.do")
+	public String toUserPageMainMethod() {
+		return "userPage/userPageMain";
+	}
+	@RequestMapping(value="pwdchange.do")
+	public String toUserChangePwdMethod() {
+		return "userPage/userChangePwd";
+	}
+	@RequestMapping(value="upgrade.do")
+	public String toUserAccountUpgradeMethod() {
+		return "userPage/userUpgrade";
+	}
 }

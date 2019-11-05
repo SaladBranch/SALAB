@@ -11,17 +11,18 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="../../../resources/css/userPage/userPageCommon.css">
-    <link rel="stylesheet" href="../../../resources/css/userPage/userPageMain.css">
-
-    <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
+
+    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
+    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css">
+
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>USER | SALAB</title>
 </head>
 
 <body>
+   
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
@@ -42,7 +43,7 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43</div>
+                <div class="add-btn"></div>
                 <div class="user-profile">
                     <div class="profile-img">
                         <img src="/salab/resources/img/default_profile.png" alt="">
@@ -80,59 +81,68 @@
             </div>
         </div>
     </div>
-
+        
     <div class="right-main-side">
         <div>
-            <section id="ipersonalInfo">
-                <div id="pImageBox">
-                    <div id="userImg">
-                        <div id="pImage">
-                            <div class="inputImg">
-                                <label id="imgLabel" for="imgUpload">사진변경</label>
-                                <input type="file" id="imgUpload">
-                            </div>
-                        </div>
-                        <div id="userEmail">
-                            <span class="horizontally">${loginMember.username }</span>
-                        </div>
+            <section id="ipersonalInfo" class="section-grid">
+
+                <div id="userImg">
+                    <div class="inputImg">
+                        <label id="imgLabel" for="imgUpload">
+                            <div id="pImage"><span>사진변경</span></div>
+                        </label>
+                        <input type="file" id="imgUpload">
+                    </div>
+                    <div id="userEmail">
+                        ${loginMember.useremail }
                     </div>
                 </div>
-                <div id="id-Info">
-                    <div id="info-title">
+
+                <div id="id-Info" class="box-grid">
+                    <div id="info-title" class="box-title">
                         <span>내 계정 정보</span>
                     </div>
                     <div id="id-changeBox">
                         <div id="userid">유저 이름</div>
                         <div>
-                            <input id="id-change" type="text" placeholder="Ssdfa" maxlength="20">
+                            <input class="input-grid" type="text" placeholder="${loginMember.username }" maxlength="20">
                             <input type="button" id="id-change-btn" value="이름 변경하기">
                         </div>
                     </div>
                 </div>
+       
                 <div id="delete-id">
                     <span>계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
                 </div>
             </section>
-            <section id="deleteAccount">
-                <span>계정과 관련된 모든 것이 삭제됩니다</span>
-                <div>
-                    <ul>
-                        <li>유저 계정정보가 모두 삭제됩니다.</li>
-                        <li>해당 계정으로 업로드된 모든 데이터가 삭제됩니다</li>
-                        <li>
-                            <p>그동안 작업한 모든 프로젝트와 데이터들도 삭제되며 복구가 불가능 하게 됩니다.<br>(개인 프로젝트는 곧 바로 삭제되며, 협업 프로젝트는 팀원 중 한명에게 팀장 권한이 양도됩니다 )</p>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <input placeholder="ID">
-                    <input placeholder="PASSWORD">
-                    <input type="checkbox"><span>주의사항을 확인하였고 동의합니다.</span>
-                    <input type="button" value="계정 삭제하기">
+            <section id="deleteAccount" class="section-grid">
+                <div class="box-grid">
+                    <div id="delete-title" class="box-title">
+                        <span>계정과 관련된 모든 것이 삭제됩니다</span>
+                    </div>
+                    <div class="box-content">
+                        <ul>
+                            <li>유저 계정정보가 모두 삭제됩니다.</li>
+                            <li>해당 계정으로 업로드된 모든 데이터가 삭제됩니다</li>
+                            <li>그동안 작업한 모든 프로젝트와 데이터들도 삭제되며 복구가 불가능 하게 됩니다.</li>
+                            <li>(개인 프로젝트는 곧 바로 삭제되며, 협업 프로젝트는 팀원 중 한명에게 팀장 권한이 양도됩니다 )</li>
+
+                        </ul>
+                    </div>
+                    <div class="box-content">
+                        <div class="highlight">
+                            <span>삭제를 진행하려면 입력하세요</span>
+                        </div>
+                        <input class="text-box" placeholder="ID" maxlength="30">
+                        <input class="text-box" placeholder="PASSWORD" maxlength="20">
+                        <input type="checkbox"><span>주의사항을 확인하였고 동의합니다.</span>
+                        <input id="delete-btn" type="button" value="계정 삭제하기">
+                    </div>
                 </div>
             </section>
         </div>
     </div>
 
 </body>
+
 </html>

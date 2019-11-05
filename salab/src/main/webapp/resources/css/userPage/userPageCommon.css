@@ -252,3 +252,60 @@ body{
 .horizontally{
     display: inline-block;
 }
+input[type="checkbox"]{
+    position: relative;
+    opacity: 1;
+    width: 15px;
+    height: 15px;
+}
+
+
+input[type="button"] {
+    position: relative;
+    float: right;
+    margin-right: 30px;
+    border-radius: 3px;
+    background-color: white;
+   
+    border: 0.7px solid gray;
+    box-shadow: 2px 1px gray;
+    cursor: pointer;
+    min-height: 24px;
+    padding: 6px 14px;
+    color: gray;
+    height: 30px;
+    font-size: 9pt;
+    font-weight: 300; 
+    padding-bottom: 2px;
+}
+.section-grid {
+    width: 70%;
+    margin:20px auto;
+    margin-top: 0px;
+    padding: 0px;
+    
+}
+.box-title{
+    background-color: #e8e8e8;
+    color: dimgrey;
+    height: 44px;
+    padding: 10px 20px;
+    border: 0.5px solid gray;
+    font-size: 0.8em;
+}
+.box-grid {
+    border: 0.5px solid gray;
+    margin-bottom: 0px;
+    width: 85%;
+    background-color: white;
+    height: auto;
+    color: #8c8c8c;
+}
+#menu-title {
+    margin-top: 50px;
+}
+.input-grid{
+    width: 80%;
+    padding-left: 10px;
+    height: 32px;
+}

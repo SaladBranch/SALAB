@@ -23,6 +23,20 @@ public class PageController {
 	public String toUserQnAMethod() {
 		return "help/userQnA";
 	}
+	@RequestMapping(value="privateFile.do")
+	public String toPrivateFileMethod() {
+		return "privateFile/privateFile";
+	}
 	
-	
+	@RequestMapping(value="trashCan.do")
+	public String toTrashCanMethod() {
+		return "trashCan/trashCan";
+	}
+
+	// 승진 테스트페이지 이동
+	@RequestMapping(value="testSEUNGJIN.do")
+	public String toTestSEUNGJIN() {
+		return "testSEUNGJIN";
+	}
+  
 }

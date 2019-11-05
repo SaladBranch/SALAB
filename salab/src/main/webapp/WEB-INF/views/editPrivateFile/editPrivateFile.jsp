@@ -151,6 +151,7 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
+    <script src="/salab/resources/js/editPrivateFile/seungFunction.js"></script>
     <script type="text/javascript">
     $(function(){
         $('.page-tab-content').show();

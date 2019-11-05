@@ -27,26 +27,35 @@ body { margin : 0; }
 <script>
 
 var elementCount = 1;
+var appendElement = "";
 
 $(document).on("mousedown", ".element", function(event) {
-	$("body").append("<div class='dragging' name='" + $(this).attr("id") + "'>" + $(this).html() + "</div>");
+	appendElement = $("<div class='dragging' name='" + $(this).attr("id") + "'>" + $(this).html() + "</div>").appendTo("body");
 	moveDragging(event);
 });
 
-$(document).on("mousemove", ".dragging", function(event) {
+$(document).on("mousemove", "body", function(event) {
 	moveDragging(event);
 });
 
-$(document).on("mouseup", ".dragging", function(event) {
+$(document).on("mouseup", "body", function(event) {
 	$(".dragging").remove();
 	var nowX = event.pageX;
 	var nowY = event.pageY;
-	var canvasTop = $(".canvas").css("top").split("px")[0];
+	
+	/* var canvasTop = $(".canvas").css("top").split("px")[0];
 	var canvasLeft = $(".canvas").css("left").split("px")[0];
 	var canvasRight = $(".canvas").css("left").split("px")[0] * 1 + $(".canvas").css("width").split("px")[0] * 1;
-	var canvasBottom = $(".canvas").css("top").split("px")[0] * 1 + $(".canvas").css("height").split("px")[0] * 1;
-	if (nowX >= canvasLeft && nowX <= canvasRight && nowY >= canvasTop && nowY <= canvasBottom) {
-		includeElement(nowX - canvasLeft - 40, nowY - canvasTop - 40, $(this).children().attr("id"));
+	var canvasBottom = $(".canvas").css("top").split("px")[0] * 1 + $(".canvas").css("height").split("px")[0] * 1; */
+
+	var canvasTop = $(".canvas").offset().top;
+	var canvasLeft = $(".canvas").offset().left;
+	var canvasRight = canvasTop * 1 + $(".canvas").css("width").split("px")[0] * 1;
+	var canvasBottom = canvasLeft * 1 + $(".canvas").css("height").split("px")[0] * 1;
+	
+	if (nowX >= canvasLeft && nowX <= canvasRight && nowY >= canvasTop && nowY <= canvasBottom ? appendElement != "" : false) {
+		includeElement(nowX - canvasLeft - 40, nowY - canvasTop - 40, appendElement.children().attr("id"));
+		appendElement = "";
 	}
 });
 
@@ -58,17 +67,23 @@ function moveDragging(event) {
 }
 
 function includeElement(X, Y, element) {
-	var elementType = "width : 80px; height : 80px; background : white; ";
+	var elementType = "background : white; ";
 	if (element == "object1") {
 		elementType = elementType + "border : 2px solid black;";
 	} else if (element == "object2") {
 		elementType = elementType + "border : 2px solid black; border-radius : 50px;";
 	}
-	$(".canvas").append("<div id=element" + elementCount + " style='position : absolute; top : " + Y + "px; left : " + X + "px; " + elementType + "' onmouseover='divDraggable(\"element" + elementCount++ + "\")'>");
+	//$(".canvas").append("<div id=element" + elementCount + " style='position : absolute; top : " + Y + "px; left : " + X + "px; " + elementType + "' onmouseover='divDraggable(\"element" + elementCount++ + "\")'>");
+	$(".canvas").append("<div id=element" + elementCount + " style='position : absolute; top : " + Y + "px; left : " + X + "px; width : 84px; height : 84px; ' onmouseenter='canvasDivEnter(\"element" + elementCount + "\")' onmouseleave='canvasDivLeave(\"element" + elementCount++ + "\")'><div class='object' style='width : 80px; height : 80px; " + elementType + "'></div></div>");
 }
 
-function divDraggable(element) {
+function canvasDivEnter(element) {
+	$("div[id=" + element + "]").css("border", "2px solid blue");
 	$("div[id=" + element + "]").draggable();
+}
+
+function canvasDivLeave(element) {
+	$("div[id=" + element + "]").css("border", "");
 }
 
 </script>
@@ -77,14 +92,11 @@ function divDraggable(element) {
 <body>
 <div class="sideBar_L">
 	<div class="elementList">
-		<div class="elementList">
-			<div class="element">
-				<div class="object" id="object1" style="width : 60px; height : 60px; border : 2px solid gray;">
-				</div>
+		<div class="element">
+			<div class="object" id="object1" style="width : 60px; height : 60px; border : 2px solid gray;" ></div>
 			</div>
-			<div class="element">
-				<div class="object" id="object2" style="width : 60px; height : 60px; border : 2px solid gray; border-radius : 50px">
-				</div>
+		<div class="element">
+			<div class="object" id="object2" style="width : 60px; height : 60px; border : 2px solid gray; border-radius : 50px">
 			</div>
 		</div>
 	</div>

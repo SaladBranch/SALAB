@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,7 @@ function payTest(){
 		method: 'card_rebill', // 빌링키를 받기 위한 결제 수단
 		show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
 		user_info: {
+			username: '오세준',
 			email: '${loginMember.useremail}',
 			phone: ${loginMember.userphone}
 		},
@@ -34,9 +36,10 @@ function payTest(){
 		//결제가 취소되면 수행됩니다.
 		console.log(data);
 	}).done(function (data) {
+		console.log(data);
 		// 빌링키를 정상적으로 가져오면 해당 데이터를 불러옵니다.
 		$.ajax({
-			url: 'pm_comp.do',
+			url: 'pm_done.do',
 			data: {
 				billing_key : data.billing_key,
 				order_id : 'order_id_' + d.getTime(),
@@ -44,7 +47,7 @@ function payTest(){
 			},
 			type: 'POST',
 			success: function(){
-				
+				location.href='pm_complete.do';
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				console.log("error : " + textStatus);
@@ -52,9 +55,29 @@ function payTest(){
 		});
 	});
 }
+
+function isbilling(){
+	var d = new Date;
+	
+	$.ajax({
+		url: 'pm_isbilling.do',
+		data: {
+			order_id : 'order_id_' + d.getTime(),
+			userno : '${loginMember.userno}'
+		},
+		type: 'POST',
+		success: function(){
+			location.href='pm_complete.do';
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + textStatus);
+		}
+	});
+}
 </script>
 </head>
 <body>
-	<button onclick="payTest();">결제</button>
+		<button onclick="isbilling();">빌링결제</button>
+		<button onclick="payTest();">결제</button>
 </body>
 </html>

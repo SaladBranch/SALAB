@@ -1,4 +1,5 @@
-﻿package com.sesame.salab.common;
+
+package com.sesame.salab.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,11 @@ public class PageController {
 	public String toTrashCanMethod() {
 		return "trashCan/trashCan";
 	}
+  
+  @RequestMapping(value="epFile.do")
+	public String toEditPrivateFileMethod() {
+		return "editPrivateFile/editPrivateFile";
+	}
 
 	// 승진 테스트페이지 이동
 	@RequestMapping(value="testSEUNGJIN.do")
@@ -52,5 +58,4 @@ public class PageController {
    	public String toUserAccountUpgradeMethod() {
     	  return "userPage/userUpgrade";
    	}
-  
-}
+

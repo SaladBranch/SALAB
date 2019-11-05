@@ -264,7 +264,7 @@ body{
     margin-right: 5px;
 }
 .sort-by-mention{
-    width: 120px;
+    width: 100px;
 }
 .sort-standards{
     z-index: 5;
@@ -452,4 +452,56 @@ body{
     color: #fff;
     font-size: 13px;
     padding-left: 10px;
+}
+
+.menu-title{
+	margin-top: 50px;
+}
+
+.notice_head{
+	text-align: center;
+	font-size: 40pt;
+	border-bottom: 1px solid black;
+	padding: 30px;
+}
+
+.notice_body{
+	text-align: center;
+	margin-top: 20px;
+}
+
+.notice_list_top{
+	text-align: center;
+	border-bottom: 1px solid lightgray;
+	width: 50%;
+    margin: 0 auto;
+    margin-top: 15px;
+    font-size: 15pt;
+    background: silver;
+}
+
+.notice_list{
+	text-align: center;
+	border-bottom: 1px solid lightgray;
+	width: 50%;
+    margin: 0 auto;
+    margin-top: 15px;
+    font-size: 15pt;
+}
+
+.notice_no{
+	float: left;
+}
+
+.notice_title{
+	text-align: center;
+	text-decoration: bold;
+}
+
+.notice_date{
+	float: right;
+}
+
+a:visited{ 
+	text-decoration: none; 
 }

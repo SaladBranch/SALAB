@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <!DOCTYPE html>
- <html>
+<!DOCTYPE html>
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -11,21 +11,18 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
+    <link rel="stylesheet" href="/salab/resources/css/help/userQnA.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
-
-    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
-    <link rel="stylesheet" href="/salab/resources/css/userPage/uesrChangePwd.css">
-
+    
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>USER | SALAB</title>
 </head>
 
 <body>
-
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText">도움말</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -52,7 +49,7 @@
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
                                 <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
+                                <li><a href="userqna.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
                         </div>
@@ -63,48 +60,63 @@
     </header>
     <div class="left-side-bar">
         <div class="left-top-side-bar">
-            <div id="menu-title">
-                <span>계정 설정</span>
+            <div class="menu-title">
+                <span>도움말</span>
             </div>
             <div class="recent-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="#">계정정보</a>
+                <a href="userNotice.do">공지사항</a>
             </div>
-            <div class="private-file active-menu">
+            <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="#">비밀번호 변경</a>
+                <a href="#">자주 찾는 질문</a>
             </div>
-            <div class="trashcan">
+            <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="#">계정 업그레이드</a>
+                <a href="userQnA.do">1:1문의</a>
             </div>
         </div>
     </div>
-        <div class="right-main-side">
-    <section class="section-grid">
-        <div class="box-grid">
-            <div  class="box-title">
-                <span>Change password</span>
-            </div>
-            <div class="box-content">
-                <div class="sub-content">
-                    <input type="password" class="input-grid" placeholder="Current Password" maxlength="20">
-                </div>
-                <div class="sub-content">
-                    <input type="password" class="input-grid" placeholder="New Password" maxlength="20" >
-                    <span>6~20자의 영문 대/소문자, 숫자, 특수문자 혼용 가능.</span>
-                </div>
-                <div class="sub-content">
-                    <input type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" >
-                    <input type="button" value="변경하기">
-                </div>
-               
-                    
-              
-            </div>
-        </div>
-    </section>
-    </div>
-</body>
 
+    <div class="right-main-side">
+    	<div class="qna_top">
+    		<p>1:1문의</p>
+    	</div>
+        <div class="qna_bottom">
+        	<ul>
+   				<li class="qna_head_check">
+   					<input type="radio"><span>Y</span>
+   				</li>
+   				<li class="qna_head_check">
+   					<input type="radio"><span>N</span>
+   				</li>
+   				<li>
+   					<div class="qna_head_insert"></div>
+   				</li>
+        		<li class="qna_head">
+        			<ul>
+        				<li class="qna_head_sub" id="qna_no"><span>NO</span></li>
+        				<li class="qna_head_sub" id="qna_title"><span>제목</span></li>
+        				<li class="qna_head_sub" id="qna_date"><span>등록날짜</span></li>
+        				<li class="qna_head_sub" id="qna_yn"><span>답변여부</span></li>
+        			</ul>
+        		</li>
+        		<li class="qna_list">
+        			<ul>
+        				<li class="qna_head_sub" id="qna_no"><span>1</span></li>
+        				<li class="qna_head_sub" id="qna_title"><a href="#"><span>새로운 업데이트 예정일이 언제인가요? </span></a></li>
+        				<li class="qna_head_sub" id="qna_date"><span>19-10-23</span></li>
+        				<li class="qna_head_sub" id="qna_yn"><span>N</span></li>
+        			</ul>
+        		</li>
+        		<li class="qna_list">
+        			<ul>
+        				<li class="qna_head_sub" id="qna_null"><span>아직 등록된 문의가 없습니다.</span></li>
+        			</ul>
+        		</li>
+        	</ul>
+        </div>
+    </div>
+
+</body>
 </html>

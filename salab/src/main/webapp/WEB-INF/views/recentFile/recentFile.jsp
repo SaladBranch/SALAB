@@ -117,7 +117,7 @@
         </div>
         
         <div class="row recent-files">
-            <div class="file-grid">
+            <div class="file-grid" onclick="location.href='epFile.do'">
                 <div class="file-container">
                     <div class="file-thumbnail">
                         

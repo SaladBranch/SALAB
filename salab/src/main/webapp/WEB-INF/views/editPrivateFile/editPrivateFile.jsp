@@ -76,45 +76,47 @@
             <div class="comp-category common-shape" onclick="toggleComps(this, '.common-shape-comps');">
                 <p>&#9660;</p>기본도형(common shape)
             </div>
-            <div class="common-shape-comps">
+              <div class="common-shape-comps">
                 <div style="padding:5px;">
                     <!--직사각형-->
-                    <a class="geItem dragging" display="inline-block">
+                    <a class="geItem c_rectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--모서리가 둥근 직사각형-->
-                    <a class="geItem" display="inline-block">
+                    <a class="geItem c_brectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" rx="5" ry="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
-                    <!--텍스트-->
-                    <a class="geItem" display="inline-block">
+                    <!--Heading-->
+                    <a class="geItem c_heading" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                        <foreignObject x="4" y="4" width="40" height="20">
-                            <div xmlns="http://www.w3.org/1999/xhtml">
-                                Text
+                        <g transform="scale(0.35)">
+                        <foreignObject x="4" y="15" width="180" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <h1>Heading</h1>
                             </div>
                         </foreignObject>
+                        </g>
                     </svg>
                     </a>
                     <!--글타래-->
-                    <a class="geItem" display="inline-block">
+                    <a class="geItem c_paragraph" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.3)">
-                        <foreignObject x="1" y="0" width="180" height="160">
-                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 12px;">
+                        <foreignObject x="1" y="-10" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
                                 <h1>Heading</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
                             </div>
                         </foreignObject>
                         </g>
                     </svg>
                     </a>
                     <!--타원-->
-                    <a class="geItem" display="inline-block">
+                    <a class="geItem c_ellipse" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
@@ -151,7 +153,6 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
-    <script src="/salab/resources/js/editPrivateFile/seungFunction.js"></script>
     <script type="text/javascript">
     $(function(){
         $('.page-tab-content').show();

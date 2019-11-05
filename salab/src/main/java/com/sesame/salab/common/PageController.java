@@ -13,4 +13,16 @@ public class PageController {
 	public String toRecentFileMethod() {
 		return "recentFile/recentFile";
 	}
+	
+	@RequestMapping(value="userNotice.do")
+	public String toUserNoticeMethod() {
+		return "help/userNotice";
+	}
+	
+	@RequestMapping(value="userQnA.do")
+	public String toUserQnAMethod() {
+		return "help/userQnA";
+	}
+	
+	
 }

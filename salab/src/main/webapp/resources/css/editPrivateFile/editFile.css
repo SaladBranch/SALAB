@@ -181,6 +181,29 @@ svg{
     margin-right: 20px;
 }
 
+#toggle-page:hover .toggle-page-menu{display: block;}
+#toggle-edit:hover .toggle-edit-menu{display: block;}
+#toggle-sort:hover .toggle-sort-menu{display: block;}
+#toggle-sort-order:hover .toggle-sort-order{display: block;}
+#toggle-insert:hover .toggle-insert-menu{display: block;}
+#toggle-look:hover .toggle-look-menu{display: block;}
+.toggle-page-menu, .toggle-edit-menu, .toggle-sort-menu, .toggle-insert-menu, .toggle-look-menu, .toggle-sort-order{
+    display: none;
+    padding: 10px 0;
+    width: 200px;
+    position: absolute;
+    left: 199px;
+    background: #2c2c2c;
+    border-left: 1px solid #000;
+    border-radius: 3px;
+}
+.toggle-page-menu{top: 51px;}
+.toggle-edit-menu{top: 81px;}
+.toggle-sort-menu, .toggle-insert-menu{top: 111px;}
+.toggle-look-menu{top: 141px;}
+.toggle-sort-order{top: 0;}
+
+
 /*-------------------------*/
 /* Left Side Bar */
 /*-------------------------*/

@@ -44,6 +44,69 @@
         </div>
     </nav>
     </header>
+        <div class="main-toggle-menu">
+        <ul>
+            <li><a href="recentFile.do">파일 페이지로 이동</a></li>
+            <hr>
+            <li id="toggle-page">
+                페이지<span><i class="fas fa-caret-right"></i></span>
+                <ul class="toggle-page-menu">
+                    <li><a href="#">새 페이지</a></li>
+                    <li><a href="#">페이지 복사</a></li>
+                    <li><a href="#">페이지 삭제</a></li>
+                    <li><a href="#">페이지 이름 변경</a></li>
+                    <li><a href="#">저장</a></li>
+                    <li><a href="#">전체 저장</a></li>
+                    <li><a href="#">내보내기</a></li>
+                    <li><a href="#">전체 내보내기</a></li>
+                </ul>
+            </li>
+            
+            <li id="toggle-edit">
+                편집<span><i class="fas fa-caret-right"></i></span>
+                <ul class="toggle-edit-menu">
+                    <li><a href="#">실행취소</a></li>
+                    <li><a href="#">다시실행</a></li>
+                    <li><a href="#">삭제하기</a></li>
+                    <li><a href="#">잘라내기</a></li>
+                    <li><a href="#">복사</a></li>
+                    <li><a href="#">붙여넣기</a></li>
+                    <li><a href="#">개인 라이브러리</a></li>
+                </ul>
+            </li>
+            <li id="toggle-sort">
+                정렬<span><i class="fas fa-caret-right"></i></span>
+                <ul class="toggle-sort-menu">
+                    <li><a href="#">그룹</a></li>
+                    <li><a href="#">그룹해제</a></li>
+                    <li id="toggle-sort-order">
+                    순서<span><i class="fas fa-caret-right"></i></span>
+                        <ul class="toggle-sort-order">
+                            <li><a href="#">맨 앞으로</a></li>
+                            <li><a href="#">앞으로</a></li>
+                            <li><a href="#">맨 뒤로</a></li>
+                            <li><a href="#">뒤로</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li id="toggle-insert">
+                삽입<span><i class="fas fa-caret-right"></i></span>
+                <ul class="toggle-insert-menu">
+                    <li><a href="#">이미지</a></li>
+                    <li><a href="#">테이블</a></li>
+                    <li><a href="#">메모</a></li>
+                </ul>
+            </li>
+            <li id="toggle-look">
+                 보기<span><i class="fas fa-caret-right"></i></span>
+                <ul class="toggle-look-menu">
+                    <li><a href="#">격자무늬 보이기</a></li>
+                    <li><a href="#">웹 테스트</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
        
     <div class="left-side-bar">
         <div class="tab-menu">
@@ -209,6 +272,22 @@
             $('.right-side-bar').hide();
         }
     }
+    
+    $('.top-bar-menu input').click(function(){
+        if($(this).is(':checked')){
+            $('.main-toggle-menu').show();
+        }else{
+            $('.main-toggle-menu').hide();
+        }
+    });
+        
+    $(document).on('click', function(e){
+        if(!$(e.target).is($('.top-bar-menu input'))){
+            console.log("ㅇ")
+            $('.top-bar-menu input').prop("checked", false);
+            $('.main-toggle-menu').hide();    
+        }
+    });
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 var elementCount = 1;
 
-var target = '.canvas';
+var target = '#droppable';
 /* event 함수들 실행 후에는insertY 80으로 변경 */
 var insertX = 130, insertY = 80;
 var clicks = 0, delay = 400;
@@ -15,9 +15,12 @@ $('.geItem').on('mousedown', function(e){
     
     if(clicks == 2){
         var temp = insertCompReposition($(this).clone());
+        temp.attr({onmouseenter: 'canvasDivEnter()'});
         $(target).append(temp);
         insertY += temp.children("svg").height();
         clicks = 0;
+        appendElement = "";
+        
     }else{
         appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
         appendElement.children("a").children("svg").attr("width", "80");
@@ -39,7 +42,9 @@ $('body').on('mousemove', function(e){
 	if (nowX >= canvasLeft && nowX <= canvasRight && nowY >= canvasTop && nowY <= canvasBottom ? appendElement != "" : false) {
 		includeElement(nowX - canvasLeft, nowY - canvasTop, appendElement);
 		appendElement = "";
-	}
+	}else{
+        appendElement = "";
+    }
 });
 
 function moveDragging(event) {
@@ -52,7 +57,6 @@ function moveDragging(event) {
 }
 
 function includeElement(X, Y, temp) {
-	console.log(temp.html());
 	tempA = temp.children("a");
     tempA.attr({onmouseenter: 'canvasDivEnter()'});
 	tempA.css({
@@ -61,23 +65,19 @@ function includeElement(X, Y, temp) {
 		left: X
 	});
     tempA = insertSVGResize(tempA);
-	/*tempA.children("svg").attr({
-		width: '200px',
-		height: '100px'
-	});*/
-    
+
 	$("[id=droppable]").append(temp.html());
 }
 
 function canvasDivEnter(element) {
 	$(this).css("border", "2px solid blue");
-	$("[id=droppable] a").draggable();
+	$("#droppable a").draggable();
 }
 
 function insertCompReposition(temp){
     temp.css({
         position: 'absolute',
-        top: insertY,
+        top: insertY, 
         left: insertX
     });
     
@@ -116,3 +116,4 @@ function insertSVGResize(temp){
     
     return temp;
 }
+

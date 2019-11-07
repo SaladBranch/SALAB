@@ -18,7 +18,7 @@ body { margin : 0; }
 .dragging { width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px; }
 .dragging .object { margin : 8px; }
 
-.canvas { width : 600px; height : 600px; position : absolute; top : 100px; left : 300px; background : white; border : 5px solid black; z-index : -9999 }
+.droppable { width : 600px; height : 600px; position : absolute; top : 100px; left : 300px; background : white; border : 5px solid black; z-index : -9999 }
 
 </style>
 
@@ -29,32 +29,27 @@ body { margin : 0; }
 var elementCount = 1;
 var appendElement = "";
 
-$(document).on("mousedown", ".element", function(event) {
-	appendElement = $("<div class='dragging' name='" + $(this).attr("id") + "'>" + $(this).html() + "</div>").appendTo("body");
+$('.geItem').on("mousedown", function(event) {
+	appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
+	appendElement.children("a").children("svg").attr("width", "80");
+	appendElement.children("a").attr("height", "80");
 	moveDragging(event);
 });
 
-$(document).on("mousemove", "body", function(event) {
+$("body").on("mousemove", function(event) {
 	moveDragging(event);
 });
 
-$(document).on("mouseup", "body", function(event) {
+$("body").on("mouseup", function(event) {
 	$(".dragging").remove();
-	var nowX = event.pageX;
-	var nowY = event.pageY;
-	
-	/* var canvasTop = $(".canvas").css("top").split("px")[0];
-	var canvasLeft = $(".canvas").css("left").split("px")[0];
-	var canvasRight = $(".canvas").css("left").split("px")[0] * 1 + $(".canvas").css("width").split("px")[0] * 1;
-	var canvasBottom = $(".canvas").css("top").split("px")[0] * 1 + $(".canvas").css("height").split("px")[0] * 1; */
-
-	var canvasTop = $(".canvas").offset().top;
-	var canvasLeft = $(".canvas").offset().left;
-	var canvasRight = canvasTop * 1 + $(".canvas").css("width").split("px")[0] * 1;
-	var canvasBottom = canvasLeft * 1 + $(".canvas").css("height").split("px")[0] * 1;
-	
+	var nowX = event.clientX;
+	var nowY = event.clientY;
+	var canvasTop = Math.round($("[id=droppable]").offset().top);
+	var canvasLeft = Math.round($("[id=droppable]").offset().left);
+	var canvasRight = canvasLeft * 1 + $("[id=droppable]").css("width").split("px")[0] * 1;
+	var canvasBottom = canvasTop * 1 + $("[id=droppable]").css("height").split("px")[0] * 1;
 	if (nowX >= canvasLeft && nowX <= canvasRight && nowY >= canvasTop && nowY <= canvasBottom ? appendElement != "" : false) {
-		includeElement(nowX - canvasLeft - 40, nowY - canvasTop - 40, appendElement.children().attr("id"));
+		includeElement(nowX - canvasLeft, nowY - canvasTop, appendElement);
 		appendElement = "";
 	}
 });
@@ -62,28 +57,34 @@ $(document).on("mouseup", "body", function(event) {
 function moveDragging(event) {
 	var dragX = event.pageX - 40;
 	var dragY = event.pageY - 40;
-	$(".dragging").css("left", dragX);
-	$(".dragging").css("top", dragY);
+	$(".dragging").css({
+		left : dragX,
+		top : dragY
+	});
 }
 
-function includeElement(X, Y, element) {
-	var elementType = "background : white; ";
-	if (element == "object1") {
-		elementType = elementType + "border : 2px solid black;";
-	} else if (element == "object2") {
-		elementType = elementType + "border : 2px solid black; border-radius : 50px;";
-	}
-	//$(".canvas").append("<div id=element" + elementCount + " style='position : absolute; top : " + Y + "px; left : " + X + "px; " + elementType + "' onmouseover='divDraggable(\"element" + elementCount++ + "\")'>");
-	$(".canvas").append("<div id=element" + elementCount + " style='position : absolute; top : " + Y + "px; left : " + X + "px; width : 84px; height : 84px; ' onmouseenter='canvasDivEnter(\"element" + elementCount + "\")' onmouseleave='canvasDivLeave(\"element" + elementCount++ + "\")'><div class='object' style='width : 80px; height : 80px; " + elementType + "'></div></div>");
+function includeElement(X, Y, temp) {
+	console.log(temp.html());
+	tempA = temp.children("a");
+	tempA.attr({
+		onmouseenter : 'canvasDivEnter()'
+	});
+	tempA.css({
+		position: 'absolute',
+		top: Y,
+		left: X
+	});
+	tempA.children("svg").attr({
+		width: '200px',
+		height: '100px',
+	});
+	
+	$("[id=droppable]").append(temp.html());
+	
 }
 
-function canvasDivEnter(element) {
-	$("div[id=" + element + "]").css("border", "2px solid blue");
-	$("div[id=" + element + "]").draggable();
-}
-
-function canvasDivLeave(element) {
-	$("div[id=" + element + "]").css("border", "");
+function canvasDivEnter() {
+	$("[id=droppable] a").draggable();
 }
 
 </script>
@@ -101,9 +102,13 @@ function canvasDivLeave(element) {
 		</div>
 	</div>
 	<input type="hidden" value="1">
-	<div class="canvas">
-	
-	</div>
+
+    <div class="canvas-container">
+        <div id="droppable" class="canvas ui-widget-content">
+            
+        </div>
+    </div>
+    
 </div>
 
 </body>

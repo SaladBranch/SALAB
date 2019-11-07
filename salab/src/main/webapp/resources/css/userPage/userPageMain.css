@@ -1,124 +1,305 @@
-/*-------------------------*/
-/*id="ipersonalInfo"*/
-/*-------------------------*/
-
-
-
-
-#ipersonalInfo {}
-
-#pImage {
-    width: 130px;
-    height: 130px;
-    outline: none;
-    background-color: brown;
-    border-radius: 100%;
-    padding-top: 100px;
+.section-grid {
+    max-width: 40%;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 30px;
+    padding:0px;
 }
 
-#pImage > span {}
 
-.inputImg {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    margin-bottom: 10px;
-}
-
-#userEmail {
-    display: inline-block;
-
-}
-
-#userEmail {
-    clear: both;
-}
 
 /* img 삽입*/
+#userImg {
+    background: dimgray;
+    padding: 15px 25px;
+   background: linear-gradient(90deg, dimgray 0%, #7a7a7a 70%, #b0b0b0 100%); 
+    margin-bottom: 30px;
+}
+
 #userImg label {
     font-size: 0.7em;
     color: #ebe2e1;
     cursor: pointer;
     width: 100%;
+
 }
 
-#pImage > span {
-    margin-top: 140px;
-}
+
 
 #userImg input[type="file"] {
     display: none;
 }
 
-#id-info {}
+#pImage {
+    width: 45px;
+    height: 45px;
+    outline: none;
+    background-color: brown;
+    border-radius: 100%;
+    padding-top: 18px;
 
-
-.box-content{
-    margin: 20px 10px;
-    font-size: 0.8em;
 }
-ul>li{
+
+
+#pImage > span {
+    display: none;
+    margin-top: 90px;
+    font-size: 6pt;
+    color: antiquewhite;
+}
+
+#pImage:hover > span {
+    display: contents;
+}
+
+.inputImg {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#userEmail {
+    display: inline-block;
+    top: 300px;
+    padding-left: 10px;
+    padding-bottom: 8px;
+    vertical-align: bottom;
+    color: #f7f7ed;
+    font-size: 1.2em;
+    font-weight: 400;
+
+}
+
+#userImg {}
+
+#main-title {
+    margin: 0px;
+    padding: 12px 15px;
+    height: 46px;
+    vertical-align: middle;
+}
+
+/******name******/
+#nameTitle {}
+
+
+.blank {
+    margin-bottom: 60px;
+}
+
+.clickable {
+    display: block;
+    cursor: pointer;
+    color: #20aaf5;
+    margin: 10px 0px;
+}
+
+.clickable:hover {
+    color: #3ec28f;
+}
+
+.block {
+    display: block;
+}
+
+.inlineblock {
+    display: inline-block
+}
+
+/******name change****/
+#changeName input[type="text"] {
+    margin: 15px auto;
+    padding: 2px 15px;
+    font-size: 14px;
+    width: 93%;
+    height: 28px;
+    border: 0.3px solid #3ec28f;
+
+}
+
+
+#deleteTitle {
+    cursor: pointer;
+    font-size: 0.6em;
+    color: dimgrey;`
+}
+
+
+
+#deleteConfirm {
+    font-size: 0.8em;
+
+}
+
+
+#deleteConfirm > input[type="password"] {
+    margin: 8px auto;
+    padding: 2px 15px;
+    font-size: 14px;
+    width: 93%;
+    height: 28px;
+    border: 0.3px solid #3ec28f;
+}
+
+
+/******change Pwd********/
+.box-changePwd {}
+
+#box-changePwd input[type="password"] {
+    margin: 3px 16px;
+    padding: 2px 15px;
+    font-size: 14px;
+    width: 93%;
+    height: 28px;
+    border: 0.3px solid #3ec28f;
+
+}
+
+#pwdChangeEx {
+    margin-top: 8px;
+    margin-left: 22px;
+    font-size: 0.6em;
+    color: darkgray;
+}
+
+
+#box-changePwd {
+    min-height: 240px;
+}
+
+#box-changePwd input[type="button"] {
+    margin-top: 10px;
+}
+
+/*****modal*****/
+.modalOutline {
+    display: noe;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Black w/ opacity */
+
+}
+
+.modalContent {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 35%;
+    box-shadow: 0px 1px 3px;
+    min-height: 160px;
+}
+
+.modalContent input[type="button"] {
+    margin-right: 18px;
+}
+
+.z-index1 {
+    z-index: 3;
+}
+
+.z-index2 {
+    z-index: 2;
+}
+
+.z-index3 {
+    z-index: 1;
+}
+
+modal
+
+/*****delete modal *****/
+ul {
+    margin: 7px;
+}
+
+ul > li {
+    margin: 1px 2px;
     padding: 2px 0px;
-    font-size: 0.7em;
+    font-size: 0.6em;
     font-weight: 600;
 }
-ul>li::before{
+
+ul > li::before {
     content: "- ";
 }
-#id-changeBox {
-    margin: 30px 10px;
+
+
+.division {
+    padding-top: 20px;
+    display: inline-block;
+    vertical-align: top;
+    min-width: 42%;
+    min-height: 400px;
 }
-#id-changeBox:nth-child(1){
-    margin-bottom: 5px;
+
+.afsdfsdf {}
+
+
+.fdfdfs {
+    min-width: 15%;
+
+}
+/*******grade*******/
+.show-grade{
+    margin-top: 10px;
+    width: 100%;
+    padding-left: 20px;
+}
+.grade-title{
+    font-weight: 400;
+}
+#next-payment-date, #first-payment-date{
+    margin-bottom: 30px;
+}
+.content-box {
+    min-height: 450px;
 }
 
 
-
-
-/*-------------------------*/
-/*delete info*/
-/*-------------------------*/
-#delete-id {
-    margin: 10px;
-    font-size: 0.6em;
-    text-decoration-line: underline;
-    cursor: pointer;
+.outline-box{
+    height: 120px;
 }
-.highlight{
-    color: dimgrey;
-    font-weight: 500;
-}
-
-#deleteAccount {
-    margin-bottom: 40px;
-    display: none;
-}
-.box-content li :nth-last-child(){
-    font-size: 0.6em;
-}
-.text-box{
-    margin: 4px 15px;
+/****if standard*****/
+#downgrade-bottom>div{
+    padding-right: 10%;
     display: block;
-    height: 28px;
-    width: 300px;
+    margin-top: 50px;
+    text-align: center;
+    color: #e35d42;
+    font-size: 0.7em;
 }
-input[type="checkbox"]{
-    margin-left: 15px;
-    margin-right: 5px;
-    position: relative;
-    top: 3px;
-}
+.description-title{
+    font-size: 16px;
+    margin-top 30px;
+    padding: 10px 0px;
 
-.box-content>span{
-    font-size: 0.8em;
 }
-
-#delete-title {
-    background-color: #ffb48f;
+#standard-description span {
+    font-size: 16px;
+    font-weight: 400
 }
-.box-content{
-    padding:  10px 5px;
+#standard-description >div p {
+    font-size: 14px;
+     padding-left: 20px;   
+    
 }
-.section-grid{
-    margin-top: 60px;
+#goto-upgrade{
+    font-size: 14px;
+    margin-top: 25px;
+    margin-left: 35%;
+    text-decoration: none;
+}
+#goto-upgrade:hover{
+    text-decoration: underline;
+}
+#goto-FAQ {
+margin-right: 10px;
 }

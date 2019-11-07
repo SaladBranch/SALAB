@@ -1,3 +1,4 @@
+
 var elementCount = 1;
 
 var target = '#droppable';

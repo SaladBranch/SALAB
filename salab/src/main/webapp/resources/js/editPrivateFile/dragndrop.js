@@ -20,7 +20,7 @@ $('.geItem').on('mousedown', function(e){
         insertY += temp.children("svg").height();
         clicks = 0;
         appendElement = "";
-        
+
     }else{
         appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
         appendElement.children("a").children("svg").attr("width", "80");

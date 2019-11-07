@@ -167,15 +167,13 @@
                     </a>
                     <!--글타래-->
                     <a class="geItem c_paragraph" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                        <g transform="scale(0.3)">
+                    <svg x="0" y="0" width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <foreignObject x="1" y="-10" width="300" height="160">
                             <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
                                 <h1>Heading</h1>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
                             </div>
                         </foreignObject>
-                        </g>
                     </svg>
                     </a>
                     <!--타원-->

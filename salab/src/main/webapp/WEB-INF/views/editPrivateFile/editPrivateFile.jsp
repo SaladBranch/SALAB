@@ -12,6 +12,7 @@
     
     <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/editFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/components.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>파일명 | Salab</title>
@@ -142,19 +143,19 @@
               <div class="common-shape-comps">
                 <div style="padding:5px;">
                     <!--직사각형-->
-                    <a class="geItem c_rectangle" display="inline-block">
+                    <a id="obj_rect" class="geItem c_rectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--모서리가 둥근 직사각형-->
-                    <a class="geItem c_brectangle" display="inline-block">
+                    <a id="obj_brect" class="geItem c_brectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" rx="5" ry="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--Heading-->
-                    <a class="geItem c_heading" display="inline-block">
+                    <a id="obj_heading" class="geItem c_heading" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.35)">
                         <foreignObject x="4" y="15" width="180" height="160">
@@ -166,8 +167,10 @@
                     </svg>
                     </a>
                     <!--글타래-->
-                    <a class="geItem c_paragraph" display="inline-block">
-                    <svg x="0" y="0" width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <a id="obj_paragraph" class="geItem c_paragraph" display="inline-block">
+                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.3)">
+
                         <foreignObject x="1" y="-10" width="300" height="160">
                             <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
                                 <h1>Heading</h1>
@@ -177,7 +180,7 @@
                     </svg>
                     </a>
                     <!--타원-->
-                    <a class="geItem c_ellipse" display="inline-block">
+                    <a id="obj_ellipse" class="geItem c_ellipse" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
@@ -214,6 +217,7 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript">
     $(function(){
         $('.page-tab-content').show();

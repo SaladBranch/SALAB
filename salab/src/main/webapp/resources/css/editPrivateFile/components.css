@@ -1,0 +1,64 @@
+@charset "UTF-8";
+/*--------------------------*/
+/*Object CSS*/
+/*--------------------------*/
+.obj-rect, .obj-brect, .obj-ellipse{
+    position: absolute;
+    width: 140px;
+    height: 70px;
+    background: transparent;
+    border: 1px solid #000;
+}
+.obj-brect{
+    border-radius: 10px;
+}
+.obj-paragraph{
+    width: 200px;
+}
+.obj-ellipse{
+    border-radius: 50%;
+}
+
+.ui-resizable-handle{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #00a8ff;
+}
+.ui-resizable-helper { 
+    border: 1px dotted #00F;
+}
+.ui-resizable-n{
+    top: -9px;
+    left: calc(50% - 4.5px);
+}
+.ui-resizable-e{
+    right: -9px;
+    top: calc(50% - 4.5px);
+}
+.ui-resizable-s{
+    bottom: -9px;
+    left: calc(50% - 4.5px);
+}
+.ui-resizable-w{
+    top: calc(50% - 4.5px);
+    left: -9px;
+}
+.ui-resizable-ne{
+    top: -9px;
+    right: -9px;
+}
+.ui-resizable-se{
+    bottom: -9px;
+    right: -9px;
+}
+.ui-resizable-nw{
+    top: -9px;
+    left: -9px;
+}
+.ui-resizable-sw{
+    bottom: -9px;
+    left: -9px;
+}

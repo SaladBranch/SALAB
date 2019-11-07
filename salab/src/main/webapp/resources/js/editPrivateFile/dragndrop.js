@@ -2,7 +2,6 @@ var elementCount = 1;
 
 var target = '#droppable';
 /* event 함수들 실행 후에는insertY 80으로 변경 */
-var insertX = 130, insertY = 80;
 var clicks = 0, delay = 400;
 
 $('.geItem').on('mousedown', function(e){
@@ -14,17 +13,14 @@ $('.geItem').on('mousedown', function(e){
     }, delay);
     
     if(clicks == 2){
-        var temp = insertCompReposition($(this).clone());
-        temp.attr({onmouseenter: 'canvasDivEnter()'});
+        var module = getModule($(this).attr("id"));
+        module.setX(200);
+        module.setY(100);
+        var temp = module.obj_code;
         $(target).append(temp);
-        insertY += temp.children("svg").height();
         clicks = 0;
-        appendElement = "";
-        
     }else{
         appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
-        appendElement.children("a").children("svg").attr("width", "80");
-        appendElement.children("a").attr("height", "80");
         moveDragging(event);
     } 
 });
@@ -57,63 +53,45 @@ function moveDragging(event) {
 }
 
 function includeElement(X, Y, temp) {
-	tempA = temp.children("a");
-    tempA.attr({onmouseenter: 'canvasDivEnter()'});
-	tempA.css({
-		position: 'absolute',
-		top: Y,
-		left: X
-	});
-    tempA = insertSVGResize(tempA);
-
-	$("[id=droppable]").append(temp.html());
+    var objId = temp.children().attr("id");
+    var module = getModule(objId);
+    module.setX(X);
+    module.setY(Y);
+    var comp = module.obj_code;
+	
+	$("[id=droppable]").append(comp);
 }
 
 function canvasDivEnter(element) {
 	$(this).css("border", "2px solid blue");
-	$("#droppable a").draggable();
+    $('#droppable .obj').draggable();
 }
 
-function insertCompReposition(temp){
-    temp.css({
-        position: 'absolute',
-        top: insertY, 
-        left: insertX
+$(document).on('click', '#droppable .obj', function(){
+    $(this).resizable({
+        handles:{
+            'n': '.ui-resizable-n',  
+            'e': '.ui-resizable-e',  
+            's': '.ui-resizable-s',  
+            'w': '.ui-resizable-w',  
+            'ne': '.ui-resizable-ne',  
+            'se': '.ui-resizable-se',  
+            'sw': '.ui-resizable-sw',  
+            'nw': '.ui-resizable-nw',  
+        },
+        alsoResize: "this .textarea"
     });
-    
-    return insertSVGResize(temp);
-}
-function insertSVGResize(temp){
-    var svg = temp.children("svg");
-    var comp = svg.children();
-    if(temp.is('.c_rectangle, .c_brectangle, .c_ellipse')){
-        svg.attr({
-            width: '200px',
-            height: '100px',
-        });
-        comp.attr({
-            'stroke-width':"0.5"
-        });   
-    }
-    if(temp.is('.c_heading')){
-        comp = comp.children();
-        svg.attr({
-            width: '200px',
-            height: '100px'
-        });
+});
 
-    }
-    if(temp.is('.c_paragraph')){
-        comp = comp.children();
-        svg.attr({
-            width: '200px',
-            height: '100px'
+$(document).on('click', function(e){
+    if(!$(e.target).is($('#droppable .obj'))){
+        $('#droppable .obj').each(function(){
+            if(!$(this).resizable("option", "disabled")){
+                $(this).children("ui-resizable-handle").hide();
+                $(this).resizable("disable");
+            }
+                
         });
-        comp.css({
-            'font-size': '15px' 
-        });
     }
-    
-    return temp;
-}
+});
 

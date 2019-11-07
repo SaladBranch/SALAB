@@ -24,4 +24,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return pdao.insertPayment(payment);
 	}
 
+	@Override
+	public Member selectPaymentUser(String userno) {
+		// 재결제시 결제할 유저 검색
+		return pdao.selectPaymentUser(userno);
+	}
+
 }

@@ -30,8 +30,16 @@ public class PaymentController {
 		return "test";
 	}
 	
-	@RequestMapping(value="pm_comp.do", method=RequestMethod.POST)
-	public String paymentCompMethod(@RequestParam("billing_key") String billingKey, @RequestParam("userno") String userno, @RequestParam("order_id") String orderid) {
+	@RequestMapping("pm_complete.do")
+	public String returnCompPage() {
+		return "payment/paymentComplete";
+	}
+	
+	@RequestMapping(value="pm_done.do", method=RequestMethod.POST)
+	public void paymentCompMethod(@RequestParam("billing_key") String billingKey, @RequestParam("userno") String userno, @RequestParam("order_id") String orderid) {
+		BootpayApi bootpay = new BootpayApi("5d5a6ed20627a800303d1954", "neJWvNvI9giAwmfjHyVS6UbU1XsnI8JxXxYHVC7WnG0=");
+		SubscribeBilling bill = new SubscribeBilling();
+		
 		//결제 성공시 값 넘기는 ajax를 통해 넘긴값 객체에 저장
 		Date d = new Date();
 		SimpleDateFormat date = new SimpleDateFormat("dd");
@@ -48,8 +56,6 @@ public class PaymentController {
 		logger.info(String.valueOf(result));
 		//빌링키 저장이 성공하면 바로 결제
 		if(result > 0) {
-			BootpayApi bootpay = new BootpayApi("5d5a6ed20627a800303d1954", "neJWvNvI9giAwmfjHyVS6UbU1XsnI8JxXxYHVC7WnG0=");
-			SubscribeBilling bill = new SubscribeBilling();
 			
 			bill.billing_key = billingKey;
 			bill.order_id = orderid;
@@ -72,7 +78,40 @@ public class PaymentController {
 			}
 		}
 		logger.info("check3");
-		return "payment/paymentComplete";
 	}
 	
+	@RequestMapping(value="pm_isbilling.do", method=RequestMethod.POST)
+	public void paymentIsBillingMethod(@RequestParam("userno") String userno, @RequestParam("order_id") String orderid) {
+		//bootpay api 객체 생성
+		BootpayApi bootpay = new BootpayApi("5d5a6ed20627a800303d1954", "neJWvNvI9giAwmfjHyVS6UbU1XsnI8JxXxYHVC7WnG0=");
+		SubscribeBilling bill = new SubscribeBilling();
+		
+		Member member = pmService.selectPaymentUser(userno);
+		
+		//빌링키를 맴버테이블에 저장
+		//빌링키 저장이 성공하면 바로 결제
+		if(member != null) {
+			
+			bill.billing_key = member.getBillingkey();
+			bill.order_id = orderid;
+			bill.price = 9900;
+			bill.pg = "danal";
+			bill.item_name = "Premium Service";
+			logger.info("check");
+			if(bill.order_id != null && bill.price != 0 && bill.item_name != null) {
+				try {
+					logger.info("check2");
+					bootpay.getAccessToken();
+					bootpay.subscribe_billing(bill);
+					Payment payment = new Payment();
+					payment.setPaymentoid(orderid);
+					payment.setUserno(Integer.parseInt(userno));
+					int result2 = pmService.insertPayment(payment);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		logger.info("check3");
+	}
 }

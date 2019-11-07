@@ -7,4 +7,6 @@ public interface PaymentService {
 	int insertBilling(Member member);
 
 	int insertPayment(Payment payment);
+
+	Member selectPaymentUser(String userno);
 }

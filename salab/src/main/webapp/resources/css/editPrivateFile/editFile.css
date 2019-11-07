@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+svg{
+    outline: none;
+}
 .top-bar{
     top: 0;
     left: 0;
@@ -128,6 +130,81 @@
     margin-top: 5px;
 }
 /*-------------------------*/
+/*왼쪽 상단 메인 토글 메뉴*/
+/*-------------------------*/
+
+.main-toggle-menu{
+    display: none;
+    z-index: 100;
+    background: #2c2c2c;
+    position: absolute;
+    top: 45px;
+    left: 8px;
+    width: 200px;
+    padding: 10px 0;
+    border-radius: 3px;
+    border: 1px solid #000;
+}
+.main-toggle-menu:before{
+    content:"";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #2c2c2c;
+    top: -6px;
+    left: 9px;
+}
+.main-toggle-menu li,
+.main-toggle-menu a{
+    color: #fff;
+}
+.main-toggle-menu hr{
+    border: 0.7px solid #777777;
+    margin: 10px 0;
+}
+.main-toggle-menu li{
+    font-size: 13px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.main-toggle-menu li:hover{
+    background: #00a8ff;
+}
+.main-toggle-menu li span{
+    font-size: 12px;
+    float: right;
+    margin-right: 20px;
+}
+
+#toggle-page:hover .toggle-page-menu{display: block;}
+#toggle-edit:hover .toggle-edit-menu{display: block;}
+#toggle-sort:hover .toggle-sort-menu{display: block;}
+#toggle-sort-order:hover .toggle-sort-order{display: block;}
+#toggle-insert:hover .toggle-insert-menu{display: block;}
+#toggle-look:hover .toggle-look-menu{display: block;}
+.toggle-page-menu, .toggle-edit-menu, .toggle-sort-menu, .toggle-insert-menu, .toggle-look-menu, .toggle-sort-order{
+    display: none;
+    padding: 10px 0;
+    width: 200px;
+    position: absolute;
+    left: 199px;
+    background: #2c2c2c;
+    border-left: 1px solid #000;
+    border-radius: 3px;
+}
+.toggle-page-menu{top: 51px;}
+.toggle-edit-menu{top: 81px;}
+.toggle-sort-menu, .toggle-insert-menu{top: 111px;}
+.toggle-look-menu{top: 141px;}
+.toggle-sort-order{top: 0;}
+
+
+/*-------------------------*/
 /* Left Side Bar */
 /*-------------------------*/
 .left-side-bar{
@@ -175,15 +252,18 @@
     top: 38px;
     overflow-y: auto;
 }
-.tab-content::-webkit-scrollbar-track{
+.tab-content::-webkit-scrollbar-track,
+.canvas-container::-webkt-scrollbar-track{
     border-radius: 5px;
     background-color: #f5f5f5;
 }
-.tab-content::-webkit-scrollbar{
+.tab-content::-webkit-scrollbar,
+.canvas-container::-webkit-scrollbar{
     width: 10px;
     background-color: #f5f5f5;
 }
-.tab-content::-webkit-scrollbar-thumb{
+.tab-content::-webkit-scrollbar-thumb,
+.canvas-container::-webkit-scrollbar-thumb{
     border-radius: 5px;
     background-color: #aaaaaa;
 }
@@ -277,6 +357,7 @@
 }
 .common-shape-comps{
     border-bottom: 1px solid #c6c6c6;
+    user-select: none;
 }
 
 .comp-tab-content svg:hover{
@@ -323,6 +404,7 @@
     top: 40px;
     left: 230px;
     background: #cecece;
+    overflow-y: auto;
 }
 
 #droppable{
@@ -331,3 +413,4 @@
     background: #fff;
     margin: 5% auto;
 }
+

@@ -173,9 +173,9 @@
 
 /*****modal*****/
 .modalOutline {
-    display: noe;
+    display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 0;
     left: 0;
     top: 0;
     width: 100%;
@@ -301,5 +301,19 @@ ul > li::before {
     text-decoration: underline;
 }
 #goto-FAQ {
-margin-right: 10px;
+	margin-right: 10px;
+	font-size:0.8em;
+}
+
+div a, div a:visited {
+    text-decoration: none;
+    color:inherit;
+}
+
+
+.close {
+    position: relative;
+    float: right;
+    color: blue;
+    
 }

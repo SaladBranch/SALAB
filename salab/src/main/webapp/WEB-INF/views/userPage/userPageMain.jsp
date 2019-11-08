@@ -104,7 +104,9 @@
                                 <span>Account Grade</span>
                             </div>
                             <div class="show-grade grade-title clickable">
-                                PREMIUM GRADE
+                                <a href="userUpgrade.do">
+                                    PREMIUM GRADE
+                                </a>
                             </div>
                         </div>
                         <div id="first-payment-date">
@@ -144,11 +146,11 @@
                             </div>
                         </div>
                         <div id="goto-upgrade" class="clickable">
-                            <span>계정 업그레이드 하기</span>
+                            <span><a href="userUpgrade.jsp">계정 업그레이드 하기</a></span>
                         </div>
                     </div>
                 </div>
-                <div id="goto-FAQ" class="escapeSentence">등급에 관련하여 궁금하신 사항이 있으신가요?</div>
+                <div id="goto-FAQ" class="escapeSentence"><a href="#">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
             </div>
             <div class="division section-grid">
                 <div id="id-Info" class="content-box">
@@ -156,7 +158,7 @@
                     <div class="outline-box">
                         <div id="nameTitle" class="titleConfigure">Name</div>
                         <div id="userId" class="contentConfigure blank">${loginMember.username }
-                            <span class="blank clickable">change name !</span>
+                            <span id="Modal-Name" class="blank clickable" onclick="showModal('name')">change name !</span>
                         </div>
                     </div>
                     <div class="outline-box">
@@ -164,49 +166,50 @@
                             Password
                         </div>
                         <div id="userpwd" class="contentConfigure blank">
-                            <span class="blank clickable">change password !</span>
+                            <span value="vv" id="Modal-Password"  class="blank clickable" onclick="showModal('pwd')">change password !</span>
                         </div>
                     </div>
-                    <div>
-                        <div id="deleteTitle" class="clickable">
-                            <span class="">계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
+                   
+                        <div id="deleteTitle" >
+                            <span id="Modal-Delete"  class="clickable" onclick="showModal('delete')">계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
                         </div>
-                    </div>
+                    
                 </div>
-                <div class="escapeSentence">logout</div>
+                <div id="goto-logout" class="escapeSentence"><a href="logout.do">logout</a></div>
             </div>
         </div>
     </div>
     <!-- modal-->
     <div>
-        <div class="modalOutline z-index1 disable ">
-            <div id="changeName" class="modalContent z-index3">
+        <div id="modal-name" class="modalOutline disable " >
+            <div id="changeName" class="modalContent z-index1">
+               <div class="close">X</div>
                 <div class="titleConfigure">
                     Change Name
                 </div>
-                <input class="text-box block littleGap" type="text" placeholder="${loginMember.username }" maxlength="20">
-                <input class="" type="button" id="id-change-btn" value="Name Change">
+                <input id="newName" class="text-box block littleGap" type="text" placeholder="${loginMember.username }" maxlength="20" onkeydown="activeEnter('atName')">
+                <input class="" type="button" id="id-change-btn" value="Name Change" onclick="nameChangedo()">
             </div>
         </div>
-        <div class="modalOutline z-index2 disable">
-            <div id="box-changePwd" class="modalContent">
+        <div id="modal-password" class="modalOutline disable" >
+            <div id="box-changePwd" class="modalContent z-index3">
                 <div class="titleConfigure littlegap">
                     <span>Change Password</span>
                 </div>
                 <div>
-                    <input type="password" class="input-grid" placeholder="Current Password" maxlength="20">
+                    <input type="password" class="input-grid" placeholder="Current Password" maxlength="20" >
                     <div id="pwdChangeEx">
                         <span>6~20자의 영문 대/소문자, 숫자, 특수문자 혼용 가능.</span>
                     </div>
                     <input type="password" class="input-grid" placeholder="New Password" maxlength="20">
 
-                    <input type="password" class="input-grid" placeholder="Confirm Password" maxlength="20">
+                    <input type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')"  >
                     <input type="button" value="Password Change">
                 </div>
             </div>
         </div>
-        <div class="modalOutline z-index3 disable">
-            <div class="modalContent">
+        <div id="modal-delete" class="modalOutline disable" >
+            <div class="modalContent z-index3">
                 <div id="delete-title" class="">
                     <span>Delete account.</span>
                 </div>
@@ -217,12 +220,15 @@
                     </ul>
                 </div>
                 <div id="deleteConfirm" class="">
-                    <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20">
+                    <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20" onkeydown="activeEnter('atDelete')" >
                     <input id="delete-btn" type="button" value="Agree & Delete">
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/salab/resources/js/userPage/userPageMain.js"></script>
 
 </html>

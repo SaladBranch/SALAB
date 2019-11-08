@@ -455,7 +455,9 @@ body{
 }
 
 .menu-title{
-	margin-top: 50px;
+	margin-top: 40px;
+	height: 35px;
+	padding: 10px 3px;
 }
 
 .qna_top{
@@ -468,8 +470,9 @@ body{
 .qna_bottom{
 	font-size: 13pt;
 	width: 80%;
-	padding: 15px 30px 30px 30px;
+	padding: 5px 30px 30px 30px;
 	display: block;
+	border-top: 2px solid black;
 }
 
 input[type="radio"]{
@@ -479,125 +482,88 @@ input[type="radio"]{
     height: 15px;
 }
 
-.qna_head_check{
-	margin: 10px;
-	float: left;
+.qna_btn_box{
+	display: block;
+	margin: 20px 10px 10px 10px;
+	padding: 15px;
+}
+
+.qna_check{
+	margin: 5px;
 	font-size: 18pt;
-	text-align: center;
-	line-height: 50px;
 	font-weight: 600;
 }
 
-.qna_head_check span{
-	margin-left: 3px;
+.qna_insert{
+	float: right;
+	font-size: 18pt;
+	font-weight: 600;
+	padding: 3px 30px 3px 30px;
+	border: 1px solid lightgreen;
+}
+
+.qna_insert:hover{
+	border: 1px solid #3cb371;
 }
 
 .qna_head{
 	font-size: 16pt;
 	text-align: center;
-	float: left;
 	width: 100%;
 	height: 50px;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 }
 
-.qna_head_sub{
+.qna_list{
+	text-align: center;
+	height: 50px;
+	border-bottom: 1px solid lightgray;
+}
+
+.qna_head_no{
 	float: left;
 	text-align: center;
 	line-height: 50px;
-	border-bottom: 1px solid lightgray;
 	font-weight: 600;
-}
-
-#qna_no{
 	width: 15%;
 }
 
-#qna_title{
+.qna_head_title{
+	float: left;
+	text-align: center;
+	line-height: 50px;
+	font-weight: 600;
 	width: 50%;
 }
 
-#qna_date{
+.qna_head_date{
+	float: left;
+	text-align: center;
+	line-height: 50px;
+	font-weight: 600;
 	width: 20%;
 }
 
-#qna_yn{
+.qna_head_yn{
+	float: left;
+	text-align: center;
+	line-height: 50px;
+	font-weight: 600;
 	width: 15%;
 }
 
-#qna_null{
+.qna_head_null{
+	float: left;
+	text-align: center;
+	line-height: 50px;
 	width:100%;
 	color: gray;
 	font-weight: 400;
 }
 
-.qna_list{
-	text-align: center;
-	height: 50px;
-}
-
-
-
-/* .qna_bottom{
-	text-align: center;
-	margin-top: 20px;
-	padding: 30px;
-	width:80%;
-}
-
-.qna_list_top{
-	display:flex;
-	text-align: center;
-	border-bottom: 1px solid lightgray;
-    margin-top: 15px;
-    font-size: 15pt;
-    background: silver;
-    height: 45px;
-}
-
-.qna_list{
-	display: flex;
-	text-align: center;
-	border-bottom: 1px solid lightgray;
-    margin-top: 10px;
-    font-size: 15pt;
-}
-
-.qna_no{
-	height: 25px;
-	width: 35px;
-	display: block;
-	float: left;
-}
-
-.qna_no span{
-	
-}
-
-.qna_title{
-	height: 25px;
-	width: 200px;
-	display: block;
-	text-decoration: bold;
-}
-
-.qna_title span{
-	text-align: center;
-}
-
-.qna_date{
-	height:25px;
-	width:70px;
-	display: block;
-	float: right;
-}
-
-.qna_date span{
-	text-align:center;
-} */
-
 a { 
 	text-decoration: none; 
 	color: black;
 }
+

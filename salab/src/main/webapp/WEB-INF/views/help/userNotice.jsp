@@ -69,7 +69,7 @@
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="#">자주 찾는 질문</a>
+                <a href="userFAQ.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
@@ -79,31 +79,52 @@
     </div>
 
     <div class="right-main-side">
-    	<div class="notice_top">
-    		<p>공지사항</p>
-    	</div>
+       <div class="notice_top">
+          <p>공지사항</p>
+       </div>
         <div class="notice_bottom">
-        	<ul>
-        		<li class="notice_head">
-        			<ul>
-        				<li class="notice_head_sub" id="notice_no"><span>NO</span></li>
-        				<li class="notice_head_sub" id="notice_title"><span>제목</span></li>
-        				<li class="notice_head_sub" id="notice_date"><span>날짜</span></li>
-        			</ul>
-        		</li>
-        		<li class="notice_list">
-        			<ul>
-        				<li class="notice_head_sub" id="notice_no"><span>1</span></li>
-        				<li class="notice_head_sub" id="notice_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
-        				<li class="notice_head_sub" id="notice_date"><span>19-10-23</span></li>
-        			</ul>
-        		</li>
-        		<li class="notice_list">
-        			<ul>
-        				<li class="notice_head_sub" id="notice_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
-        			</ul>
-        		</li>
-        	</ul>
+           <ul>
+              <li class="notice_head">
+                 <ul>
+                    <li class="notice_head_no"><span>NO</span></li>
+                    <li class="notice_head_title"><span>제목</span></li>
+                    <li class="notice_head_date"><span>날짜</span></li>
+                 </ul>
+              </li>
+              <li class="notice_list">
+                 <ul>
+                    <li class="notice_head_no"><span>1</span></li>
+                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <li class="notice_head_date"><span>19-10-23</span></li>
+                 </ul>
+              </li>
+              <li class="notice_list">
+                 <ul>
+                    <li class="notice_head_no"><span>1</span></li>
+                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <li class="notice_head_date"><span>19-10-23</span></li>
+                 </ul>
+              </li>
+              <li class="notice_list">
+                 <ul>
+                    <li class="notice_head_no"><span>1</span></li>
+                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <li class="notice_head_date"><span>19-10-23</span></li>
+                 </ul>
+              </li>
+              <li class="notice_list">
+                 <ul>
+                    <li class="notice_head_no"><span>1</span></li>
+                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <li class="notice_head_date"><span>19-10-23</span></li>
+                 </ul>
+              </li>
+              <li class="notice_list">
+                 <ul>
+                    <li class="notice_head_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
+                 </ul>
+              </li>
+           </ul>
         </div>
     </div>
 

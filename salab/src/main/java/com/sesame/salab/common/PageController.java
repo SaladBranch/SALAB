@@ -14,6 +14,7 @@ public class PageController {
 		return "recentFile/recentFile";
 	}
 	
+	//연영 help 페이지 ~
 	@RequestMapping(value="userNotice.do")
 	public String toUserNoticeMethod() {
 		return "help/userNotice";
@@ -23,6 +24,18 @@ public class PageController {
 	public String toUserQnAMethod() {
 		return "help/userQnA";
 	}
+	
+	@RequestMapping(value="userQnAInsert.do")
+	public String toUserQnAInsertMethod() {
+		return "help/userQnAInsert";
+	}
+	
+	@RequestMapping(value="userFAQ.do")
+	public String toUserFAQMethod() {
+		return "help/userFAQ";
+	}
+	// ~ 연영 help 페이지
+	
 	@RequestMapping(value="privateFile.do")
 	public String toPrivateFileMethod() {
 		return "privateFile/privateFile";

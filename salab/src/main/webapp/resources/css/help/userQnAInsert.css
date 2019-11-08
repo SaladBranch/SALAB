@@ -455,76 +455,87 @@ body{
 }
 
 .menu-title{
-   margin-top: 40px;
-   height: 35px;
-   padding: 10px 3px;
+	margin-top: 40px;
+	height: 35px;
+	padding: 10px 3px;
 }
 
-.notice_top{
-   float: left;
-   font-size: 40pt;
-   padding: 40px 30px 15px 30px;
-   width:80%;
+.qna_top{
+	float: left;
+	font-size: 40pt;
+	padding: 40px 30px 15px 30px;
+	width:80%;
 }
 
-.notice_bottom{
-   font-size: 13pt;
-   width: 80%;
-   padding: 5px 30px 30px 30px;
-   display: block;
-   border-top: 2px solid black;
+.qna_bottom{
+	font-size: 13pt;
+	width: 80%;
+	padding: 5px 30px 30px 30px;
+	display: block;
+	border-top: 2px solid black;
 }
 
-.notice_head{
-   font-size: 16pt;
-   text-align: center;
-   width: 100%;
-   height: 50px;
-   border-bottom: 1px solid black;
+.qna_box{
+	border: 1px solid black;
+	width: 80%;
+	padding: 40px;
+	margin: 20px 20px 20px 70px;
 }
 
-.notice_list{
-	height: 50px;
-	border-bottom: 1px solid lightgray;
+.qna_info{
+	padding:2px;
+	font-weight: bold;
 }
 
-.notice_head_no{
-   float: left;
-   text-align: center;
-   line-height: 50px;
-   font-weight: 600;
-   width: 15%;
+.qna_info_faq{
+	padding: 15px;
+	margin-bottom: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid gray;
 }
 
-.notice_head_title{
-   float: left;
-   text-align: center;
-   line-height: 50px;
-   font-weight: 600;
-   width: 70%;
+
+
+.qna_title{
+	margin: 5px;
+	font-size: 20pt;
 }
 
-.notice_head_date{
-   float: left;
-   text-align: center;
-   line-height: 50px;
-   font-weight: 600;
-   width: 15%;
+#qna_box_title{
+	border: 1px solid black;
+	margin: 5px;
+	width: 100%;
 }
 
-.notice_head_null{
-   float: left;
-   text-align: center;
-   line-height: 50px;
-   font-weight: 600;
-   width: 100%;
-   color: gray;
-   font-weight: 400;
+.qna_content{
+	margin: 5px;
+	font-size: 20pt;
 }
+
+#qna_box_content{
+	border: 1px solid black;
+	margin: 5px;
+	width: 100%;
+	height: 300px;
+}
+
+.qna_back_btn{
+	float: left;
+	padding:20px;
+}
+
+.qna_success_btn{
+	float: right;
+	padding:20px;
+}
+
 
 a { 
-   text-decoration: none; 
-   color: black;
+	text-decoration: none; 
+	color: black;
 }
 
+a:hover{
+	color: #3cb371;
+}
 

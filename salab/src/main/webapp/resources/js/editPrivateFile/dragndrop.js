@@ -1,5 +1,5 @@
 
-var elementCount = 1;
+var editable = "true"
 
 var target = '#droppable';
 /* event 함수들 실행 후에는insertY 80으로 변경 */
@@ -82,6 +82,10 @@ $(document).on('click', '#droppable .obj', function(){
         },
         alsoResize: "this .textarea"
     });
+    if (editable == "true") {
+    	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
+        $('.right-side-bar').fadeIn(300);
+    }
 });
 
 $(document).on('click', function(e){

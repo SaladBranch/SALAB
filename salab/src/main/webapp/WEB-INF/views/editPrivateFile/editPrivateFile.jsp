@@ -212,6 +212,40 @@
             <div class="tab figure-tab active-tab">Figure</div>
             <div class="tab text-tab">Text</div>
         </div>
+        <div class="tab-content">
+        	<div class="figure-tab-content">
+            	<div class="figure-category figure-shape" onclick="toggleComps(this, '.figure-shape-comps');">
+                	<p>&#9660;</p>SHAPE
+            	</div>
+            	<div class="figure-shape-comps">
+            		<div class="figure-shape-item" id="width">
+            			<span>가로</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-shape-item" id="height">
+            			<span>세로</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-shape-item" id="backgroundColor">
+            			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            	</div>
+        	</div>
+        	<div class="text-tab-content">
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+                	<p>&#9660;</p>SHAPE
+            	</div>
+            	<div class="text-shape-comps">
+            		<div class="text-shape-item" id="width">
+            			<span class="text-shape-item-title">폰트</span><select></select>
+            		</div>
+            		<div class="text-shape-item" id="height">
+            			<span class="text-shape-item-title">크기</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="text-shape-item" id="backgroundColor">
+            			<span class="text-shape-item-title">색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            	</div>
+        	</div>
+        </div>
     </div>
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
@@ -257,23 +291,98 @@
         
     function toggleComps(menu, comp){
         if($(comp).css("display") == "none"){
-            $(comp).show();
+            $(comp).slideDown(200);
             $(menu).children("p").text("▼");
         }else{
-            $(comp).hide();
+            $(comp).slideUp(200);
             $(menu).children("p").text("▶");
         }
     }
         
     function toggleEdit(btn){
         if($('.right-side-bar').css("display") == "none"){
-            $(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
-            $('.right-side-bar').show();
+        	$(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
+            $('.right-side-bar').fadeIn(300);
         }else{
             $(btn).children("img").attr("src", "/salab/resources/img/openedit_blank.png");
-            $('.right-side-bar').hide();
+            $('.right-side-bar').fadeOut(300);
+            editable = "false";
         }
     }
+
+    $('.figure-tab').click(function(){
+        $('.tab-menu .tab').each(function(){
+            $(this).removeClass('active-tab'); 
+        });
+        $('.figure-tab').addClass('active-tab');
+        $('.figure-tab-content').show();
+        $('.text-tab-content').hide();
+    });
+    
+    $('.text-tab').click(function(){
+        $('.tab-menu .tab').each(function(){
+            $(this).removeClass('active-tab'); 
+        });
+        $('.text-tab').addClass('active-tab');
+        $('.figure-tab-content').hide();
+        $('.text-tab-content').show();
+    });
+
+    $('.figure-shape-item').mouseenter(function() {
+    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
+        	$(this).css({
+        		border : "1px solid lightgray"
+        	});
+    	}
+    });
+
+    $('.figure-shape-item').mouseleave(function() {
+    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
+        	$(this).css({
+        		border : "1px solid white"
+        	});
+    	}
+    });
+    
+    $('.figure-shape-item').click(function(){
+        $('.figure-shape-item').each(function(){
+            $(this).removeClass('clickedItem');
+            $(this).css("border", "1px solid white");
+            $(this).children("input").css("border", "1px solid white");
+        });
+        $(this).addClass('clickedItem');
+        $(this).css("border", "1px solid black");
+    	$(this).children("input").focus();
+        $(this).children("input").css("border", "1px solid skyblue");
+    });
+    
+    $('.text-shape-item').mouseenter(function() {
+    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
+        	$(this).css({
+        		border : "1px solid lightgray"
+        	});
+    	}
+    });
+
+    $('.text-shape-item').mouseleave(function() {
+    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
+        	$(this).css({
+        		border : "1px solid white"
+        	});
+    	}
+    });
+    
+    $('.text-shape-item').click(function(){
+        $('.text-shape-item').each(function(){
+            $(this).removeClass('clickedItem');
+            $(this).css("border", "1px solid white");
+            $(this).children("input").css("border", "1px solid white");
+        });
+        $(this).addClass('clickedItem');
+        $(this).css("border", "1px solid black");
+    	$(this).children("input").focus();
+        $(this).children("input").css("border", "1px solid skyblue");
+    });
     
     $('.top-bar-menu input').click(function(){
         if($(this).is(':checked')){

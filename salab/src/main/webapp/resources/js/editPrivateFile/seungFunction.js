@@ -1,5 +1,4 @@
 
-var elementCount = 1;
 var appendElement = "";
 
 $(function() {

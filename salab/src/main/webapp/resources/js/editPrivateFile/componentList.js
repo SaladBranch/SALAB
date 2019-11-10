@@ -1,3 +1,16 @@
+var resize_handler = {
+    code: function(){
+        return `<div class="ui-resizable-handle ui-resizable-n"></div>
+          <div class="ui-resizable-handle ui-resizable-e"></div>
+          <div class="ui-resizable-handle ui-resizable-s"></div>
+          <div class="ui-resizable-handle ui-resizable-w"></div>
+          <div class="ui-resizable-handle ui-resizable-ne"></div>
+          <div class="ui-resizable-handle ui-resizable-se"></div>
+          <div class="ui-resizable-handle ui-resizable-sw"></div>
+          <div class="ui-resizable-handle ui-resizable-nw"></div>`;
+    }
+}
+
 var obj_rect = {
     insertX: 200,
     insertY: 100,
@@ -8,17 +21,8 @@ var obj_rect = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj obj-rect" onmouseenter="canvasDivEnter();" style="position: absolute; top: ${obj_rect.insertY}px; left: ${obj_rect.insertX}px;">
-          <div class="textarea" contenteditable="true"></div>
-          <div class="ui-resizable-handle ui-resizable-n"></div>
-          <div class="ui-resizable-handle ui-resizable-e"></div>
-          <div class="ui-resizable-handle ui-resizable-s"></div>
-          <div class="ui-resizable-handle ui-resizable-w"></div>
-
-          <div class="ui-resizable-handle ui-resizable-ne"></div>
-          <div class="ui-resizable-handle ui-resizable-se"></div>
-          <div class="ui-resizable-handle ui-resizable-sw"></div>
-          <div class="ui-resizable-handle ui-resizable-nw"></div>
+        var code = `<div class="obj"  style="position: absolute; top: ${obj_rect.insertY}px; left: ${obj_rect.insertX}px; width: 140px; height: 70px;">
+          <div class="obj-comp textarea obj-rect" contenteditable="true"></div>
         </div>`;
         return code;
     }
@@ -33,17 +37,8 @@ var obj_brect = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj obj-brect" onmouseenter="canvasDivEnter();" style="position: absolute; top: ${obj_brect.insertY}px; left: ${obj_brect.insertX}px;">
-          <div class="textarea" contenteditable="true"></div>
-          <div class="ui-resizable-handle ui-resizable-n"></div>
-          <div class="ui-resizable-handle ui-resizable-e"></div>
-          <div class="ui-resizable-handle ui-resizable-s"></div>
-          <div class="ui-resizable-handle ui-resizable-w"></div>
-
-          <div class="ui-resizable-handle ui-resizable-ne"></div>
-          <div class="ui-resizable-handle ui-resizable-se"></div>
-          <div class="ui-resizable-handle ui-resizable-sw"></div>
-          <div class="ui-resizable-handle ui-resizable-nw"></div>
+        var code = `<div class="obj" style="position: absolute; top: ${obj_brect.insertY}px; left: ${obj_brect.insertX}px; width: 140px; height: 70px;">
+          <div class="obj-comp textarea obj-brect" contenteditable="true"></div>
         </div>`;
         return code;
     }
@@ -59,19 +54,10 @@ var obj_heading = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj obj-heading" onmouseenter="canvasDivEnter();" style="position: absolute; top: ${obj_heading.insertY}px; left: ${obj_heading.insertX}px;">
-          <div class="textarea" contenteditable="true">
+        var code = `<div class="obj" style="position: absolute; top: ${obj_heading.insertY}px; left: ${obj_heading.insertX}px; width: 200px;">
+          <div class="obj-comp textarea obj-heading" contenteditable="true">
             <h1 style="font-size: 35px;">Heading</h1>
           </div>
-          <div class="ui-resizable-handle ui-resizable-n"></div>
-          <div class="ui-resizable-handle ui-resizable-e"></div>
-          <div class="ui-resizable-handle ui-resizable-s"></div>
-          <div class="ui-resizable-handle ui-resizable-w"></div>
-
-          <div class="ui-resizable-handle ui-resizable-ne"></div>
-          <div class="ui-resizable-handle ui-resizable-se"></div>
-          <div class="ui-resizable-handle ui-resizable-sw"></div>
-          <div class="ui-resizable-handle ui-resizable-nw"></div>
         </div>`
         return code;
     }
@@ -86,20 +72,11 @@ var obj_paragraph = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj obj-paragraph" onmouseenter="canvasDivEnter();" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px;">
-          <div class="textarea" contenteditable="true">
+        var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 200px;">
+          <div class="obj-comp textarea obj-paragraph" contenteditable="true">
             <h1 style="font-size: 35px;">Heading</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
           </div>
-          <div class="ui-resizable-handle ui-resizable-n"></div>
-          <div class="ui-resizable-handle ui-resizable-e"></div>
-          <div class="ui-resizable-handle ui-resizable-s"></div>
-          <div class="ui-resizable-handle ui-resizable-w"></div>
-          
-          <div class="ui-resizable-handle ui-resizable-ne"></div>
-          <div class="ui-resizable-handle ui-resizable-se"></div>
-          <div class="ui-resizable-handle ui-resizable-sw"></div>
-          <div class="ui-resizable-handle ui-resizable-nw"></div>
         </div>`
         return code;
     }
@@ -114,17 +91,8 @@ var obj_ellipse = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj obj-ellipse" onmouseenter="canvasDivEnter();" style="position: absolute; top: ${obj_ellipse.insertY}px; left: ${obj_ellipse.insertX}px;">
-          <div class="textarea" contenteditable="true"></div>
-          <div class="ui-resizable-handle ui-resizable-n"></div>
-          <div class="ui-resizable-handle ui-resizable-e"></div>
-          <div class="ui-resizable-handle ui-resizable-s"></div>
-          <div class="ui-resizable-handle ui-resizable-w"></div>
-
-          <div class="ui-resizable-handle ui-resizable-ne"></div>
-          <div class="ui-resizable-handle ui-resizable-se"></div>
-          <div class="ui-resizable-handle ui-resizable-sw"></div>
-          <div class="ui-resizable-handle ui-resizable-nw"></div>
+        var code = `<div class="obj" style="position: absolute; top: ${obj_ellipse.insertY}px; left: ${obj_ellipse.insertX}px; width: 140px; height: 70px;">
+          <div class="obj-comp textarea obj-ellipse" contenteditable="true"></div>
         </div>`;
         return code;
     }
@@ -144,4 +112,5 @@ var getModule = function(id){
             return obj_ellipse;
     }
 };
+
 

@@ -108,7 +108,8 @@
             </li>
         </ul>
     </div>
-       
+    
+    <div class="focus"></div>
     <div class="left-side-bar">
         <div class="tab-menu">
             <div class="tab page-tab active-tab">Page</div>

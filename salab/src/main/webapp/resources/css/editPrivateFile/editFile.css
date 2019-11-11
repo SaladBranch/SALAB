@@ -423,20 +423,26 @@ svg{
 .figure-shape-comps {
     font-size: 15px;
     margin : 10px 0px 0px 0px;
+    border-bottom: 1px solid #c6c6c6;
 }
-.figure-shape-item {
+.figure-line-comps {
+    font-size: 15px;
+    margin : 10px 0px 0px 0px;
+    border-bottom: 1px solid #c6c6c6;
+}
+.figure-item {
 	width : 190px;
 	height : 35px;
 	border : 1px solid white;
 	margin : 0px auto 5px auto;
 	padding : 0px 0px 0px 10px;
 }
-.figure-shape-item span {
+.figure-item span {
 	width : 30px;
 	margin : 8px 0px 0px 0px;
 	float : left;
 }
-.figure-shape-item input[type=number] {
+.figure-item input[type=number] {
 	width : 50px;
 	height : 25px;
 	font-size : 14px;
@@ -445,7 +451,13 @@ svg{
 	border : 1px solid white;
 	float : left;
 }
-.figure-shape-item .colorView {
+.figure-item input[type=checkbox] {
+	width : 100px;
+	height : 25px;
+	font-size : 14px;
+	float : left;
+}
+.figure-item .colorView {
 	width : 25px;
 	height : 25px;
 	background : black;
@@ -454,7 +466,7 @@ svg{
 	border-radius : 3px;
 	float : left;
 }
-.figure-shape-item input[type=text] {
+.figure-item input[type=text] {
 	width : 70px;
 	height : 25px;
 	font-size : 13px;
@@ -488,27 +500,37 @@ svg{
 .text-category:hover{
     background: #e6f7ff;
 }
+.text-font {
+    border-bottom: 1px solid #c6c6c6;
+    user-select: none;
+}
 .text-shape {
     border-bottom: 1px solid #c6c6c6;
     user-select: none;
 }
+.text-font-comps {
+    font-size: 15px;
+    margin : 10px 0px 0px 0px;
+    border-bottom: 1px solid #c6c6c6;
+}
 .text-shape-comps {
     font-size: 15px;
     margin : 10px 0px 0px 0px;
+    border-bottom: 1px solid #c6c6c6;
 }
-.text-shape-item {
+.text-item {
 	width : 190px;
 	height : 35px;
 	border : 1px solid white;
 	margin : 0px auto 5px auto;
 	padding : 0px 0px 0px 10px;
 }
-.text-shape-item span {
+.text-item span {
 	width : 30px;
 	margin : 8px 0px 0px 0px;
 	float : left;
 }
-.text-shape-item input[type=number] {
+.text-item input[type=number] {
 	width : 50px;
 	height : 25px;
 	font-size : 14px;
@@ -517,7 +539,7 @@ svg{
 	border : 1px solid white;
 	float : left;
 }
-.text-shape-item .colorView {
+.text-item .colorView {
 	width : 25px;
 	height : 25px;
 	background : black;
@@ -526,7 +548,7 @@ svg{
 	border-radius : 3px;
 	float : left;
 }
-.text-shape-item input[type=text] {
+.text-item input[type=text] {
 	width : 70px;
 	height : 25px;
 	font-size : 14px;
@@ -536,7 +558,7 @@ svg{
 	border-radius : 5px;
 	float : left;
 }
-.text-shape-item select {
+.text-item select {
 	width : 100px;
 	height : 25px;
 	font-size : 14px;

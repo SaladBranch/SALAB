@@ -4,5 +4,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member_projectMapper">
 	
+	<insert id="insertTeamMember" parameterType="Member_Project" >
+		insert into member_project values(#{projectno}, #{userno}, sysdate, 'ONLY_READ')
+	</insert>
 	
 </mapper>

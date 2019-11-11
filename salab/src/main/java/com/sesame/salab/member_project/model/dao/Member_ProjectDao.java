@@ -13,4 +13,9 @@ public class Member_ProjectDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	public int insertTeamMember(Member_Project mp) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("member_projectMapper.insertTeamMember", mp);
+	}
+
 }

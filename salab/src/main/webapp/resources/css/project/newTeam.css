@@ -1,0 +1,33 @@
+.top {
+    display: flex;
+    justify-content: space-between;
+    width: 530px;
+    margin: 0 auto;
+    padding-bottom: 43px;
+    
+}
+
+.middle {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.projectTile {
+    font-size: 1.7em;
+    
+}
+
+#input {
+    height: 40px;
+    width: 350px;
+    outline: none;
+    border-width: thin;
+    border-color: #00a8ff;
+    border-radius: 6px;
+    
+}
+
+.first {
+    color: #00a8ff;
+}

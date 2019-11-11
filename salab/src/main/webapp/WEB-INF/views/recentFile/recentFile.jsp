@@ -80,7 +80,7 @@
         <div class="left-middle-side-bar">
             <div class="new-team">
                 <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="#">새로운 팀 </a>
+                <a href="newTeam.do">새로운 팀 </a>
             </div>
         </div>
     </div>

@@ -78,6 +78,7 @@ public class MemberController {
 		return "emailCI/emailConfirm";
 	}
 	
+	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
 		String viewFileName = "recentFile/recentFile";

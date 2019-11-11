@@ -1,10 +1,15 @@
 
 package com.sesame.salab.common;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sesame.salab.member.model.vo.Member;
 
 @Controller
 public class PageController {
@@ -58,4 +63,17 @@ public class PageController {
    	public String toUserAccountUpgradeMethod() {
     	  return "userPage/userUpgrade";
    	}
+   	
+   	//세준
+   	@RequestMapping(value="newTeam.do")
+   	public String createProjectMethod() {
+   		return "project/newTeam";
+   	}
+   	
+   	@RequestMapping(value="investTeam.do")
+	public String createProejct(@RequestParam("projectname")String projectname, HttpServletRequest request) {
+		request.setAttribute("projectname", projectname);
+   		
+		return "project/investTeam";
+	}
 }

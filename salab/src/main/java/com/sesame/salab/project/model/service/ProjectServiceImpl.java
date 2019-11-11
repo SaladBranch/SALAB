@@ -27,4 +27,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.autocomp(text);
 	}
 
+	@Override
+	public String projectInvest(String uno) {
+		// 팀원 초대하기위해 메일 검색
+		return pDao.projectInvest(uno);
+	}
+
+	@Override
+	public int selectProjectNo(Project project) {
+		// 최근생성한 프로젝트넘버 검색
+		return pDao.seletProjectNo(project);
+	}
+
 }

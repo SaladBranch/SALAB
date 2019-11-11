@@ -5,4 +5,6 @@ import com.sesame.salab.member_project.model.vo.Member_Project;
 
 public interface Member_ProjectService {
 
+	int insertTeamMember(Member_Project mp);
+
 }

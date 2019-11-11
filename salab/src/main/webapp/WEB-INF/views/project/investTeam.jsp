@@ -13,48 +13,15 @@
     <script type="text/javascript">
       
         function investTeam(){
-        	console.log($('.innputInvest').val());
-        	if($('.inputInvest').val() == ""){
+        	console.log($('.investuser').val());
+        	if(!($('.investuser').length)){
         		alert('초대할 팀원을 입력해주세요');
         		return false;
         	}
-        	
         	$('form').submit();
         }
-
-       
     	
         $(function(){
-        	 /* $(':text').keyup(function(){
-        		$('#autocomp').html("");
-            	var keyword = $(this).val();
-            	if(keyword == ""){
-            		return false;
-            	}else{
-            		$.ajax({
-                		url: 'autocomplete.do',
-                		type: 'post',
-                		dataType: 'json',
-                		data: {text : keyword},
-                		success: function(data){
-                			var jstr = JSON.stringify(data);
-                			var json = JSON.parse(jstr);
-                			for(var i in json.list){
-         	       				$('#autocomp').append('<option value="' + json.list[i].username +'"/>');
-                			}
-                		},
-                		error: function(status, request, errorData){
-        					console.log("error code : " + request.status + "\nMessage : " + request.responseText + 
-        							"\nError : " + errorData);
-        				}
-                	}); 
-            	}
-            });
-            
-        	$(document).on('select', '#autocomp', function(){
-         		alert($(this).val());
-         	});  */
-        	 
            $( "#input1" ).autocomplete({ 
             	source : function( request, response ) { //많이 봤죠? jquery Ajax로 비동기 통신한 후 
             			//json객체를 서버에서 내려받아서 리스트 뽑는 작업 
@@ -71,9 +38,7 @@
             							}
             						}) 
             					); 
-            				},select: function( event, ui ) {
-            					$( "<div>" ).text("Selected: " + ui.item.username + " aka " + ui.item.userno).prependTo( "#log" );
-            			      }
+            				}
             			}); 
             }, //최소 몇자 이상되면 통신을 시작하겠다라는 옵션 
             minLength: 2, //자동완성 목록에서 특정 값 선택시 처리하는 동작 구현 
@@ -97,7 +62,6 @@
          <p>프로젝트를 함꼐할 팀원을 초대해주세요.</p>
          <p/>
          <div id="log">
-        	
         </div>
          <div class="inputfield">
          	<input id="input1" class="inputInvest" type="text" name="invest1" list="autocomp">

@@ -219,30 +219,85 @@
                 	<p>&#9660;</p>SHAPE
             	</div>
             	<div class="figure-shape-comps">
-            		<div class="figure-shape-item" id="width">
+            		<div class="figure-item enterable" id="width">
             			<span>가로</span><input type="number" value="20"><span>px</span>
             		</div>
-            		<div class="figure-shape-item" id="height">
+            		<div class="figure-item enterable" id="height">
             			<span>세로</span><input type="number" value="20"><span>px</span>
             		</div>
-            		<div class="figure-shape-item" id="backgroundColor">
+            		<div class="figure-item" id="ratio-fix">
+            			<input type="checkbox" name="ratio" value="가나다라">체크박스가안나와요ㅠ_ㅠ
+            		</div>
+            		<div class="figure-item enterable" id="rotation">
+            			<span>회전</span><input type="number" value="20"><span>%</span>
+            		</div>
+            		<div class="figure-item enterable" id="backgroundColor">
+            			<span>배경</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            	</div>
+            	<div class="figure-category figure-line" onclick="toggleComps(this, '.figure-line-comps');">
+                	<p>&#9660;</p>LINE
+            	</div>
+            	<div class="figure-line-comps">
+            		<div class="figure-item enterable" id="kinds">
+            			<span>종류</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="width">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            		<div class="figure-item" id="weight">
+            			<span>굵기</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-top">
+            			<span>T</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-left">
+            			<span>L</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-right">
+            			<span>R</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-bottom">
+            			<span>B</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="figure-item" id="ratio-fix">
+            			<input type="checkbox" name="ratio" value="가나다라">너두? 야나두!
             		</div>
             	</div>
         	</div>
         	<div class="text-tab-content">
             	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+                	<p>&#9660;</p>FONT
+            	</div>
+            	<div class="text-font-comps">
+            		<div class="text-item enterable" id="font">
+            			<span>폰트</span><select></select>
+            		</div>
+            		<div class="text-item enterable" id="size">
+            			<span>크기</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="text-item enterable" id="textcolor">
+            			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            		<div class="text-item" id="effect">
+            			<span>효과</span>
+            		</div>
+            		<div class="text-item" id="effect">
+            			<span>효과</span>
+            		</div>
+            	</div>
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
                 	<p>&#9660;</p>SHAPE
             	</div>
             	<div class="text-shape-comps">
-            		<div class="text-shape-item" id="width">
-            			<span class="text-shape-item-title">폰트</span><select></select>
+            		<div class="text-item enterable" id="textgroundcolor">
+            			<span>강조</span><div class="colorView"></div><input type="text" value="#000000">
             		</div>
-            		<div class="text-shape-item" id="height">
-            			<span class="text-shape-item-title">크기</span><input type="number" value="20"><span>px</span>
+            		<div class="text-item" id="sort">
+            			<span>정렬</span>
             		</div>
-            		<div class="text-shape-item" id="backgroundColor">
-            			<span class="text-shape-item-title">색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		<div class="text-item" id="sort">
+            			<span>정렬</span>
             		</div>
             	</div>
         	</div>
@@ -253,6 +308,7 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript">
     $(function(){
         $('.page-tab-content').show();
@@ -329,62 +385,6 @@
         $('.text-tab-content').show();
     });
 
-    $('.figure-shape-item').mouseenter(function() {
-    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
-        	$(this).css({
-        		border : "1px solid lightgray"
-        	});
-    	}
-    });
-
-    $('.figure-shape-item').mouseleave(function() {
-    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
-        	$(this).css({
-        		border : "1px solid white"
-        	});
-    	}
-    });
-    
-    $('.figure-shape-item').click(function(){
-        $('.figure-shape-item').each(function(){
-            $(this).removeClass('clickedItem');
-            $(this).css("border", "1px solid white");
-            $(this).children("input").css("border", "1px solid white");
-        });
-        $(this).addClass('clickedItem');
-        $(this).css("border", "1px solid black");
-    	$(this).children("input").focus();
-        $(this).children("input").css("border", "1px solid skyblue");
-    });
-    
-    $('.text-shape-item').mouseenter(function() {
-    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
-        	$(this).css({
-        		border : "1px solid lightgray"
-        	});
-    	}
-    });
-
-    $('.text-shape-item').mouseleave(function() {
-    	if ($(this).attr("class").split(" ")[1] != "clickedItem") {
-        	$(this).css({
-        		border : "1px solid white"
-        	});
-    	}
-    });
-    
-    $('.text-shape-item').click(function(){
-        $('.text-shape-item').each(function(){
-            $(this).removeClass('clickedItem');
-            $(this).css("border", "1px solid white");
-            $(this).children("input").css("border", "1px solid white");
-        });
-        $(this).addClass('clickedItem');
-        $(this).css("border", "1px solid black");
-    	$(this).children("input").focus();
-        $(this).children("input").css("border", "1px solid skyblue");
-    });
-    
     $('.top-bar-menu input').click(function(){
         if($(this).is(':checked')){
             $('.main-toggle-menu').show();

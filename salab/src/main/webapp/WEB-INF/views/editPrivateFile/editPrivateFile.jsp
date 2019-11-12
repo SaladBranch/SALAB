@@ -204,7 +204,7 @@
     
     <div class="canvas-container">
         <div id="droppable" class="canvas ui-widget-content">
-            
+            <div id="multiselect"></div>
         </div>
     </div>
     

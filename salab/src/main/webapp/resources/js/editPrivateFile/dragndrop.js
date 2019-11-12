@@ -145,6 +145,7 @@ $(function(){
         }
     });
     //canvas 위 마우스 이벤트
+    var $all = $('#multiselect');
     $('#droppable').on('mousedown', function(e){
         selectcnt = $('.ui-selected').length;
         if(!$(e.target).is('#droppable .obj *')){

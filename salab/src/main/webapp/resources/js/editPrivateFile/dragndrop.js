@@ -1,10 +1,11 @@
-var elementCount = 0;
+
 var clicks = 0;
 var delay = 400;
 var target = '#droppable';
 var appendElement = "";
 var selectedObj = [];
 var selectcnt = 0;
+var editable = "true";
 
 function addResizable($obj){
     $obj.append(resize_handler.code);
@@ -162,6 +163,12 @@ $(function(){
                 $('#droppable').append($all.children());
             }
         }else{
+            var $obj = $(e.target).parents(".obj");
+            clearSelect();
+            $selectedObj = $obj;
+            $obj.addClass("ui-selected");
+            addResizable($obj);
+            formatChange($obj);
 //            console.log(selectcnt);
             if(selectcnt > 1){
                 selectedObj = new Array();
@@ -181,6 +188,10 @@ $(function(){
                 selectedObj.push($obj);
                 $obj.addClass("ui-selected");
                 addResizable($obj);    
+            }
+            if (editable == "true") {
+            	$(".open-edit img").attr("src", "/salab/resources/img/openedit_full.png");
+              $('.right-side-bar').fadeIn(300);
             }
         }
     }).on('mouseup', function(){

@@ -1,3 +1,6 @@
+var rotate_handler = {
+    code: function(){ return `<div class="ui-rotatable-handle ui-draggable">`;}
+}
 var resize_handler = {
     code: function(){
         return `<div class="ui-resizable-handle ui-resizable-n"></div>

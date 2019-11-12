@@ -13,6 +13,12 @@ public class Member_ProjectServiceImpl implements Member_ProjectService{
 	@Autowired
 	private Member_ProjectDao mpDao;
 
+	@Override
+	public int insertTeamMember(Member_Project mp) {
+		// 초대수락한 유저 프로젝트에 등록
+		return mpDao.insertTeamMember(mp);
+	}
+
 	
 
 }

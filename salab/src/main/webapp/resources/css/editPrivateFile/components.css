@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*마우스 선택영역*/
 .focus {
     position:fixed; 
@@ -10,23 +9,37 @@
 /*--------------------------*/
 /*Object CSS*/
 /*--------------------------*/
+.obj{
+    border: 1.5px solid transparent;
+}
 .obj-comp{
     position: relative;
     width: 100%;
     height: 100%;
     background: transparent;
 }
-.obj-rect, .obj-brect, .obj-ellipse{
+.obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{
     border: 1px solid #000;
 }
 .obj-brect{
     border-radius: 10px;
 }
-.obj-ellipse{
+.obj-ellipse, .obj-circle{
     border-radius: 50%;
 }
 .obj-comp *{
-	width: 100%;
+    width: 100%;
+}
+.obj-diamond{
+
+}
+.obj-diamond .textarea{
+
+}
+#multiselect{
+    position: absolute;
+    width: auto;
+    height: auto;
 }
 /*--------------------------*/
 /* Resizable */
@@ -79,4 +92,18 @@
 /*--------------------------*/
 .ui-selected{
     border: 1.5px solid #00a8ff;
+}
+/*--------------------------*/
+/* Rotatable */
+/*--------------------------*/
+.ui-rotatable-handle {
+    position: absolute;
+    top: -30px;
+    left: calc(50% - 8px);
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-image: url(../../resources/img/rotate.png);
+    background-size: contain;
+    background-repeat: no-repeat;
 }

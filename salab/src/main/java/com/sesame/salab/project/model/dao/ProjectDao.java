@@ -25,4 +25,16 @@ public class ProjectDao {
 		return sqlSession.selectList("projectMapper.autocomp", text);
 	}
 
+	public String projectInvest(String uno) {
+		// TODO Auto-generated method stub
+		Member m =sqlSession.selectOne("projectMapper.projectInvest", uno);
+		return m.getUseremail();
+	}
+
+	public int seletProjectNo(Project project) {
+		// TODO Auto-generated method stub
+		Project p = sqlSession.selectOne("projectMapper.selectProjectNo", project);
+		return p.getProjectno();
+	}
+
 }

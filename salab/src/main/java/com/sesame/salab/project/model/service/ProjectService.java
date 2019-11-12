@@ -11,4 +11,8 @@ public interface ProjectService {
 
 	List<Member> autocomp(String text);
 
+	String projectInvest(String uno);
+
+	int selectProjectNo(Project project);
+
 }

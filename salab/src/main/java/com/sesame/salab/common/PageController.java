@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -89,4 +90,11 @@ public class PageController {
    		
 		return "project/investTeam";
 	}
+   	
+   	@RequestMapping(value="projectinvite.do")
+   	public String projectInvite(@RequestParam("userno")String userno, @RequestParam("projectno")String projectno, HttpServletRequest request) {
+   		request.setAttribute("userno", userno);
+   		request.setAttribute("projectno", projectno);
+   		return "project/inviteProject";
+   	}
 }

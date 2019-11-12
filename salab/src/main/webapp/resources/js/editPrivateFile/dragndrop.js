@@ -4,6 +4,7 @@ var delay = 400;
 var target = '#droppable';
 var appendElement = "";
 var $selectedObj;
+var selectcnt = 0;
 
 function addResizable($obj){
     $obj.append(resize_handler.code);
@@ -20,9 +21,12 @@ function addResizable($obj){
         },
         alsoResize: "this .obj-comp"
     });
+    $obj.rotatable();
+    $obj.children('.ui-rotatable-handle').show();
 }
 function delResizable($obj){
     $obj.children().remove('.ui-resizable-handle');
+    $obj.children('.ui-rotatable-handle').hide();
 }
 
 /* obj 삽입시, 삽입 obj 선택 */
@@ -78,14 +82,19 @@ $(function(){
     var left, top, width, height;
     var $focus = $('.focus');
     $(document).on('mouseenter', '#droppable .obj',function(){
-        $(this).draggable();
+        $(this).draggable({
+            cancel: ".ui-rotatable-handle"
+        });
     }).on('keyup', function(e){
         if(e.keyCode == 46){
             $selectedObj.remove();
         }
     }).on("mousedown", function(e){
-        if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle"))
+        if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle"))
             mode = false;
+        else if($(e.target).is(".ui-rotatable-handle")){
+            $(e.target).parent(".obj").rotatable();
+        }
         else{
             mode = true;
             startX = e.clientX;
@@ -94,7 +103,7 @@ $(function(){
             $focus.show();   
         }
     }).on('mouseup', function(e){
-        mode =  false;
+        mode = false;
         $focus.hide();
         $focus.css("width", 0);
         $focus.css("height", 0);  
@@ -133,14 +142,39 @@ $(function(){
     });
     //canvas 위 마우스 이벤트
     $('#droppable').on('mousedown', function(e){
+        selectcnt = $('.ui-selected').length;
+        var $all = $('#multiselect');
         if(!$(e.target).is('#droppable .obj *')){
             clearSelect();
+            if($all.html() != ""){
+                $all.draggable('destroy');
+                
+                $all.children().each(function(){
+                    $(this).css({
+                        left: Number($(this).css('left').replace('px', '')) + Number($all.css('left').replace('px', '')) + 'px',
+                        top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px'
+                    });
+                    $(this).draggable('enable');
+                });
+                $('#droppable').append($all.children());
+            }
         }else{
-            var $obj = $(e.target).parents(".obj");
-            clearSelect();
-            $selectedObj = $obj;
-            $obj.addClass("ui-selected");
-            addResizable($obj);
+            if(selectcnt > 1){
+                $('.ui-selected').each(function(){
+                    $all.append($(this));
+                    $(this).draggable('disable');
+                });
+                $all.draggable().css({
+                    top: 0,
+                    left: 0
+                });
+            }else{
+                var $obj = $(e.target).parents(".obj");
+                clearSelect();
+                $selectedObj = $obj;
+                $obj.addClass("ui-selected");
+                addResizable($obj);    
+            }
         }
     });
     

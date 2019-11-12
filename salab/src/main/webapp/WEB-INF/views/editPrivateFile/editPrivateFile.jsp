@@ -306,6 +306,7 @@
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>

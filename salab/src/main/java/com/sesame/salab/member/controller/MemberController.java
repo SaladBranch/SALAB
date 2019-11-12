@@ -2,6 +2,7 @@ package com.sesame.salab.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.Tempkey;
 import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.privatefile.model.service.PrivateFileService;
+import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 @Controller
 public class MemberController {
@@ -34,6 +37,10 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	//요것도 파일정보 불러오는데 필요해서 했습니다
+	@Autowired
+	private PrivateFileService pfService;
 	
 	//처음 회원가입 시 , 회원정보 삽입하는 파트
 	@RequestMapping(value="enroll.do", method=RequestMethod.POST)
@@ -71,13 +78,20 @@ public class MemberController {
 		return "emailCI/emailConfirm";
 	}
 	
+	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String loginMethod(HttpSession session, Member member) {
+	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
 		String viewFileName = "recentFile/recentFile";
 		logger.info("로그인 입력 정보 : " + member.toString());
 		Member loginMember = memberService.loginCheck(member);
-		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
+		
+		//유저메인 페이지 로딩시에 파일에대한 정보가 필요해서 추가합니다
+		List<PrivateFile> privateFile = pfService.selectList(loginMember.getUserno());
+		
+		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) && privateFile != null) {
 			session.setAttribute("loginMember", loginMember);
+			requset.setAttribute("privateFile", privateFile);
+			logger.info(String.valueOf(privateFile.size()));
 		}else {
 			viewFileName = "common/error";
 		}

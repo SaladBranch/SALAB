@@ -69,7 +69,7 @@
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="#">자주 찾는 질문</a>
+                <a href="userFAQ.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
@@ -83,40 +83,41 @@
     		<p>1:1문의</p>
     	</div>
         <div class="qna_bottom">
+			<div class="qna_btn_box">
+				<input type="radio" value="y" class="qna_check"><span class="qna_check">Y</span>
+				<input type="radio" value="n" class="qna_check"><span class="qna_check">N</span>
+				<a href="userQnAInsert.do">
+					<div class="qna_insert">
+						<span>문의하기</span>
+					</div>
+				</a>
+			</div>
+   				
         	<ul>
-   				<li class="qna_head_check">
-   					<input type="radio"><span>Y</span>
-   				</li>
-   				<li class="qna_head_check">
-   					<input type="radio"><span>N</span>
-   				</li>
-   				<li>
-   					<div class="qna_head_insert"></div>
-   				</li>
         		<li class="qna_head">
         			<ul>
-        				<li class="qna_head_sub" id="qna_no"><span>NO</span></li>
-        				<li class="qna_head_sub" id="qna_title"><span>제목</span></li>
-        				<li class="qna_head_sub" id="qna_date"><span>등록날짜</span></li>
-        				<li class="qna_head_sub" id="qna_yn"><span>답변여부</span></li>
+        				<li class="qna_head_no"><span>NO</span></li>
+        				<li class="qna_head_title"><span>제목</span></li>
+        				<li class="qna_head_date"><span>등록날짜</span></li>
+        				<li class="qna_head_yn"><span>답변여부</span></li>
         			</ul>
         		</li>
         		<li class="qna_list">
         			<ul>
-        				<li class="qna_head_sub" id="qna_no"><span>1</span></li>
-        				<li class="qna_head_sub" id="qna_title"><a href="#"><span>새로운 업데이트 예정일이 언제인가요? </span></a></li>
-        				<li class="qna_head_sub" id="qna_date"><span>19-10-23</span></li>
-        				<li class="qna_head_sub" id="qna_yn"><span>N</span></li>
+        				<li class="qna_head_no"><span>1</span></li>
+        				<li class="qna_head_title"><a href="#"><span>새로운 업데이트 예정일이 언제인가요? </span></a></li>
+        				<li class="qna_head_date"><span>19-10-23</span></li>
+        				<li class="qna_head_yn"><span>N</span></li>
         			</ul>
         		</li>
         		<li class="qna_list">
         			<ul>
-        				<li class="qna_head_sub" id="qna_null"><span>아직 등록된 문의가 없습니다.</span></li>
+        				<li class="qna_head_null"><span>아직 진행중인 문의가 없습니다.</span></li>
         			</ul>
         		</li>
         	</ul>
         </div>
     </div>
-
+    
 </body>
 </html>

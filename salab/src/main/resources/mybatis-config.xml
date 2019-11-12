@@ -6,12 +6,17 @@
 	<typeAliases>
 		<typeAlias type="com.sesame.salab.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.sesame.salab.payment.model.vo.Payment" alias="Payment"/>
-		
+		<typeAlias type="com.sesame.salab.privatefile.model.vo.PrivateFile" alias="PrivateFile"/>
+		<typeAlias type="com.sesame.salab.project.model.vo.Project" alias="Project"/>
+		<typeAlias type="com.sesame.salab.member_project.model.vo.Member_Project" alias="Member_Project"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
 		<mapper resource="mappers/userPage-mapper.xml" />
+		<mapper resource="mappers/privatefile-mapper.xml" />
+		<mapper resource="mappers/project-mapper.xml"/>
+		<mapper resource="mappers/member_project-mapper.xml"/>
 	</mappers>
 </configuration>

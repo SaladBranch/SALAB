@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectMapper">
+	
+	<insert id="createProject" parameterType="Project">
+		insert into project values(SEQ_PROJECTNO.NEXTVAL, #{projectname}, default, default, null, null, #{userno})
+	</insert>
+	
+	<select id="autocomp" parameterType="String" resultType="Member">
+		select * from member where username like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="projectInvest" parameterType="String" resultType="Member">
+		select useremail from member where userno = #{userno}
+	</select>
+	
+	<select id="selectProjectNo" parameterType="Project" resultType="Project">
+		select * from (select projectno from project where userno = #{userno} and projectname = #{projectname} order by PROJECTCREATEDATE desc) where rownum=1
+	</select>
+	
+</mapper>

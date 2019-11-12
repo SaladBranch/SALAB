@@ -455,125 +455,76 @@ body{
 }
 
 .menu-title{
-	margin-top: 50px;
+   margin-top: 40px;
+   height: 35px;
+   padding: 10px 3px;
 }
 
 .notice_top{
-	float: left;
-	font-size: 40pt;
-	padding: 40px 30px 15px 30px;
-	width:80%;
+   float: left;
+   font-size: 40pt;
+   padding: 40px 30px 15px 30px;
+   width:80%;
 }
 
 .notice_bottom{
-	font-size: 13pt;
-	width: 80%;
-	padding: 15px 30px 30px 30px;
-	display: block;
+   font-size: 13pt;
+   width: 80%;
+   padding: 5px 30px 30px 30px;
+   display: block;
+   border-top: 2px solid black;
 }
 
 .notice_head{
-	font-size: 16pt;
-	text-align: center;
-	float: left;
-	width: 100%;
-	height: 50px;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-}
-
-.notice_head_sub{
-	float: left;
-	text-align: center;
-	line-height: 50px;
-	border-bottom: 1px solid lightgray;
-	font-weight: 600;
-}
-
-#notice_no{
-	width: 20%;
-}
-
-#notice_title{
-	width: 50%;
-}
-
-#notice_date{
-	width: 30%;
-}
-
-#notice_null{
-	width:100%;
-	color: gray;
-	font-weight: 400;
+   font-size: 16pt;
+   text-align: center;
+   width: 100%;
+   height: 50px;
+   border-bottom: 1px solid black;
 }
 
 .notice_list{
-	text-align: center;
 	height: 50px;
-}
-
-
-
-/* .notice_bottom{
-	text-align: center;
-	margin-top: 20px;
-	padding: 30px;
-	width:80%;
-}
-
-.notice_list_top{
-	display:flex;
-	text-align: center;
 	border-bottom: 1px solid lightgray;
-    margin-top: 15px;
-    font-size: 15pt;
-    background: silver;
-    height: 45px;
 }
 
-.notice_list{
-	display: flex;
-	text-align: center;
-	border-bottom: 1px solid lightgray;
-    margin-top: 10px;
-    font-size: 15pt;
+.notice_head_no{
+   float: left;
+   text-align: center;
+   line-height: 50px;
+   font-weight: 600;
+   width: 15%;
 }
 
-.notice_no{
-	height: 25px;
-	width: 35px;
-	display: block;
-	float: left;
+.notice_head_title{
+   float: left;
+   text-align: center;
+   line-height: 50px;
+   font-weight: 600;
+   width: 70%;
 }
 
-.notice_no span{
-	
+.notice_head_date{
+   float: left;
+   text-align: center;
+   line-height: 50px;
+   font-weight: 600;
+   width: 15%;
 }
 
-.notice_title{
-	height: 25px;
-	width: 200px;
-	display: block;
-	text-decoration: bold;
+.notice_head_null{
+   float: left;
+   text-align: center;
+   line-height: 50px;
+   font-weight: 600;
+   width: 100%;
+   color: gray;
+   font-weight: 400;
 }
-
-.notice_title span{
-	text-align: center;
-}
-
-.notice_date{
-	height:25px;
-	width:70px;
-	display: block;
-	float: right;
-}
-
-.notice_date span{
-	text-align:center;
-} */
 
 a { 
-	text-decoration: none; 
-	color: black;
+   text-decoration: none; 
+   color: black;
 }
+
+

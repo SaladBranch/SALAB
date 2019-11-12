@@ -104,5 +104,6 @@
     width: 16px;
     cursor: pointer;
     background-image: url(../../resources/img/rotate.png);
-    background-size: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
 }

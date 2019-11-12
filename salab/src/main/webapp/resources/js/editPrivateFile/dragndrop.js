@@ -3,7 +3,7 @@ var clicks = 0;
 var delay = 400;
 var target = '#droppable';
 var appendElement = "";
-var $selectedObj;
+var selectedObj = [];
 var selectcnt = 0;
 
 function addResizable($obj){
@@ -36,7 +36,8 @@ function initSelect(){
         delResizable($(this));
     });
     var $lastone = $('#droppable .obj').last();
-    $selectedObj = $lastone;
+    selectedObj = new Array();
+    selectedObj.push($lastone);
     $lastone.addClass('ui-selected');
     addResizable($lastone);
 }
@@ -87,7 +88,9 @@ $(function(){
         });
     }).on('keyup', function(e){
         if(e.keyCode == 46){
-            $selectedObj.remove();
+            for(i = 0; i<selectedObj.length; i++){
+                selectedObj[i].remove();
+            }
         }
     }).on("mousedown", function(e){
         if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle"))
@@ -159,8 +162,11 @@ $(function(){
                 $('#droppable').append($all.children());
             }
         }else{
+//            console.log(selectcnt);
             if(selectcnt > 1){
+                selectedObj = new Array();
                 $('.ui-selected').each(function(){
+                    selectedObj.push($(this));
                     $all.append($(this));
                     $(this).draggable('disable');
                 });
@@ -171,11 +177,15 @@ $(function(){
             }else{
                 var $obj = $(e.target).parents(".obj");
                 clearSelect();
-                $selectedObj = $obj;
+                selectedObj = new Array();
+                selectedObj.push($obj);
                 $obj.addClass("ui-selected");
                 addResizable($obj);    
             }
         }
+    }).on('mouseup', function(){
+        selectcnt = $('.ui-selected').length;
+        console.log(selectcnt);
     });
     
     //obj 삽입 이벤트

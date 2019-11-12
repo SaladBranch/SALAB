@@ -220,27 +220,27 @@
             	</div>
             	<div class="figure-shape-comps">
             		<div class="figure-item enterable" id="width">
-            			<span>가로</span><input type="number" value="20"><span>px</span>
+            			<span>가로</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item enterable" id="height">
-            			<span>세로</span><input type="number" value="20"><span>px</span>
+            			<span>세로</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item" id="ratio-fix">
-            			<input type="checkbox" name="ratio" value="가나다라">체크박스가안나와요ㅠ_ㅠ
+            			<input type="checkbox" name="ratio" value="ratiofixed">체크박스가안나와요ㅠ_ㅠ
             		</div>
             		<div class="figure-item enterable" id="rotation">
-            			<span>회전</span><input type="number" value="20"><span>%</span>
+            			<span>회전</span><input type="number" value="0"><span>%</span>
             		</div>
             		<div class="figure-item enterable" id="backgroundColor">
-            			<span>배경</span><div class="colorView"></div><input type="text" value="#000000">
+            			<span>배경</span><div class="colorView"></div><input type="text" value="#FFFFFF">
             		</div>
             	</div>
             	<div class="figure-category figure-line" onclick="toggleComps(this, '.figure-line-comps');">
                 	<p>&#9660;</p>LINE
             	</div>
             	<div class="figure-line-comps">
-            		<div class="figure-item enterable" id="kinds">
-            			<span>종류</span><input type="number" value="20"><span>px</span>
+            		<div class="figure-item enterable dropdownable" id="kinds">
+            			<span>종류</span><div class="line"><hr></div>
             		</div>
             		<div class="figure-item enterable" id="width">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
@@ -249,19 +249,27 @@
             			<span>굵기</span>
             		</div>
             		<div class="figure-item enterable" id="weight-top">
-            			<span>T</span><input type="number" value="20"><span>px</span>
+            			<span>T</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item enterable" id="weight-left">
-            			<span>L</span><input type="number" value="20"><span>px</span>
+            			<span>L</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item enterable" id="weight-right">
-            			<span>R</span><input type="number" value="20"><span>px</span>
+            			<span>R</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item enterable" id="weight-bottom">
-            			<span>B</span><input type="number" value="20"><span>px</span>
+            			<span>B</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item" id="ratio-fix">
             			<input type="checkbox" name="ratio" value="가나다라">너두? 야나두!
+            		</div>
+            		<div class= "figure-line-droplist">
+            			<div class="component" id="0"><hr></div>
+            			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px white"></div>
+            			<div class="component" id="2" onclick="figurelineChange('dashed')"><hr style="border : dashed 3px white"></div>
+            			<div class="component" id="3" onclick="figurelineChange('solid')"><hr style="border : solid 3px white"></div>
+            			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px white"></div>
+            			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px white"></div>
             		</div>
             	</div>
         	</div>

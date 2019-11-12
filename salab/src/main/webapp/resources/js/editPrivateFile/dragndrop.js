@@ -1,9 +1,10 @@
-var elementCount = 0;
+
 var clicks = 0;
 var delay = 400;
 var target = '#droppable';
 var appendElement = "";
 var $selectedObj;
+var editable = "true";
 
 function addResizable($obj){
     $obj.append(resize_handler.code);
@@ -141,6 +142,11 @@ $(function(){
             $selectedObj = $obj;
             $obj.addClass("ui-selected");
             addResizable($obj);
+            formatChange($obj);
+            if (editable == "true") {
+            	$(".open-edit img").attr("src", "/salab/resources/img/openedit_full.png");
+                $('.right-side-bar').fadeIn(300);
+            }
         }
     });
     

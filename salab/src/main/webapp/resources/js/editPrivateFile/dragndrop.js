@@ -1,15 +1,14 @@
-
+var elementCount = 0;
 var clicks = 0;
 var delay = 400;
 var target = '#droppable';
 var appendElement = "";
 var selectedObj = [];
 var selectcnt = 0;
-var editable = "true";
 
 function addResizable($obj){
     $obj.append(resize_handler.code);
-    $obj.resizable({
+    $obj.draggable().rotatable().resizable({
         handles:{
             'n': '.ui-resizable-n',  
             'e': '.ui-resizable-e',  
@@ -22,7 +21,6 @@ function addResizable($obj){
         },
         alsoResize: "this .obj-comp"
     });
-    $obj.rotatable();
     $obj.children('.ui-rotatable-handle').show();
 }
 function delResizable($obj){
@@ -85,7 +83,7 @@ $(function(){
     var $focus = $('.focus');
     $(document).on('mouseenter', '#droppable .obj',function(){
         $(this).draggable({
-            cancel: ".ui-rotatable-handle"
+//            cancel: ".ui-rotatable-handle"
         });
     }).on('keyup', function(e){
         if(e.keyCode == 46){
@@ -96,9 +94,6 @@ $(function(){
     }).on("mousedown", function(e){
         if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle"))
             mode = false;
-        else if($(e.target).is(".ui-rotatable-handle")){
-            $(e.target).parent(".obj").rotatable();
-        }
         else{
             mode = true;
             startX = e.clientX;
@@ -148,13 +143,11 @@ $(function(){
     var $all = $('#multiselect');
     $('#droppable').on('mousedown', function(e){
         selectcnt = $('.ui-selected').length;
+        selectedObj = new Array();
         if(!$(e.target).is('#droppable .obj *')){
             clearSelect();
-            selectedObj = new Array();
-
         }else{
             if(selectcnt > 1){
-                selectedObj = new Array();
                 $('.ui-selected').each(function(){
                     $(this).draggable('disable');
                     selectedObj.push($(this));
@@ -167,15 +160,15 @@ $(function(){
             }else{
                 var $obj = $(e.target).parents(".obj");
                 clearSelect();
-                selectedObj = new Array();
                 selectedObj.push($obj);
                 $obj.addClass("ui-selected");
-                addResizable($obj);    
+                addResizable($obj);
             }
         }
     }).on('mousemove', function(){
         selectcnt = $('.ui-selected').length;
         if(selectcnt > 1){
+            selectedObj = new Array();
             $('.ui-selected').each(function(){
                 $(this).draggable('disable');
                 selectedObj.push($(this));

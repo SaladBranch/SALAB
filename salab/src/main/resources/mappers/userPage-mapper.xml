@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userPageMapper">
+
+	<update id="changeName"  parameterType="Member">
+		UPDATE MEMBER SET USERNAME = #{username} WHERE USERNO = #{userno}
+	</update>
+	<update id="changePwd"  parameterType="Member">
+		UPDATE MEMBER SET USERPWD = #{userpwd} WHERE USERNO = #{userno}
+	</update>
+
+</mapper>

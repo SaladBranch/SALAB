@@ -183,10 +183,10 @@
     <div>
         <div id="modal-name" class="modalOutline disable " >
             <div id="changeName" class="modalContent z-index1">
-               <div class="close">X</div>
                 <div class="titleConfigure">
                     Change Name
                 </div>
+                <input id="userNo" type="hidden" value="${loginMember.userno }">
                 <input id="newName" class="text-box block littleGap" type="text" placeholder="${loginMember.username }" maxlength="20" onkeydown="activeEnter('atName')">
                 <input class="" type="button" id="id-change-btn" value="Name Change" onclick="nameChangedo()">
             </div>
@@ -197,14 +197,14 @@
                     <span>Change Password</span>
                 </div>
                 <div>
-                    <input type="password" class="input-grid" placeholder="Current Password" maxlength="20" >
+                    <input id="password"  type="password" class="input-grid" placeholder="Current Password" maxlength="20" >
                     <div id="pwdChangeEx">
                         <span>6~20자의 영문 대/소문자, 숫자, 특수문자 혼용 가능.</span>
                     </div>
-                    <input type="password" class="input-grid" placeholder="New Password" maxlength="20">
-
-                    <input type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')"  >
-                    <input type="button" value="Password Change">
+                    <input id="password1" type="password" class="input-grid" placeholder="New Password" maxlength="20" >
+ 
+                    <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')"  >
+                    <input type="button" value="Password Change" onclick="passwordCheck(password.value , password1.value, password2.value)">
                 </div>
             </div>
         </div>
@@ -221,7 +221,7 @@
                 </div>
                 <div id="deleteConfirm" class="">
                     <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20" onkeydown="activeEnter('atDelete')" >
-                    <input id="delete-btn" type="button" value="Agree & Delete">
+                    <input id="delete-btn" type="button" value="Agree & Delete"  onclick="accountDelete(deletePwd.value)">
                 </div>
             </div>
         </div>

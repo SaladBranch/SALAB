@@ -57,9 +57,27 @@
     	}
     });
 
+	// component 안의 lineColor input 유효성검사
+    $(".figure-item#lineColor input[type=text]").on("change keyup paste", function(event) {
+    	var value = $(this).val().replace(/[^(0-9)^(a-f)^(A-F)]/g, "");
+    	if (value.length > 7) {
+    		value = value.substring(0, 6);
+    	}
+    	$(this).val("#" + value.toUpperCase());
+    	if (event.keyCode == 13) {
+    		$(this).focusout();
+    		backgroundColorChange();
+    	}
+    });
+
 	// component 안의 backgroundColor input focusout 시 색상 변화
     $(".figure-item#backgroundColor input[type=text]").on("focusout", function() {
     	backgroundColorChange();
+    });
+
+	// component 안의 lineColor input focusout 시 색상 변화
+    $(".figure-item#lineColor input[type=text]").on("focusout", function() {
+    	lineColorChange();
     });
 
 	// line dropdownList 마우스 enter 시 색상 변화
@@ -69,6 +87,17 @@
     	});
     	$(this).css("background", "gray");
     });
+
+	// lineColor 색상 변화
+    function lineColorChange() {
+    	var str = pad($(".figure-item#lineColor input[type=text]").val().replace(/[#]/g, ""), 6);
+    	var str1 = parseInt(str.substring(0, 2), 16).toString();
+    	var str2 = parseInt(str.substring(2, 4), 16).toString();
+    	var str3 = parseInt(str.substring(4, 6), 16).toString();
+    	$(".figure-item#lineColor .colorView").css({
+    		background : "rgba(" + str1 + ", " + str2 + ", " + str3 + ")"
+    	});
+    }
 
 	// backgroundColor 색상 변화
     function backgroundColorChange() {

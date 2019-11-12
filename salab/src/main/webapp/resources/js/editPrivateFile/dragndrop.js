@@ -147,35 +147,17 @@ $(function(){
     //canvas 위 마우스 이벤트
     $('#droppable').on('mousedown', function(e){
         selectcnt = $('.ui-selected').length;
-        var $all = $('#multiselect');
         if(!$(e.target).is('#droppable .obj *')){
             clearSelect();
-            if($all.html() != ""){
-                $all.draggable('destroy');
-                
-                $all.children().each(function(){
-                    $(this).css({
-                        left: Number($(this).css('left').replace('px', '')) + Number($all.css('left').replace('px', '')) + 'px',
-                        top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px'
-                    });
-                    $(this).draggable('enable');
-                });
-                $('#droppable').append($all.children());
-            }
+            selectedObj = new Array();
+
         }else{
-            var $obj = $(e.target).parents(".obj");
-            clearSelect();
-            $selectedObj = $obj;
-            $obj.addClass("ui-selected");
-            addResizable($obj);
-            formatChange($obj);
-//            console.log(selectcnt);
             if(selectcnt > 1){
                 selectedObj = new Array();
                 $('.ui-selected').each(function(){
+                    $(this).draggable('disable');
                     selectedObj.push($(this));
                     $all.append($(this));
-                    $(this).draggable('disable');
                 });
                 $all.draggable().css({
                     top: 0,
@@ -189,14 +171,33 @@ $(function(){
                 $obj.addClass("ui-selected");
                 addResizable($obj);    
             }
-            if (editable == "true") {
-            	$(".open-edit img").attr("src", "/salab/resources/img/openedit_full.png");
-              $('.right-side-bar').fadeIn(300);
-            }
+        }
+    }).on('mousemove', function(){
+        selectcnt = $('.ui-selected').length;
+        if(selectcnt > 1){
+            $('.ui-selected').each(function(){
+                $(this).draggable('disable');
+                selectedObj.push($(this));
+                $all.append($(this));
+            });
+            $all.draggable().css({
+                top: 0,
+                left: 0
+            });
         }
     }).on('mouseup', function(){
-        selectcnt = $('.ui-selected').length;
-        console.log(selectcnt);
+        if($all.html() != ""){
+            $all.draggable('destroy');
+
+            $all.children().each(function(){
+                $(this).css({
+                    left: Number($(this).css('left').replace('px', '')) + Number($all.css('left').replace('px', '')) + 'px',
+                    top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px'
+                });
+                $(this).draggable('enable');
+            });
+            $('#droppable').append($all.children());
+        }
     });
     
     //obj 삽입 이벤트

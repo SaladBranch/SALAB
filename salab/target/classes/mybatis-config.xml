@@ -14,6 +14,7 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
+		<mapper resource="mappers/userPage-mapper.xml" />
 		<mapper resource="mappers/privatefile-mapper.xml" />
 		<mapper resource="mappers/project-mapper.xml"/>
 		<mapper resource="mappers/member_project-mapper.xml"/>

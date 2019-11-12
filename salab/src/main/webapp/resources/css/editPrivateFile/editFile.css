@@ -476,7 +476,43 @@ svg{
 	border-radius : 5px;
 	float : left;
 }
+.figure-item .line {
+	width : 100px;
+	height : 25px;
+	font-size : 14px;
+	margin : 4px 10px 0px 10px;
+	border : 1px solid white;
+	float : left;
+}
+.figure-item .line hr {
+	width : 70px;
+	margin : 8px 5px 0px 5px;
+	border : solid 3px gray;
+}
+.figure-line-droplist {
+	display : none;
+	position : absolute;
+	width : 100px;
+	height : 150px;
+	font-size : 14px;
+	border : 1px solid gray;
+	float : left;
+	background : black;
+}
+.figure-line-droplist .component {
+	width : 100px;
+	height : 25px;
+	font-size : 14px;
+	padding : 0px 0px 0px 5px;
+	border-bottom : 1px solid gray;
+	float : left;
+	cursor : pointer;
+}
 
+.figure-line-droplist .component hr {
+	width : 70px;
+	margin : 8px 5px 0px 5px;
+}
 .text-tab-content {
 	display : none;
 }

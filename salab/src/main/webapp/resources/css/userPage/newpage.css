@@ -2,17 +2,22 @@
     max-width: 40%;
     margin-top: 0px;
     margin-right: 0px;
+    margin-bottom: 40px;
     margin-left: 30px;
-    padding:0px;
+
+    padding: 0px;
 }
 
+.disable {
+    display: none;
+}
 
 
 /* img 삽입*/
 #userImg {
     background: dimgray;
     padding: 15px 25px;
-   background: linear-gradient(90deg, dimgray 0%, #7a7a7a 70%, #b0b0b0 100%); 
+   
     margin-bottom: 30px;
 }
 
@@ -31,7 +36,7 @@
 }
 
 #pImage {
-    width: 45px;
+    width:  45px;
     height: 45px;
     outline: none;
     background-color: brown;
@@ -48,10 +53,9 @@
     color: antiquewhite;
 }
 
-#pImage:hover > span {
+#pImage:hover >span{
     display: contents;
 }
-
 .inputImg {
     display: inline-block;
     text-align: center;
@@ -64,10 +68,10 @@
     padding-left: 10px;
     padding-bottom: 8px;
     vertical-align: bottom;
-    color: #f7f7ed;
+    color:#f7f7ed;
     font-size: 1.2em;
     font-weight: 400;
-
+    
 }
 
 #userImg {}
@@ -82,6 +86,15 @@
 /******name******/
 #nameTitle {}
 
+.titleConfigure {
+    font-weight: 500;
+    margin: 7px 0px;
+}
+
+.contentConfigure {
+    font-size: 0.7em;
+    margin-left: 10px;
+}
 
 .blank {
     margin-bottom: 60px;
@@ -93,8 +106,7 @@
     color: #20aaf5;
     margin: 10px 0px;
 }
-
-.clickable:hover {
+.clickable:hover{
     color: #3ec28f;
 }
 
@@ -121,7 +133,7 @@
 #deleteTitle {
     cursor: pointer;
     font-size: 0.6em;
-    color: dimgrey;`
+    color: dimgrey;
 }
 
 
@@ -173,9 +185,9 @@
 
 /*****modal*****/
 .modalOutline {
-    display: none;
+    display: noe;
     position: fixed;
-    z-index: 0;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
@@ -230,91 +242,27 @@ ul > li {
 ul > li::before {
     content: "- ";
 }
-
-
+#logout{
+    float: right;
+  margin-top: 170px;
+    
+}
+#logout:hover {
+    text-decoration-line: underline;
+}
 .division {
     padding-top: 20px;
     display: inline-block;
     vertical-align: top;
     min-width: 42%;
-    min-height: 400px;
+min-height: 500px;
 }
+.afsdfsdf {
 
-.afsdfsdf {}
+}
 
 
 .fdfdfs {
-    min-width: 15%;
-
-}
-/*******grade*******/
-.show-grade{
-    margin-top: 10px;
-    width: 100%;
-    padding-left: 20px;
-}
-.grade-title{
-    font-weight: 400;
-}
-#next-payment-date, #first-payment-date{
-    margin-bottom: 30px;
-}
-.content-box {
-    min-height: 450px;
-}
-
-
-.outline-box{
-    height: 120px;
-}
-/****if standard*****/
-#downgrade-bottom>div{
-    padding-right: 10%;
-    display: block;
-    margin-top: 50px;
-    text-align: center;
-    color: #e35d42;
-    font-size: 0.7em;
-}
-.description-title{
-    font-size: 16px;
-    margin-top 30px;
-    padding: 10px 0px;
-
-}
-#standard-description span {
-    font-size: 16px;
-    font-weight: 400
-}
-#standard-description >div p {
-    font-size: 14px;
-     padding-left: 20px;   
+        min-width: 15%;
     
 }
-#goto-upgrade{
-    font-size: 14px;
-    margin-top: 25px;
-    margin-left: 35%;
-    text-decoration: none;
-}
-#goto-upgrade:hover{
-    text-decoration: underline;
-}
-#goto-FAQ {
-	margin-right: 10px;
-	font-size:0.8em;
-}
-
-div a, div a:visited {
-    text-decoration: none;
-    color:inherit;
-}
-
-
-.close {
-    position: relative;
-    float: right;
-    color: blue;
-    
-}
-

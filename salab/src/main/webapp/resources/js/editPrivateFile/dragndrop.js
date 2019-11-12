@@ -1,10 +1,11 @@
-var elementCount = 0;
+
 var clicks = 0;
 var delay = 400;
 var target = '#droppable';
 var appendElement = "";
 var selectedObj = [];
 var selectcnt = 0;
+var editable = "true";
 
 function addResizable($obj){
     $obj.append(resize_handler.code);
@@ -144,7 +145,6 @@ $(function(){
         }
     });
     //canvas 위 마우스 이벤트
-    var $all = $('#multiselect');
     $('#droppable').on('mousedown', function(e){
         selectcnt = $('.ui-selected').length;
         if(!$(e.target).is('#droppable .obj *')){

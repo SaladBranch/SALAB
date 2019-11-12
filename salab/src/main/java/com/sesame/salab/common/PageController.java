@@ -65,15 +65,12 @@ public class PageController {
 	}
 
 	//건우
-	  @RequestMapping(value="usermain.do")
+	  @RequestMapping(value="userMain.do")
   	 public String toUserPageMainMethod() {
   	    return "userPage/userPageMain";
  	  }
-   	@RequestMapping(value="pwdchange.do")
-   	public String toUserChangePwdMethod() {
-   	   return "userPage/userChangePwd";
-   	}
-   	@RequestMapping(value="upgrade.do")
+ 
+   	@RequestMapping(value="userUpgrade.do")
    	public String toUserAccountUpgradeMethod() {
     	  return "userPage/userUpgrade";
    	}

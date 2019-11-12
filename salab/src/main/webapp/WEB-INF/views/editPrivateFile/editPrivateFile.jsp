@@ -242,7 +242,7 @@
             		<div class="figure-item enterable dropdownable" id="kinds">
             			<span>종류</span><div class="line"><hr></div>
             		</div>
-            		<div class="figure-item enterable" id="width">
+            		<div class="figure-item enterable" id="lineColor">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
             		</div>
             		<div class="figure-item" id="weight">

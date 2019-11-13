@@ -8,6 +8,12 @@ var appendElement = "";
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
+
+    formatChange($lastone);
+    if (editable = "true") {
+    	$(".right-side-bar").fadeIn(300);
+    }
+
     $('#droppable .obj').each(function(){
         if($(this).is($lastone)){
             selectedObj = new Array();

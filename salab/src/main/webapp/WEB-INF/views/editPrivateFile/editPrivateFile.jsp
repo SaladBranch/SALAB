@@ -238,7 +238,7 @@
             			<span>세로</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item" id="ratio-fix">
-            			<input type="checkbox" name="ratio" value="ratiofixed">체크박스가안나와요ㅠ_ㅠ
+						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
             		</div>
             		<div class="figure-item enterable" id="rotation">
             			<span>회전</span><input type="number" value="0"><span>%</span>
@@ -254,8 +254,8 @@
             		<div class="figure-item enterable dropdownable" id="kinds">
             			<span>종류</span><div class="line"><hr></div>
             		</div>
-            		<div class="figure-item enterable" id="width">
-            			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		<div class="figure-item enterable" id="lineColor">
+            			<span>색상</span><div class="colorView"></div><input type="text" value="#FFFFFF">
             		</div>
             		<div class="figure-item" id="weight">
             			<span>굵기</span>
@@ -273,7 +273,7 @@
             			<span>B</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item" id="ratio-fix">
-            			<input type="checkbox" name="ratio" value="가나다라">너두? 야나두!
+						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
             		</div>
             		<div class= "figure-line-droplist">
             			<div class="component" id="0"><hr></div>

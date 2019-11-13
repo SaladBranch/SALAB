@@ -39,6 +39,10 @@ function initSelect(){
     selectedObj.push($lastone);
     $lastone.addClass('ui-selected');
     addResizable($lastone);
+    formatChange($lastone);
+    if (editable = "true") {
+    	$(".right-side-bar").fadeIn(300);
+    }
 }
 
 /* 모두 선택 취소 */
@@ -163,6 +167,10 @@ $(function(){
                 selectedObj.push($obj);
                 $obj.addClass("ui-selected");
                 addResizable($obj);
+                formatChange($obj);
+                if (editable = "true") {
+                	$(".right-side-bar").fadeIn(300);
+                }
             }
         }
     }).on('mousemove', function(){

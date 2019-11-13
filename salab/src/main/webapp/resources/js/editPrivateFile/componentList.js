@@ -3,7 +3,8 @@ var rotate_handler = {
 }
 var resize_handler = {
     code: function(){
-        return `<div class="ui-resizable-handle ui-resizable-n"></div>
+        return `  
+          <div class="ui-resizable-handle ui-resizable-n"></div>
           <div class="ui-resizable-handle ui-resizable-e"></div>
           <div class="ui-resizable-handle ui-resizable-s"></div>
           <div class="ui-resizable-handle ui-resizable-w"></div>
@@ -45,7 +46,7 @@ var obj_brect = {
         </div>`;
         return code;
     }
-}
+};
 
 var obj_heading = {
     insertX: 200,
@@ -64,7 +65,7 @@ var obj_heading = {
         </div>`
         return code;
     }
-}
+};
 var obj_paragraph = {
     insertX: 200,
     insertY: 100,
@@ -83,7 +84,7 @@ var obj_paragraph = {
         </div>`
         return code;
     }
-}
+};
 var obj_ellipse = {
     insertX: 200,
     insertY: 100,
@@ -99,7 +100,40 @@ var obj_ellipse = {
         </div>`;
         return code;
     }
-}
+};
+var obj_square = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj"  style="position: absolute; top: ${obj_square.insertY}px; left: ${obj_square.insertX}px; width: 100px; height: 100px;">
+          <div class="obj-comp textarea obj-square" contenteditable="true"></div>
+        </div>`;
+        return code;
+    }
+};
+var obj_circle = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj" style="position: absolute; top: ${obj_circle.insertY}px; left: ${obj_circle.insertX}px; width: 100px; height: 100px;">
+          <div class="obj-comp textarea obj-circle" contenteditable="true"></div>
+        </div>`;
+        return code;
+    }
+};
+
 
 var getModule = function(id){
     switch(id){
@@ -113,6 +147,10 @@ var getModule = function(id){
             return obj_paragraph;
         case 'obj_ellipse':
             return obj_ellipse;
+        case 'obj_square':
+            return obj_square;
+        case 'obj_circle':
+            return obj_circle;
     }
 };
 

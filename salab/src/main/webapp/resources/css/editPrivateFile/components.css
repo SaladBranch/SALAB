@@ -10,13 +10,16 @@
 /*Object CSS*/
 /*--------------------------*/
 .obj{
+    position: absolute;
     border: 1.5px solid transparent;
+    cursor: default;
 }
 .obj-comp{
     position: relative;
     width: 100%;
     height: 100%;
     background: transparent;
+/*    overflow: hidden;*/
 }
 .obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{
     border: 1px solid #000;
@@ -30,12 +33,7 @@
 .obj-comp *{
     width: 100%;
 }
-.obj-diamond{
 
-}
-.obj-diamond .textarea{
-
-}
 #multiselect{
     position: absolute;
     width: auto;

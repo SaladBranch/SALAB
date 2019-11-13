@@ -186,6 +186,18 @@
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
                     </a>
+                    <!--정사각형-->
+                    <a id="obj_square" class="geItem c_square" display="inline-block">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
+                        </svg>
+                    </a>
+                    <!--정원(?)-->
+                    <a id="obj_circle" class="geItem c_circle" display="inline-block">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
+                        </svg>
+                    </a>
                 </div>
             </div>
             <div class="comp-category form-control">
@@ -405,7 +417,6 @@
         
     $(document).on('click', function(e){
         if(!$(e.target).is($('.top-bar-menu input'))){
-            console.log("ㅇ")
             $('.top-bar-menu input').prop("checked", false);
             $('.main-toggle-menu').hide();    
         }

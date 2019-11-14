@@ -216,6 +216,10 @@ svg{
     left: 0;
     flex-direction: column;
     z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .tab-menu{
@@ -388,6 +392,10 @@ svg{
     right: 0;
     background: #fff;
     border-left: 1px solid #eaeaea;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 .right-side-bar .tab-menu .tab{
     width: 50%;

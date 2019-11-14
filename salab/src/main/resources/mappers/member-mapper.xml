@@ -33,4 +33,7 @@
 	<select id="isExistEmail" parameterType="string" resultType="int">
 		SELECT COUNT(*) FROM MEMBER WHERE USEREMAIL = #{useremail}
 	</select>
+	<delete id="deleteAccount" parameterType="Member" >
+		 DELETE FROM MEMBER WHERE USERNO=#{userno}
+	</delete>
 </mapper>

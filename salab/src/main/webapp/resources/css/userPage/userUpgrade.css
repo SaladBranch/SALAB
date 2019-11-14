@@ -1,0 +1,98 @@
+#upgrade-section {
+    max-width: 60%;
+    margin-top: 20px;
+    margin-left: 40px;
+    padding: 0px;
+    height: 700px;
+}
+
+#upgrade-title {
+    margin-top: 10px;
+    margin-bottom:40px;
+}
+
+#upgrade-header {
+    margin-left: 250px;
+}
+
+#upgrade-header > div {
+    margin-left: 60px;
+}
+#upgrade-header > div:nth-child(2) {
+    margin-left: 60px;
+   text-decoration: underline;
+}
+
+#upgrade-body {
+    padding-left: 40px;
+    min-height: 300px;
+}
+
+/******upgrade-body********/
+#upgrade-body table {
+    border-collapse: separate;
+    border-spacing: 10px 20px;
+    	font-size:0.8em;
+}
+
+#upgrade-body tr {
+    margin: 20px 0px;
+    padding: 70px;
+
+}
+
+#upgrade-body tr th {
+
+    width: 230px;
+}
+
+#upgrade-body tr td:nth-child(2) {
+    width: 160px;
+    text-align: center;
+}
+
+#upgrade-body tr td:nth-child(3) {
+    width: 160px;
+    text-align: center;
+}
+#upgrade-bottom{
+    display: block;
+    margin-top: 50px;
+    padding-left: 40px;
+    
+}
+#upgrade-bottom div{
+    font-size: 0.7em;
+    width: 100%;
+    margin-left: 25%;
+}
+input[type="button"]{
+    float: none;
+    margin-top: 25px;
+    margin-left: 33%;   
+}
+
+#goto-FAQ {
+    font-size: 0.6em;
+    margin-top: 60px;
+}
+
+
+#horizon-line {
+    width: 600px;
+    border-top: 0.5px solid #787878;
+    position: absolute;
+    top:160px;
+    left: 100px;
+    z-index: 5;
+}
+#downgrade-bottom>div{
+    font-size: 11pt;
+    color: #e35d42;
+    margin-top: 50px;
+    text-align: center;
+    margin-right: 10%;
+
+}
+
+

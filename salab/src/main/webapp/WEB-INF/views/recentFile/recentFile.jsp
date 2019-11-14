@@ -47,7 +47,7 @@
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
+                                <li><a href="userMain.do">계정 설정하기</a></li>
                                 <li><a href="userNotice.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
@@ -80,7 +80,7 @@
         <div class="left-middle-side-bar">
             <div class="new-team">
                 <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="#">새로운 팀 </a>
+                <a href="newTeam.do">새로운 팀 </a>
             </div>
         </div>
     </div>

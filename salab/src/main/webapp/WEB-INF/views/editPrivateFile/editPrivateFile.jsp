@@ -108,7 +108,8 @@
             </li>
         </ul>
     </div>
-       
+    
+    <div class="focus"></div>
     <div class="left-side-bar">
         <div class="tab-menu">
             <div class="tab page-tab active-tab">Page</div>
@@ -185,6 +186,18 @@
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
                     </a>
+                    <!--정사각형-->
+                    <a id="obj_square" class="geItem c_square" display="inline-block">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
+                        </svg>
+                    </a>
+                    <!--정원(?)-->
+                    <a id="obj_circle" class="geItem c_circle" display="inline-block">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
+                        </svg>
+                    </a>
                 </div>
             </div>
             <div class="comp-category form-control">
@@ -203,7 +216,7 @@
     
     <div class="canvas-container">
         <div id="droppable" class="canvas ui-widget-content">
-            
+            <div id="multiselect"></div>
         </div>
     </div>
     
@@ -212,12 +225,112 @@
             <div class="tab figure-tab active-tab">Figure</div>
             <div class="tab text-tab">Text</div>
         </div>
+        <div class="tab-content">
+        	<div class="figure-tab-content">
+            	<div class="figure-category figure-shape" onclick="toggleComps(this, '.figure-shape-comps');">
+                	<p>&#9660;</p>SHAPE
+            	</div>
+            	<div class="figure-shape-comps">
+            		<div class="figure-item enterable" id="width">
+            			<span>가로</span><input type="number" value="0"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="height">
+            			<span>세로</span><input type="number" value="0"><span>px</span>
+            		</div>
+            		<div class="figure-item" id="ratio-fix">
+						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
+            		</div>
+            		<div class="figure-item enterable" id="rotation">
+            			<span>회전</span><input type="number" value="0"><span>%</span>
+            		</div>
+            		<div class="figure-item enterable" id="backgroundColor">
+            			<span>배경</span><div class="colorView"></div><input type="text" value="#FFFFFF">
+            		</div>
+            	</div>
+            	<div class="figure-category figure-line" onclick="toggleComps(this, '.figure-line-comps');">
+                	<p>&#9660;</p>LINE
+            	</div>
+            	<div class="figure-line-comps">
+            		<div class="figure-item enterable dropdownable" id="kinds">
+            			<span>종류</span><div class="line"><hr></div>
+            		</div>
+            		<div class="figure-item enterable" id="lineColor">
+            			<span>색상</span><div class="colorView"></div><input type="text" value="#FFFFFF">
+            		</div>
+            		<div class="figure-item" id="weight">
+            			<span>굵기</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-top">
+            			<span>T</span><input type="number" value="0"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-left">
+            			<span>L</span><input type="number" value="0"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-right">
+            			<span>R</span><input type="number" value="0"><span>px</span>
+            		</div>
+            		<div class="figure-item enterable" id="weight-bottom">
+            			<span>B</span><input type="number" value="0"><span>px</span>
+            		</div>
+            		<div class="figure-item" id="ratio-fix">
+						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
+            		</div>
+            		<div class= "figure-line-droplist">
+            			<div class="component" id="0"><hr></div>
+            			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px white"></div>
+            			<div class="component" id="2" onclick="figurelineChange('dashed')"><hr style="border : dashed 3px white"></div>
+            			<div class="component" id="3" onclick="figurelineChange('solid')"><hr style="border : solid 3px white"></div>
+            			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px white"></div>
+            			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px white"></div>
+            		</div>
+            	</div>
+        	</div>
+        	<div class="text-tab-content">
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+                	<p>&#9660;</p>FONT
+            	</div>
+            	<div class="text-font-comps">
+            		<div class="text-item enterable" id="font">
+            			<span>폰트</span><select></select>
+            		</div>
+            		<div class="text-item enterable" id="size">
+            			<span>크기</span><input type="number" value="20"><span>px</span>
+            		</div>
+            		<div class="text-item enterable" id="textcolor">
+            			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            		<div class="text-item" id="effect">
+            			<span>효과</span>
+            		</div>
+            		<div class="text-item" id="effect">
+            			<span>효과</span>
+            		</div>
+            	</div>
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+                	<p>&#9660;</p>SHAPE
+            	</div>
+            	<div class="text-shape-comps">
+            		<div class="text-item enterable" id="textgroundcolor">
+            			<span>강조</span><div class="colorView"></div><input type="text" value="#000000">
+            		</div>
+            		<div class="text-item" id="sort">
+            			<span>정렬</span>
+            		</div>
+            		<div class="text-item" id="sort">
+            			<span>정렬</span>
+            		</div>
+            	</div>
+        	</div>
+        </div>
     </div>
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
     <script type="text/javascript">
     $(function(){
         $('.page-tab-content').show();
@@ -257,24 +370,43 @@
         
     function toggleComps(menu, comp){
         if($(comp).css("display") == "none"){
-            $(comp).show();
+            $(comp).slideDown(200);
             $(menu).children("p").text("▼");
         }else{
-            $(comp).hide();
+            $(comp).slideUp(200);
             $(menu).children("p").text("▶");
         }
     }
         
     function toggleEdit(btn){
         if($('.right-side-bar').css("display") == "none"){
-            $(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
-            $('.right-side-bar').show();
+        	$(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
+            $('.right-side-bar').fadeIn(300);
         }else{
             $(btn).children("img").attr("src", "/salab/resources/img/openedit_blank.png");
-            $('.right-side-bar').hide();
+            $('.right-side-bar').fadeOut(300);
+            editable = "false";
         }
     }
+
+    $('.figure-tab').click(function(){
+        $('.tab-menu .tab').each(function(){
+            $(this).removeClass('active-tab'); 
+        });
+        $('.figure-tab').addClass('active-tab');
+        $('.figure-tab-content').show();
+        $('.text-tab-content').hide();
+    });
     
+    $('.text-tab').click(function(){
+        $('.tab-menu .tab').each(function(){
+            $(this).removeClass('active-tab'); 
+        });
+        $('.text-tab').addClass('active-tab');
+        $('.figure-tab-content').hide();
+        $('.text-tab-content').show();
+    });
+
     $('.top-bar-menu input').click(function(){
         if($(this).is(':checked')){
             $('.main-toggle-menu').show();
@@ -285,7 +417,6 @@
         
     $(document).on('click', function(e){
         if(!$(e.target).is($('.top-bar-menu input'))){
-            console.log("ㅇ")
             $('.top-bar-menu input').prop("checked", false);
             $('.main-toggle-menu').hide();    
         }

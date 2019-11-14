@@ -1,10 +1,16 @@
 
 package com.sesame.salab.common;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sesame.salab.member.model.vo.Member;
 
 @Controller
 public class PageController {
@@ -69,16 +75,33 @@ public class PageController {
 	}
 
 	//건우
-	  @RequestMapping(value="usermain.do")
+	  @RequestMapping(value="userMain.do")
   	 public String toUserPageMainMethod() {
   	    return "userPage/userPageMain";
  	  }
-   	@RequestMapping(value="pwdchange.do")
-   	public String toUserChangePwdMethod() {
-   	   return "userPage/userChangePwd";
-   	}
-   	@RequestMapping(value="upgrade.do")
+ 
+   	@RequestMapping(value="userUpgrade.do")
    	public String toUserAccountUpgradeMethod() {
     	  return "userPage/userUpgrade";
+   	}
+   	
+   	//세준
+   	@RequestMapping(value="newTeam.do")
+   	public String createProjectMethod() {
+   		return "project/newTeam";
+   	}
+   	
+   	@RequestMapping(value="investTeam.do")
+	public String createProejct(@RequestParam("projectname")String projectname, HttpServletRequest request) {
+		request.setAttribute("projectname", projectname);
+   		
+		return "project/investTeam";
+	}
+   	
+   	@RequestMapping(value="projectinvite.do")
+   	public String projectInvite(@RequestParam("userno")String userno, @RequestParam("projectno")String projectno, HttpServletRequest request) {
+   		request.setAttribute("userno", userno);
+   		request.setAttribute("projectno", projectno);
+   		return "project/inviteProject";
    	}
 }

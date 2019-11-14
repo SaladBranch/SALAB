@@ -16,17 +16,17 @@
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css">
 
-
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
+
     <title>USER | SALAB</title>
 </head>
 
 <body>
-   
+
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div id="top-bar">계정 설정</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -65,84 +65,170 @@
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div id="menu-title">
-                <span>계정 설정</span>
+                <span>Settings</span>
             </div>
             <div class="recent-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="#">계정정보</a>
-            </div>
-            <div class="private-file">
-                <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="#">비밀번호 변경</a>
+                <a href="userMain.do">계정정보</a>
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="#">계정 업그레이드</a>
+                <a href="userUpgrade.do">계정 업그레이드</a>
             </div>
         </div>
     </div>
-        
+
     <div class="right-main-side">
         <div>
-            <section id="ipersonalInfo" class="section-grid">
 
-                <div id="userImg">
-                    <div class="inputImg">
-                        <label id="imgLabel" for="imgUpload">
-                            <div id="pImage"><span>사진변경</span></div>
-                        </label>
-                        <input type="file" id="imgUpload">
-                    </div>
-                    <div id="userEmail">
-                        ${loginMember.useremail }
-                    </div>
+            <div id="userImg">
+                <div class="inputImg">
+                    <label id="imgLabel" for="imgUpload">
+                        <div id="pImage"><span>사진변경</span></div>
+                    </label>
+                    <input type="file" id="imgUpload">
                 </div>
+                <div id="userEmail">
+                    ${loginMember.useremail }
+                </div>
+            </div>
+        </div>
+        <div>
 
-                <div id="id-Info" class="box-grid">
-                    <div id="info-title" class="box-title">
-                        <span>내 계정 정보</span>
+            <div class="division section-grid">
+                <div class="content-box ">
+                    <!--if PREMIUM-->
+                    <div class="">
+                        <div class="outline-box">
+                            <div class="titleConfigure">
+                                <span>Account Grade</span>
+                            </div>
+                            <div class="show-grade grade-title clickable">
+                                <a href="userUpgrade.do">
+                                    PREMIUM GRADE
+                                </a>
+                            </div>
+                        </div>
+                        <div id="first-payment-date">
+                            <div class="titleConfigure"><span>First-payment.</span></div>
+                            <div class="contentConfigure"><span>2019년 12월 22일</span></div>
+                        </div>
+                        <div id="next-payment-date">
+                            <div class="titleConfigure "><span>Next-payment.</span></div>
+                            <div class="contentConfigure"><span>2019년 12월 22일</span></div>
+                        </div>
                     </div>
-                    <div id="id-changeBox">
-                        <div id="userid">유저 이름</div>
+                    <!-- if STANDARD -->
+                    <div class="disable">
+                        <div class="outline-box">
+                            <div class="titleConfigure">
+                                <span>Account Grade</span>
+                            </div>
+                            <div class="show-grade">
+                                <span class="">STANDARD GRADE</span>
+                            </div>
+                        </div>
                         <div>
-                            <input class="input-grid" type="text" placeholder="${loginMember.username }" maxlength="20">
-                            <input type="button" id="id-change-btn" value="이름 변경하기">
+                            SALAB의 PREMIUM 기능을 확인하세요 !
+                            <div id="standard-description">
+                                <div class="description-title">
+                                    <span>MESSENGER in file</span>
+                                    <p>동시 메신저 기능을 지원합니다.<br>같은 페이지를 작업하는 팀원과의 원활한 소통을 위한, 메신저 기능이 기다리고 있습니다.</p>
+                                </div>
+                                <div class="description-title ">
+                                    <span>MOUSE TRACKING</span>
+                                    <p>팀원의 마우스커서를 보여줍니다. <br>내가 작업함과 동시에, 팀원이 현재 작업중인 파티션을 확인할 수 있습니다. </p>
+                                </div>
+                                <div class="description-title ">
+                                    <span>TRANS-CO</span>
+                                    <p>작업한 페이지를 code화 하여 보여줍니다.<br>TRANS-CO를 활용한다면, FRONT 구현에 시간을 덜 낭비할 수 있습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="goto-upgrade" class="clickable">
+                            <span><a href="userUpgrade.jsp">계정 업그레이드 하기</a></span>
                         </div>
                     </div>
                 </div>
-       
-                <div id="delete-id">
-                    <span>계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
-                </div>
-            </section>
-            <section id="deleteAccount" class="section-grid">
-                <div class="box-grid">
-                    <div id="delete-title" class="box-title">
-                        <span>계정과 관련된 모든 것이 삭제됩니다</span>
-                    </div>
-                    <div class="box-content">
-                        <ul>
-                            <li>유저 계정정보가 모두 삭제됩니다.</li>
-                            <li>해당 계정으로 업로드된 모든 데이터가 삭제됩니다</li>
-                            <li>그동안 작업한 모든 프로젝트와 데이터들도 삭제되며 복구가 불가능 하게 됩니다.</li>
-                            <li>(개인 프로젝트는 곧 바로 삭제되며, 협업 프로젝트는 팀원 중 한명에게 팀장 권한이 양도됩니다 )</li>
+                <div id="goto-FAQ" class="escapeSentence"><a href="#">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
+            </div>
+            <div class="division section-grid">
+                <div id="id-Info" class="content-box">
 
-                        </ul>
-                    </div>
-                    <div class="box-content">
-                        <div class="highlight">
-                            <span>삭제를 진행하려면 입력하세요</span>
+                    <div class="outline-box">
+                        <div id="nameTitle" class="titleConfigure">Name</div>
+                        <div id="userId" class="contentConfigure blank">${loginMember.username }
+                            <span id="Modal-Name" class="blank clickable" onclick="showModal('name')">change name !</span>
                         </div>
-                        <input class="text-box" placeholder="ID" maxlength="30">
-                        <input class="text-box" placeholder="PASSWORD" maxlength="20">
-                        <input type="checkbox"><span>주의사항을 확인하였고 동의합니다.</span>
-                        <input id="delete-btn" type="button" value="계정 삭제하기">
                     </div>
+                    <div class="outline-box">
+                        <div id="pwdTitle" class="titleConfigure outline">
+                            Password
+                        </div>
+                        <div id="userpwd" class="contentConfigure blank">
+                            <span value="vv" id="Modal-Password"  class="blank clickable" onclick="showModal('pwd')">change password !</span>
+                        </div>
+                    </div>
+                   
+                        <div id="deleteTitle" >
+                            <span id="Modal-Delete"  class="clickable" onclick="showModal('delete')">계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
+                        </div>
+                    
                 </div>
-            </section>
+                <div id="goto-logout" class="escapeSentence"><a href="logout.do">logout</a></div>
+            </div>
         </div>
     </div>
-
+    <!-- modal-->
+    <div>
+        <div id="modal-name" class="modalOutline disable " >
+            <div id="changeName" class="modalContent z-index1">
+                <div class="titleConfigure">
+                    Change Name
+                </div>
+                <input id="userNo" type="hidden" value="${loginMember.userno }">
+                <input id="newName" class="text-box block littleGap" type="text" placeholder="${loginMember.username }" maxlength="20" onkeydown="activeEnter('atName')">
+                <input class="" type="button" id="id-change-btn" value="Name Change" onclick="nameChangedo()">
+            </div>
+        </div>
+        <div id="modal-password" class="modalOutline disable" >
+            <div id="box-changePwd" class="modalContent z-index3">
+                <div class="titleConfigure littlegap">
+                    <span>Change Password</span>
+                </div>
+                <div>
+                    <input id="password"  type="password" class="input-grid" placeholder="Current Password" maxlength="20" >
+                    <div id="pwdChangeEx">
+                        <span>6~20자의 영문 대/소문자, 숫자, 특수문자 혼용 가능.</span>
+                    </div>
+                    <input id="password1" type="password" class="input-grid" placeholder="New Password" maxlength="20" >
+ 
+                    <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')"  >
+                    <input type="button" value="Password Change" onclick="passwordCheck(password.value , password1.value, password2.value)">
+                </div>
+            </div>
+        </div>
+        <div id="modal-delete" class="modalOutline disable" >
+            <div class="modalContent z-index3">
+                <div id="delete-title" class="">
+                    <span>Delete account.</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li>모든 프로젝트와 데이터들도 삭제되며 복구가 불가능 하게 됩니다.</li>
+                        <li>(협업 프로젝트는 팀원 중 한명에게 팀장 권한이 양도됩니다 )</li>
+                    </ul>
+                </div>
+                <div id="deleteConfirm" class="">
+                    <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20" onkeydown="activeEnter('atDelete')" >
+                    <input id="delete-btn" type="button" value="Agree & Delete"  onclick="accountDelete(deletePwd.value)">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/salab/resources/js/userPage/userPageMain.js"></script>
 
 </html>

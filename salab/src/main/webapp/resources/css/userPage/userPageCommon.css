@@ -249,6 +249,10 @@ body{
 /*Common*/
 /*----------------------------*/
 
+.disable {
+    display: none;
+}
+
 .horizontally{
     display: inline-block;
 }
@@ -302,10 +306,51 @@ input[type="button"] {
     color: #8c8c8c;
 }
 #menu-title {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 .input-grid{
     width: 80%;
     padding-left: 10px;
-    height: 32px;
+    height: 35px;
+}
+#menu-title{
+    height: 35px;
+    padding: 10px 3px;
+}
+.cube{
+    margin-top: 14px;
+    display: inline-block;
+    border: 0.5 solid gray;
+    width:  280px;
+    height:  62px;
+    font:  0.8em;
+    background-color: white;
+    text-align: center;
+    padding: 22px 20px;
+    border-radius: 4px;
+        border: 0.5px solid #cccaca;
+}
+
+
+.titleConfigure {
+    font-weight: 500;
+}
+
+.contentConfigure {
+    font-size: 0.7em;
+}
+.escapeSentence{
+    float: right;
+    margin-top: 30px;
+    margin-right: 30px;
+    vertical-align: bottom;
+    cursor: pointer;
+}
+
+.escapeSentence:hover {
+    text-decoration-line: underline;
+}
+
+.colorcode{
+    color:#3ecf65;
 }

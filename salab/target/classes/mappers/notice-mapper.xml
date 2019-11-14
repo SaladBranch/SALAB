@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="noticeMapper">
+	<resultMap id="resultNotice" type="Notice">
+		<id property="noticeno" column="NOTICENO" />
+		<result property="adminid" column="ADMINID" />
+		<result property="noticetitle" column="NOTICETITLE" />
+		<result property="noticecontent" column="NOTICECONTENT" />
+		<result property="noticedate" column="NOTICEDATE" />
+	</resultMap>
+	
+	<select id="selectList" parameterType="hashmap" resultMap="resultNotice">
+		select * from notice where noticeno = #{noticeno}
+	</select>
+</mapper>

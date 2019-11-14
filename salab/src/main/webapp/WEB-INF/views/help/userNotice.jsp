@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -69,7 +70,7 @@
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="userFAQ.do">자주 찾는 질문</a>
+                <a href="faqlist.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
@@ -93,30 +94,38 @@
               </li>
               <li class="notice_list">
                  <ul>
-                    <li class="notice_head_no"><span>1</span></li>
-                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                	<a href="userNoticeDetail.do">
+                    <li class="notice_head_no"><span>4</span></li>
+                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
                     <li class="notice_head_date"><span>19-10-23</span></li>
+                   	</a>
                  </ul>
               </li>
               <li class="notice_list">
                  <ul>
-                    <li class="notice_head_no"><span>1</span></li>
-                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <a href="#">
+                    <li class="notice_head_no"><span>3</span></li>
+                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
                     <li class="notice_head_date"><span>19-10-23</span></li>
+                   	</a>
                  </ul>
               </li>
               <li class="notice_list">
                  <ul>
-                    <li class="notice_head_no"><span>1</span></li>
-                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <a href="#">
+                    <li class="notice_head_no"><span>2</span></li>
+                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
                     <li class="notice_head_date"><span>19-10-23</span></li>
+                   	</a>
                  </ul>
               </li>
               <li class="notice_list">
                  <ul>
+                    <a href="#">
                     <li class="notice_head_no"><span>1</span></li>
-                    <li class="notice_head_title"><a href="#"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></a></li>
+                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
                     <li class="notice_head_date"><span>19-10-23</span></li>
+                   	</a>
                  </ul>
               </li>
               <li class="notice_list">

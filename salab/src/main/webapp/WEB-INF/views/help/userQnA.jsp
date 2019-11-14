@@ -69,7 +69,7 @@
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="userFAQ.do">자주 찾는 질문</a>
+                <a href="faqlist.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
@@ -104,10 +104,12 @@
         		</li>
         		<li class="qna_list">
         			<ul>
+        				<a href="userQnADetail.do">
         				<li class="qna_head_no"><span>1</span></li>
-        				<li class="qna_head_title"><a href="#"><span>새로운 업데이트 예정일이 언제인가요? </span></a></li>
+        				<li class="qna_head_title"><span>새로운 업데이트 예정일이 언제인가요? </span></li>
         				<li class="qna_head_date"><span>19-10-23</span></li>
         				<li class="qna_head_yn"><span>N</span></li>
+        				</a>
         			</ul>
         		</li>
         		<li class="qna_list">

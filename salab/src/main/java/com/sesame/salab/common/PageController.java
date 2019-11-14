@@ -27,6 +27,11 @@ public class PageController {
 		return "help/userNotice";
 	}
 	
+	@RequestMapping(value="userNoticeDetail.do")
+	public String toUserNoticeDetailMethod() {
+		return "help/userNoticeDetail";
+	}
+	
 	@RequestMapping(value="userQnA.do")
 	public String toUserQnAMethod() {
 		return "help/userQnA";
@@ -37,10 +42,15 @@ public class PageController {
 		return "help/userQnAInsert";
 	}
 	
+	@RequestMapping(value="userQnADetail.do")
+	public String toUserQnADetailMethod() {
+		return "help/userQnADetail";
+	}
 	@RequestMapping(value="userFAQ.do")
 	public String toUserFAQMethod() {
 		return "help/userFAQ";
 	}
+	
 	// ~ 연영 help 페이지
 	
 	@RequestMapping(value="privateFile.do")

@@ -186,6 +186,18 @@
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
                     </a>
+                    <!--정사각형-->
+                    <a id="obj_square" class="geItem c_square" display="inline-block">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
+                        </svg>
+                    </a>
+                    <!--정원(?)-->
+                    <a id="obj_circle" class="geItem c_circle" display="inline-block">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
+                        </svg>
+                    </a>
                 </div>
             </div>
             <div class="comp-category form-control">
@@ -204,7 +216,7 @@
     
     <div class="canvas-container">
         <div id="droppable" class="canvas ui-widget-content">
-            
+            <div id="multiselect"></div>
         </div>
     </div>
     
@@ -226,7 +238,7 @@
             			<span>세로</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item" id="ratio-fix">
-            			<input type="checkbox" name="ratio" value="ratiofixed">체크박스가안나와요ㅠ_ㅠ
+						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
             		</div>
             		<div class="figure-item enterable" id="rotation">
             			<span>회전</span><input type="number" value="0"><span>%</span>
@@ -242,8 +254,8 @@
             		<div class="figure-item enterable dropdownable" id="kinds">
             			<span>종류</span><div class="line"><hr></div>
             		</div>
-            		<div class="figure-item enterable" id="width">
-            			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            		<div class="figure-item enterable" id="lineColor">
+            			<span>색상</span><div class="colorView"></div><input type="text" value="#FFFFFF">
             		</div>
             		<div class="figure-item" id="weight">
             			<span>굵기</span>
@@ -261,7 +273,7 @@
             			<span>B</span><input type="number" value="0"><span>px</span>
             		</div>
             		<div class="figure-item" id="ratio-fix">
-            			<input type="checkbox" name="ratio" value="가나다라">너두? 야나두!
+						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
             		</div>
             		<div class= "figure-line-droplist">
             			<div class="component" id="0"><hr></div>
@@ -318,6 +330,7 @@
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
     <script type="text/javascript">
     $(function(){
         $('.page-tab-content').show();
@@ -404,7 +417,6 @@
         
     $(document).on('click', function(e){
         if(!$(e.target).is($('.top-bar-menu input'))){
-            console.log("ㅇ")
             $('.top-bar-menu input').prop("checked", false);
             $('.main-toggle-menu').hide();    
         }

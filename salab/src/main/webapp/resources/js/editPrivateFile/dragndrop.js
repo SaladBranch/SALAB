@@ -90,6 +90,8 @@ function addControl(){
             $obj.children('.ui-rotatable-handle').hide();
             if($obj.hasClass('ui-draggable'))
                 $obj.draggable('destroy');
+            if(!$obj.hasClass('ui-selected'))
+                $obj.addClass('ui-selected');
             $all.append($obj);
         }
         $all.draggable().css({

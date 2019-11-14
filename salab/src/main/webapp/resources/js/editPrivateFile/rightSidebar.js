@@ -278,6 +278,7 @@
 
 	// canvas div 클릭 시 서식 값 변화
     function formatChange(object) {
+    	
     	var target = $(object).children(".obj-comp");
     	
     	// 가로
@@ -287,8 +288,13 @@
     	$(".figure-shape-comps .figure-item[id=height] input").val(object.css("height").split("px")[0]);
     	
     	// 회전율
-    	var radius = object.css("transform").split("(")[1].split(")")[0].split(", ");
-    	var rotate = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
+    	var radius = object.css("transform");
+    	var rotate = 0;
+    	if (radius != "none") {
+    		radius = radius.split("(")[1].split(")")[0].split(", ");
+        	var rotate = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
+    	}
+    	
     	if (rotate < 0)
     		rotate = 360 - (rotate * -1); 
     	$(".figure-shape-comps .figure-item[id=rotation] input").val(rotate);

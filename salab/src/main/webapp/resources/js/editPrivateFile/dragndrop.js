@@ -8,7 +8,6 @@ var appendElement = "";
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
-
     $('#droppable .obj').each(function(){
         if($(this).is($lastone)){
             selectedObj = new Array();
@@ -79,17 +78,18 @@ function addControl(){
         }).rotatable({
             degrees: getRotateDegree($obj)
         });
-
         formatChange($obj);
         if (editable = "true") {
         	$(".right-side-bar").fadeIn(300);
         }
-
+        
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
             $obj.children().remove('.ui-resizable-handle');
             $obj.children('.ui-rotatable-handle').hide();
+            if($obj.hasClass('ui-draggable'))
+                $obj.draggable('destroy');
             $all.append($obj);
         }
         $all.draggable().css({
@@ -120,7 +120,7 @@ $(function(){
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){
-            selectedObj = new Array();  
+            selectedObj = new Array();
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -215,4 +215,3 @@ $(function(){
         $focus.css('height', height);        
     }
 });
-

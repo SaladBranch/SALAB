@@ -477,93 +477,87 @@ body{
 	margin-left: 70px;
 }
 
-
-input[type="radio"]{
-    position: relative;
-    opacity: 1;
-    width: 15px;
-    height: 15px;
+.qna_box{
+	border: 1px solid black;
+	width: 65%;
+	padding: 30px 40px;
+	margin: 10px 30px 10px 150px;
 }
 
-.qna_btn_box{
-	display: block;
-	margin: 20px 10px 10px 10px;
+.qna_info{
+	padding:2px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.qna_info_faq{
 	padding: 15px;
+	margin-bottom: 20px;
+	font-size: 13px;
+	border-bottom: 1px solid gray;
 }
 
-.qna_check{
-	margin: 5px;
-	font-size: 18pt;
-	font-weight: 600;
-}
-
-.qna_insert{
-	float: right;
-	font-size: 18pt;
-	font-weight: 600;
-	padding: 3px 30px 3px 30px;
-	border: 1px solid lightgreen;
-}
-
-.qna_insert:hover{
-	border: 1px solid #3cb371;
-}
-
-.qna_head{
+.qna_fromAdmin{
+	margin: 0px 0px 20px 5px;
+	padding-bottom: 5px;
 	font-size: 16pt;
 	font-weight: bold;
-	text-align: center;
+	color: #3cb371;
+}
+
+.qna_title{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#qna_box_title{
+	border: 1px solid black;
+	margin: 5px 5px 10px 5px;
 	width: 100%;
-	height: 50px;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
 }
 
-.qna_list{
-	text-align: center;
-	height: 60px;
-	border-bottom: 1px solid lightgray;
+.qna_content{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
 }
 
-.qna_head_no{
-	float: left;
-	text-align: center;
-	line-height: 55px;
-	font-weight: 500;
-	width: 15%;
+#qna_box_content{
+	border: 1px solid black;
+	margin: 5px 5px 10px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 120px;
+	resize: none;
+	outline: none;
 }
 
-.qna_head_title{
-	float: left;
-	text-align: center;
-	line-height: 55px;
-	font-weight: 500;
-	width: 50%;
+.qna_ans{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
 }
 
-.qna_head_date{
-	float: left;
-	text-align: center;
-	line-height: 55px;
-	font-weight: 500;
-	width: 20%;
+#qna_box_ans{
+	border: 1px solid black;
+	margin: 5px 5px 25px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 120px;
+	resize: none;
+	outline: none;
 }
 
-.qna_head_yn{
-	float: left;
-	text-align: center;
-	line-height: 55px;
-	font-weight: 500;
-	width: 15%;
+.qna_back_btn{
+	margin: 5px 50px 0px 400px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
 }
 
-.qna_head_null{
-	float: left;
-	text-align: center;
-	line-height: 55px ;
-	width:100%;
-	color: gray;
-	font-weight: 400;
+.qna_back_btn:hover{
+	border: 1px solid #3cb371;
 }
 
 a { 

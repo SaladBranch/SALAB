@@ -9,6 +9,8 @@
 		<typeAlias type="com.sesame.salab.privatefile.model.vo.PrivateFile" alias="PrivateFile"/>
 		<typeAlias type="com.sesame.salab.project.model.vo.Project" alias="Project"/>
 		<typeAlias type="com.sesame.salab.member_project.model.vo.Member_Project" alias="Member_Project"/>
+		<typeAlias type="com.sesame.salab.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.sesame.salab.faq.model.vo.Faq" alias="Faq" />
 	</typeAliases>
 	
 	<mappers>
@@ -18,5 +20,7 @@
 		<mapper resource="mappers/privatefile-mapper.xml" />
 		<mapper resource="mappers/project-mapper.xml"/>
 		<mapper resource="mappers/member_project-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/faq-mapper.xml" />
 	</mappers>
 </configuration>

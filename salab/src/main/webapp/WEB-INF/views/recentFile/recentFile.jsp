@@ -267,7 +267,7 @@
             </div>
             
             <div class="file-grid">
-                <div class="new-file" onclick="javascript:location.href='insert_newpage.do?userno=${loginMember.userno }'">
+                <div class="new-file" onclick="javascript:location.href='insert_newprivateFile.do?userno=${loginMember.userno }'">
                     &#43; 새 파일
                 </div>
             </div>

@@ -6,7 +6,7 @@ import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 public interface PrivateFileService {
 
-	int insertNewPage(String userno);
+	int insertNewPrivateFile(String userno);
 
 	List<PrivateFile> selectList(int userno);
 	

@@ -31,7 +31,7 @@ public class Member_ProjectController {
 		//MEMBER_PROJECT테이블에 추가하는 코드
 		int result = mpService.insertTeamMember(mp);
 		if(result > 0) {
-			viewName = "redirect:main.do";
+			viewName = "project/teamPage";
 		}else {
 			viewName = "common/error";
 		}

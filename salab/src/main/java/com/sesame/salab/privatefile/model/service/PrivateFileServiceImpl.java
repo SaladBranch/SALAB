@@ -15,9 +15,9 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	private PrivateFileDao pfDao;
 	
 	@Override
-	public int insertNewPage(String userno) {
+	public int insertNewPrivateFile(String userno) {
 		// 새파일 인서트용 메소드 
-		return pfDao.insertNewPage(userno);
+		return pfDao.insertNewPrivateFile(userno);
 	}
 
 	@Override

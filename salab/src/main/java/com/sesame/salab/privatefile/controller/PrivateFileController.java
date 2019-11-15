@@ -13,10 +13,10 @@ public class PrivateFileController {
 	@Autowired
 	private PrivateFileService pfService;
 	
-	@RequestMapping("insert_newpage.do")
+	@RequestMapping("insert_newprivateFile.do")
 	public String insertNewPage(@RequestParam("userno")String userno) {
 		
-		int result = pfService.insertNewPage(userno);
+		int result = pfService.insertNewPrivateFile(userno);
 		
 		String viewName = "editPrivateFile/editPrivateFile";
 		if(result <= 0) {

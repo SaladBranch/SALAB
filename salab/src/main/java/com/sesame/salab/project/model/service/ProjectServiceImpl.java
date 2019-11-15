@@ -28,7 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public String projectInvest(String uno) {
+	public String projectInvite(String uno) {
 		// 팀원 초대하기위해 메일 검색
 		return pDao.projectInvest(uno);
 	}

@@ -9,5 +9,7 @@ public interface PrivateFileService {
 	int insertNewPrivateFile(String userno);
 
 	List<PrivateFile> selectList(int userno);
+
+	PrivateFile createPage(String userno);
 	
 }

@@ -78,3 +78,7 @@ function pasteObject(){
         cutted = 0;
     }
 }
+function cloneObject(){
+    copyObject();
+    pasteObject();
+}

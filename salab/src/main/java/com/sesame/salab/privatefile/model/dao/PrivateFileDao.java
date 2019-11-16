@@ -24,4 +24,9 @@ public class PrivateFileDao {
 		return sqlSession.selectList("privatefileMapper.selectList", userno);
 	}
 
+	public PrivateFile createPage(String userno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("privatefileMapper.createPage", Integer.parseInt(userno));
+	}
+
 }

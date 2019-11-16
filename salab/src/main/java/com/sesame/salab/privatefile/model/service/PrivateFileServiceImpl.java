@@ -26,4 +26,10 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 		return pfDao.selectList(userno);
 	}
 
+	@Override
+	public PrivateFile createPage(String userno) {
+		// 새파일 생성시 페이지생성을 위해 fileno 셀렉트
+		return pfDao.createPage(userno);
+	}
+
 }

@@ -8,8 +8,12 @@
 		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, null, null, default, sysdate, default)
 	</insert>
 	
-	<select id="selectList" parameterType="int" resultType="privateFile">
+	<select id="selectList" parameterType="int" resultType="PrivateFile">
 		select * from privatefile where userno = #{userno}
+	</select>
+	
+	<select id="createPage" parameterType="int" resultType="PrivateFile">
+		select * from (select pfileno from privatefile where userno = #{userno} order by PFILELASTMODIFIED desc) where rownum = 1
 	</select>
 		
 </mapper>

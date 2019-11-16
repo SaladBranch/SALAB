@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.mongodb.MongoClient;
+import com.sesame.salab.page.model.vo.Page;
 
 public class MongoService {
 	
@@ -94,5 +96,35 @@ public class MongoService {
 	public void removeData(String deleteCollection, Fruit condition) {
 		Query query = new Query(new Criteria("_id").is(condition.get_id()));
 		mongoOps.remove(query, deleteCollection);
+	}
+
+
+	public void createFirstPage(Page page) {
+		mongoOps.insert(page, "page");
+		
+	}
+
+	public List<Page> findPage(String collection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno())
+				));
+		return mongoOps.find(query, Page.class, collection);
+	}
+
+	//새페이지 생성
+	public void insertNewPage(Page page, String collection) {
+		mongoOps.insert(page, collection);
+		
+	}
+
+	//페이지 넘버계산용
+	public int countPage(Page page, String collection) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno())
+				));
+		
+		return (int) mongoOps.count(query, collection);
 	}
 }

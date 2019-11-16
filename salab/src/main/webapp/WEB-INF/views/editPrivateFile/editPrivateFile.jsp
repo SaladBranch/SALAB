@@ -52,7 +52,7 @@
             <li id="toggle-page">
                 페이지<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-page-menu">
-                    <li><a href="#">새 페이지</a></li>
+                    <li><a href="#" onclick="newPage()">새 페이지</a></li>
                     <li><a href="#">페이지 복사</a></li>
                     <li><a href="#">페이지 삭제</a></li>
                     <li><a href="#">페이지 이름 변경</a></li>
@@ -117,21 +117,7 @@
             <div class="tab lib-tab">Lib</div>
         </div>
         <div class="tab-content page-tab-content">
-            <div class="page">
-                <div class="page-top">
-                    <div class="page-no">1.</div>
-                    <div class="page-thumbnail">
-                        <img src="/salab/resources/img/whitebox.png">
-                    </div>
-                </div>
-                <div class="page-name">
-                    <input type="text" class="page-title" value="Untitled">
-                </div>
-            </div>
             
-            <div class="newpage">
-                &#43;
-            </div>
         </div>
         
         <div class="tab-content comp-tab-content">
@@ -192,7 +178,7 @@
                             <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
                         </svg>
                     </a>
-                    <!--정원(?)-->
+                    <!--정원(x) perfect Circle -->
                     <a id="obj_circle" class="geItem c_circle" display="inline-block">
                         <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                             <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
@@ -422,6 +408,72 @@
             $('.main-toggle-menu').hide();    
         }
     });
+    
+    //page 탭 리스트 불러오는 ajax
+    function pageTab(){
+    	$.ajax({
+    		url: 'pageTab.do',
+    		type: 'post',
+    		data: {
+    			userno: ${userno},
+    			fileno: ${fileno}
+    		},
+    		dataType: 'json',
+    		success: function(data){
+    			console.log(data.page[0].pageno);
+    			$('.page-tab-content').html('');
+    			for(var i =0; i < data.page.length; i++){
+    				$('.page-tab-content').append(
+        					'<div class="page">' +
+        	                '<div class="page-top">' +
+        	                    '<div class="page-no">'+ data.page[i].pageno +'.</div>' +
+        	                    '<div class="page-thumbnail">' +
+        	                        '<img src="/salab/resources/img/whitebox.png">' +
+        	                    '</div>'+
+        	                '</div>' +
+        	                '<div class="page-name">' + 
+        	                    '<input type="text" class="page-title" value="Untitled">' +
+        	                '</div>' +
+        	            '</div>'		
+        			);
+    			}
+    			
+    			$('.page-tab-content').append(
+    					'<div class="newpage">' +
+    	                '&#43;' +
+    	            '</div>'	
+    			);
+    		},
+    		error: function(){
+    			
+    		}
+    	});
+    }
+    
+    function newPage(){
+    	console.log('check');
+    	$.ajax({
+    		url: 'newPage.do',
+    		type: 'post',
+    		dataType: 'json',
+    		data: {
+    			userno: ${userno},
+    			fileno: ${fileno}
+    		},
+    		success: function(data){
+    			console.log("ok");
+    			pageTab();
+    		},
+    		error:function(){
+    			
+    		}
+    	});
+    }
+    
+    $(function(){
+    	pageTab();
+    });
+    
     </script>
 </body>
 </html>

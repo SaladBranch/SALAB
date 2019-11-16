@@ -324,6 +324,7 @@
         </div>
     </div>
     
+    <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>

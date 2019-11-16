@@ -2,10 +2,7 @@ var copiedObj = [];
 var cutted = 0; //복사인지, 잘라내기한건지 구분하기 위한 변수
 $(document).on('keydown', function(e){
     if(e.keyCode == 46){
-        for(i = 0; i<selectedObj.length; i++){
-            selectedObj[i].remove();
-        }
-        selectedObj = new Array();
+        deleteObject();
     }
     if(e.ctrlKey && e.keyCode == 67 && $('.ui-selected').length > 0){
         copyObject();
@@ -17,6 +14,12 @@ $(document).on('keydown', function(e){
         pasteObject();
     }
 });
+function deleteObject(){
+    for(i = 0; i<selectedObj.length; i++){
+        selectedObj[i].remove();
+    }
+    selectedObj = new Array();   
+}
 
 function copyObject(){
     copiedObj = new Array();
@@ -74,4 +77,8 @@ function pasteObject(){
         copiedObj = new Array();
         cutted = 0;
     }
+}
+function cloneObject(){
+    copyObject();
+    pasteObject();
 }

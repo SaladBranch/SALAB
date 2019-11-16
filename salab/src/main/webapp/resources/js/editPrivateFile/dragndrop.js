@@ -42,7 +42,52 @@ function includeElement(X, Y, temp) {
 	$("#droppable").append(comp);
     initSelect();
 }
-
+function leftMouseListner(){
+    $(document).on('click', function(){
+        toggleContext(0); 
+    });
+    $('#droppable').on('click', function(){
+        toggleContext(0);
+    });
+}
+function rightMouseListner(){
+    $(window).on('contextmenu', function(){
+        event.preventDefault();
+    });
+    //canvas 
+    $('#droppable').on('contextmenu', function(e){
+        e.preventDefault();
+        $('.context-menu').html(contextmenu.canvas);
+        toggleContext(1);
+        menuActivation();
+        showContext(e.clientX, e.clientY);
+    });
+    $(document).on('contextmenu', '#droppable .obj', function(e){
+        e.preventDefault();
+        $(this).addClass('ui-selected');
+        selectedObj = new Array();
+        $('.ui-selected').each(function(){
+            selectedObj.push($(this));
+        });
+        addControl();
+        selectedObj.length === 1 ? $('.context-menu').html(contextmenu.single) : $('.context-menu').html(contextmenu.multi);
+        toggleContext(1);
+        menuActivation();
+        showContext(e.clientX, e.clientY);
+    });
+}
+function toggleContext(num){
+    num === 1 ? $('.context-menu').addClass('show') : $('.context-menu').removeClass('show');
+}
+function showContext(x, y){
+    $('.context-menu').css({
+        top: y,
+        left: x
+    });
+}
+function menuActivation(){
+    copiedObj.length > 0 ? $('.pasteObj').removeClass('disabled') : $('.pasteObj').addClass('disabled');
+}
 function addControl(){
     if($all.html() != ""){
         $all.children().each(function(){
@@ -119,6 +164,9 @@ function getRotateDegree($obj){
 $(function(){
     //canvas 위에 삽입된 object는 select 가능
     //애초에 모든 controller들이 붙어서 온 상태이다. 염두해두도록
+    rightMouseListner();
+    leftMouseListner();
+    
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){

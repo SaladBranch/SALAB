@@ -216,6 +216,10 @@ svg{
     left: 0;
     flex-direction: column;
     z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .tab-menu{
@@ -388,6 +392,10 @@ svg{
     right: 0;
     background: #fff;
     border-left: 1px solid #eaeaea;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 .right-side-bar .tab-menu .tab{
     width: 50%;
@@ -716,3 +724,37 @@ svg{
     margin: 5% auto;
 }
 
+.context-menu{
+    display: none;
+    position: absolute;
+    z-index: 99;
+    background: #2c2c2c;
+    width: 180px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    padding: 5px 0;
+}
+.context-menu a{
+    display: block;
+    color: #fff;
+    font-size: 13px;
+    padding: 6px 0;
+    padding-left: 10px;
+}
+.context-menu a:hover{
+    background: #00a8ff;
+}
+.disabled{
+    color: #797979 !important;
+    cursor: default;
+}
+.disabled:hover{
+    background: #2c2c2c !important;
+}
+.show{
+    display: block;
+}
+.boundary{
+    margin: 2px 0;
+    height: 1px;
+    background: #9a9a9a;
+}

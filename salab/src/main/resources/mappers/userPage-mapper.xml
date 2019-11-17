@@ -11,4 +11,26 @@
 		UPDATE MEMBER SET USERPWD = #{userpwd} WHERE USERNO = #{userno}
 	</update>
 
+	<select id="findProjectList" parameterType="Member" resultType="Member">
+		SELECT USERNO 
+		FROM MEMBER_PROJECT 
+		WHERE PROJECTNO= ( 
+		 	SELECT PROJECTNO 
+			 FROM MEMBER_PROJECT 
+ 			 WHERE USERNO = #{userno} AND USERAUTH ='LEADER') 
+ 		ORDER BY PROJECTJOINDATE
+	</select>
+	<select id="test" parameterType="Member" resultType="int">
+		    SELECT PROJECTNO
+  			FROM MEMBER_PROJECT
+ 			 WHERE USERNO = #{userno} AND USERAUTH ='LEADER'
+   			 order by projectno
+	</select>
+	
+	<select id="searchPremium" parameterType="int" resultType="int" >
+		 	SELECT NVL(USERNO, 0) USERNO
+			 FROM MEMBER_PROJECT INNER JOIN MEMBER USING(USERNO)
+      		where projectno = #{projectno} and userlevel ='PREMIUM' and userauth != 'LEADER' AND rownum = 1 
+      		ORDER BY PROJECTNO ASC, PROJECTJOINDATE ASC
+	</select>
 </mapper>

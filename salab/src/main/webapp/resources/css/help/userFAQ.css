@@ -462,25 +462,28 @@ body{
 
 .faq_top{
 	float: left;
-	font-size: 40pt;
-	padding: 40px 30px 15px 30px;
-	width:80%;
+   font-size: 30pt;
+   padding: 40px 30px 25px 30px;
+   width:87%;
+   margin-left: 70px;
+   border-bottom: 2px solid black;
 }
 
 .faq_bottom{
 	font-size: 13pt;
-	width: 80%;
-	padding: 0px 30px 30px 30px;
-	display: block;
-	border-top: 2px solid black;
+   width: 87%;
+   padding: 0px 30px;
+   display: block;
+   margin-left: 70px;
 }
 
+
 .faq_head{
-	font-size: 16pt;
+	font-size: 14pt;
 	text-align: center;
 	float: left;
 	width: 100%;
-	height: 50px;
+	height: 40px;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 }
@@ -495,15 +498,20 @@ body{
 
 .faq_list{
 	text-align: center;
-	height: 50px;
+	height: 40px;
 }
 
 .faq_open{
 	float: left;
-	font-size: 16pt;
+	font-size: 13pt;
 	text-align: center;
 	width: 100%;
 	border-bottom: 1px solid gray;
+	cursor: pointer;
+}
+
+.faq_open:hover{
+	color: #3cb371;
 }
 
 .faq_open_sub{
@@ -528,6 +536,7 @@ body{
 	font-weight: 600;
 	width: 60%;
 }
+
 
 .faq_open_plus{
 	float: left;
@@ -555,17 +564,14 @@ body{
 	border-top: 1px dashed lightgray;
 	background-color: white;
 	display: none;
+	color: black;
 }
 
 .faq_box p{
 	text-align: left;
-	padding: 20px 100px 20px 100px;
-}
-
-.click{
-	cursor: pointer;
-	width: 100%;
-	float: left;
+	padding: 20px 130px 20px 110px;
+	font-family: san-serif;
+	font-size: 17px;
 }
 
 a { 
@@ -573,4 +579,18 @@ a {
 	color: black;
 }
 
+/* .faq_open_category:hover{
+	color: #3cb371;
+}
 
+.faq_open_title:hover{
+	color: #3cb371;
+}
+
+.faq_open_plus:hover{
+	color: #3cb371;
+}
+
+.faq_open_minus:hover{
+	color: #3cb371;
+} */

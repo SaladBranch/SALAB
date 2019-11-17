@@ -134,7 +134,6 @@ var obj_circle = {
     }
 };
 
-
 var getModule = function(id){
     switch(id){
         case 'obj_rect':
@@ -154,4 +153,43 @@ var getModule = function(id){
     }
 };
 
+var contextmenu = {
+    canvas: function(){
+        return `
+        <a href="javascript:pasteObject();" class="pasteObj">붙여넣기</a>
+        <a href="javascript:selectAll();" class="selectAll">전체선택</a>
+        <a href="#" class="changeCanvas-size">화면 사이즈 변경</a>
+        <a href="#" class="changeCanvas-color">페이지 배경색</a>
+        <a href="#" class="changeCanvas-color-all">모든 페이지에 이 배경색 적용</a>
+        <a href="#" class="webtest">웹테스트</a>    
+    `
+    },
+    single: function(){
+        return `
+        <a href="javascript:deleteObject();" class="deleteObj">삭제하기</a>
+        <a href="javascript:cutObject();" class="cutObj">잘라내기</a>
+        <a href="javascript:copyObject();" class="copyObj">복사</a>
+        <a href="javascript:pasteObject();" class="pasteObj">붙여넣기</a>
+        <a href="javascript:cloneObject();" class="cloneObj">복제하기</a>
+        <div class="boundary"></div>
+        <a href="">순서</a>
+        <div class="boundary"></div>
+        <a href="">보내기</a>
+        `
+    },
+    multi: function(){
+        return `
+        <a href="">그룹</a>
+        <a href="">그룹해제</a>
+        <div class="boundary"></div>
+        <a href="javascript:deleteObject();" class="deleteObj">삭제하기</a>
+        <a href="javascript:cutObject();" class="cutObj">잘라내기</a>
+        <a href="javascript:copyObject();" class="copyObj">복사</a>
+        <a href="javascript:pasteObject();" class="pasteObj">붙여넣기</a>
+        <a href="javascript:cloneObject();" class="cloneObj">복제하기</a>
+        <div class="boundary"></div>
+        <a href="">순서</a>
+        `
+    }
+}
 

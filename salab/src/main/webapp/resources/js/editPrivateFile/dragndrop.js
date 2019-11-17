@@ -9,7 +9,6 @@ var editable = "true"; // right-side-bar 자동 오픈 여부
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
-
     $('#droppable .obj').each(function(){
         if($(this).is($lastone)){
             selectedObj = new Array();
@@ -44,7 +43,52 @@ function includeElement(X, Y, temp) {
 	$("#droppable").append(comp);
     initSelect();
 }
-
+function leftMouseListner(){
+    $(document).on('click', function(){
+        toggleContext(0); 
+    });
+    $('#droppable').on('click', function(){
+        toggleContext(0);
+    });
+}
+function rightMouseListner(){
+    $(window).on('contextmenu', function(){
+        event.preventDefault();
+    });
+    //canvas 
+    $('#droppable').on('contextmenu', function(e){
+        e.preventDefault();
+        $('.context-menu').html(contextmenu.canvas);
+        toggleContext(1);
+        menuActivation();
+        showContext(e.clientX, e.clientY);
+    });
+    $(document).on('contextmenu', '#droppable .obj', function(e){
+        e.preventDefault();
+        $(this).addClass('ui-selected');
+        selectedObj = new Array();
+        $('.ui-selected').each(function(){
+            selectedObj.push($(this));
+        });
+        addControl();
+        selectedObj.length === 1 ? $('.context-menu').html(contextmenu.single) : $('.context-menu').html(contextmenu.multi);
+        toggleContext(1);
+        menuActivation();
+        showContext(e.clientX, e.clientY);
+    });
+}
+function toggleContext(num){
+    num === 1 ? $('.context-menu').addClass('show') : $('.context-menu').removeClass('show');
+}
+function showContext(x, y){
+    $('.context-menu').css({
+        top: y,
+        left: x
+    });
+}
+function menuActivation(){
+    copiedObj.length > 0 ? $('.pasteObj').removeClass('disabled') : $('.pasteObj').addClass('disabled');
+}
 function addControl(){
     if($all.html() != ""){
         $all.children().each(function(){
@@ -80,18 +124,21 @@ function addControl(){
         }).rotatable({
             degrees: getRotateDegree($obj)
         });
-
         formatChange($obj);
         if (editable == "true") {
         	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
         	$(".right-side-bar").fadeIn(300);
         }
-
+        
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
             $obj.children().remove('.ui-resizable-handle');
             $obj.children('.ui-rotatable-handle').hide();
+            if($obj.hasClass('ui-draggable'))
+                $obj.draggable('destroy');
+            if(!$obj.hasClass('ui-selected'))
+                $obj.addClass('ui-selected');
             $all.append($obj);
         }
         $all.draggable().css({
@@ -119,10 +166,13 @@ function getRotateDegree($obj){
 $(function(){
     //canvas 위에 삽입된 object는 select 가능
     //애초에 모든 controller들이 붙어서 온 상태이다. 염두해두도록
+    rightMouseListner();
+    leftMouseListner();
+    
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){
-            selectedObj = new Array();  
+            selectedObj = new Array();
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -142,7 +192,7 @@ $(function(){
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-        if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle"))
+    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *"))
             mode = false;
         else{
             mode = true;
@@ -216,6 +266,3 @@ $(function(){
         $focus.css('top', top);
         $focus.css('height', height);        
     }
-    
-});
-

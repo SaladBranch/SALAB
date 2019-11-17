@@ -462,18 +462,21 @@ body{
 
 .qna_top{
 	float: left;
-	font-size: 40pt;
-	padding: 40px 30px 15px 30px;
-	width:80%;
+	font-size: 30pt;
+	padding: 40px 30px 25px 30px;
+	width:87%;
+	margin-left: 70px;
+	border-bottom: 2px solid black;
 }
 
 .qna_bottom{
 	font-size: 13pt;
-	width: 80%;
-	padding: 5px 30px 30px 30px;
+	width: 87%;
+	padding: 0px 30px;
 	display: block;
-	border-top: 2px solid black;
+	margin-left: 70px;
 }
+
 
 input[type="radio"]{
     position: relative;
@@ -508,6 +511,7 @@ input[type="radio"]{
 
 .qna_head{
 	font-size: 16pt;
+	font-weight: bold;
 	text-align: center;
 	width: 100%;
 	height: 50px;
@@ -517,46 +521,46 @@ input[type="radio"]{
 
 .qna_list{
 	text-align: center;
-	height: 50px;
+	height: 60px;
 	border-bottom: 1px solid lightgray;
 }
 
 .qna_head_no{
 	float: left;
 	text-align: center;
-	line-height: 50px;
-	font-weight: 600;
+	line-height: 55px;
+	font-weight: 500;
 	width: 15%;
 }
 
 .qna_head_title{
 	float: left;
 	text-align: center;
-	line-height: 50px;
-	font-weight: 600;
+	line-height: 55px;
+	font-weight: 500;
 	width: 50%;
 }
 
 .qna_head_date{
 	float: left;
 	text-align: center;
-	line-height: 50px;
-	font-weight: 600;
+	line-height: 55px;
+	font-weight: 500;
 	width: 20%;
 }
 
 .qna_head_yn{
 	float: left;
 	text-align: center;
-	line-height: 50px;
-	font-weight: 600;
+	line-height: 55px;
+	font-weight: 500;
 	width: 15%;
 }
 
 .qna_head_null{
 	float: left;
 	text-align: center;
-	line-height: 50px;
+	line-height: 55px ;
 	width:100%;
 	color: gray;
 	font-weight: 400;
@@ -565,5 +569,9 @@ input[type="radio"]{
 a { 
 	text-decoration: none; 
 	color: black;
+}
+
+a:hover{
+	color: #3cb371;
 }
 

@@ -8,4 +8,24 @@
 		insert into member_project values(#{projectno}, #{userno}, sysdate, 'ONLY_READ')
 	</insert>
 	
+	<!-- 건우 -->
+	<update id="setLeader" parameterType="int">
+		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'LEADER'  WHERE USERNO=#{USERNO}
+	</update>
+	<update id="setCanEdit" parameterType="int">
+		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'CAN_EDIT'  WHERE USERNO=#{USERNO}
+	</update>
+	<update id="setOnlyRead" parameterType="int">
+		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'ONLY_READ'  WHERE USERNO=#{USERNO}
+	</update>
+	<update id="setAllOnlyRead" parameterType="int">
+		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'ONLY_READ'  WHERE PROJECTNO=#{PROJECTNO}
+	</update>	
+	<select id="searchNextLeader" parameterType="int"  resultType="int" >
+		 	SELECT NVL(USERNO, 0) USERNO
+			 FROM MEMBER_PROJECT INNER JOIN MEMBER USING(USERNO)
+      		WHERE PROJECTNO = #{PROJECTNO} AND USERAUTH != 'LEADER'  AND rownum = 1 
+      		ORDER BY PROJECTJOINDATE ASC
+	</select>
+	
 </mapper>

@@ -87,6 +87,7 @@
         <div class="qna_bottom">
 			<div class="qna_box">
 				<form action="qnaInsert.do" method="post" enctype="multipart/form-data">
+					<p class="qna_toAdmin">To. SALAB</p>
 					<p class="qna_info">현재 1:1 문의 답변에 평균 7 ~ 14일 정도 소요될 수 있으며, 최대 20일 이상 지연될 수 있습니다.</p>
 					<p class="qna_info">신속하게 답변드릴 수 있도록 최선을 다하겠습니다.</p>
 					<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
@@ -100,8 +101,10 @@
 							<p class="qna_content">내용</p>
 							<textarea id="qna_box_content" name="qna_box_content"></textarea>
 						</li>
-						<span class="qna_back_btn">취소</span>
-						<span class="qna_success_btn">등록</span>
+						<li>
+							<span class="qna_back_btn" onclick="back_qna();">취소</span>
+							<span class="qna_success_btn">등록</span>
+						</li>
 					</ul>
 				</form>
 			</div>
@@ -110,4 +113,15 @@
     </div>
     
 </body>
+
+<!-- 취소 버튼 click -->
+<script type="text/javascript">
+function back_qna(){	
+	var check = confirm("취소 하시겠습니까?");
+		if(check){ history.go(-1);}
+}
+</script>
+<!-- 취소 버튼 click -->
+
+
 </html>

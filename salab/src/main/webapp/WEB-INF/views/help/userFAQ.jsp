@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -70,7 +71,7 @@
             </div>
             <div class="private-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="userFAQ.do">자주 하는 질문</a>
+                <a href="faqlist.do">자주 하는 질문</a>
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
@@ -85,45 +86,19 @@
     	</div>
         <div class="faq_bottom">
         	<ul>
-        		<li class="faq_open">
-        			<ul>
-	        			<div class="click">
-	        				<li class="faq_open_category"><span>계정</span></li>
-	        				<li class="faq_open_title"><span>이메일을 변경하고 싶어요.</span></li>
-	        				<li class="faq_open_plus"><span>+</span></li>
-	        				<li class="faq_open_minus"><span>-</span></li>
-	        			</div>
-        					<div class="faq_box">
-        						<p>이메일은 타 사이트의 ID와 같이 사용되기 때문에 변경하실 수 없습니다. 번거로우시겠지만, 새로운 계정을 만들어 주세요.</p>
-        					</div>
-	        		</ul>
-        		</li>
-        		<li class="faq_open">
-        			<ul>
-	        			<div class="click">
-	        				<li class="faq_open_category"><span>결제</span></li>
-	        				<li class="faq_open_title"><span>계좌이체로도 결제가 가능할까요?</span></li>
-	        				<li class="faq_open_plus"><span>+</span></li>
-	        				<li class="faq_open_minus"><span>-</span></li>
-	        			</div>
-	        				<div class="faq_box">
-        						<p>이메일은 타 사이트의 ID와 같이 사용되기 때문에 변경하실 수 없습니다. 번거로우시겠지만, 새로운 계정을 만들어 주세요.</p>
-        					</div>
-        			</ul>
-        		</li>
-        		<li class="faq_open">
-        			<ul>
-	        			<div class="click">
-	        				<li class="faq_open_category"><span>협업</span></li>
-	        				<li class="faq_open_title"><span>팀 프로젝트 접속이 되지 않습니다.</span></li>
-	        				<li class="faq_open_plus"><span>+</span></li>
-	        				<li class="faq_open_minus"><span>-</span></li>
-        				</div>
-        					<div class="faq_box">
-        						<p>이메일은 타 사이트의 ID와 같이 사용되기 때문에 변경하실 수 없습니다. 번거로우시겠지만, 새로운 계정을 만들어 주세요.</p>
-        					</div>
-        			</ul>
-        		</li>
+        		<c:forEach var="faqlist" items="${requestScope.list }">
+	        		<li class="faq_open">
+	        			<ul>
+							<li class="faq_open_category"><span>${faqlist.faqcategory }</span></li>
+							<li class="faq_open_title"><span>${faqlist.faqtitle }</span></li>
+							<li class="faq_open_plus"><span>+</span></li>
+							<li class="faq_open_minus"><span>-</span></li>
+							<div class="faq_box">
+								<p>${faqlist.faqcontent }</p>
+							</div>
+		        		</ul>
+	        		</li>
+        		</c:forEach>
         	</ul>
         </div>
     </div>
@@ -137,10 +112,11 @@ $(function() {
 	$(".faq_box").hide();
 	//숨김
 	
-	$(".click").click(function(){
-		$(this).children(".faq_open_minus").toggle();
-		$(this).children(".faq_open_plus").toggle();
-		$(this).next(".faq_box").slideToggle();
+	$(".faq_open").click(function(){
+		console.log($(this).html());
+		$(this).children("ul").children(".faq_open_minus").toggle();
+		$(this).children("ul").children(".faq_open_plus").toggle();
+		$(this).children("ul").children(".faq_box").slideToggle();
 	});
 });
 </script>

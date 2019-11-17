@@ -65,13 +65,16 @@ function rightMouseListner(){
     });
     $(document).on('contextmenu', '#droppable .obj', function(e){
         e.preventDefault();
-        $(this).addClass('ui-selected');
+        if($(this).parents('.group-obj').length == 0)
+            $(this).addClass('ui-selected');
+        else
+            $(this).parents('.group-obj').addClass('ui-selected');
         selectedObj = new Array();
         $('.ui-selected').each(function(){
             selectedObj.push($(this));
         });
         addControl();
-        selectedObj.length === 1 ? $('.context-menu').html(contextmenu.single) : $('.context-menu').html(contextmenu.multi);
+        (selectedObj.length > 1 || selectedObj[0].hasClass('group-obj')) ? $('.context-menu').html(contextmenu.multi) : $('.context-menu').html(contextmenu.single);
         toggleContext(1);
         menuActivation();
         showContext(e.clientX, e.clientY);
@@ -88,6 +91,10 @@ function showContext(x, y){
 }
 function menuActivation(){
     copiedObj.length > 0 ? $('.pasteObj').removeClass('disabled') : $('.pasteObj').addClass('disabled');
+    
+    selectedObj.length === 1 && selectedObj[0].hasClass('group-obj') ? $('.ungroupObj').removeClass('disabled') : $('.ungroupObj').addClass('disabled');
+    
+    selectedObj.length === 1 ? $('.groupObj').addClass('disabled') : $('.groupObj').removeClass('disabled');
 }
 function addControl(){
     if($all.html() != ""){
@@ -109,21 +116,39 @@ function addControl(){
                 $focus.hide();
             },
             cancel: '.ui-rotatable-handle'
-        }).resizable({
-            handles:{
-                'n': '.ui-resizable-n',  
-                'e': '.ui-resizable-e',  
-                's': '.ui-resizable-s',
-                'w': '.ui-resizable-w',
-                'ne': '.ui-resizable-ne',  
-                'se': '.ui-resizable-se',
-                'sw': '.ui-resizable-sw',
-                'nw': '.ui-resizable-nw',  
-            },
-            alsoResize: "this .obj-comp"
         }).rotatable({
             degrees: getRotateDegree($obj)
         });
+        //group obj는 also resize 대상 변경
+        if($obj.hasClass('group-obj')){
+            $obj.resizable({
+                handles:{
+                    'n': '.ui-resizable-n',  
+                    'e': '.ui-resizable-e',  
+                    's': '.ui-resizable-s',
+                    'w': '.ui-resizable-w',
+                    'ne': '.ui-resizable-ne',  
+                    'se': '.ui-resizable-se',
+                    'sw': '.ui-resizable-sw',
+                    'nw': '.ui-resizable-nw',  
+                },
+                alsoResize: $obj.children('.obj')
+            });
+        }else{
+            $obj.resizable({
+                handles:{
+                    'n': '.ui-resizable-n',  
+                    'e': '.ui-resizable-e',  
+                    's': '.ui-resizable-s',
+                    'w': '.ui-resizable-w',
+                    'ne': '.ui-resizable-ne',  
+                    'se': '.ui-resizable-se',
+                    'sw': '.ui-resizable-sw',
+                    'nw': '.ui-resizable-nw',  
+                },
+                alsoResize: "this .obj-comp"
+            });
+        }
         formatChange($obj);
         if (editable == "true") {
         	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
@@ -266,3 +291,4 @@ $(function(){
         $focus.css('top', top);
         $focus.css('height', height);        
     }
+});

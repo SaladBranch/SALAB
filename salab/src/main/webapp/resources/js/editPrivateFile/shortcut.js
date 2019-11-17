@@ -13,6 +13,9 @@ $(document).on('keydown', function(e){
     if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){
         pasteObject();
     }
+    if(e.ctrlKey && e.keyCode == 65){
+        selectAll();
+    }
 });
 function deleteObject(){
     for(i = 0; i<selectedObj.length; i++){
@@ -69,7 +72,6 @@ function pasteObject(){
             $newObj.appendTo($all);
             selectedObj.push($newObj);
         }
-        console.log(selectedObj.length);
         addControl();
 
     }
@@ -77,8 +79,75 @@ function pasteObject(){
         copiedObj = new Array();
         cutted = 0;
     }
+    
 }
 function cloneObject(){
     copyObject();
     pasteObject();
+}
+//우클릭 시 그룹 풀림현상 해결해라
+function groupObject(){
+    var $group = $('<div class="group-obj obj ui-selected"></div>')
+    var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
+    for(i = 0; i<selectedObj.length; i++){
+        $obj = selectedObj[i];
+        
+        var oleft = Number($obj.css('left').replace('px', ''));
+        var otop = Number($obj.css('top').replace('px', ''));
+        var oright = oleft + Number($obj.css('width').replace('px', ''));
+        var obottom = otop + Number($obj.css('height').replace('px', ''));
+        
+        if(oleft < left) left = oleft;
+        if(otop < top) top = otop;
+        if(oright > right) right = oright;
+        if(obottom > bottom) bottom = obottom;
+        
+        $obj.children().remove('.ui-resizable-handle');
+        $obj.children('.ui-rotatable-handle').hide();
+        if($obj.hasClass('ui-draggable'))
+            $obj.draggable('destroy');
+        $obj.removeClass('ui-selected');
+        $group.append($obj);
+    }
+    $group.css({
+        top: top,
+        left: left,
+        width: right - left,
+        height: bottom - top
+    });
+    $group.children('.obj').each(function(){
+        $(this).css({
+            left: Number($(this).css('left').replace('px', '')) - left,
+            top: Number($(this).css('top').replace('px', '')) - top
+        });
+    });
+    
+    $group.appendTo('#droppable');
+    selectedObj = new Array();
+    selectedObj.push($group);
+    
+    addControl();
+}
+function ungroupObject(){
+    $group = selectedObj[0];
+    selectedObj = new Array();
+    $group.children('.obj').each(function(){
+        $(this).css({
+            left: Number($(this).css('left').replace('px', '')) + Number($group.css('left').replace('px', '')) + 'px',
+            top: Number($(this).css('top').replace('px', '')) + Number($group.css('top').replace('px', '')) + 'px'
+        });
+        $(this).addClass('ui-selected');
+        $(this).appendTo('#droppable');
+        selectedObj.push($(this));
+    });
+    $group.remove();
+    addControl();
+}
+function selectAll(){
+    selectedObj = new Array();
+    $('#droppable > .obj').each(function(){
+        $(this).addClass('ui-selected');
+        selectedObj.push($(this));
+    });
+    addControl();
 }

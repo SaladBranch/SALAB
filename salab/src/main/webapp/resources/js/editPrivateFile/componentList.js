@@ -179,8 +179,8 @@ var contextmenu = {
     },
     multi: function(){
         return `
-        <a href="">그룹</a>
-        <a href="">그룹해제</a>
+        <a href="javascript:groupObject();" class="groupObj">그룹</a>
+        <a href="javascript:ungroupObject();" class="ungroupObj">그룹해제</a>
         <div class="boundary"></div>
         <a href="javascript:deleteObject();" class="deleteObj">삭제하기</a>
         <a href="javascript:cutObject();" class="cutObj">잘라내기</a>

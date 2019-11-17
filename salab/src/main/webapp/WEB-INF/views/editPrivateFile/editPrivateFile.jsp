@@ -223,7 +223,7 @@
             		<div class="figure-item enterable" id="height">
             			<span>세로</span><input type="number" value="0"><span>px</span>
             		</div>
-            		<div class="figure-item" id="ratio-fix">
+            		<div class="figure-item checkbox" id="size-ratio-fix">
 						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
             		</div>
             		<div class="figure-item enterable" id="rotation">
@@ -243,24 +243,27 @@
             		<div class="figure-item enterable" id="lineColor">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#FFFFFF">
             		</div>
-            		<div class="figure-item" id="weight">
-            			<span>굵기</span>
+            		<div class="figure-item togglable" id="weight" onclick="toggleItems('weight');">
+            			<span>굵기</span><p>&#9660;</p>
             		</div>
-            		<div class="figure-item enterable" id="weight-top">
-            			<span>T</span><input type="number" value="0"><span>px</span>
+            		<div class="weight-tab">
+	            		<div class="figure-item enterable" id="weight-top">
+	            			<span>T</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="weight-left">
+	            			<span>L</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="weight-right">
+	            			<span>R</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="weight-bottom">
+	            			<span>B</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item checkbox" id="weight-ratio-fix">
+							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
+	            		</div>
             		</div>
-            		<div class="figure-item enterable" id="weight-left">
-            			<span>L</span><input type="number" value="0"><span>px</span>
-            		</div>
-            		<div class="figure-item enterable" id="weight-right">
-            			<span>R</span><input type="number" value="0"><span>px</span>
-            		</div>
-            		<div class="figure-item enterable" id="weight-bottom">
-            			<span>B</span><input type="number" value="0"><span>px</span>
-            		</div>
-            		<div class="figure-item" id="ratio-fix">
-						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
-            		</div>
+            		
             		<div class= "figure-line-droplist">
             			<div class="component" id="0"><hr></div>
             			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px white"></div>
@@ -269,6 +272,28 @@
             			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px white"></div>
             			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px white"></div>
             		</div>
+            		
+            		<div class="figure-item togglable" id="radius" onclick="toggleItems('radius');">
+            			<span>모서리</span><p>&#9660;</p>
+            		</div>
+            		<div class="radius-tab">
+	            		<div class="figure-item enterable" id="radius-top-left">
+	            			<span>T - L</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="radius-top-right">
+	            			<span>T - R</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="radius-bottom-left">
+	            			<span>B - L</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="radius-bottom-right">
+	            			<span>B - R</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item checkbox" id="radius-ratio-fix">
+							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">모서리 비율 고정</span>
+	            		</div>
+            		</div>
+            		
             	</div>
         	</div>
         	<div class="text-tab-content">
@@ -277,20 +302,32 @@
             	</div>
             	<div class="text-font-comps">
             		<div class="text-item enterable" id="font">
-            			<span>폰트</span><select></select>
+            			<span>폰트</span><div class="fontType"></div><input type="hidden">
             		</div>
             		<div class="text-item enterable" id="size">
             			<span>크기</span><input type="number" value="20"><span>px</span>
             		</div>
-            		<div class="text-item enterable" id="textcolor">
+            		<div class="text-item enterable" id="textColor">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
             		</div>
             		<div class="text-item" id="effect">
             			<span>효과</span>
             		</div>
-            		<div class="text-item" id="effect">
-            			<span>효과</span>
+            		<div class="text-item" id="effect-list">
+            			<div class="text-effect" id="bold"><img src="/salab/resources/img/text_Bold.png"></div>
+            			<div class="text-effect" id="italic"><img src="/salab/resources/img/text_Italic.png"></div>
+            			<div class="text-effect" id="underline"><img src="/salab/resources/img/text_Underline.png"></div>
+            			<div class="text-effect" id="strikethrough"><img src="/salab/resources/img/text_Strikethrough.png"></div>
             		</div>
+            		
+            		<div class= "text-font-droplist">
+            			<div class="component" id="1" onclick="textFontChange('굴림', 'Gulim')">굴림</div>
+            			<div class="component" id="2" onclick="textFontChange('돋움', 'Dotum')">돋움</div>
+            			<div class="component" id="3" onclick="textFontChange('바탕', 'Batang')">바탕</div>
+            			<div class="component" id="4" onclick="textFontChange('궁서', 'Gungsuh')">궁서</div>
+            			<div class="component" id="5" onclick="textFontChange('맑은 고딕', 'Malgun Gothic')">맑은 고딕</div>
+            		</div>
+            		
             	</div>
             	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
                 	<p>&#9660;</p>SHAPE
@@ -302,8 +339,11 @@
             		<div class="text-item" id="sort">
             			<span>정렬</span>
             		</div>
-            		<div class="text-item" id="sort">
-            			<span>정렬</span>
+            		<div class="text-item" id="sort-list">
+            			<div class="text-sort" id="justify"><img src="/salab/resources/img/text_Justify.png"></div>
+            			<div class="text-sort" id="left"><img src="/salab/resources/img/text_Left.png"></div>
+            			<div class="text-sort" id="center"><img src="/salab/resources/img/text_Center.png"></div>
+            			<div class="text-sort" id="right"><img src="/salab/resources/img/text_Right.png"></div>
             		</div>
             	</div>
         	</div>
@@ -325,6 +365,7 @@
         $('.lib-tab-content').hide();
     });
     $('.page-tab').click(function(){
+    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -335,6 +376,7 @@
         
     });
     $('.comp-tab').click(function(){
+    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -345,6 +387,7 @@
        
     });
     $('.lib-tab').click(function(){
+    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -376,6 +419,17 @@
         }
     }
 
+    function toggleItems(menu){
+    	var target = $("." + menu + "-tab");
+		if (target.css("display") == "none"){
+			$(".figure-item[id=" + menu + "] p").text("▼");
+			target.slideDown(200);
+		} else {
+			$(".figure-item[id=" + menu + "] p").text("▶");
+			target.slideUp(200);
+		}
+    }
+    
     $('.figure-tab').click(function(){
         $('.tab-menu .tab').each(function(){
             $(this).removeClass('active-tab'); 

@@ -5,6 +5,7 @@ var canvas = ".canvas-container";
 var $focus = $('.focus');
 var $all = $('#multiselect');
 var appendElement = "";
+var editable = "true"; // right-side-bar 자동 오픈 여부
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
@@ -108,7 +109,7 @@ function addControl(){
                 $focus.hide();
             },
             cancel: '.ui-rotatable-handle'
-        }).resizable({ 
+        }).resizable({
             handles:{
                 'n': '.ui-resizable-n',  
                 'e': '.ui-resizable-e',  
@@ -124,7 +125,8 @@ function addControl(){
             degrees: getRotateDegree($obj)
         });
         formatChange($obj);
-        if (editable = "true") {
+        if (editable == "true") {
+        	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
         	$(".right-side-bar").fadeIn(300);
         }
         
@@ -264,4 +266,3 @@ $(function(){
         $focus.css('top', top);
         $focus.css('height', height);        
     }
-});

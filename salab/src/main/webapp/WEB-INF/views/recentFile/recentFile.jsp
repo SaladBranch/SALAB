@@ -19,7 +19,7 @@
     function epFile(no){
     	var fileno = no;
     	var userno = ${loginMember.userno};
-    	location.href="epFile.do?uno="+ userno + "&fileno=" +fileno;
+    	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
     }
     </script>
     <title>최근 파일 | Salab</title>

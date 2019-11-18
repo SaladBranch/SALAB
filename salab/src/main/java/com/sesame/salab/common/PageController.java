@@ -1,21 +1,44 @@
 
 package com.sesame.salab.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.page.model.dao.MongoService;
+import com.sesame.salab.page.model.vo.Page;
+import com.sesame.salab.privatefile.model.service.PrivateFileService;
+import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 @Controller
 public class PageController {
 	private static final Logger logger = LoggerFactory.getLogger(PageController.class);
 	
+	@Autowired
+	private PrivateFileService pfService;
+	
 	@RequestMapping(value="recentFile.do")
-	public String toRecentFileMethod() {
-		return "recentFile/recentFile";
+	public String toRecentFileMethod(HttpSession session, HttpServletRequest request) {
+		String viewFileName = "recentFile/recentFile";
+		Member member = (Member) session.getAttribute("loginMember");
+		logger.info(member.toString());
+		List<PrivateFile> privateFile = pfService.selectList(member.getUserno());
+		if( privateFile != null) {
+			request.setAttribute("privateFile", privateFile);
+		}else {
+			viewFileName = "common/error";
+		}
+		return viewFileName;
 	}
 	
 	//연영 help 페이지 ~
@@ -61,9 +84,17 @@ public class PageController {
 	}
   
   @RequestMapping(value="epFile.do")
-	public String toEditPrivateFileMethod(@RequestParam("uno")String userno, @RequestParam("fileno")String fileno, HttpServletRequest req) {
-	  req.setAttribute("userno", userno);
-	  req.setAttribute("fileno", fileno);
+	public String toEditPrivateFileMethod(@RequestParam("userno")String userno, @RequestParam("fileno")String fileno, HttpServletRequest req) {
+	  MongoService mgService = new MongoService();
+	  Page page = new Page();
+	  page.setUserno(Integer.parseInt(userno));
+	  page.setFileno(Integer.parseInt(fileno));
+	  ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+
+	  req.setAttribute("pageList", pageList);
+	  req.setAttribute("userno", page.getUserno());
+	  req.setAttribute("fileno", page.getFileno());
+	  logger.info("check");
 		return "editPrivateFile/editPrivateFile";
 	}
 

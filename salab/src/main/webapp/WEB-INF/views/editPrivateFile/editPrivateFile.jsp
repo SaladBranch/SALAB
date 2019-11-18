@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -116,6 +117,7 @@
             <div class="tab comp-tab">Comp</div>
             <div class="tab lib-tab">Lib</div>
         </div>
+
         <ol class="tab-content page-tab-content">
            <li class="page-item">
                 <div class="page">
@@ -131,6 +133,7 @@
                 &#43;
             </div>
         </ol>
+
         
         <div class="tab-content comp-tab-content">
             <div class="searchbox">
@@ -535,10 +538,6 @@
     		}
     	});
     }
-    
-    $(function(){
-    	pageTab();
-    });
     
     </script>
 </body>

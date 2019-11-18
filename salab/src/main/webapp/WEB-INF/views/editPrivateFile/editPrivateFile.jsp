@@ -53,7 +53,7 @@
             <li id="toggle-page">
                 페이지<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-page-menu">
-                    <li><a href="#" onclick="newPage()">새 페이지</a></li>
+                    <li><a onclick="newPage()">새 페이지</a></li>
                     <li><a href="#">페이지 복사</a></li>
                     <li><a href="#">페이지 삭제</a></li>
                     <li><a href="#">페이지 이름 변경</a></li>
@@ -132,7 +132,12 @@
             <div class="newpage">
                 &#43;
             </div>
+
+            </c:forEach>
+            <div class="newpage">+</div>
+        </div>
         </ol>
+
 
         
         <div class="tab-content comp-tab-content">
@@ -216,9 +221,7 @@
     
     
     <div class="canvas-container">
-        <div id="droppable" class="canvas ui-widget-content">
-            <div id="multiselect"></div>
-        </div>
+        ${pageList[0].content }
     </div>
     
     <div class="right-side-bar">

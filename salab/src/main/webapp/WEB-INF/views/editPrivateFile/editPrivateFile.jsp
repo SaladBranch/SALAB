@@ -132,9 +132,6 @@
             <div class="newpage">
                 &#43;
             </div>
-
-            </c:forEach>
-            <div class="newpage">+</div>
         </div>
         </ol>
 

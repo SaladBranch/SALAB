@@ -91,7 +91,6 @@ public class MemberController {
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) && privateFile != null) {
 			session.setAttribute("loginMember", loginMember);
 			requset.setAttribute("privateFile", privateFile);
-			logger.info(String.valueOf(privateFile.size()));
 		}else {
 			viewFileName = "common/error";
 		}

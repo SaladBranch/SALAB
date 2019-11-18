@@ -1,19 +1,20 @@
 var copiedObj = [];
 var cutted = 0; //복사인지, 잘라내기한건지 구분하기 위한 변수
 $(document).on('keydown', function(e){
-    if(e.keyCode == 46){
+    if(e.keyCode == 46){ //delete
         deleteObject();
     }
-    if(e.ctrlKey && e.keyCode == 67 && $('.ui-selected').length > 0){
+    if(e.ctrlKey && e.keyCode == 67 && $('#droppable .ui-selected').length > 0){ //ctrl+c
         copyObject();
     }
-    if(e.ctrlKey && e.keyCode == 88 && $('.ui-selected').length > 0){
+    if(e.ctrlKey && e.keyCode == 88 && $('#droppable .ui-selected').length > 0){ //ctrl+x
         cutObject();
     }
-    if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){
+    if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){ //ctrl+z
         pasteObject();
     }
-    if(e.ctrlKey && e.keyCode == 65){
+    if(e.ctrlKey && e.keyCode == 65){ //ctrl+a
+        e.preventDefault();
         selectAll();
     }
 });
@@ -26,13 +27,13 @@ function deleteObject(){
 
 function copyObject(){
     copiedObj = new Array();
-    $('.ui-selected').each(function(){
+    $('#droppable .ui-selected').each(function(){
          copiedObj.push($(this));
     });
 }
 function cutObject(){
     copiedObj = new Array();
-    $('.ui-selected').each(function(){
+    $('#droppable .ui-selected').each(function(){
         copiedObj.push($(this));
         $(this).remove();
     });

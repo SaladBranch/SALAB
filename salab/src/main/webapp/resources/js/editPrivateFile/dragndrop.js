@@ -70,7 +70,7 @@ function rightMouseListner(){
         else
             $(this).parents('.group-obj').addClass('ui-selected');
         selectedObj = new Array();
-        $('.ui-selected').each(function(){
+        $('#droppable .ui-selected').each(function(){
             selectedObj.push($(this));
         });
         addControl();
@@ -213,6 +213,34 @@ $(function(){
         }
     });
     
+    $('.page-tab-content').selectable({
+        cancel: '.ui-selected',
+        filter: '>li'
+    }).sortable({
+        items: "> li",
+        placeholder: "ui-selected",
+        axis: 'y',
+        handle: 'div, .ui-selected',
+        cancel: '.newpage',
+        helper: function(e, item){
+            if ( ! item.hasClass('ui-selected') ) {
+              item.parent().children('.ui-selected').removeClass('ui-selected');
+              item.addClass('ui-selected');
+            }
+            var selected = item.parent().children('.ui-selected').clone();
+            ph = item.outerHeight() * selected.length;
+            item.data('multidrag', selected).siblings('.ui-selected').remove();
+            return $('<li/>').append(selected);
+        },
+        start: function(e, ui) {
+            ui.placeholder.css({'height':ph});
+        },
+        stop: function(e, ui) {
+            var selected = ui.item.data('multidrag');
+            ui.item.after(selected);
+            ui.item.remove();
+        }
+    });
     //canvas 위의 마우스 드래깅
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수

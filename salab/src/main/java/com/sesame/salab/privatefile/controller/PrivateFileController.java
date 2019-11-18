@@ -39,12 +39,14 @@ public class PrivateFileController {
 		page.setPagename("Untitled");
 		
 		//파일 생성후 바로 첫페이지 생성
-		
 		mgService.createFirstPage(page);
-		mgService.close();
 		
+		//생성한 페이지 바로 가져옴
+		 ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+		mgService.close();
 		mv.addObject("userno", userno);
 		mv.addObject("fileno", pfile.getPfileno());
+		mv.addObject("pageList", pageList);
 		mv.setViewName("editPrivateFile/editPrivateFile");
 		if(result <= 0) {
 			mv.setViewName("common/error");
@@ -61,12 +63,8 @@ public class PrivateFileController {
 		
 		MongoService mgService = new MongoService();
 		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
-		for(Page page2 : pageList) {
-			System.out.println(page2.toString());
-		}
 		Gson gson = new Gson();
 		String result = gson.toJson(pageList);
-		System.out.println("result ::: " + result);
 		mv.addObject("page", pageList);
 		mgService.close();
 		return mv;

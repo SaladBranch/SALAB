@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -117,7 +118,15 @@
             <div class="tab lib-tab">Lib</div>
         </div>
         <div class="tab-content page-tab-content">
-            
+            <c:forEach var="page" items="${pageList }">
+            	<div class="page">
+            	<div class="page-top">
+            		<div class="page-no"><c:out value="${page.pageno }"/>.</div>
+            		<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            	</div>
+            	<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
+            </div>
+            </c:forEach>
         </div>
         
         <div class="tab-content comp-tab-content">
@@ -469,10 +478,6 @@
     		}
     	});
     }
-    
-    $(function(){
-    	pageTab();
-    });
     
     </script>
 </body>

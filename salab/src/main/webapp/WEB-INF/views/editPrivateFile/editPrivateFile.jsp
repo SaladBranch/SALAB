@@ -117,18 +117,28 @@
             <div class="tab comp-tab">Comp</div>
             <div class="tab lib-tab">Lib</div>
         </div>
-        <div class="tab-content page-tab-content">
-            <c:forEach var="page" items="${pageList }">
-            	<div class="page">
-            	<div class="page-top">
-            		<div class="page-no"><c:out value="${page.pageno }"/>.</div>
-            		<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
-            	</div>
-            	<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
+
+        <ol class="tab-content page-tab-content">
+           <li class="page-item">
+                <div class="page">
+                    <div class="page-thumbnail">
+                        <img src="/salab/resources/img/whitebox.png">
+                    </div>
+                    <div class="page-name">
+                        <input type="text" class="page-title" value="Untitled">
+                    </div>
+                </div>
+            </li>
+            <div class="newpage">
+                &#43;
             </div>
+
             </c:forEach>
             <div class="newpage">+</div>
         </div>
+        </ol>
+
+
         
         <div class="tab-content comp-tab-content">
             <div class="searchbox">

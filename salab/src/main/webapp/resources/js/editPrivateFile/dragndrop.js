@@ -230,7 +230,10 @@ $(function(){
             var selected = item.parent().children('.ui-selected').clone();
             ph = item.outerHeight() * selected.length;
             item.data('multidrag', selected).siblings('.ui-selected').remove();
-            return $('<li/>').append(selected);
+            return $('<li/>').append(selected).css({
+                'list-style':"none",
+                padding: 0
+            });
         },
         start: function(e, ui) {
             ui.placeholder.css({'height':ph});

@@ -129,7 +129,7 @@
             		</div>
             	</li>
             </c:forEach>
-            <li class="page-item"><div class="newpage">+</div></li>
+            <div class="newpage">&#43;</div>
         </ol>
 
 

@@ -1,6 +1,8 @@
 
 package com.sesame.salab.common;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -8,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sesame.salab.page.model.dao.MongoService;
+import com.sesame.salab.page.model.vo.Page;
 
 @Controller
 public class PageController {
@@ -61,9 +66,17 @@ public class PageController {
 	}
   
   @RequestMapping(value="epFile.do")
-	public String toEditPrivateFileMethod(@RequestParam("uno")String userno, @RequestParam("fileno")String fileno, HttpServletRequest req) {
-	  req.setAttribute("userno", userno);
-	  req.setAttribute("fileno", fileno);
+	public String toEditPrivateFileMethod(@RequestParam("userno")String userno, @RequestParam("fileno")String fileno, HttpServletRequest req) {
+	  MongoService mgService = new MongoService();
+	  Page page = new Page();
+	  page.setUserno(Integer.parseInt(userno));
+	  page.setFileno(Integer.parseInt(fileno));
+	  ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+
+	  req.setAttribute("pageList", pageList);
+	  req.setAttribute("userno", page.getUserno());
+	  req.setAttribute("fileno", page.getFileno());
+	  logger.info("check");
 		return "editPrivateFile/editPrivateFile";
 	}
 

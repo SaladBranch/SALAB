@@ -119,6 +119,20 @@
         </div>
 
         <ol class="tab-content page-tab-content">
+           <li class="page-item">
+                <div class="page">
+                    <div class="page-thumbnail">
+                        <img src="/salab/resources/img/whitebox.png">
+                    </div>
+                    <div class="page-name">
+                        <input type="text" class="page-title" value="Untitled">
+                    </div>
+                </div>
+            </li>
+            <div class="newpage">
+                &#43;
+            </div>
+        </div>
         	<c:forEach var="page" items="${pageList }">
            		<li class="page-item">
             		<div class="page">
@@ -129,7 +143,7 @@
             		</div>
             	</li>
             </c:forEach>
-            <div class="newpage">&#43;</div>
+            <li class="page-item"><div class="newpage">+</div></li>
         </ol>
 
 

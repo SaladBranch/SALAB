@@ -94,7 +94,6 @@ public class PageController {
 	  req.setAttribute("pageList", pageList);
 	  req.setAttribute("userno", page.getUserno());
 	  req.setAttribute("fileno", page.getFileno());
-	  logger.info("check");
 		return "editPrivateFile/editPrivateFile";
 	}
 

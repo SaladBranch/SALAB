@@ -533,3 +533,58 @@ a:hover{
 	color: #3cb371;
 }
 
+
+/* 페이징 css */
+.box_footer{
+	font-size: 13pt;
+	width: 87%;
+	padding: 0px 30px;
+	display: block;
+	margin-left: 70px;
+}
+
+.paging_list{
+	text-align: center;
+	width: 80%;
+	height: 40px;
+	margin-top: 20px;
+	padding-left: 330px;
+}
+
+.paging_btn{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	color: gray;
+	width: 11%;
+}
+.paging_btn > a{
+	color: black;
+}
+
+.paging_btn > a:hover{
+	color: #3cb371;
+}
+
+.paging_no{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	width: 6%;
+	color: black;
+}
+
+.paging_no:hover{
+	background: lightgreen;
+}
+
+.paging_no_this{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	width: 6%;
+	color: #3cb371;
+}

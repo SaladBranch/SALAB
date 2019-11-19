@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
     <link rel="stylesheet" href="/salab/resources/css/userPage/userUpgrade.css">
 
+   <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.2.min.js" type="application/javascript"></script>
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>USER | SALAB</title>
 </head>
@@ -72,7 +74,7 @@
             </div>
             <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userUpgrade.do" >계정 업그레이드</a>
+                <a href="userUpgrade.do">계정 업그레이드</a>
             </div>
         </div>
     </div>
@@ -131,7 +133,7 @@
                 <div>
                     <div id="upgrade-bottom">
                         <div>월 11$에 SALAB의 모든 기능을 사용해보세요 !</div>
-                        <input type="button" value="PREMIUM 등록하기">
+                        <input type="button" value="PREMIUM 등록하기" onclick="firstPay()">
                     </div>
                 </div>
                 <div id="goto-FAQ" class="escapeSentence">등급에 관련하여 궁금하신 사항이 있으신가요?</div>
@@ -203,5 +205,63 @@
         </section>
     </div>
 </body>
+<script>
+    function firstPay() {
+        var d = new Date;
+        var orderno='${loginMember.userno}'+'u'+d.getTime();
+        
+        console.log('${loginMember.useremail}');
+
+        BootPay.request({
+            price: 0, // 0으로 해야 한다.
+            application_id: "5d5a6ed20627a800303d1951",
+            name: 'Premium Service', //결제창에서 보여질 이름
+            pg: 'danal',
+            method: 'card_rebill', // 빌링키를 받기 위한 결제 수단
+            show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
+            user_info: {
+                username: '${loginMember.username}',
+                email: '${loginMember.useremail}',
+                phone: '${loginMember.userphone}'
+            },
+            
+            order_id: orderno , //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+            params: {
+                callback1: '그대로 콜백받을 변수 1',
+                callback2: '그대로 콜백받을 변수 2',
+                customvar1234: '변수명도 마음대로'
+            },
+        }).error(function(data) {
+            alert("에러발생. 재시도해주세요");
+            console.log(data);
+        }).cancel(function(data) {
+            alert("결제가 취소되었습니다.");
+            console.log(data);
+        }).done(function(data) {
+            console.log(data);
+            // 빌링키를 정상적으로 가져오면 해당 데이터를 불러옵니다.
+            $.ajax({
+                url: 'pm_done.do',
+                data: {
+                    billing_key: data.billing_key,
+                    order_id: orderno,
+                    userno: '${loginMember.userno}'
+                },
+                type: 'POST',
+                success: function() {
+                    uptest();
+                    location.href = 'userMain.do';
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("error : " + textStatus);
+                }
+            });
+        });
+    }
+    
+    function uptest(){
+    alert("dd");
+}
+</script>
 
 </html>

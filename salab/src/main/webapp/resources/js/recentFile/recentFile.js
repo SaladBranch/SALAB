@@ -211,7 +211,7 @@ $(window).click(function(event){
     if(!$(event.target).is($('.user-profile *')) && drop.css('display') == 'block'){
         drop.hide();
     }
-   
+    
 });
 
 

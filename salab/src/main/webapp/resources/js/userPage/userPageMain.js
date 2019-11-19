@@ -132,11 +132,9 @@ function accountDelete(pwd) {
             } else if (data = 'success') {
                 location.href = 'logout.do';
             }
-            console.log("password : " + password.toString);
-            alert("전송성공");
         },
         error: function () {
-            alert("실패");
+            alert("에러");
         }
     });
 }

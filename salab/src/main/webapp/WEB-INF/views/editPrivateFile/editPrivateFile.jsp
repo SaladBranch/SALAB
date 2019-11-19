@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -52,7 +53,7 @@
             <li id="toggle-page">
                 페이지<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-page-menu">
-                    <li><a href="#">새 페이지</a></li>
+                    <li><a onclick="newPage()">새 페이지</a></li>
                     <li><a href="#">페이지 복사</a></li>
                     <li><a href="#">페이지 삭제</a></li>
                     <li><a href="#">페이지 이름 변경</a></li>
@@ -116,23 +117,30 @@
             <div class="tab comp-tab">Comp</div>
             <div class="tab lib-tab">Lib</div>
         </div>
-        <div class="tab-content page-tab-content">
-            <div class="page">
-                <div class="page-top">
-                    <div class="page-no">1.</div>
-                    <div class="page-thumbnail">
-                        <img src="/salab/resources/img/whitebox.png">
-                    </div>
-                </div>
-                <div class="page-name">
-                    <input type="text" class="page-title" value="Untitled">
-                </div>
-            </div>
-            
-            <div class="newpage">
-                &#43;
-            </div>
-        </div>
+
+        <ol class="tab-content page-tab-content">
+        	<li class="page-item ui-selectee ui-selected">
+            	<div class="page ui-sortable-handle">
+            		<div class="page-top ui-sortable-handle">
+            			<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            		</div>
+            		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
+            	</div>
+            </li>
+        	<c:forEach var="page" items="${pageList }" begin="1">
+           			<li class="page-item">
+            		<div class="page">
+            			<div class="page-top">
+            				<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            			</div>
+            			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
+            		</div>
+            		</li>
+            </c:forEach>
+            <div class="newpage" onclick="newPage()">&#43;</div>
+        </ol>
+
+
         
         <div class="tab-content comp-tab-content">
             <div class="searchbox">
@@ -192,7 +200,7 @@
                             <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
                         </svg>
                     </a>
-                    <!--정원(?)-->
+                    <!--정원(x) perfect Circle -->
                     <a id="obj_circle" class="geItem c_circle" display="inline-block">
                         <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                             <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
@@ -215,9 +223,7 @@
     
     
     <div class="canvas-container">
-        <div id="droppable" class="canvas ui-widget-content">
-            <div id="multiselect"></div>
-        </div>
+        ${pageList[0].content }
     </div>
     
     <div class="right-side-bar">
@@ -237,7 +243,7 @@
             		<div class="figure-item enterable" id="height">
             			<span>세로</span><input type="number" value="0"><span>px</span>
             		</div>
-            		<div class="figure-item" id="ratio-fix">
+            		<div class="figure-item checkbox" id="size-ratioFix">
 						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
             		</div>
             		<div class="figure-item enterable" id="rotation">
@@ -257,32 +263,56 @@
             		<div class="figure-item enterable" id="lineColor">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#FFFFFF">
             		</div>
-            		<div class="figure-item" id="weight">
-            			<span>굵기</span>
+            		<div class="figure-item togglable" id="weight" onclick="toggleItems('weight');">
+            			<span>굵기</span><p>&#9660;</p>
             		</div>
-            		<div class="figure-item enterable" id="weight-top">
-            			<span>T</span><input type="number" value="0"><span>px</span>
+            		<div class="weight-tab">
+	            		<div class="figure-item enterable" id="weight-top">
+	            			<span>T</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="weight-left">
+	            			<span>L</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="weight-right">
+	            			<span>R</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="weight-bottom">
+	            			<span>B</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item checkbox" id="weight-ratioFix">
+							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
+	            		</div>
             		</div>
-            		<div class="figure-item enterable" id="weight-left">
-            			<span>L</span><input type="number" value="0"><span>px</span>
-            		</div>
-            		<div class="figure-item enterable" id="weight-right">
-            			<span>R</span><input type="number" value="0"><span>px</span>
-            		</div>
-            		<div class="figure-item enterable" id="weight-bottom">
-            			<span>B</span><input type="number" value="0"><span>px</span>
-            		</div>
-            		<div class="figure-item" id="ratio-fix">
-						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
-            		</div>
+            		
             		<div class= "figure-line-droplist">
-            			<div class="component" id="0"><hr></div>
-            			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px white"></div>
-            			<div class="component" id="2" onclick="figurelineChange('dashed')"><hr style="border : dashed 3px white"></div>
-            			<div class="component" id="3" onclick="figurelineChange('solid')"><hr style="border : solid 3px white"></div>
-            			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px white"></div>
-            			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px white"></div>
+            			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px black"></div>
+            			<div class="component" id="2" onclick="figurelineChange('dashed')"><hr style="border : dashed 3px black"></div>
+            			<div class="component" id="3" onclick="figurelineChange('solid')"><hr style="border : solid 3px black"></div>
+            			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px black"></div>
+            			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px black"></div>
             		</div>
+            		
+            		<div class="figure-item togglable" id="radius" onclick="toggleItems('radius');">
+            			<span>모서리</span><p>&#9660;</p>
+            		</div>
+            		<div class="radius-tab">
+	            		<div class="figure-item enterable" id="radius-top-left">
+	            			<span>T - L</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="radius-top-right">
+	            			<span>T - R</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="radius-bottom-left">
+	            			<span>B - L</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item enterable" id="radius-bottom-right">
+	            			<span>B - R</span><input type="number" value="0"><span>px</span>
+	            		</div>
+	            		<div class="figure-item checkbox" id="radius-ratioFix">
+							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">모서리 비율 고정</span>
+	            		</div>
+            		</div>
+            		
             	</div>
         	</div>
         	<div class="text-tab-content">
@@ -290,21 +320,33 @@
                 	<p>&#9660;</p>FONT
             	</div>
             	<div class="text-font-comps">
-            		<div class="text-item enterable" id="font">
-            			<span>폰트</span><select></select>
+            		<div class="text-item enterable dropdownable" id="font">
+            			<span>폰트</span><div class="fontType"></div><input type="hidden">
             		</div>
             		<div class="text-item enterable" id="size">
             			<span>크기</span><input type="number" value="20"><span>px</span>
             		</div>
-            		<div class="text-item enterable" id="textcolor">
+            		<div class="text-item enterable" id="textColor">
             			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
             		</div>
             		<div class="text-item" id="effect">
             			<span>효과</span>
             		</div>
-            		<div class="text-item" id="effect">
-            			<span>효과</span>
+            		<div class="text-item" id="effect-list">
+            			<div class="text-effect" id="bold"><img src="/salab/resources/img/text_Bold.png"></div>
+            			<div class="text-effect" id="italic"><img src="/salab/resources/img/text_Italic.png"></div>
+            			<div class="text-effect" id="underline"><img src="/salab/resources/img/text_Underline.png"></div>
+            			<div class="text-effect" id="strikethrough"><img src="/salab/resources/img/text_Strikethrough.png"></div>
             		</div>
+            		
+            		<div class= "text-font-droplist">
+            			<div class="component" id="1" onclick="textFontChange('굴림', 'Gulim')">굴림</div>
+            			<div class="component" id="2" onclick="textFontChange('돋움', 'Dotum')">돋움</div>
+            			<div class="component" id="3" onclick="textFontChange('바탕', 'Batang')">바탕</div>
+            			<div class="component" id="4" onclick="textFontChange('궁서', 'Gungsuh')">궁서</div>
+            			<div class="component" id="5" onclick="textFontChange('맑은 고딕', 'Malgun Gothic')">맑은 고딕</div>
+            		</div>
+            		
             	</div>
             	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
                 	<p>&#9660;</p>SHAPE
@@ -316,14 +358,18 @@
             		<div class="text-item" id="sort">
             			<span>정렬</span>
             		</div>
-            		<div class="text-item" id="sort">
-            			<span>정렬</span>
+            		<div class="text-item" id="sort-list">
+            			<div class="text-sort" id="justify"><img src="/salab/resources/img/text_Justify.png"></div>
+            			<div class="text-sort" id="left"><img src="/salab/resources/img/text_Left.png"></div>
+            			<div class="text-sort" id="center"><img src="/salab/resources/img/text_Center.png"></div>
+            			<div class="text-sort" id="right"><img src="/salab/resources/img/text_Right.png"></div>
             		</div>
             	</div>
         	</div>
         </div>
     </div>
     
+    <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
@@ -332,12 +378,20 @@
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
     <script type="text/javascript">
+    	//페이지컨텐츠를 담을 전역변수
+    	var list = new Array();
     $(function(){
+    	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
+    	<c:forEach items="${pageList }" var="item">
+    		list.push("${item.content }");
+    	</c:forEach>
+    	
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
     });
     $('.page-tab').click(function(){
+    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -348,6 +402,7 @@
         
     });
     $('.comp-tab').click(function(){
+    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -358,6 +413,7 @@
        
     });
     $('.lib-tab').click(function(){
+    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -389,6 +445,17 @@
         }
     }
 
+    function toggleItems(menu){
+    	var target = $("." + menu + "-tab");
+		if (target.css("display") == "none"){
+			$(".figure-item[id=" + menu + "] p").text("▼");
+			target.slideDown(200);
+		} else {
+			$(".figure-item[id=" + menu + "] p").text("▶");
+			target.slideUp(200);
+		}
+    }
+    
     $('.figure-tab').click(function(){
         $('.tab-menu .tab').each(function(){
             $(this).removeClass('active-tab'); 
@@ -421,6 +488,103 @@
             $('.main-toggle-menu').hide();    
         }
     });
+    
+    //page 탭 리스트 불러오는 ajax
+    function pageTab(){
+    	$.ajax({
+    		url: 'pageTab.do',
+    		type: 'post',
+    		data: {
+    			userno: ${userno},
+    			fileno: ${fileno}
+    		},
+    		dataType: 'json',
+    		success: function(data){
+    			console.log(data.page[0].pageno);
+    			$('.page-tab-content').html('');
+    			for(var i =0; i < data.page.length; i++){
+    				$('.page-tab-content').append(
+        					'<li class="page-item">' +
+    						'<div class="page">' +
+        	                '<div class="page-top">' +
+        	                    '<div class="page-thumbnail">' +
+        	                        '<img src="/salab/resources/img/whitebox.png">' +
+        	                    '</div>'+
+        	                '</div>' +
+        	                '<div class="page-name">' + 
+        	                    '<input type="text" class="page-title" value="Untitled">' +
+        	                '</div>' +
+        	            '</div>'	+ 
+        	            '</li>'
+        			);
+    			}
+    			
+    			$('.page-tab-content').append(
+    					'<div class="newpage" onclick="newPage()">' +
+    	                '&#43;' +
+    	            '</div>'	
+    			);
+    		},
+    		error: function(){
+    			
+    		}
+    	});
+    }
+    
+    function newPage(){
+    	console.log('check');
+    	$.ajax({
+    		url: 'newPage.do',
+    		type: 'post',
+    		dataType: 'json',
+    		data: {
+    			userno: ${userno},
+    			fileno: ${fileno}
+    		},
+    		success: function(data){
+    			console.log("ok");
+    			pageTab();
+    		},
+    		error:function(){
+    			
+    		}
+    	});
+    }
+    
+    //페이지 셀렉트시에 페이지를 변경시켜줄 함수
+    function pageContent(index){
+    	var no = index;
+    	$('.canvas-container').html(list[no]);
+    	$all = $('#multiselect');
+    	$('#droppable').selectable({
+            filter: " > .obj",
+            start: function(){
+                selectedObj = new Array();
+            },
+            selected: function(e, ui){
+                selectedObj.push($(ui.selected));
+            },
+            unselected: function(e, ui){
+                $(ui.unselected).children().remove('.ui-resizable-handle');
+                if($(ui.unselected).hasClass('ui-draggable'))
+                    $(ui.unselected).draggable('destroy');
+                $(ui.unselected).children('.ui-rotatable-handle').hide();
+            },
+            stop: function(){
+                addControl();
+            }
+        });
+        rightMouseListner();
+        leftMouseListner();
+        
+    }
+    
+    function tempStorage(index){
+    	var no = index;
+    	list[no] = $('.canvas-container').html();
+    }
+    
     </script>
+    
 </body>
 </html>

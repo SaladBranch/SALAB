@@ -97,7 +97,7 @@ public class ProjectController {
 			//초대메일 전송
 			for(String uno : investMember) {
 				logger.info(uno);
-				String uemail = pService.projectInvest(uno);
+				String uemail = pService.projectInvite(uno);
 				logger.info(uemail);
 				MailUtils sendMail = new MailUtils(mailSender);
 				sendMail.setSubject("[SALAB] 프로젝트 참여");
@@ -111,9 +111,6 @@ public class ProjectController {
 			mv.addObject("message", "엌ㅋㅋㅋ 프로젝트 생성되는 상상함");
 			mv.setViewName("common/error");
 		}
-		
-		
-		
 		
 		return mv;
 	}

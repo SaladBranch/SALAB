@@ -15,6 +15,13 @@
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
+    <script type="text/javascript">
+    function epFile(no){
+    	var fileno = no;
+    	var userno = ${loginMember.userno};
+    	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
+    }
+    </script>
     <title>최근 파일 | Salab</title>
 </head>
 <body>
@@ -118,34 +125,34 @@
         
         <div class="row recent-files">
         	<c:forEach var="pfile" items="${privateFile }">
-        		<div class="file-grid" onclick="location.href='epFile.do'">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                <c:out value="${pfile.pfiletitle }"/>
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일1
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+	                <div class="file-container">
+	                    <div class="file-thumbnail">
+	                        
+	                    </div>
+	                    <div class="file-info">
+	                        <div class="about-file">
+	                            <div class="file-name">
+	                                <c:out value="${pfile.pfiletitle }"/>
+	                            </div>
+	                            <div class="file-edited">
+	                                5분 전 편집 in 개인파일1
+	                            </div>
+	                        </div>
+	                        <div class="file-options">
+	                            <div class="file-options-btn">&#8942;</div>
+	                            <div class="file-options-menu">
+	                                <ul>
+	                                    <li><a href="#">파일열기</a></li>
+	                                    <li><a href="#">파일 정보 설정</a></li>
+	                                    <li><a href="#">사본만들기</a></li>
+	                                    <li><a href="#">웹테스트</a></li>
+	                                    <li><a href="#">삭제</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
            		</div>
         	</c:forEach>
         	
@@ -267,7 +274,7 @@
             </div>
             
             <div class="file-grid">
-                <div class="new-file" onclick="javascript:location.href='insert_newpage.do?userno=${loginMember.userno }'">
+                <div class="new-file" onclick="javascript:location.href='insert_newprivateFile.do?userno=${loginMember.userno }'">
                     &#43; 새 파일
                 </div>
             </div>

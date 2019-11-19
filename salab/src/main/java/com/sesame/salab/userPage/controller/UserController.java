@@ -3,8 +3,9 @@ package com.sesame.salab.userPage.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -96,20 +97,40 @@ public class UserController {
 		//틀릴 시 , 사후처리.
 	}
 	@RequestMapping(value="accountDelete.do", method= RequestMethod.POST)
-	public void accountDeleteMethod(@RequestParam("password") String password, HttpServletResponse response) throws IOException{
-		Map<String, Integer> result = new HashMap<String,Integer>(); 
-		
+	public void accountDeleteMethod(@RequestParam("password") String password, HttpServletResponse response, HttpSession session) throws IOException{
 		logger.info("delete.do 진입");
-		logger.info("pass : " + password);
+		logger.info("입력된 password : " + password);
 		
-		
+		Member member = (Member) session.getAttribute("loginMember");
+		Member checkMember = new Member();
+		checkMember.setUserpwd(password);
+
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		//패스워드가 동일, 처리완료시,
-		
-		//패스워드가 다를 시,
-		out.append("success");
+		if( bcryptPasswordEncoder.matches(checkMember.getUserpwd(), member.getUserpwd()) ) {
+			logger.info("password Checking passed... userinfo: "+member.toString());
+			member.setUserpwd(bcryptPasswordEncoder.encode(checkMember.getUserpwd()));
+			//해당 멤버가 가지고 있는 팀 프로젝트 번호리스트 가져오기.
+			List<Integer> projectNumList = upService.test(member);
+			logger.info("유저가 LEADER로 있는 프로젝트 수 : "+ projectNumList.size());
+			for(int i =0; i < projectNumList.size() ; i++){
+					if(member.getUserlevel().equals("PREMIUM")) {
+						//PREMIUM
+						upService.searchPremium(projectNumList.get(i));
+					}else {
+						//STANDARD
+						upService.searchNextLeader(projectNumList.get(i));		
+					}
+				}
+				//유저 삭제
+			upService.deleteAccount(member);
+			out.append("success");
+		}else {
+			//패스워드가 다를 시,
+			out.append("fail");
+			
+		}
 		out.flush();
 		out.close();
 	

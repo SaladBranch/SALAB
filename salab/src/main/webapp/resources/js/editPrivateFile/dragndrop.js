@@ -156,6 +156,7 @@ function addControl(){
         }
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
+    	console.log("복수 선택");
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
             $obj.children().remove('.ui-resizable-handle');
@@ -218,17 +219,17 @@ $(function(){
         filter: '>li',
         start: function(){
         	//페이지를 셀렉트했을때 변경된 작업에대해서 임시저장하는 함
-        	$( ".page-tab-content .ui-selected", this ).each(function() {
-                var index = $( ".page-tab-content li" ).index( this );
+        	$( ".page-tab-content .ui-selected").each(function(){
+                var index = $( ".page-tab-content li" ).index($(this));
                 tempStorage(index);
             });
         },
         stop: function(){
         	//페이지를 셀렉트 했을때 안의 content 가 바뀌게 하는 함수
-        	$( ".page-tab-content .ui-selected", this ).each(function() {
-                var index = $( ".page-tab-content li" ).index( this );
+        	$( ".page-tab-content .ui-selected").each(function() {
+                var index = $( ".page-tab-content li" ).index($(this));
                 pageContent(index);
-              });
+        	});
         }
     }).sortable({
         items: "> li",

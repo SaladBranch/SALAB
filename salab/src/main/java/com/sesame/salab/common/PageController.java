@@ -98,9 +98,9 @@ public class PageController {
 	}
 
 	// 승진 테스트페이지 이동
-	@RequestMapping(value="testSEUNGJIN.do")
+	@RequestMapping(value="textTest.do")
 	public String toTestSEUNGJIN() {
-		return "testSEUNGJIN";
+		return "textTest";
 	}
 
 	//건우

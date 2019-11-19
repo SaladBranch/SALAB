@@ -18,13 +18,13 @@ public class Member implements Serializable{
 	private String userauthkey;
 	private String useremailchecked;
 	private String billingkey;
-	private int paymentdate;
+	private Date paymentdate;
 	
 	public Member() {}
 
 	public Member(int userno, String useremail, String userpwd, String username, String userphone, String userprofile_o,
 			String userprofile_r, String userlevel, Date userenrolldate, String userauthkey, String useremailchecked,
-			String billingkey, int paymentdate) {
+			String billingkey, Date paymentdate) {
 		super();
 		this.userno = userno;
 		this.useremail = useremail;
@@ -137,11 +137,11 @@ public class Member implements Serializable{
 		this.billingkey = billingkey;
 	}
 
-	public int getPaymentdate() {
+	public Date getPaymentdate() {
 		return paymentdate;
 	}
 
-	public void setPaymentdate(int paymentdate) {
+	public void setPaymentdate(Date paymentdate) {
 		this.paymentdate = paymentdate;
 	}
 

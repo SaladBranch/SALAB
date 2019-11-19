@@ -82,11 +82,12 @@ function pasteObject(){
     }
     
 }
+//복제하기
 function cloneObject(){
     copyObject();
     pasteObject();
 }
-//우클릭 시 그룹 풀림현상 해결해라
+//그룹화
 function groupObject(){
     var $group = $('<div class="group-obj obj ui-selected"></div>')
     var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
@@ -129,21 +130,26 @@ function groupObject(){
     
     addControl();
 }
+//그룹해제
 function ungroupObject(){
-    $group = selectedObj[0];
-    selectedObj = new Array();
-    $group.children('.obj').each(function(){
-        $(this).css({
-            left: Number($(this).css('left').replace('px', '')) + Number($group.css('left').replace('px', '')) + 'px',
-            top: Number($(this).css('top').replace('px', '')) + Number($group.css('top').replace('px', '')) + 'px'
+    if(selectedObj[0].hasClass('group-obj')){
+        $group = selectedObj[0];
+        selectedObj = new Array();
+        $group.children('.obj').each(function(){
+            $(this).css({
+                left: Number($(this).css('left').replace('px', '')) + Number($group.css('left').replace('px', '')) + 'px',
+                top: Number($(this).css('top').replace('px', '')) + Number($group.css('top').replace('px', '')) + 'px'
+            });
+            $(this).addClass('ui-selected');
+            $(this).appendTo('#droppable');
+            selectedObj.push($(this));
         });
-        $(this).addClass('ui-selected');
-        $(this).appendTo('#droppable');
-        selectedObj.push($(this));
-    });
-    $group.remove();
-    addControl();
+        $group.remove();
+        addControl();
+    }
+
 }
+//전체선택
 function selectAll(){
     selectedObj = new Array();
     $('#droppable > .obj').each(function(){
@@ -151,4 +157,49 @@ function selectAll(){
         selectedObj.push($(this));
     });
     addControl();
+}
+//맨앞으로
+var zIndex = 0;
+function send_forward(){
+    var max = 0;
+    $('#droppable .obj').each(function(){
+        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+        if(num > max){
+            max = num;
+        }
+    });
+    for(i = 0; i<selectedObj.length; i++){
+        selectedObj[i].css('z-index', Number(max) + 1);
+    }
+}
+//앞으로
+function send_front(){
+    for(i = 0; i<selectedObj.length; i++){
+        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
+        selectedObj[i].css('z-index', Number(num) + 1);
+    }
+}
+//뒤로
+function send_back(){
+    for(i = 0; i<selectedObj.length; i++){
+        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
+        if(num != 0)
+            selectedObj[i].css('z-index', Number(num) - 1);
+        else{
+            $('#droppable .obj').each(function(){
+                var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+                $(this).css('z-index', Number(num) + 1);
+            });
+        }
+    }
+}
+//맨뒤로
+function send_backward(){
+    $('#droppable .obj').each(function(){
+        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+        $(this).css('z-index', Number(num) + 1);
+    });
+    for(i = 0; i<selectedObj.length; i++){
+        selectedObj[i].css('z-index', 0);
+    }
 }

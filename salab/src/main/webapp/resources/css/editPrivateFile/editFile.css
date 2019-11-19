@@ -733,16 +733,17 @@ ol.page-tab-content li{
     margin: 5% auto;
 }
 
+/*우클릭 메뉴*/
 .context-menu{
     display: none;
     position: absolute;
-    z-index: 99;
+    z-index: 999;
     background: #2c2c2c;
     width: 180px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
     padding: 5px 0;
 }
-.context-menu a{
+.context-menu a, .context-menu>ul>li{
     display: block;
     color: #fff;
     font-size: 13px;
@@ -752,6 +753,7 @@ ol.page-tab-content li{
 .context-menu a:hover{
     background: #00a8ff;
 }
+.context-menu>ul{cursor: pointer; position: relative;}
 .disabled{
     color: #797979 !important;
     cursor: default;
@@ -766,4 +768,23 @@ ol.page-tab-content li{
     margin: 2px 0;
     height: 1px;
     background: #9a9a9a;
+}
+.context-menu li span{
+    float: right;
+    font-size: 12px;
+    margin-right: 10px;
+    line-height: 100%;
+}
+.orderObj:hover .orderObj-sub{display: block;}
+.orderObj-sub{
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    left: 180px;
+    top: -2px;
+    background: #2c2c2c;
+    width: 180px;
+    padding: 6px 0;
+    border: 1px solid #000;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }

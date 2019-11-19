@@ -243,7 +243,7 @@
             		<div class="figure-item enterable" id="height">
             			<span>세로</span><input type="number" value="0"><span>px</span>
             		</div>
-            		<div class="figure-item checkbox" id="size-ratio-fix">
+            		<div class="figure-item checkbox" id="size-ratioFix">
 						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
             		</div>
             		<div class="figure-item enterable" id="rotation">
@@ -279,18 +279,17 @@
 	            		<div class="figure-item enterable" id="weight-bottom">
 	            			<span>B</span><input type="number" value="0"><span>px</span>
 	            		</div>
-	            		<div class="figure-item checkbox" id="weight-ratio-fix">
+	            		<div class="figure-item checkbox" id="weight-ratioFix">
 							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
 	            		</div>
             		</div>
             		
             		<div class= "figure-line-droplist">
-            			<div class="component" id="0"><hr></div>
-            			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px white"></div>
-            			<div class="component" id="2" onclick="figurelineChange('dashed')"><hr style="border : dashed 3px white"></div>
-            			<div class="component" id="3" onclick="figurelineChange('solid')"><hr style="border : solid 3px white"></div>
-            			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px white"></div>
-            			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px white"></div>
+            			<div class="component" id="1" onclick="figurelineChange('dotted')"><hr style="border : dotted 3px black"></div>
+            			<div class="component" id="2" onclick="figurelineChange('dashed')"><hr style="border : dashed 3px black"></div>
+            			<div class="component" id="3" onclick="figurelineChange('solid')"><hr style="border : solid 3px black"></div>
+            			<div class="component" id="4" onclick="figurelineChange('double')"><hr style="border : double 3px black"></div>
+            			<div class="component" id="5" onclick="figurelineChange('ridge')"><hr style="border : ridge 3px black"></div>
             		</div>
             		
             		<div class="figure-item togglable" id="radius" onclick="toggleItems('radius');">
@@ -309,7 +308,7 @@
 	            		<div class="figure-item enterable" id="radius-bottom-right">
 	            			<span>B - R</span><input type="number" value="0"><span>px</span>
 	            		</div>
-	            		<div class="figure-item checkbox" id="radius-ratio-fix">
+	            		<div class="figure-item checkbox" id="radius-ratioFix">
 							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">모서리 비율 고정</span>
 	            		</div>
             		</div>

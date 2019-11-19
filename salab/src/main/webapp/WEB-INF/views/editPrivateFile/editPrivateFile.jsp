@@ -119,17 +119,25 @@
         </div>
 
         <ol class="tab-content page-tab-content">
-        	<c:forEach var="page" items="${pageList }">
-           		<li class="page-item">
+        	<li class="page-item ui-selectee ui-selected">
+            	<div class="page ui-sortable-handle">
+            		<div class="page-top ui-sortable-handle">
+            			<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            		</div>
+            		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
+            	</div>
+            </li>
+        	<c:forEach var="page" items="${pageList }" begin="1">
+           			<li class="page-item">
             		<div class="page">
             			<div class="page-top">
             				<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
             			</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
             		</div>
-            	</li>
+            		</li>
             </c:forEach>
-            <div class="newpage">&#43;</div>
+            <div class="newpage" onclick="newPage()">&#43;</div>
         </ol>
 
 
@@ -371,7 +379,14 @@
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
     <script type="text/javascript">
+    	//페이지컨텐츠를 담을 전역변수
+    	var list = new Array();
     $(function(){
+    	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
+    	<c:forEach items="${pageList }" var="item">
+    		list.push("${item.content }");
+    	</c:forEach>
+    	
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
@@ -490,9 +505,9 @@
     			$('.page-tab-content').html('');
     			for(var i =0; i < data.page.length; i++){
     				$('.page-tab-content').append(
-        					'<div class="page">' +
+        					'<li class="page-item">' +
+    						'<div class="page">' +
         	                '<div class="page-top">' +
-        	                    '<div class="page-no">'+ data.page[i].pageno +'.</div>' +
         	                    '<div class="page-thumbnail">' +
         	                        '<img src="/salab/resources/img/whitebox.png">' +
         	                    '</div>'+
@@ -500,12 +515,13 @@
         	                '<div class="page-name">' + 
         	                    '<input type="text" class="page-title" value="Untitled">' +
         	                '</div>' +
-        	            '</div>'		
+        	            '</div>'	+ 
+        	            '</li>'
         			);
     			}
     			
     			$('.page-tab-content').append(
-    					'<div class="newpage">' +
+    					'<div class="newpage" onclick="newPage()">' +
     	                '&#43;' +
     	            '</div>'	
     			);
@@ -536,6 +552,41 @@
     	});
     }
     
+    //페이지 셀렉트시에 페이지를 변경시켜줄 함수
+    function pageContent(index){
+    	var no = index;
+    	$('.canvas-container').html(list[no]);
+        $('#droppable').selectable({
+            filter: " > .obj",
+            start: function(){
+                selectedObj = new Array();
+            },
+            selected: function(e, ui){
+                selectedObj.push($(ui.selected));
+            },
+            unselected: function(e, ui){
+                $(ui.unselected).children().remove('.ui-resizable-handle');
+                if($(ui.unselected).hasClass('ui-draggable'))
+                    $(ui.unselected).draggable('destroy');
+                $(ui.unselected).children('.ui-rotatable-handle').hide();
+            },
+            stop: function(){
+                addControl();
+            }
+        });
+        
+        addControl()
+        rightMouseListner();
+        leftMouseListner();
+        
+    }
+    
+    function tempStorage(index){
+    	var no = index;
+    	list[no] = $('.canvas-container').html();
+    }
+    
     </script>
+    
 </body>
 </html>

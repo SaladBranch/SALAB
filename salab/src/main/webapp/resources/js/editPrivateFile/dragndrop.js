@@ -215,7 +215,21 @@ $(function(){
     
     $('.page-tab-content').selectable({
         cancel: '.ui-selected',
-        filter: '>li'
+        filter: '>li',
+        start: function(){
+        	//페이지를 셀렉트했을때 변경된 작업에대해서 임시저장하는 함
+        	$( ".page-tab-content .ui-selected", this ).each(function() {
+                var index = $( ".page-tab-content li" ).index( this );
+                tempStorage(index);
+            });
+        },
+        stop: function(){
+        	//페이지를 셀렉트 했을때 안의 content 가 바뀌게 하는 함수
+        	$( ".page-tab-content .ui-selected", this ).each(function() {
+                var index = $( ".page-tab-content li" ).index( this );
+                pageContent(index);
+              });
+        }
     }).sortable({
         items: "> li",
         placeholder: "ui-selected",
@@ -322,4 +336,5 @@ $(function(){
         $focus.css('top', top);
         $focus.css('height', height);        
     }
+    
 });

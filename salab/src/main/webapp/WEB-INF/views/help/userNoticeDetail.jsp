@@ -65,11 +65,11 @@
             </div>
             <div class="recent-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+                <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="userFAQ.do">자주 찾는 질문</a>
+                <a href="faqlist.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
@@ -109,13 +109,13 @@
     
 </body>
 
-<!-- 취소 버튼 click -->
+<!-- 목록으로 버튼 click -->
 <script type="text/javascript">
 function back_notice(){
 	history.go(-1);
 }
 </script>
-<!-- 취소 버튼 click -->
+<!-- 목록으로 버튼 click -->
 
 
 </html>

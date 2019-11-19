@@ -65,11 +65,11 @@
             </div>
             <div class="recent-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+                <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="userFAQ.do">자주 찾는 질문</a>
+                <a href="faqlist.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->

@@ -25,10 +25,18 @@
             $(this).css("border", "1px solid white");
             $(this).children("input").css("border", "1px solid white");
         });
-        if (!$(this).is(".dropdownable"))
+        if (!$(this).is(".dropdownable")) {
         	$(".figure-line-droplist").slideUp(100);
+        	$(".text-font-droplist").slideUp(100);
+        }
         else {
-        	figurelineClicked();
+        	if ($(this).attr("id") == "kinds") {
+        		figurelineClicked();
+            	$(".text-font-droplist").slideUp(100);
+        	} else if ($(this).attr("id") == "font") {
+        		textfontClicked();
+            	$(".figure-line-droplist").slideUp(100);
+        	}
         }
         $(this).addClass('clickedItem');
         $(this).css("border", "1px solid black");
@@ -71,8 +79,10 @@
             $(this).children("input").css("border", "1px solid white");
         });
     	
-    	if (!$(this).is(".dropdownable"))
+    	if (!$(this).is(".dropdownable")) {
         	$(".figure-line-droplist").slideUp(100);
+        	$(".text-font-droplist").slideUp(100);
+    	}
     	
         if ($(this).is(".checked")){
             $(this).removeClass("checked");
@@ -125,65 +135,140 @@
 
     	var type = $(this).parents().attr("id");
     	var value = $(this).val();
-    	
     	var eventType = event.handleObj.type;
     	
-    	switch(type) {
-    		case "width" : 
-    	    	if (eventType == "keyup" ? event.keyCode == 13 : eventType == "change" || eventType == "focusout") {
-    	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
-    	    			var pastHeight = $(".figure-shape-comps .figure-item[id=height] input").val();
-    	    			$(".figure-shape-comps .figure-item[id=height] input").val(Math.round(filterNumber(value) / $(".ui-selected").css("width").split("px")[0] * pastHeight));
-    	    		}
-    	    	}
-    			$(this).val(filterValue("number", value));
-    			break;
-    		case "height" :
-    	    	if (eventType == "keyup" ? event.keyCode == 13 : eventType == "change" || eventType == "focusout") {
-    	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
-	    		    	var pastWidth = $(".figure-shape-comps .figure-item[id=width] input").val();
-	    		    	$(".figure-shape-comps .figure-item[id=width] input").val(Math.round(filterNumber(value) / $(".ui-selected").css("height").split("px")[0] * pastWidth));
-	    			}
-    	    	}
-    			$(this).val(filterValue("number", value));
-    			break;
-    		case "rotation" :
-    			$(this).val(filterValue("number", value));
-    			break;
-    		case "backgroundColor" :
-    			$(this).val(filterValue("color", value));
-    			changeColor("background");
-    			break;
-    		case "lineColor" :
-    			$(this).val(filterValue("color", value));
-    			changeColor("line");
-    			break;
-    		case "weight-top" :
-    		case "weight-left" :
-    		case "weight-right" :
-    		case "weight-bottom" :
-    			var filteredValue = filterValue("number", value);
-	    		if ($(".figure-line-comps #weight-ratioFix").is(".checked")) {
-	    			changeValue("weight", filteredValue);
-    			} else {
-        			$(this).val(filteredValue);
+    	var applyType = "";
+    	
+    	if (type == "width") {
+	    	if (eventType == "keyup" ? event.keyCode == 13 : eventType == "change" || eventType == "focusout") {
+	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
+	    			var pastHeight = $(".figure-shape-comps .figure-item[id=height] input").val();
+	    			$(".figure-shape-comps .figure-item[id=height] input").val(Math.round(filterNumber(value) / $(".ui-selected").css("width").split("px")[0] * pastHeight));
+	    		}
+	    	}
+			$(this).val(filterValue("number", value));
+			applyType = "width";
+    	}
+    	
+    	if (type == "height") {
+	    	if (eventType == "keyup" ? event.keyCode == 13 : eventType == "change" || eventType == "focusout") {
+	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
+    		    	var pastWidth = $(".figure-shape-comps .figure-item[id=width] input").val();
+    		    	$(".figure-shape-comps .figure-item[id=width] input").val(Math.round(filterNumber(value) / $(".ui-selected").css("height").split("px")[0] * pastWidth));
     			}
-    			break;
-    		case "radius-top-left" :
-    		case "radius-top-right" :
-    		case "radius-bottom-left" :
-    		case "radius-top-right" :
-    			var filteredValue = filterValue("number", value);
-	    		if ($(".figure-line-comps #radius-ratioFix").is(".checked")) {
-	    			changeValue("radius", filteredValue);
-    			} else {
-        			$(this).val(filteredValue);
-    			}
-    			break;
-    		case "textColor" :
-    			$(this).val(filterValue("color", value));
-    			changeColor("text");
-    			break;
+	    	}
+			$(this).val(filterValue("number", value));
+			applyType = "height";
+    	}
+
+    	if (type == "ratition") {
+			$(this).val(filterValue("number", value));
+			applyType = "ratition";
+    	}
+
+    	if (type == "backgroundColor") {
+			$(this).val(filterValue("color", value));
+			changeColor("background");
+			applyType = "backgroundColor";
+    	}
+
+    	if (type == "lineColor") {
+			$(this).val(filterValue("color", value));
+			changeColor("line");
+			applyType = "lineColor";
+    	}
+
+    	if (type == "weight-top") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #weight-ratioFix").is(".checked")) {
+    			changeValue("weight", filteredValue);
+        		applyType = "weight-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "weight-top";
+			}
+    	}
+
+    	if (type == "weight-left") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #weight-ratioFix").is(".checked")) {
+    			changeValue("weight", filteredValue);
+        		applyType = "weight-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "weight-left";
+			}
+    	}
+
+    	if (type == "weight-right") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #weight-ratioFix").is(".checked")) {
+    			changeValue("weight", filteredValue);
+        		applyType = "weight-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "weight-right";
+			}
+    	}
+
+    	if (type == "weight-bottom") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #weight-ratioFix").is(".checked")) {
+    			changeValue("weight", filteredValue);
+        		applyType = "weight-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "weight-bottom";
+			}
+    	}
+
+    	if (type == "radius-top-left") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #radius-ratioFix").is(".checked")) {
+    			changeValue("radius", filteredValue);
+        		applyType = "radius-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "radius-top-left";
+			}
+    	}
+
+    	if (type == "radius-top-right") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #radius-ratioFix").is(".checked")) {
+    			changeValue("radius", filteredValue);
+        		applyType = "radius-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "radius-top-right";
+			}
+    	}
+
+    	if (type == "radius-bottom-left") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #radius-ratioFix").is(".checked")) {
+    			changeValue("radius", filteredValue);
+        		applyType = "radius-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "radius-bottom-left";
+			}
+    	}
+
+    	if (type == "radius-top-right") {
+			var filteredValue = filterValue("number", value);
+    		if ($(".figure-line-comps #radius-ratioFix").is(".checked")) {
+    			changeValue("radius", filteredValue);
+        		applyType = "radius-all";
+			} else {
+    			$(this).val(filteredValue);
+        		applyType = "radius-top-right";
+			}
+    	}
+
+    	if (type == "textColor") {
+			$(this).val(filterValue("color", value));
+			changeColor("text");
     	}
 
     	if (eventType == "keyup" ? event.keyCode == 13 : eventType == "change" || eventType == "focusout") {
@@ -192,7 +277,7 @@
         		$(this).blur;
             clearEnterable();
 
-    		applyChange();
+    		applyChange(type);
 
     	}
 		
@@ -286,7 +371,7 @@
     	$(".figure-item .line").children("hr").css({
     		border : style + " 3px gray"
     	});
-		applyChange();
+		applyChange("kinds");
 		clearEnterable();
     }
 
@@ -306,8 +391,8 @@
     function textfontClicked() {
     	if ($(".text-font-droplist").css("display") == "none") {
          	$(".text-font-droplist").css({
-         		top : $(".text-item .fontType").position().top + 29,
-         		left : $(".text-item .fontType").position().left + 10
+         		top : $(".text-item .fontType").position().top + 31,
+         		left : $(".text-item .fontType").position().left + 9
          	});
          	$(".text-font-droplist").slideDown(100);
     	} else {
@@ -320,7 +405,7 @@
      	$(".text-font-droplist").slideUp(100);
      	$(".text-item[id=font] .fontType").html(title);
      	$(".text-item[id=font] input").val(style);
- 		applyChange();
+ 		applyChange("font");
 		clearEnterable();
     }
 
@@ -353,8 +438,8 @@
     		 $(this).css("border", "1px solid black");
     		 $(this).css("background", "white");
     	 }
-				
-    	 applyChange();
+
+    	 applyChange("text-effect-" + $(this).attr("id"));
 				
      });
      
@@ -403,7 +488,7 @@
 			$(this).css("background", "white");
 		}
 		
-    	 applyChange();
+    	 applyChange("text-sort");
     	 
 	});
      
@@ -573,137 +658,191 @@
 // canvas div에 값 적용시키기
 
 	// input 변화
-    function applyChange() {
+    function applyChange(type) {
     	
-    	if ($(".ui-selected").length > 0) {
+    	if ($(".canvas-container .ui-selected").length > 0) {
     		
-    		// FIGURE
+    		var selectOption = ".canvas-container .ui-selected";
     		
-        	// 가로, 세로
-        	$(".ui-selected").css({
-        		width : $(".figure-shape-comps .figure-item[id=width] input").val(),
-        		height : $(".figure-shape-comps .figure-item[id=height] input").val()
-        	});
-        	
-        	// 회전율
-        	var radius = $(".ui-selected").css("transform").split("(")[1].split(")")[0].split(", ");
-        	radius = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
-        	if (radius != $(".figure-shape-comps .figure-item[id=rotation] input").val()) {
-        		$(".ui-selected").css({
-        			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() + "deg)"
-        		});
-        	}
+    		if ($(".canvas-container .ui-selected").is(".group-obj"))
+    			selectOption += " .obj";
+    		
+    		$(selectOption).each(function() {
+    			
+    			var select = $(this);
+    			
+        		// FIGURE
+        		
+            	// 가로, 세로
+        		if (type == "width" || type == "height") {
+                	select.css({
+                		width : $(".figure-shape-comps .figure-item[id=width] input").val(),
+                		height : $(".figure-shape-comps .figure-item[id=height] input").val()
+                	});
+        		}
+        		
+            	// 회전율
+        		if (type == "rotation") {
+                	var radius = select.css("transform").split("(")[1].split(")")[0].split(", ");
+                	radius = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
+                	if (radius != $(".figure-shape-comps .figure-item[id=rotation] input").val()) {
+                		select.css({
+                			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() + "deg)"
+                		});
+                	}
+        		}
 
-        	// 배경 색
-        	var backgroundColor = $(".figure-shape-comps .figure-item[id=backgroundColor] input").val().split("#")[1];
-        	var backgroundColor1 = parseInt(backgroundColor.substring(0, 2), 16);
-        	var backgroundColor2 = parseInt(backgroundColor.substring(2, 4), 16);
-        	var backgroundColor3 = parseInt(backgroundColor.substring(4, 6), 16);
-        	
-        	$(".ui-selected .obj-comp").css({
-        		background : "rgb(" + backgroundColor1 + ", " + backgroundColor2 + ", " + backgroundColor3 + ")"
-        	});
+            	// 배경 색
+        		if (type == "backgroundColor") {
+                	var backgroundColor = $(".figure-shape-comps .figure-item[id=backgroundColor] input").val().split("#")[1];
+                	var backgroundColor1 = parseInt(backgroundColor.substring(0, 2), 16);
+                	var backgroundColor2 = parseInt(backgroundColor.substring(2, 4), 16);
+                	var backgroundColor3 = parseInt(backgroundColor.substring(4, 6), 16);
+                	
+                	select.children(".obj-comp").css({
+                		background : "rgb(" + backgroundColor1 + ", " + backgroundColor2 + ", " + backgroundColor3 + ")"
+                	});
+        		}
 
-        	// 선 종류, 굵기, 색
-        	var lineColor = $(".figure-line-comps .figure-item[id=lineColor] input").val().split("#")[1];
-        	var lineColor1 = parseInt(lineColor.substring(0, 2), 16);
-        	var lineColor2 = parseInt(lineColor.substring(2, 4), 16);
-        	var lineColor3 = parseInt(lineColor.substring(4, 6), 16);
-        	
-        	$(".ui-selected .obj-comp").css("border-top", $(".figure-line-comps .figure-item[id=kinds] hr").css("border-style") + " " + $(".figure-line-comps .figure-item[id=weight-top] input").val() + "px rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-        	$(".ui-selected .obj-comp").css("border-left", $(".figure-line-comps .figure-item[id=kinds] hr").css("border-style") + " " + $(".figure-line-comps .figure-item[id=weight-left] input").val() + "px rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-        	$(".ui-selected .obj-comp").css("border-right", $(".figure-line-comps .figure-item[id=kinds] hr").css("border-style") + " " + $(".figure-line-comps .figure-item[id=weight-right] input").val() + "px rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-        	$(".ui-selected .obj-comp").css("border-bottom", $(".figure-line-comps .figure-item[id=kinds] hr").css("border-style") + " " + $(".figure-line-comps .figure-item[id=weight-bottom] input").val() + "px rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-        	
-        	// 선 모서리 radius
-        	$(".ui-selected .obj-comp").css("border-top-left-radius", $(".figure-line-comps .figure-item[id=radius-top-left] input").val() + "px");
-        	$(".ui-selected .obj-comp").css("border-top-right-radius", $(".figure-line-comps .figure-item[id=radius-top-right] input").val() + "px");
-        	$(".ui-selected .obj-comp").css("border-bottom-left-radius", $(".figure-line-comps .figure-item[id=radius-bottom-left] input").val() + "px");
-        	$(".ui-selected .obj-comp").css("border-bottom-right-radius", $(".figure-line-comps .figure-item[id=radius-bottom-right] input").val() + "px");
-        	
-        	
-        	// TEXT
-        	$(".ui-selected .obj-comp").css("font-family", $(".text-font-comps .text-item[id=font] input").val());
+            	// 선 종류
+        		if (type == "kinds") {
+                	select.children(".obj-comp").css("border-top", select.children(".obj-comp").css("borderTopWidth") + " " + $(".figure-line-comps .figure-item[id=kinds] hr").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+                	select.children(".obj-comp").css("border-left", select.children(".obj-comp").css("borderLeftWidth") + " " + $(".figure-line-comps .figure-item[id=kinds] hr").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+                	select.children(".obj-comp").css("border-right", select.children(".obj-comp").css("borderRightWidth") + " " + $(".figure-line-comps .figure-item[id=kinds] hr").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+                	select.children(".obj-comp").css("border-bottom", select.children(".obj-comp").css("borderBottomWidth") + " " + $(".figure-line-comps .figure-item[id=kinds] hr").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+        		}
 
-        	// text 색
-        	
-        	var fontColor = $(".text-font-comps .text-item[id=textColor] input").val().split("#")[1];
+            	// 선 색
+        		if (type == "lineColor") {
+                	var lineColor = $(".figure-line-comps .figure-item[id=lineColor] input").val().split("#")[1];
+                	var lineColor1 = parseInt(lineColor.substring(0, 2), 16);
+                	var lineColor2 = parseInt(lineColor.substring(2, 4), 16);
+                	var lineColor3 = parseInt(lineColor.substring(4, 6), 16);
+                	select.children(".obj-comp").css("border-top", select.children(".obj-comp").css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
+                	select.children(".obj-comp").css("border-left", select.children(".obj-comp").css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
+                	select.children(".obj-comp").css("border-right", select.children(".obj-comp").css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
+                	select.children(".obj-comp").css("border-bottom", select.children(".obj-comp").css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
+        		}
+        		
+        		// 선 굵기
+        		if (type.startsWith("weight")) {
+        			if (type.endsWith("top"))
+        				select.children(".obj-comp").css("border-top", $(".figure-line-comps .figure-item[id=weight-top] input").val() + "px " + select.children(".obj-comp").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+        			if (type.endsWith("left"))
+        				select.children(".obj-comp").css("border-left", $(".figure-line-comps .figure-item[id=weight-left] input").val() + "px " + select.children(".obj-comp").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+        			if (type.endsWith("right"))
+        				select.children(".obj-comp").css("border-right", $(".figure-line-comps .figure-item[id=weight-right] input").val() + "px " + select.children(".obj-comp").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+        			if (type.endsWith("bottom"))
+        				select.children(".obj-comp").css("border-bottom", $(".figure-line-comps .figure-item[id=weight-bottom] input").val() + "px " + select.children(".obj-comp").css("borderStyle") + " " + select.children(".obj-comp").css("borderColor"));
+        		}
 
-        	var fontColor1 = parseInt(fontColor.substring(0, 2), 16);
-        	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
-        	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
+            	// 선 모서리 radius
+        		if (type.startsWith("radius")) {
+        			if (type.endsWith("top-left"))
+        				select.children(".obj-comp").css("border-top-left-radius", $(".figure-line-comps .figure-item[id=radius-top-left] input").val() + "px");
+        			if (type.endsWith("top-right"))
+        				select.children(".obj-comp").css("border-top-right-radius", $(".figure-line-comps .figure-item[id=radius-top-right] input").val() + "px");
+        			if (type.endsWith("bottom-left"))
+        				select.children(".obj-comp").css("border-bottom-left-radius", $(".figure-line-comps .figure-item[id=radius-bottom-left] input").val() + "px");
+        			if (type.endsWith("bottom-right"))
+        				select.children(".obj-comp").css("border-bottom-right-radius", $(".figure-line-comps .figure-item[id=radius-bottom-right] input").val() + "px");
+        		}
+        		
+            	// TEXT
+        		
+        		// font
+        		if (type == "font") {
+                	select.children(".obj-comp").css("font-family", $(".text-font-comps .text-item[id=font] input").val());
+        		}
 
-        	$(".ui-selected .obj-comp").css({
-        		color : "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")"
-        	});
-        	
-        	/*if ($(".text-effect[id=bold]").is(".clicked")) {
-
-           	 	console.log(window.getSelection().anchorOffset);
-           	 	console.log(window.getSelection().focusNode);
-           	 	console.log(window.getSelection().focusOffset);
-           	 	console.log(window.getSelection().focusNode.length);
-           	 	console.log(window.getSelection());
-
-           	 	var str = window.getSelection().focusNode.nodeValue;
-           	 	
-           	 	var start = window.getSelection().focusOffset;
-           	 	var end = window.getSelection().anchorOffset;
-           	 	
-           	 	if (start > end) {
-           	 		var change = start;
-           	 		start = end;
-           	 		end = change;
-           	 	}
-           	 	
-           	 	var str1 = str.substring(0, start);
-           	 	var str2 = "<span style='font-weight : bold;'>" + str.substring(start, end) + "</span>";
-           	 	var str3 = str.substring(end, 7);
-
-           	 	console.log("str1 : " + str1);
-           	 	console.log("str2 : " + str2);
-           	 	console.log("str3 : " + str3);
-           	 	console.log("test : " + str1 + str2 + str3);
-           	 	
-           	 	$(".ui-selected .obj-comp").html(str1 + str2 + str3);
-           	 	
-            	//$(".ui-selected .obj-comp").css("font-weight", "bold");
+            	// text 색
+        		if (type == "fontColor") {
+                	var fontColor = $(".text-font-comps .text-item[id=textColor] input").val().split("#")[1];
+                	var fontColor1 = parseInt(fontColor.substring(0, 2), 16);
+                	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
+                	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
+                	select.children(".obj-comp").css({
+                		color : "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")"
+                	});
+        		}
             	
-        	}*/
+            	/*if ($(".text-effect[id=bold]").is(".clicked")) {
 
-        	if ($(".text-effect[id=bold]").is(".clicked"))
-            	$(".ui-selected .obj-comp").css("font-weight", "bold");
-        	else
-            	$(".ui-selected .obj-comp").css("font-weight", "normal");
-        	
-        	if ($(".text-effect[id=italic]").is(".clicked"))
-        		$(".ui-selected .obj-comp").css("font-style", "italic");
-        	else
-        		$(".ui-selected .obj-comp").css("font-style", "normal");
+               	 	console.log(window.getSelection().anchorOffset);
+               	 	console.log(window.getSelection().focusNode);
+               	 	console.log(window.getSelection().focusOffset);
+               	 	console.log(window.getSelection().focusNode.length);
+               	 	console.log(window.getSelection());
 
-        	var textDecoration = "";
-        	if ($(".text-effect[id=underline]").is(".clicked")){
-        		textDecoration += "underline";
-        	}
-        	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-        		if (textDecoration != "")
-        			textDecoration += " ";
-    			textDecoration += "line-through";
-        	}
-        	if (textDecoration == "")
-        		$(".ui-selected .obj-comp").css("text-decoration", "none");
-        	else 
-        		$(".ui-selected .obj-comp").css("text-decoration", textDecoration);
-        	
-        	if ($(".text-sort[id=justify]").is(".clicked"))
-            	$(".ui-selected .obj-comp").css("text-align", "justify");
-        	else if ($(".text-sort[id=left]").is(".clicked"))
-            	$(".ui-selected .obj-comp").css("text-align", "left");
-        	else if ($(".text-sort[id=center]").is(".clicked"))
-            	$(".ui-selected .obj-comp").css("text-align", "center");
-        	else if ($(".text-sort[id=right]").is(".clicked"))
-            	$(".ui-selected .obj-comp").css("text-align", "right");
-        	
+               	 	var str = window.getSelection().focusNode.nodeValue;
+               	 	
+               	 	var start = window.getSelection().focusOffset;
+               	 	var end = window.getSelection().anchorOffset;
+               	 	
+               	 	if (start > end) {
+               	 		var change = start;
+               	 		start = end;
+               	 		end = change;
+               	 	}
+               	 	
+               	 	var str1 = str.substring(0, start);
+               	 	var str2 = "<span style='font-weight : bold;'>" + str.substring(start, end) + "</span>";
+               	 	var str3 = str.substring(end, 7);
+
+               	 	console.log("str1 : " + str1);
+               	 	console.log("str2 : " + str2);
+               	 	console.log("str3 : " + str3);
+               	 	console.log("test : " + str1 + str2 + str3);
+               	 	
+               	 	select.children(".obj-comp").html(str1 + str2 + str3);
+               	 	
+                	//select.children(".obj-comp").css("font-weight", "bold");
+                	
+            	}*/
+
+        		if (type == "text-effect-bold") {
+                	if ($(".text-effect[id=bold]").is(".clicked"))
+                    	select.children(".obj-comp").css("font-weight", "bold");
+                	else
+                    	select.children(".obj-comp").css("font-weight", "normal");
+        		}
+        		
+        		if (type == "text-effect-italic") {
+                	if ($(".text-effect[id=italic]").is(".clicked"))
+                		select.children(".obj-comp").css("font-style", "italic");
+                	else
+                		select.children(".obj-comp").css("font-style", "normal");
+        		}
+            	
+        		if (type == "text-effect-underline" || type == "text-effect-strikethrough") {
+                	var textDecoration = "";
+                	if ($(".text-effect[id=underline]").is(".clicked")){
+                		textDecoration += "underline";
+                	}
+                	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
+                		if (textDecoration != "")
+                				textDecoration += " ";
+            			textDecoration += "line-through";
+                	}
+                	if (textDecoration == "")
+                		select.children(".obj-comp").css("text-decoration", "none");
+                	else 
+                		select.children(".obj-comp").css("text-decoration", textDecoration);
+        		}
+
+        		if (type == "text-sort") {
+                	if ($(".text-sort[id=justify]").is(".clicked"))
+                    	select.children(".obj-comp").css("text-align", "justify");
+                	else if ($(".text-sort[id=left]").is(".clicked"))
+                    	select.children(".obj-comp").css("text-align", "left");
+                	else if ($(".text-sort[id=center]").is(".clicked"))
+                    	select.children(".obj-comp").css("text-align", "center");
+                	else if ($(".text-sort[id=right]").is(".clicked"))
+                    	select.children(".obj-comp").css("text-align", "right");
+        		}
+        		
+    		})
+    		
     	}
     	else {
     		console.log("선택된 엘리먼트가 없습니다.");

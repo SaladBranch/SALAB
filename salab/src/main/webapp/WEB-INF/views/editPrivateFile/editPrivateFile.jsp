@@ -320,7 +320,7 @@
                 	<p>&#9660;</p>FONT
             	</div>
             	<div class="text-font-comps">
-            		<div class="text-item enterable" id="font">
+            		<div class="text-item enterable dropdownable" id="font">
             			<span>폰트</span><div class="fontType"></div><input type="hidden">
             		</div>
             		<div class="text-item enterable" id="size">

@@ -556,7 +556,8 @@
     function pageContent(index){
     	var no = index;
     	$('.canvas-container').html(list[no]);
-        $('#droppable').selectable({
+    	$all = $('#multiselect');
+    	$('#droppable').selectable({
             filter: " > .obj",
             start: function(){
                 selectedObj = new Array();
@@ -574,8 +575,6 @@
                 addControl();
             }
         });
-        
-        addControl()
         rightMouseListner();
         leftMouseListner();
         

@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 public class Paging implements Serializable {
 
    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 587571909730737266L;
+
+/**
     * 
     */
    

@@ -52,19 +52,19 @@ public class PageController {
 		return "help/userNoticeDetail";
 	}
 	
-	@RequestMapping(value="userQnA.do")
+	@RequestMapping(value="userQna.do")
 	public String toUserQnAMethod() {
-		return "help/userQnA";
+		return "help/userQna";
 	}
 	
-	@RequestMapping(value="userQnAInsert.do")
-	public String toUserQnAInsertMethod() {
-		return "help/userQnAInsert";
+	@RequestMapping(value="userQnaInsert.do")
+	public String toUserQnaInsertMethod() {
+		return "help/userQnaInsert";
 	}
 	
-	@RequestMapping(value="userQnADetail.do")
-	public String toUserQnADetailMethod() {
-		return "help/userQnADetail";
+	@RequestMapping(value="userQnaDetail.do")
+	public String toUserQnaDetailMethod() {
+		return "help/userQnaDetail";
 	}
 	@RequestMapping(value="userFAQ.do")
 	public String toUserFAQMethod() {

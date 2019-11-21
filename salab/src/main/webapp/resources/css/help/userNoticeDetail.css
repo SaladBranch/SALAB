@@ -516,6 +516,7 @@ body{
 	border: 1px solid black;
 	margin: 5px 5px 10px 5px;
 	width: 100%;
+	display: block;
 }
 
 .notice_content{
@@ -532,6 +533,7 @@ body{
 	height: 230px;
 	resize: none;
 	outline: none;
+	display: block;
 }
 
 .notice_back_btn{

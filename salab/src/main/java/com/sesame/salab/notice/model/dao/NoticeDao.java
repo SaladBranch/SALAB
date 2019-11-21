@@ -23,4 +23,8 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.listCount");
 	}
 
+	public Notice selectOne(int noticeno) {
+		return sqlSession.selectOne("noticeMapper.selectOne", noticeno);
+	}
+
 }

@@ -473,8 +473,15 @@ body{
 	font-size: 13pt;
    width: 87%;
    padding: 0px 30px;
+   padding-bottom: 30px;
    display: block;
    margin-left: 70px;
+   overflow: auto;
+   overflow-sytyle:  none;
+}
+
+.faq_bottom::-webkit-scrollbar {
+	display: none;
 }
 
 

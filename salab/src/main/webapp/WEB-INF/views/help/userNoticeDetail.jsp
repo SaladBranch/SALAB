@@ -73,7 +73,7 @@
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>
@@ -91,11 +91,11 @@
 					<ul>
 						<li>
 							<p class="notice_title">제목</p>
-							<input type="text" id="notice_box_title" name="notice_box_title">
+							<input type="text" id="notice_box_title" name="notice_box_title" readonly value="${requestScope.notice.noticetitle }">
 						</li>
 						<li>
 							<p class="notice_content">내용</p>
-							<textarea id="notice_box_content" name="notice_box_content"></textarea>
+							<textarea id="notice_box_content" name="notice_box_content" readonly="readonly">${requestScope.notice.noticecontent }</textarea>
 						</li>
 						<li>
 							<span class="notice_back_btn" onclick="back_notice();">목록으로</span>

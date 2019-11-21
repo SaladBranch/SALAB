@@ -18,4 +18,8 @@
 	<select id="listCount" resultType="int">
 		select count(*) from notice
 	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="resultNotice">
+		select * from notice where noticeno = #{noticeno}
+	</select>
 </mapper>

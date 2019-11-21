@@ -74,7 +74,7 @@
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>
@@ -94,32 +94,36 @@
                  </ul>
               </li>
               <!-- 목록 상단 -->
+				
+              	<!-- 목록 -->
+				<c:if test="${!empty requestScope.noticelist }">
+					<c:forEach var="notice" items="${requestScope.noticelist }">
+						<c:url var="noticeDetail" value="noticeDetail.do">
+							<c:param name="noticeno" value="${notice.noticeno }" />
+							<c:param name="page" value="${paging.currentPage }" />
+						</c:url>
+						<li class="notice_list">
+							<ul>
+								<a href="${noticeDetail }">
+									<li class="notice_head_no"><span>${notice.noticeno }</span></li>
+									<li class="notice_head_title"><span>${notice.noticetitle }</span></li>
+									<li class="notice_head_date"><span>${notice.noticedate }</span></li>
+								</a>
+							</ul>
+						</li>
+					</c:forEach>
+				</c:if>
+              	<!-- 목록 -->
               
-              <!-- 목록 -->
-              <c:if test="${!empty requestScope.noticelist }">
-	              <c:forEach var="notice" items="${requestScope.noticelist }">
-	              <li class="notice_list">
-	                 <ul>
-	                	<a href="userNoticeDetail.do">
-	                    <li class="notice_head_no"><span>${notice.noticeno }</span></li>
-	                    <li class="notice_head_title"><span>${notice.noticetitle }</span></li>
-	                    <li class="notice_head_date"><span>${notice.noticedate }</span></li>
-	                   	</a>
-	                 </ul>
-	              </li>
-	              </c:forEach>
-              </c:if>
-              <!-- 목록 -->
-              
-              <!-- 목록 == null -->
-              <c:if test="${empty requestScope.noticelist }">
-	              <li class="notice_list">
-	                 <ul>
-	                    <li class="notice_head_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
-	                 </ul>
-	              </li>
-              </c:if>
-              <!-- 목록 == null -->
+				<!-- 목록 == null -->
+				<c:if test="${empty requestScope.noticelist }">
+					<li class="notice_list">
+						<ul>
+							<li class="notice_head_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
+						</ul>
+					</li>
+				</c:if>
+				<!-- 목록 == null -->
            </ul>
         </div>
         

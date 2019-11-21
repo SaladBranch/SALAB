@@ -39,7 +39,7 @@
             <div></div>
             <div class="top-right-menus">
                 <div class="canvas-size">
-                    <p>57%<i class="fas fa-chevron-down"></i></p>
+                    <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
                 </div>
                 <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_blank.png"></button>
             </div>

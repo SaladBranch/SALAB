@@ -33,4 +33,7 @@
       		where projectno = #{projectno} and userlevel ='PREMIUM' and userauth != 'LEADER' AND rownum = 1 
       		ORDER BY PROJECTNO ASC, PROJECTJOINDATE ASC
 	</select>
+	<update id="userImgInsert" parameterType="Member" >
+		update member set userprofile_r = #{userprofile_r} where userno=#{userno}
+	</update>
 </mapper>

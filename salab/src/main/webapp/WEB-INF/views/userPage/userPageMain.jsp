@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css">
 
+    <link rel="stylesheet" href="/salab/vendors/css/croppie.css">
+
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
     <title>USER | SALAB</title>
@@ -83,10 +85,12 @@
 
             <div id="userImg">
                 <div class="inputImg">
-                    <label id="imgLabel" for="imgUpload">
+                    <label id="imgLabel" for="userimg">
                         <div id="pImage"><span>사진변경</span></div>
                     </label>
-                    <input type="file" id="imgUpload">
+                    <input type="file" id="userimg" name="userimg" accept="image/*">
+                    <input type="hidden" name="oimage" value="">
+                    <input type="hidden" name="base64img" id="base64img">
                 </div>
                 <div id="userEmail">
                     ${loginMember.useremail }
@@ -166,14 +170,14 @@
                             Password
                         </div>
                         <div id="userpwd" class="contentConfigure blank">
-                            <span value="vv" id="Modal-Password"  class="blank clickable" onclick="showModal('pwd')">change password !</span>
+                            <span value="vv" id="Modal-Password" class="blank clickable" onclick="showModal('pwd')">change password !</span>
                         </div>
                     </div>
-                   
-                        <div id="deleteTitle" >
-                            <span id="Modal-Delete"  class="clickable" onclick="showModal('delete')">계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
-                        </div>
-                    
+
+                    <div id="deleteTitle">
+                        <span id="Modal-Delete" class="clickable" onclick="showModal('delete')">계정을 포함한 SALAB과 관련된 모든 정보들을 삭제하고 싶으신가요?</span>
+                    </div>
+
                 </div>
                 <div id="goto-logout" class="escapeSentence"><a href="logout.do">logout</a></div>
             </div>
@@ -181,7 +185,7 @@
     </div>
     <!-- modal-->
     <div>
-        <div id="modal-name" class="modalOutline disable " >
+        <div id="modal-name" class="modalOutline disable ">
             <div id="changeName" class="modalContent z-index1">
                 <div class="titleConfigure">
                     Change Name
@@ -191,24 +195,24 @@
                 <input class="" type="button" id="id-change-btn" value="Name Change" onclick="nameChangedo()">
             </div>
         </div>
-        <div id="modal-password" class="modalOutline disable" >
+        <div id="modal-password" class="modalOutline disable">
             <div id="box-changePwd" class="modalContent z-index3">
                 <div class="titleConfigure littlegap">
                     <span>Change Password</span>
                 </div>
                 <div>
-                    <input id="password"  type="password" class="input-grid" placeholder="Current Password" maxlength="20" >
+                    <input id="password" type="password" class="input-grid" placeholder="Current Password" maxlength="20">
                     <div id="pwdChangeEx">
                         <span>6~20자의 영문 대/소문자, 숫자, 특수문자 혼용 가능.</span>
                     </div>
-                    <input id="password1" type="password" class="input-grid" placeholder="New Password" maxlength="20" >
- 
-                    <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')"  >
+                    <input id="password1" type="password" class="input-grid" placeholder="New Password" maxlength="20">
+
+                    <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')">
                     <input type="button" value="Password Change" onclick="passwordCheck(password.value , password1.value, password2.value)">
                 </div>
             </div>
         </div>
-        <div id="modal-delete" class="modalOutline disable" >
+        <div id="modal-delete" class="modalOutline disable">
             <div class="modalContent z-index3">
                 <div id="delete-title" class="">
                     <span>Delete account.</span>
@@ -220,15 +224,123 @@
                     </ul>
                 </div>
                 <div id="deleteConfirm" class="">
-                    <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20" onkeydown="activeEnter('atDelete')" >
-                    <input id="delete-btn" type="button" value="Agree & Delete"  onclick="accountDelete(deletePwd.value)">
+                    <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20" onkeydown="activeEnter('atDelete')">
+                    <input id="delete-btn" type="button" value="Agree & Delete" onclick="accountDelete(deletePwd.value)">
                 </div>
             </div>
         </div>
     </div>
+    <div id="profile-crop" class="modal-crop">
+        <div class="modal-crop-content">
+            <div class="crop-top clearfix">
+                <a class="close-crop">&times;</a>
+                <button class="change-img">확인</button>
+            </div>
+            <div class="crop-main">
+            </div>
+        </div>
+    </div>
+
 </body>
 
 <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/salab/resources/js/userPage/userPageMain.js"></script>
+<script type="text/javascript" src="/salab/vendors/js/croppie.js"></script>
+<script type="text/javascript">
+    $("#userimg").on("change", function() {
+        readFile(this);
+    });
+
+    var modalCrop = document.getElementById("profile-crop");
+    var basic = $('.crop-main').croppie({
+        viewport: {
+            width: 300,
+            height: 300
+        },
+        boundary: {
+            width: 400,
+            height: 500
+        },
+        showZoomer: false
+    });
+
+    function readFile(input) {
+        console.log("변경시작");
+
+        if (input.files && input.files[0]) { //파일있다면 
+            console.log("파일있다");
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                console.log("창띄울게");
+                $('.modal-crop').addClass('is-visible');
+                setTimeout(function() {
+                    $('.modal-crop').addClass('is-open');
+                }, 20);
+                $('.crop-main').croppie('bind', {
+                    url: e.target.result
+                });
+
+                $('.change-img').on('click', function() {
+                    $('.crop-main').croppie('result', {
+                        type: 'base64',
+                        format: 'jpeg',
+                        size: {
+                            width: 100,
+                            height: 100
+                        }
+                    }).then(function(resp) {
+                        /* const blobUrl = window.URL.createObjectURL(resp);
+		                $('#editImg').attr("src", blobUrl); */
+                        alert("변환된 data : " + resp);
+                        /*$('#base64img').val(resp);*/
+
+                        $('#editImg').attr("src", resp);
+/* 페이지새로고침이라 필요없음                       $('.modal-crop').removeClass('is-open');
+                        $('.modal-crop').removeClass('is-visible');*/
+                        
+                        /*rest를 <hidden>에 넣어서  imgInsert.do로 연결*/
+  {
+                            var form = document.createElement("form");
+                            form.setAttribute("method", "post");
+                            form.setAttribute("action", "imgInsert.do");
+                            document.body.appendChild(form);
+
+                            var insert = document.createElement("input");
+                            insert.setAttribute("type", "hidden");
+                            insert.setAttribute("name", "upfiles");
+                            insert.setAttribute("value",  resp);
+                            form.append(insert);
+      
+                            var insert2 = document.createElement("input");
+                            insert2.setAttribute("type", "hidden");
+                            insert2.setAttribute("name", "ofilename");
+                            insert2.setAttribute("value", $("#userimg").val());
+                            form.append(insert2);
+      
+                            form.submit();
+                        }
+                        /*페이지 이동.*/
+                    });
+                });
+
+                $('.close-crop').on('click', function() {
+                    input.value = "";
+                    $('.modal-crop').removeClass('is-open');
+                    $('.modal-crop').removeClass('is-visible');
+                });
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    window.onclick = function(event) {
+        if (event.target == modalCrop) {
+            $('.modal-crop').removeClass('is-open');
+            $('.modal-crop').removeClass('is-visible');
+        }
+    }
+</script>
 
 </html>

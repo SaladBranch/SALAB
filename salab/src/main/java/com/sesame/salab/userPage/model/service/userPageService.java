@@ -21,4 +21,6 @@ public interface userPageService {
 
 	void deleteAccount(Member member);
 
+	int userImgInsert(Member member);
+
 }

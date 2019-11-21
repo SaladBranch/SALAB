@@ -77,4 +77,10 @@ public class userPageDao {
 		logger.info(member.getUseremail() +"is deleted.");
 		
 	}
+
+	public int userImgInsert(Member member) {
+		// TODO Auto-generated method stub
+		System.out.println(member.toString());
+		return sqlSession.update("userPageMapper.userImgInsert", member);
+	}
 }

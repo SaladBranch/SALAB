@@ -11,7 +11,7 @@
 		<result property="faqcontent" column="FAQCONTENT" />
 	</resultMap>
 	
-	<select id="selectList" parameterType="hashmap" resultMap="resultFaq">
+	<select id="selectList" resultMap="resultFaq">
 		SELECT * FROM FAQ
 	</select>
 </mapper>

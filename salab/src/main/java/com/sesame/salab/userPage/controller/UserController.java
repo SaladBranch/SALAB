@@ -1,14 +1,20 @@
 package com.sesame.salab.userPage.controller;
 
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
+import javax.xml.crypto.Data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,5 +143,33 @@ public class UserController {
 		//기존패스워드가 맞는지 확인,
 		//맞다면 삭제 프로세스 진행.
 		//틀릴 시 , 사후처리.
+	}
+	@RequestMapping(value="imgInsert.do", method=RequestMethod.POST)
+	public String userImgInsertMethod(HttpServletRequest request,@RequestParam(name="upfiles", required=false) String upfiles, @RequestParam(name="ofilename",required=false) String ofilename, HttpSession session) throws IOException {
+		Member member = (Member) session.getAttribute("loginMember");
+		System.out.println("imgInsert.do 진입..."+member.toString());
+		if (upfiles != null) {
+			System.out.println("if 진입");
+			String path = request.getSession().getServletContext().getRealPath("resources/userUpfiles");
+			System.out.println("path  : "+path);
+			
+			String base64img = upfiles;
+			String imgdata = base64img.split(",")[1];
+			byte[] imageBytes = DatatypeConverter.parseBase64Binary(imgdata);
+	
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String renameFileName =member.getUserno()+"u"+ sdf.format(new java.sql.Date(System.currentTimeMillis()))+ "." + ofilename.substring(ofilename.lastIndexOf('.') + 1);
+				
+			BufferedImage bufImg  = ImageIO.read(new ByteArrayInputStream(imageBytes));
+			ImageIO.write(bufImg, "jpg", new File(path + "/" + renameFileName));
+
+			member.setUserprofile_r(renameFileName);
+			int result=upService.userImgInsert(member);
+			if(result >0 ) {
+				System.out.println("이미지업로드 성공.");
+			}
+
+		}
+		return "redirect:userMain.do";
 	}
 }

@@ -717,13 +717,14 @@ ol.page-tab-content li{
 /* Canvas */
 /*-------------------------*/
 .canvas-container{
-    width: calc(100% - 230px);
+    width: calc(100% - 460px);
     height: calc(100vh - 40px);
     position: absolute;
     top: 40px;
     left: 230px;
     background: #cecece;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 #droppable{

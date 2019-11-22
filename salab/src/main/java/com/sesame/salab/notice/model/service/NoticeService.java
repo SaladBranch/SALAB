@@ -1,10 +1,15 @@
 package com.sesame.salab.notice.model.service;
 
-import java.util.HashMap;
 import java.util.List;
 
+import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.notice.model.vo.Notice;
 
 public interface NoticeService {
-	List<Notice> selectList(HashMap<String, Object> map);
+	List<Notice> noticeList(Paging paging);
+
+	int listCount();
+
+	Notice selectOne(int noticeno);
+	
 }

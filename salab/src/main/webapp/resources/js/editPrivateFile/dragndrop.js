@@ -117,7 +117,8 @@ function addControl(){
             },
             cancel: '.ui-rotatable-handle'
         }).rotatable({
-            degrees: getRotateDegree($obj)
+            degrees: getRotateDegree($obj),
+            wheelRotate: false
         });
         //group obj는 also resize 대상 변경
         if($obj.hasClass('group-obj')){

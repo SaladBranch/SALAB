@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="/salab/resources/css/help/userQnA.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/help/userQna.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
@@ -65,7 +66,7 @@
             </div>
             <div class="recent-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+                <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
@@ -73,7 +74,7 @@
             </div>
             <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>
@@ -84,16 +85,17 @@
     	</div>
         <div class="qna_bottom">
 			<div class="qna_btn_box">
-				<input type="radio" value="y" class="qna_check"><span class="qna_check">Y</span>
-				<input type="radio" value="n" class="qna_check"><span class="qna_check">N</span>
-				<a href="userQnAInsert.do">
-					<div class="qna_insert">
+				<!-- <input type="radio" value="y" class="qna_check"><span class="qna_check">Y</span>
+				<input type="radio" value="n" class="qna_check"><span class="qna_check">N</span> -->
+				<a href="userQnaInsert.do">
+					<div class="qna_btn">
 						<span>문의하기</span>
 					</div>
 				</a>
 			</div>
    				
         	<ul>
+        		<!-- 목록 상단 -->
         		<li class="qna_head">
         			<ul>
         				<li class="qna_head_no"><span>NO</span></li>
@@ -102,23 +104,93 @@
         				<li class="qna_head_yn"><span>답변여부</span></li>
         			</ul>
         		</li>
-        		<li class="qna_list">
-        			<ul>
-        				<a href="userQnADetail.do">
-        				<li class="qna_head_no"><span>1</span></li>
-        				<li class="qna_head_title"><span>새로운 업데이트 예정일이 언제인가요? </span></li>
-        				<li class="qna_head_date"><span>19-10-23</span></li>
-        				<li class="qna_head_yn"><span>N</span></li>
-        				</a>
-        			</ul>
-        		</li>
-        		<li class="qna_list">
-        			<ul>
-        				<li class="qna_head_null"><span>아직 진행중인 문의가 없습니다.</span></li>
-        			</ul>
-        		</li>
+        		<!-- 목록 상단 -->
+        		
+        		<!-- 목록 -->
+        		<c:if test="${!empty requestScope.qnalist }">
+        			<c:forEach var="qna" items="${requestScope.qnalist }">
+		        		<li class="qna_list">
+		        			<ul>
+		        				<a href="userQnaDetail.do">
+			        				<li class="qna_head_no"><span>${qna.qnano }</span></li>
+			        				<li class="qna_head_title"><span>${qna.qnatitle }</span></li>
+			        				<li class="qna_head_date"><span>${qna.qnadate }</span></li>
+			        				<li class="qna_head_yn"><span>${qna.qnareplyyn }</span></li>
+		        				</a>
+		        			</ul>
+		        		</li>
+	        		</c:forEach>
+        		</c:if>
+        		<!-- 목록 -->
+        		
+        		<!-- 목록 null -->
+        		<c:if test="${empty requestScope.qnalist }">
+	        		<li class="qna_list">
+	        			<ul>
+	        				<li class="qna_head_null"><span>아직 진행중인 문의가 없습니다.</span></li>
+	        			</ul>
+	        		</li>
+        		</c:if>
+        		<!-- 목록 null -->
         	</ul>
         </div>
+        
+        <!-- paging -->
+        <div class="box_footer">
+       		<ul>
+	       		<li class="paging_list">
+		       		<ul>
+						<!-- 처음 -->
+						<c:if test="${paging.currentPage eq 1}">
+							<li class="paging_btn">[처음]</li>
+						</c:if>
+						<c:if test="${paging.currentPage ne 1 }">
+							<li class="paging_btn"><a href="qnalist.do?page=1">[처음]</a></li>
+						</c:if>
+						<!-- 처음 -->
+						
+						<!-- 이전-->
+						<c:if test="${paging.startPage eq 1 }">
+							<li class="paging_btn">[이전]</li>
+						</c:if>
+						<c:if test="${paging.startPage ne 1 }">
+							<li class="paging_btn"><a href="qnalist.do?page=${paging.startPage - 1 }">[이전]</a></li>
+						</c:if>
+						<!-- 이전-->
+						
+						<!-- 현재 Page 숫자 목록 -->
+						<c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+							<c:if test="${pageno eq paging.currentPage }">		
+								<li class="paging_no_this">[${ pageno }]</li>
+							</c:if>
+							<c:if test="${pageno ne paging.currentPage }">
+								<a href="qnalist.do?page=${ pageno }"><li class="paging_no">${ pageno }</li></a>
+							</c:if>
+						</c:forEach>
+						<!-- 현재 Page 숫자 목록 -->
+						
+						<!-- 다음-->
+						<c:if test="${paging.endPage eq paging.maxPage}">
+							<li class="paging_btn">[다음]</li>
+						</c:if>
+						<c:if test="${paging.endPage ne paging.maxPage}">
+							<li class="paging_btn"><a href="qnalist.do?page=${paging.endPage + 1 }">[다음]</a></li>
+						</c:if>
+						<!-- 다음-->
+						
+						<!-- 끝 -->
+						<c:if test="${paging.currentPage ge paging.maxPage }">
+							<li class="paging_btn">[끝]</li>
+						</c:if>
+						<c:if test="${paging.currentPage lt paging.maxPage }">
+							<li class="paging_btn"><a href="qnalist.do?page=${paging.maxPage }">[끝]</a></li>
+						</c:if>
+						<!-- 끝 -->
+					</ul>
+				</li>
+       		</ul>
+        </div>
+        <!-- paging -->
     </div>
     
 </body>

@@ -65,15 +65,15 @@
             </div>
             <div class="recent-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+                <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="userFAQ.do">자주 찾는 질문</a>
+                <a href="faqlist.do">자주 찾는 질문</a>
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>
@@ -91,11 +91,11 @@
 					<ul>
 						<li>
 							<p class="notice_title">제목</p>
-							<input type="text" id="notice_box_title" name="notice_box_title">
+							<input type="text" id="notice_box_title" name="notice_box_title" readonly value="${requestScope.notice.noticetitle }">
 						</li>
 						<li>
 							<p class="notice_content">내용</p>
-							<textarea id="notice_box_content" name="notice_box_content"></textarea>
+							<textarea id="notice_box_content" name="notice_box_content" readonly="readonly">${requestScope.notice.noticecontent }</textarea>
 						</li>
 						<li>
 							<span class="notice_back_btn" onclick="back_notice();">목록으로</span>
@@ -109,13 +109,13 @@
     
 </body>
 
-<!-- 취소 버튼 click -->
+<!-- 목록으로 버튼 click -->
 <script type="text/javascript">
 function back_notice(){
 	history.go(-1);
 }
 </script>
-<!-- 취소 버튼 click -->
+<!-- 목록으로 버튼 click -->
 
 
 </html>

@@ -487,8 +487,8 @@ input[type="radio"]{
 
 .qna_btn_box{
 	display: block;
-	margin: 20px 10px 10px 10px;
-	padding: 15px;
+	margin: 10px 10px 10px 10px;
+	padding: 10px 15px 40px 15px;
 }
 
 .qna_check{
@@ -497,7 +497,7 @@ input[type="radio"]{
 	font-weight: 600;
 }
 
-.qna_insert{
+.qna_btn{
 	float: right;
 	font-size: 18pt;
 	font-weight: 600;
@@ -505,7 +505,7 @@ input[type="radio"]{
 	border: 1px solid lightgreen;
 }
 
-.qna_insert:hover{
+.qna_btn:hover{
 	border: 1px solid #3cb371;
 }
 
@@ -521,14 +521,14 @@ input[type="radio"]{
 
 .qna_list{
 	text-align: center;
-	height: 60px;
+	height: 55px;
 	border-bottom: 1px solid lightgray;
 }
 
 .qna_head_no{
 	float: left;
 	text-align: center;
-	line-height: 55px;
+	line-height: 48px;
 	font-weight: 500;
 	width: 15%;
 }
@@ -536,7 +536,7 @@ input[type="radio"]{
 .qna_head_title{
 	float: left;
 	text-align: center;
-	line-height: 55px;
+	line-height: 48px;
 	font-weight: 500;
 	width: 50%;
 }
@@ -544,7 +544,7 @@ input[type="radio"]{
 .qna_head_date{
 	float: left;
 	text-align: center;
-	line-height: 55px;
+	line-height: 48px;
 	font-weight: 500;
 	width: 20%;
 }
@@ -552,7 +552,7 @@ input[type="radio"]{
 .qna_head_yn{
 	float: left;
 	text-align: center;
-	line-height: 55px;
+	line-height: 48px;
 	font-weight: 500;
 	width: 15%;
 }
@@ -572,6 +572,62 @@ a {
 }
 
 a:hover{
+	color: #3cb371;
+}
+
+
+/* 페이징 css */
+.box_footer{
+	font-size: 13pt;
+	width: 87%;
+	padding: 0px 30px;
+	display: block;
+	margin-left: 70px;
+}
+
+.paging_list{
+	text-align: center;
+	width: 80%;
+	height: 40px;
+	margin-top: 20px;
+	padding-left: 330px;
+}
+
+.paging_btn{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	color: gray;
+	width: 11%;
+}
+.paging_btn > a{
+	color: black;
+}
+
+.paging_btn > a:hover{
+	color: #3cb371;
+}
+
+.paging_no{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	width: 6%;
+	color: black;
+}
+
+.paging_no:hover{
+	background: lightgreen;
+}
+
+.paging_no_this{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	width: 6%;
 	color: #3cb371;
 }
 

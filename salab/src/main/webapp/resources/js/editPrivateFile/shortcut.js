@@ -82,11 +82,12 @@ function pasteObject(){
     }
     
 }
+//복제하기
 function cloneObject(){
     copyObject();
     pasteObject();
 }
-//우클릭 시 그룹 풀림현상 해결해라
+//그룹화
 function groupObject(){
     var $group = $('<div class="group-obj obj ui-selected"></div>')
     var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
@@ -129,21 +130,26 @@ function groupObject(){
     
     addControl();
 }
+//그룹해제
 function ungroupObject(){
-    $group = selectedObj[0];
-    selectedObj = new Array();
-    $group.children('.obj').each(function(){
-        $(this).css({
-            left: Number($(this).css('left').replace('px', '')) + Number($group.css('left').replace('px', '')) + 'px',
-            top: Number($(this).css('top').replace('px', '')) + Number($group.css('top').replace('px', '')) + 'px'
+    if(selectedObj[0].hasClass('group-obj')){
+        $group = selectedObj[0];
+        selectedObj = new Array();
+        $group.children('.obj').each(function(){
+            $(this).css({
+                left: Number($(this).css('left').replace('px', '')) + Number($group.css('left').replace('px', '')) + 'px',
+                top: Number($(this).css('top').replace('px', '')) + Number($group.css('top').replace('px', '')) + 'px'
+            });
+            $(this).addClass('ui-selected');
+            $(this).appendTo('#droppable');
+            selectedObj.push($(this));
         });
-        $(this).addClass('ui-selected');
-        $(this).appendTo('#droppable');
-        selectedObj.push($(this));
-    });
-    $group.remove();
-    addControl();
+        $group.remove();
+        addControl();
+    }
+
 }
+//전체선택
 function selectAll(){
     selectedObj = new Array();
     $('#droppable > .obj').each(function(){
@@ -151,4 +157,105 @@ function selectAll(){
         selectedObj.push($(this));
     });
     addControl();
+}
+//맨앞으로
+var zIndex = 0;
+function send_forward(){
+    var max = 0;
+    $('#droppable .obj').each(function(){
+        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+        if(num > max){
+            max = num;
+        }
+    });
+    for(i = 0; i<selectedObj.length; i++){
+        selectedObj[i].css('z-index', Number(max) + 1);
+    }
+}
+//앞으로
+function send_front(){
+    for(i = 0; i<selectedObj.length; i++){
+        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
+        selectedObj[i].css('z-index', Number(num) + 1);
+    }
+}
+//뒤로
+function send_back(){
+    for(i = 0; i<selectedObj.length; i++){
+        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
+        if(num != 0)
+            selectedObj[i].css('z-index', Number(num) - 1);
+        else{
+            $('#droppable .obj').each(function(){
+                var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+                $(this).css('z-index', Number(num) + 1);
+            });
+        }
+    }
+}
+//맨뒤로
+function send_backward(){
+    $('#droppable .obj').each(function(){
+        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+        $(this).css('z-index', Number(num) + 1);
+    });
+    for(i = 0; i<selectedObj.length; i++){
+        selectedObj[i].css('z-index', 0);
+    }
+}
+//Zoom
+$(document).ready(function(){
+    var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1)
+});
+
+function ScrollZoom(container, max_scale, factor){
+    var target = container.children().first(); //zoom 대상: #droppable
+    var size = {w:target.width(), h:target.height()};
+    var pos = {x:0, y:0};
+    var zoom_target = {x:0, y:0};
+    var zoom_point = {x:0, y:0};
+    var scale = 1;
+    target.css('transform-origin', '0 0');
+    target.on('mousewheel DOMMouseScroll', scrolled);
+    
+    function scrolled(e){
+        if(e.ctrlKey){
+            var offset = container.offset();
+            zoom_point.x = e.pageX - offset.left; //줌 위치
+            zoom_point.y = e.pageY - offset.top; //줌 위치
+            
+            e.preventDefault();
+            var delta = e.delta || e.originalEvent.wheelDelta;
+            if(delta===undefined)
+                delta = e.originalEvent.detail;
+            delta = Math.max(-1,Math.min(1,delta))
+            
+            zoom_target.x = (zoom_point.x - pos.x)/scale
+            zoom_target.y = (zoom_point.y - pos.y)/scale
+            
+            scale += delta*factor*scale;
+            scale = Math.max(1, Math.min(max_scale, scale));
+            
+            pos.x = -zoom_target.x * scale + zoom_point.x
+            pos.y = -zoom_target.y * scale + zoom_point.y
+            
+            if(pos.x>0)
+                pos.x = 0;
+            if(pos.x + size.w * scale < size.w)
+                pos.x = -size.w*(scale-1)
+            if(pos.y>0)
+                pos.y = 0
+            if(pos.y + size.h * scale < size.h)
+                pos.y = -size.h*(scale-1)
+            
+            update();
+        }
+    }
+    function update(){
+        target.css('transform', 'scale(' + (scale) + ', ' + (scale) + ')');
+        $('.canvas-size p span').text(Math.floor(scale*10)*10 + "%");
+        console.log(pos.x)
+        $('.canvas-container').scrollTop(-pos.y);
+        $('.canvas-container').scrollLeft(-pos.x);
+    }
 }

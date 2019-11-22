@@ -25,7 +25,7 @@ function payTest(){
 		user_info: {
 			username: '오세준',
 			email: '${loginMember.useremail}',
-			phone: ${loginMember.userphone}
+			phone: '${loginMember.userphone}'
 		},
 		order_id: 'order_id_'+ d.getTime(), //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
 		params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
@@ -47,6 +47,8 @@ function payTest(){
 			},
 			type: 'POST',
 			success: function(){
+                alert("성공하자이말이야");
+                
 				location.href='pm_complete.do';
 			},
 			error: function(jqXHR, textStatus, errorThrown){
@@ -67,6 +69,7 @@ function isbilling(){
 		},
 		type: 'POST',
 		success: function(){
+            alert("성공이다이말이야");
 			location.href='pm_complete.do';
 		},
 		error: function(jqXHR, textStatus, errorThrown){
@@ -74,10 +77,23 @@ function isbilling(){
 		}
 	});
 }
+    function Test(){
+        $.ajax({
+		url: 'regularPayment.do',
+		type: 'POST',
+		success: function(){
+            alert("당일결제");
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + textStatus);
+		}
+	});
+    }
 </script>
 </head>
 <body>
 		<button onclick="isbilling();">빌링결제</button>
 		<button onclick="payTest();">결제</button>
+				<button onclick="Test();">당일결제</button>
 </body>
 </html>

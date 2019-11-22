@@ -215,51 +215,6 @@ $(function(){
         }
     });
     
-    $('.page-tab-content').selectable({
-        cancel: '.ui-selected',
-        filter: '>li',
-        start: function(){
-        	//페이지를 셀렉트했을때 변경된 작업에대해서 임시저장하는 함
-        	$( ".page-tab-content .ui-selected").each(function(){
-                var index = $( ".page-tab-content li" ).index($(this));
-                tempStorage(index);
-            });
-        },
-        stop: function(){
-        	//페이지를 셀렉트 했을때 안의 content 가 바뀌게 하는 함수
-        	$( ".page-tab-content .ui-selected").each(function() {
-                var index = $( ".page-tab-content li" ).index($(this));
-                pageContent(index);
-        	});
-        }
-    }).sortable({
-        items: "> li",
-        placeholder: "ui-selected",
-        axis: 'y',
-        handle: 'div, .ui-selected',
-        cancel: '.newpage',
-        helper: function(e, item){
-            if ( ! item.hasClass('ui-selected') ) {
-              item.parent().children('.ui-selected').removeClass('ui-selected');
-              item.addClass('ui-selected');
-            }
-            var selected = item.parent().children('.ui-selected').clone();
-            ph = item.outerHeight() * selected.length;
-            item.data('multidrag', selected).siblings('.ui-selected').remove();
-            return $('<li/>').append(selected).css({
-                'list-style':"none",
-                padding: 0
-            });
-        },
-        start: function(e, ui) {
-            ui.placeholder.css({'height':ph});
-        },
-        stop: function(e, ui) {
-            var selected = ui.item.data('multidrag');
-            ui.item.after(selected);
-            ui.item.remove();
-        }
-    });
     //canvas 위의 마우스 드래깅
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수

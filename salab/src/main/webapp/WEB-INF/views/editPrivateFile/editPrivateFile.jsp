@@ -54,8 +54,8 @@
                 페이지<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-page-menu">
                     <li><a onclick="newPage()">새 페이지</a></li>
-                    <li><a href="#">페이지 복사</a></li>
-                    <li><a href="#">페이지 삭제</a></li>
+                    <li><a href="javascript:" onclick="pageCopy();">페이지 복사</a></li>
+                    <li><a href="javascript:" onclick="pageDelete();">페이지 삭제</a></li>
                     <li><a href="#">페이지 이름 변경</a></li>
                     <li><a href="#">저장</a></li>
                     <li><a href="#">전체 저장</a></li>
@@ -374,16 +374,27 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/page.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
+    	
+    	/* //페이지넘버 담을 전역변수
+    	var listno = new Array(); */
     $(function(){
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
     	<c:forEach items="${pageList }" var="item">
-    		list.push("${item.content }");
+    		list.push({
+    			content: `${item.content}`,
+    			pageno: "${item.pageno}",
+    			fileno: "${item.fileno}",
+    			userno: "${item.userno}",
+    			pagename: "${item.pagename}",
+    			_id: "${item._id }"
+    		});
     	</c:forEach>
     	
         $('.page-tab-content').show();
@@ -488,101 +499,6 @@
             $('.main-toggle-menu').hide();    
         }
     });
-    
-    //page 탭 리스트 불러오는 ajax
-    function pageTab(){
-    	$.ajax({
-    		url: 'pageTab.do',
-    		type: 'post',
-    		data: {
-    			userno: ${userno},
-    			fileno: ${fileno}
-    		},
-    		dataType: 'json',
-    		success: function(data){
-    			console.log(data.page[0].pageno);
-    			$('.page-tab-content').html('');
-    			for(var i =0; i < data.page.length; i++){
-    				$('.page-tab-content').append(
-        					'<li class="page-item">' +
-    						'<div class="page">' +
-        	                '<div class="page-top">' +
-        	                    '<div class="page-thumbnail">' +
-        	                        '<img src="/salab/resources/img/whitebox.png">' +
-        	                    '</div>'+
-        	                '</div>' +
-        	                '<div class="page-name">' + 
-        	                    '<input type="text" class="page-title" value="Untitled">' +
-        	                '</div>' +
-        	            '</div>'	+ 
-        	            '</li>'
-        			);
-    			}
-    			
-    			$('.page-tab-content').append(
-    					'<div class="newpage" onclick="newPage()">' +
-    	                '&#43;' +
-    	            '</div>'	
-    			);
-    		},
-    		error: function(){
-    			
-    		}
-    	});
-    }
-    
-    function newPage(){
-    	console.log('check');
-    	$.ajax({
-    		url: 'newPage.do',
-    		type: 'post',
-    		dataType: 'json',
-    		data: {
-    			userno: ${userno},
-    			fileno: ${fileno}
-    		},
-    		success: function(data){
-    			console.log("ok");
-    			pageTab();
-    		},
-    		error:function(){
-    			
-    		}
-    	});
-    }
-    
-    //페이지 셀렉트시에 페이지를 변경시켜줄 함수
-    function pageContent(index){
-    	var no = index;
-    	$('.canvas-container').html(list[no]);
-    	$all = $('#multiselect');
-    	$('#droppable').selectable({
-            filter: " > .obj",
-            start: function(){
-                selectedObj = new Array();
-            },
-            selected: function(e, ui){
-                selectedObj.push($(ui.selected));
-            },
-            unselected: function(e, ui){
-                $(ui.unselected).children().remove('.ui-resizable-handle');
-                if($(ui.unselected).hasClass('ui-draggable'))
-                    $(ui.unselected).draggable('destroy');
-                $(ui.unselected).children('.ui-rotatable-handle').hide();
-            },
-            stop: function(){
-                addControl();
-            }
-        });
-        rightMouseListner();
-        leftMouseListner();
-        
-    }
-    
-    function tempStorage(index){
-    	var no = index;
-    	list[no] = $('.canvas-container').html();
-    }
     
     </script>
     

@@ -89,8 +89,8 @@ public class PageController {
 	  Page page = new Page();
 	  page.setUserno(Integer.parseInt(userno));
 	  page.setFileno(Integer.parseInt(fileno));
-	  ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
-
+	  List<Page> pageList = (List<Page>)mgService.findPage("page", page);
+	  
 	  req.setAttribute("pageList", pageList);
 	  req.setAttribute("userno", page.getUserno());
 	  req.setAttribute("fileno", page.getFileno());

@@ -111,11 +111,38 @@ function addControl(){
         $obj = selectedObj[0];
         $obj.append(resize_handler.code);
         $obj.children('.ui-rotatable-handle').show();
+        var __dx;
+        var __dy;
+        var __scale=0.5;
+        var __recoupLeft, __recoupTop;
+        
         $obj.draggable({ //select 된놈은 드래그 가능
-            start: function(e, ui){
-                $focus.hide();
+            cancel: '.ui-resizable-handle',
+            drag: function (event, ui) {
+                //resize bug fix ui drag `enter code here`
+                __dx = ui.position.left - ui.originalPosition.left;
+                __dy = ui.position.top - ui.originalPosition.top;
+                //ui.position.left = ui.originalPosition.left + ( __dx/__scale);
+                //ui.position.top = ui.originalPosition.top + ( __dy/__scale );
+                ui.position.left = ui.originalPosition.left + (__dx);
+                ui.position.top = ui.originalPosition.top + (__dy);
+                //
+                ui.position.left += __recoupLeft;
+                ui.position.top += __recoupTop;
             },
-            cancel: '.ui-rotatable-handle'
+            start: function (event, ui) {
+                $focus.hide();
+                //resize bug fix ui drag
+                var left = parseInt($(this).css('left'), 10);
+                left = isNaN(left) ? 0 : left;
+                var top = parseInt($(this).css('top'), 10);
+                top = isNaN(top) ? 0 : top;
+                __recoupLeft = left - ui.position.left;
+                __recoupTop = top - ui.position.top;
+            },
+            stop: function (event, ui) {
+                $(this).css('cursor', 'default');
+            }
         }).rotatable({
             degrees: getRotateDegree($obj),
             wheelRotate: false

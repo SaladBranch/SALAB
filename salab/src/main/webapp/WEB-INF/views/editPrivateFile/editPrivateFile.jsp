@@ -41,7 +41,7 @@
                 <div class="canvas-size">
                     <p>57%<i class="fas fa-chevron-down"></i></p>
                 </div>
-                <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_blank.png"></button>
+                <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_full.png"></button>
             </div>
         </div>
     </nav>
@@ -316,7 +316,7 @@
             	</div>
         	</div>
         	<div class="text-tab-content">
-            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-font-comps');">
                 	<p>&#9660;</p>FONT
             	</div>
             	<div class="text-font-comps">
@@ -366,6 +366,8 @@
             		</div>
             	</div>
         	</div>
+        </div>
+        <div class="canvas-content">
         </div>
     </div>
     

@@ -17,37 +17,69 @@
 	border : 1px solid black;
 }
 </style>
-<script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+<script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+<script src="/salab/vendors/js/jquery.caret.js"></script>
 <script type="text/javascript">
-function test() {
+function test(type) {
 
-	console.log(window.getSelection());
+    //선택 영역 찾기
+    var selected = window.getSelection().getRangeAt(0);
+    console.log(selected);
+    var contents = selected.extractContents();
+     
+    //b 태그 생성
+    var node = document.createElement('span');
+    
+    var style = "";
+    switch(type) {
+    	case "red" : style = "color : red;"; break;
+    	case "yellow" : style = "color : yellow;"; break;
+    	case "bold" : style = "font-weight : bold;"; break;
+    	case "normal" : style = "font-weight : normal;"; break;
+    }
+    
+    node.style.cssText = style;
+    node.className += "changed";
+    node.appendChild(contents);
+  
+    selected.deleteContents();
+    selected.insertNode(node);
 
-	var str = window.getSelection().focusNode.nodeValue;
-		 	
-	var start = window.getSelection().focusOffset;
-	var end = window.getSelection().anchorOffset;
-		 	
-	if (start > end) {
-		var change = start;
-		start = end;
-		end = change;
+	console.log("여기부터 시작");
+	console.log($(".input span.changed"));
+	
+	//var doc = document.getElementsByClassName("changed").getElementByTag("span");
+	
+	if (type == "red" || type == "yellow") {
+	    $(".input span.changed span").each(function() {
+			$(this).css("color", "");
+			var spanText = $(this).wrap("<div>").parent().html();
+			$(this).unwrap();
+			if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">")) {
+				$(this).contents().unwrap();
+			}
+	    });
+	}
+	else if (type == "bold" || type == "normal") {
+		
 	}
 	
-	var str = window.getSelection().focusNode.nodeValue;
-	var str1 = str.substring(0, start);
-	var str2 = "<span style='font-weight : bold;'>" + str.substring(start, end) + "</span>";
-	var str3 = str.substring(end, 7);
-
-	$(".input").html(str1 + str2 + str3);
-	$(".console").append(str1 + str2 + str3 + "<br>");
+	$(".input span").each(function() {
+		if ($(this).html() == "")
+			$(this).remove();
+	})
 	
+    $(".input span.changed").removeAttr("class");
+    
 }
 </script>
 </head>
 <body>
-<div class="input" contentEditable="true">가나다라마바사</div>
-<button onclick="test();">실행</button>
+<div class="input" contentEditable="true">가나다라마바사아</div>
+<button onclick="test('red');">색상(빨강) 변경</button>
+<button onclick="test('yellow');">색상(노랑) 변경</button>
+<button onclick="test('bold');">굵게 변경</button>
+<button onclick="test('normal');">얇게 변경</button>
 <div class="console"></div>
 </body>
 </html>

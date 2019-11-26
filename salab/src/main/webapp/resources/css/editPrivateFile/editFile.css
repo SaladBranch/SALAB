@@ -606,6 +606,7 @@ ol.page-tab-content li{
 .text-shape-comps {
     font-size: 15px;
     margin : 10px 0px 0px 0px;
+    padding-bottom : 10px;
     border-bottom: 1px solid #c6c6c6;
 }
 .text-item {

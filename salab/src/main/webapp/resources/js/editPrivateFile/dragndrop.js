@@ -5,7 +5,6 @@ var canvas = ".canvas-container";
 var $focus = $('.focus');
 var $all = $('#multiselect');
 var appendElement = "";
-var editable = "true"; // right-side-bar 자동 오픈 여부
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
@@ -45,10 +44,13 @@ function includeElement(X, Y, temp) {
 }
 function leftMouseListner(){
     $(document).on('click', function(){
-        toggleContext(0); 
+        toggleContext(0);
     });
     $('#droppable').on('click', function(){
         toggleContext(0);
+    });
+    $(document).on('dblclick', "#droppable .obj", function(){
+        $(this).children(".obj-comp").focus();
     });
 }
 function rightMouseListner(){
@@ -145,12 +147,15 @@ function addControl(){
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
+            stop : function() {
+            	formatChange();
+            },
             wheelRotate: false
         });
         //group obj는 also resize 대상 변경
         if($obj.hasClass('group-obj')){
             $obj.resizable({
-                handles:{
+            	handles:{
                     'n': '.ui-resizable-n',  
                     'e': '.ui-resizable-e',  
                     's': '.ui-resizable-s',
@@ -160,7 +165,10 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
-                alsoResize: $obj.children('.obj')
+                alsoResize: $obj.children('.obj'),
+                stop: function(){
+                    formatChange();
+                }
             });
         }else{
             $obj.resizable({
@@ -174,14 +182,13 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
-                alsoResize: "this .obj-comp"
+                alsoResize: "this .obj-comp",
+                stop: function(){
+                    formatChange();
+                }
             });
         }
-        formatChange($obj);
-        if (editable == "true") {
-        	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
-        	$(".right-side-bar").fadeIn(300);
-        }
+        formatChange();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
     	console.log("복수 선택");
@@ -199,6 +206,7 @@ function addControl(){
             top: 0,
             left: 0           
         });
+        formatChange();
     }
 }
 
@@ -239,6 +247,8 @@ $(function(){
         },
         stop: function(){
             addControl();
+            // select 실행 시 cursor out
+            window.getSelection().removeAllRanges();
         }
     });
     

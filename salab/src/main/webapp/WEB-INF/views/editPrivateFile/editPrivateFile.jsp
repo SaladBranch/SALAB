@@ -353,7 +353,7 @@
             	</div>
         	</div>
         	<div class="text-tab-content">
-            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-font-comps');">
                 	<p>&#9660;</p>FONT
             	</div>
             	<div class="text-font-comps">
@@ -403,6 +403,8 @@
             		</div>
             	</div>
         	</div>
+        </div>
+        <div class="canvas-content">
         </div>
     </div>
     

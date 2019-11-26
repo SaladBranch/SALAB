@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
     
-    <link rel="stylesheet" href="/salab/resources/css/help/userQnAInsert.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/help/userQnaInsert.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
@@ -73,7 +73,7 @@
             </div>
             <div class="trashcan active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>

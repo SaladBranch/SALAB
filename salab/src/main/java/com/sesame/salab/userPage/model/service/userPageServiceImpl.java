@@ -53,6 +53,12 @@ public class userPageServiceImpl implements userPageService {
 		upDao.deleteAccount(member);
 		
 	}
+
+	@Override
+	public int userImgInsert(Member member) {
+		// TODO Auto-generated method stub
+		return upDao.userImgInsert(member);
+	}
 	
 
 }

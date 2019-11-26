@@ -5,7 +5,7 @@
 <mapper namespace="paymentMapper">
 	
 	<update id="insertBilling" parameterType="Member">
-		update member set billingkey = #{billingkey}, paymentdate = #{paymentdate} where userno = #{userno}
+		update member set billingkey = #{billingkey}, paymentdate = #{paymentdate},userlevel = 'PREMIUM' where userno = #{userno}
 	</update>
 	
 	<insert id="insertPayment" parameterType="Payment">
@@ -15,5 +15,17 @@
 	<select id="selectPaymentUser" parameterType="int" resultType="Member">
 		select * from member where userno = #{userno} 
 	</select>
-	
+	<select id="selectEqualPaymentDate" resultType="Member">
+		select userno,useremail,username, billingkey from member where paymentdate =(SELECT TO_CHAR(SYSDATE, 'YYMMDD') FROM DUAL)
+	</select>
+	<insert id="savePaySuccess" parameterType="Payment">
+		insert into payment values(SEQ_PAYMENTNO.NEXTVAL, #{userno} ,#{useremail} , #{paymentoid} ) 
+	</insert>
+	<update id = "changepaySuccess" parameterType="int" >
+		update member  set paymentdate = (select to_date((select paymentdate from member where userno=#{userno})+ 30) from dual) where userno=#{userno}
+	</update>
+	<update id = "changepayFail" parameterType="int" >
+		update member  set paymentdate = null,  billingkey = null,  userlevel = 'STANDARD'  where userno=#{userno}
+	</update>
+
 </mapper>

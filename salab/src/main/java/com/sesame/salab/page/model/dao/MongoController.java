@@ -36,35 +36,6 @@ public class MongoController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "findAllMongo", method = RequestMethod.POST)
-	public ModelAndView findAllMongo() {
-		ModelAndView mav = new ModelAndView("jsonView");
-		
-		MongoService mongoService = new MongoService();
-		ArrayList<Fruit> fruits = (ArrayList<Fruit>) mongoService.findAll("testData");
-		Gson gson = new Gson();
-		String result = gson.toJson(fruits);
-		System.out.println("result ::: " + result);
-		
-		mongoService.close();
-		return mav;
-	}
-	
-	@RequestMapping(value = "findOneMongo", method = RequestMethod.POST)
-	public ModelAndView findMongo() {
-		ModelAndView mav = new ModelAndView("jsonView");
-		
-		MongoService mongoService = new MongoService();
-		Fruit condition = new Fruit();
-		condition.set_id("5cb31f0285980309d27af0a8");
-		Fruit fruit = mongoService.findOne("testData", condition);
-		Gson gson = new Gson();
-		String result = gson.toJson(fruit);
-		System.out.println("result ::: " + result);
-		mongoService.close();
-		return mav;
-	}
-	
 	@RequestMapping(value = "findInConditionMongo", method = RequestMethod.POST)
 	public ModelAndView findInConditionMongo() {
 		ModelAndView mav = new ModelAndView("jsonView");

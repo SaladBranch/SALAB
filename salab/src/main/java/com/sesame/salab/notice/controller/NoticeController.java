@@ -27,6 +27,7 @@ public class NoticeController {
 	public ModelAndView noticeListMethod(ModelAndView mv, Notice notice,@RequestParam(value="page", required=false) String currentPage) throws Exception {
 		
 		int curPage;
+		
 		if(currentPage != null) {
 			curPage = Integer.parseInt(currentPage);
 		} else {
@@ -39,12 +40,27 @@ public class NoticeController {
 		
 		List<Notice> noticelist = noticeService.noticeList(paging);
 		
-		logger.debug("listSize : " + noticelist.size());
-		
 		if(noticelist != null) {
 			mv.addObject("noticelist", noticelist);
 			mv.addObject("paging", paging);
 			mv.setViewName("help/userNotice");
+		}else {
+			mv.addObject("message", "공지사항 조회 실패");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="noticeDetail.do")
+	public ModelAndView noticeDetailMethod(ModelAndView mv, @RequestParam(value="noticeno") int noticeno , @RequestParam(value="page", required=false) String currentPage) throws Exception {
+		
+		Notice notice = noticeService.selectOne(noticeno);
+		
+		if(notice != null) {
+			mv.addObject("notice", notice);
+			mv.addObject("page", currentPage);
+			mv.setViewName("help/userNoticeDetail");
 		}else {
 			mv.addObject("message", "공지사항 조회 실패");
 			mv.setViewName("common/error");

@@ -9,5 +9,7 @@ public interface NoticeService {
 	List<Notice> noticeList(Paging paging);
 
 	int listCount();
+
+	Notice selectOne(int noticeno);
 	
 }

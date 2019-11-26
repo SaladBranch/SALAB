@@ -75,7 +75,7 @@
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>

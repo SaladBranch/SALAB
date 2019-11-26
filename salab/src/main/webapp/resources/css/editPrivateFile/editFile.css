@@ -714,17 +714,142 @@ ol.page-tab-content li{
 	height : 20px;
 	margin : 2px;
 }
+/*--------------------------*/
+/* right-side-bar canvas */
+/*--------------------------*/
+.canvas-tab{
+    border-bottom: 1px solid #c6c6c6;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.canvas-view h5, .canvas-sizing h5{
+    padding-left: 15px;
+    margin: 15px 0;
+}
+.canvas-sizing:before{
+    display: block;
+    content: "";
+    width: 100%;
+    border-top: 1px solid #c6c6c6;
+}
+.canvas-opt{
+    margin: 15px 0;
+    position: relative;
+}
+.grid-chk, .back-chk{
+    font-size: 13px !important;
+    margin-left: 16px;
+    padding-top: 2px !important;
+    padding-left: 30px !important;
+}
+.checkmark{
+    width: 17px;
+    height: 17px;
+    border-radius: 0;
+    border: 1px solid #c7c7c7;
+    background-color: #fff;
+}
+.chk-label:hover .checkmark{
+    background-color: #eee;
+    border: 1px solid #9f9f9f;
+}
+.checkmark:after{
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: #000;
+}
+.grid-chk input:checked ~ .checkmark,
+.back-chk input:checked ~ .checkmark{
+    background-color: #fff;
+}
+
+#canvas-background .minicolors{
+    position: absolute !important;
+    top: -7px;
+    right: 20px;
+}
+#canvas-background .minicolors-swatch{
+    width: 40px !important;
+    height: 20px !important;
+}
+
+.grid-canvas{
+    background-image: linear-gradient(rgba(102,102,102,.2) 2px,transparent 2px),linear-gradient(90deg,rgba(102,102,102,.2) 2px,transparent 2px),linear-gradient(rgba(102,102,102,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(102,102,102,.2) 1px,transparent 1px) !important;
+    background-size: 100px 100px,100px 100px,20px 20px,20px 20px !important;
+    background-position: -2px -2px,-2px -2px,-1px -1px,-1px -1px !important;
+}
+
+#canvas-sizing{
+    position: relative;
+    width: 90%;
+    margin: 0 5%;
+    font-size: 13px;
+    line-height: 25px;
+    padding: 3px;
+    border: 1px solid #000;
+}
+.open-options{
+    position: absolute;
+    font-size: 10px;
+    right: 20px;
+    top: 213px;
+}
+
+#canvas-sizing-opt{
+    display: none;
+    position: absolute;
+    width: 90%;
+    margin: 0 5%;
+    font-size: 13px;
+    line-height: 25px;
+    background: #222222;
+    padding: 5px 0;
+    z-index: 99;
+}
+#canvas-sizing-opt hr{
+    border: 0;
+    border-top: 1px solid #fff;
+}
+#canvas-sizing-opt li{
+    padding: 0 10px;
+    color: #fff;
+}
+#canvas-sizing-opt li:hover{
+    background: #00a8ff;
+}
+#canvas-sizing-opt li span{
+    float: right;
+}
+.canvas-sizing .radio-label{
+    margin: 10px 0 0 15px;
+    padding-top: 0;
+}
+.canvas-sizing .radiomark{
+    width: 20px;
+    height: 20px;
+}
+.radiomark:after{
+    top:5px;
+    left:6px;
+}
+
+
 /*-------------------------*/
 /* Canvas */
 /*-------------------------*/
 .canvas-container{
-    width: calc(100% - 230px);
+    width: calc(100% - 460px);
     height: calc(100vh - 40px);
     position: absolute;
     top: 40px;
     left: 230px;
     background: #cecece;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 #droppable{

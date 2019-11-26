@@ -322,3 +322,61 @@ $(function(){
     }
     
 });
+
+//canvas sizing
+$(function(){
+    $('.right-side-bar .tab-menu').hide();
+    $('.right-side-bar .tab-content').hide();
+    $('.back-chk input').on('change', function(){
+        var defaultVal = $('#droppable').css('background-color');
+        var $colorpic = $('<div class="canvas-colorpic"></div>')
+        if($(this).is(':checked')){
+            $('#canvas-background').append($colorpic);
+            $('.canvas-colorpic').minicolors({
+                control: 'hue',
+                position: 'bottom right',
+                defaultValue: defaultVal,
+                change: function(hex, opacity){
+                    $('#droppable').css('background-color', hex);
+                }
+            });
+        }else{
+            $('.minicolors').remove();
+            $('#droppable').css('background-color', '#fff');
+        }
+    });
+    
+    $('#canvas-sizing').on('click', function(){
+        $options = $('#canvas-sizing-opt');
+        if($options.css('display') == "none"){
+            $options.show();
+        }else{
+            $options.hide();
+        }
+    });
+    
+    $('#canvas-sizing-opt li').on('click', function(){
+        if($(this).text() != 'custom'){
+            $('#canvas-sizing').html($(this).html());
+            $('#canvas-sizing-opt').hide();
+            var width = $(this).children('span').text().split('x')[0] + 'px';
+            var height = $(this).children('span').text().split('x')[1] + 'px';
+            $('#droppable').css({
+                width: width,
+                height: height
+            });
+        }
+    });
+});
+
+$('#droppable').bind('DOMSubtreeModified', function(e){
+    if($('#droppable .ui-selected').length > 0){
+        $('.right-side-bar .canvas-menu').hide();
+        $('.right-side-bar .tab-menu').show();
+        $('.right-side-bar .tab-content').show();
+    }else{
+        $('.right-side-bar .canvas-menu').show();
+        $('.right-side-bar .tab-menu').hide();
+        $('.right-side-bar .tab-content').hide();
+    }
+});

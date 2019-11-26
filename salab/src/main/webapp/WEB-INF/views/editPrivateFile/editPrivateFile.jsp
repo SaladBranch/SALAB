@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/editFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/components.css" type="text/css">
+    <link rel="stylesheet" href="/salab/vendors/css/jquery.minicolors.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>파일명 | Salab</title>
@@ -41,7 +42,7 @@
                 <div class="canvas-size">
                     <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
                 </div>
-                <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_blank.png"></button>
+                <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_full.png"></button>
             </div>
         </div>
     </nav>
@@ -227,6 +228,42 @@
     </div>
     
     <div class="right-side-bar">
+        <div class="canvas-menu">
+            <div class="canvas-tab active-tab">Canvas</div>
+            <div class="canvas-view">
+                <h5>view</h5>
+                <div class="canvas-opt" id="cansvas-grid">
+                    <label class="chk-label grid-chk">격자무늬 보이기<input type="checkbox"><span class="checkmark"></span></label>
+                </div>
+                <div class="canvas-opt" id="canvas-background">
+                    <label class="chk-label back-chk">캔버스 배경<input type="checkbox"><span class="checkmark"></span></label>
+                </div>
+            </div>
+            <div class="canvas-sizing">
+                <h5>size</h5>
+                <div id="canvas-sizing">Desktop <span>1440x1024</span></div>
+                <span class="open-options">&#9660;</span>
+                <ul id="canvas-sizing-opt">
+                    <li>Desktop <span>1440x1024</span></li>
+                    <li>MacBook <span>1152x700</span></li>
+                    <li>MacBook Pro <span>1440x900</span></li>
+                    <li>iMac <span>1280x720</span></li>
+                    <hr>
+                    <li>iPad Pro<span>1024x1336</span></li>
+                    <li>iPad<span>768x1024</span></li>
+                    <li>iPhone 6/7/8<span>375x667</span></li>
+                    <li>Android<span>360x640</span></li>
+                    <hr>
+                    <li>16:9 <span>1600x900</span></li>
+                    <li>16:10 <span>1920x1200</span></li>
+                    <li>4:3 <span>1600x1200</span></li>
+                    <hr>
+                    <li>custom</li>
+                </ul>
+                <label class="radio-label">portrait<input type="radio"><span class="radiomark"></span></label>
+                <label class="radio-label">landscape<input type="radio"><span class="radiomark"></span></label>
+            </div>
+        </div>
         <div class="tab-menu">
             <div class="tab figure-tab active-tab">Figure</div>
             <div class="tab text-tab">Text</div>
@@ -373,6 +410,7 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/page.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
@@ -400,6 +438,13 @@
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
+        
+        $('.grid-chk input').on('change', function(){
+            if($(this).is(':checked'))
+                $('#droppable').addClass('grid-canvas');
+            else
+                $('#droppable').removeClass('grid-canvas');
+        });
     });
     $('.page-tab').click(function(){
     	
@@ -468,7 +513,7 @@
     }
     
     $('.figure-tab').click(function(){
-        $('.tab-menu .tab').each(function(){
+        $('.right-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
         $('.figure-tab').addClass('active-tab');
@@ -477,7 +522,7 @@
     });
     
     $('.text-tab').click(function(){
-        $('.tab-menu .tab').each(function(){
+        $('.right-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
         $('.text-tab').addClass('active-tab');

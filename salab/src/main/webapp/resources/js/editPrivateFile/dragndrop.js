@@ -373,10 +373,20 @@ $(function(){
         	$('.canvas-custom-sizing').hide();
             var width = Number($(this).children('span').text().split('x')[0]);
             var height = Number($(this).children('span').text().split('x')[1]);
-            $('#droppable').css({
-                width: width + 'px',
-                height: height + 'px'
-            });
+            if(width < Number($('.canvas-container').css('width').replace('px', ''))){
+            	$('#droppable').css({
+                    width: width + 'px',
+                    height: height + 'px',
+                    margin: '5% auto'
+                });
+            }else{
+            	$('#droppable').css({
+                    width: width + 'px',
+                    height: height + 'px',
+                    margin: '5% 5%'
+                });
+            }
+            
             if(width < height){
             	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
             	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
@@ -416,6 +426,8 @@ $(function(){
     
     $('#custom-width input').on('focusout', function(){
     	$('#droppable').css('width', $(this).val()+'px');
+    	if(Number($(this).val()) < Number($('.canvas-container').css('width').replace('px', '')))
+    		$('#droppable').css('margin', '5% auto');
     });
     $('#custom-height input').on('focusout', function(){
     	$('#droppable').css('height', $(this).val()+'px');

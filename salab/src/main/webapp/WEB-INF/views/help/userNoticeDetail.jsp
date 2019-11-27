@@ -86,22 +86,20 @@
     	
         <div class="notice_bottom">
 			<div class="notice_box">
-				<form action="noticeInsert.do" method="post" enctype="multipart/form-data">
-					<p class="notice_fromAdmin">From. SALAB</p>
-					<ul>
-						<li>
-							<p class="notice_title">제목</p>
-							<input type="text" id="notice_box_title" name="notice_box_title" readonly value="${requestScope.notice.noticetitle }">
-						</li>
-						<li>
-							<p class="notice_content">내용</p>
-							<textarea id="notice_box_content" name="notice_box_content" readonly="readonly">${requestScope.notice.noticecontent }</textarea>
-						</li>
-						<li>
-							<span class="notice_back_btn" onclick="back_notice();">목록으로</span>
-						</li>
-					</ul>
-				</form>
+				<p class="notice_fromAdmin">From. SALAB</p>
+				<ul>
+					<li>
+						<p class="notice_title">제목</p>
+						<input type="text" id="notice_box_title" name="notice_box_title" readonly value="${requestScope.notice.noticetitle }">
+					</li>
+					<li>
+						<p class="notice_content">내용</p>
+						<textarea id="notice_box_content" name="notice_box_content" readonly="readonly">${requestScope.notice.noticecontent }</textarea>
+					</li>
+					<li>
+						<span class="notice_back_btn" onclick="back_notice();">목록으로</span>
+					</li>
+				</ul>
 			</div>
         </div>
         

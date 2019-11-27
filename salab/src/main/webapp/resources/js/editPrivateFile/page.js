@@ -161,9 +161,16 @@
         
         //페이지별 canvas size
         $('#canvas-sizing-opt li').each(function(){
-        	if($(this).html().split(' <')[0] === $('#droppable').attr('data-canvas'))
+        	if($(this).html().split(' <')[0] === $('#droppable').attr('data-canvas')){
         		$('#canvas-sizing').html($(this).html());
+        		$('.canvas-sizing label').show();
+            	$('.canvas-custom-sizing').hide();
+        	}
         });
+        if($('#droppable').attr('data-canvas') === 'custom'){
+        	$('.canvas-sizing label').hide();
+        	$('.canvas-custom-sizing').show();
+        }
         
         //페이지별 방향
         if(Number($('#droppable').css('width').replace('px', '')) < Number($('#droppable').css('height').replace('px', ''))){

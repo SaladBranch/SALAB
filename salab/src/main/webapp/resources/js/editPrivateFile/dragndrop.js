@@ -338,21 +338,22 @@ $(function(){
     $('.right-side-bar .tab-menu').hide();
     $('.right-side-bar .tab-content').hide();
     $('.back-chk input').on('change', function(){
-        var defaultVal = $('#droppable').css('background-color');
         var $colorpic = $('<div class="canvas-colorpic"></div>')
         if($(this).is(':checked')){
             $('#canvas-background').append($colorpic);
             $('.canvas-colorpic').minicolors({
                 control: 'hue',
                 position: 'bottom right',
-                defaultValue: defaultVal,
+                defaultValue: $('#droppable').attr('data-background'),
                 change: function(hex, opacity){
                     $('#droppable').css('background-color', hex);
+                    $('#droppable').attr('data-background', hex);
                 }
             });
         }else{
             $('.minicolors').remove();
             $('#droppable').css('background-color', '#fff');
+            $('#droppable').attr('data-background', '#ffffff');
         }
     });
     
@@ -375,6 +376,8 @@ $(function(){
                 width: width,
                 height: height
             });
+            $('#droppable').attr('data-canvas', $(this).html().split(' <')[0]);
+            
         }
     });
 });

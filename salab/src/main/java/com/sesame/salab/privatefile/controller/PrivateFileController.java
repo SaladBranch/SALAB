@@ -23,6 +23,7 @@ import com.sesame.salab.privatefile.model.vo.PrivateFile;
 @Controller
 public class PrivateFileController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private String collection = "page";
 	
 	@Autowired
 	private PrivateFileService pfService;
@@ -49,7 +50,7 @@ public class PrivateFileController {
 		mgService.createFirstPage(page);
 		
 		//생성한 페이지 바로 가져옴
-		 ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+		 ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
 		mgService.close();
 		mv.addObject("userno", userno);
 		mv.addObject("fileno", pfile.getPfileno());
@@ -62,12 +63,12 @@ public class PrivateFileController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "pageTab.do", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = "pageTab.do", method = RequestMethod.POST, produces="text/plain; charset=UTF-8")
 	public ModelAndView findInConditionMongo(Page page, ModelAndView mv) {
 		mv.setViewName("jsonView");
 		
 		MongoService mgService = new MongoService();
-		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
 		
 		Gson gson = new Gson();
 		String result = gson.toJson(pageList);
@@ -79,7 +80,6 @@ public class PrivateFileController {
 	@RequestMapping(value="newPage.do", method=RequestMethod.POST)
 	public ModelAndView newPage(Page page, ModelAndView mv) {
 		MongoService mgService = new MongoService();
-		String collection = "page";
 		int result = mgService.countPage(page, collection);
 		System.out.println(result);
 		mv.setViewName("jsonView");
@@ -100,7 +100,6 @@ public class PrivateFileController {
 	@ResponseBody
 	public void pageDelete(@RequestBody Page page) {
 		MongoService mgService = new MongoService();
-		String collection = "page";
 		mgService.pageDelete(collection, page);
 		logger.info("deletePage :: " + page.toString());
 		
@@ -117,7 +116,6 @@ public class PrivateFileController {
 	@ResponseBody
 	public void pageCopy(@RequestBody Page page) {
 		MongoService mgService = new MongoService();
-		String collection = "page";
 		List<Page> list = mgService.selectUpdatePageNo(collection, page);
 		for(Page p : list) {
 			mgService.updatePageNo(collection, p, "copy");
@@ -136,16 +134,35 @@ public class PrivateFileController {
 	@ResponseBody
 	public void pageMove(@RequestBody List<Page> page) {
 		MongoService mgService = new MongoService();
-		String collection = "page";
 		
 		for(Page p : page) {
 			mgService.saveDoc(collection, p);
-			logger.info(p.toString());
 		}
-		logger.info("===================");
 		
 		mgService.close();
 		
+	}
+	
+	@RequestMapping(value="pageSave.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageSave(@RequestBody Page page) {
+		MongoService mgService = new MongoService();
+		
+		logger.info(page.toString());
+		
+		mgService.saveDoc(collection, page);
+		mgService.close();
+	}
+	
+	@RequestMapping(value="pageAllSave.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageAllSave(@RequestBody List<Page> list) {
+		MongoService mgService = new MongoService();
+		
+		for(Page p : list) {
+			mgService.saveDoc(collection, p);
+		}
+		mgService.close();
 	}
 	
 }

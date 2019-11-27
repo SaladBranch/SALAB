@@ -57,11 +57,11 @@
                     <li><a onclick="newPage()">새 페이지</a></li>
                     <li><a href="javascript:" onclick="pageCopy();">페이지 복사</a></li>
                     <li><a href="javascript:" onclick="pageDelete();">페이지 삭제</a></li>
-                    <li><a href="#">페이지 이름 변경</a></li>
-                    <li><a href="#">저장</a></li>
-                    <li><a href="#">전체 저장</a></li>
-                    <li><a href="#">내보내기</a></li>
-                    <li><a href="#">전체 내보내기</a></li>
+                    <li><a href="javascript:">페이지 이름 변경</a></li>
+                    <li><a href="javascript:" onclick="pageSave();">저장</a></li>
+                    <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
+                    <li><a href="javascript:" onclick="pageOutPdf();">내보내기</a></li>
+                    <li><a href="javascript:">전체 내보내기</a></li>
                 </ul>
             </li>
             
@@ -417,6 +417,8 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/html2canvas.min.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/page.js"></script>

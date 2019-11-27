@@ -14,7 +14,6 @@
     	var beforeIndex = $('.ui-selected').index();
     	//현재 새로 셀렉트된 페이지 인덱스
         var index = $('.page-item').index($(this));
-        console.log('시발 넘버 ' + list[index].pageno);
         
         //현재 캔버스위에 태글들을 임시저장
         tempStorage(beforeIndex);
@@ -186,9 +185,8 @@
     //페이지 삭제용 함수
     function pageDelete(){
     	var index = $('.ui-selected').index();
-    	var confirm = confirm(`정말 삭제하시겠습니까?
-    	(삭제된 페이지는 복구할 수 없습니다.)`);
-    	if(confirm){
+    	var con = confirm("정말 삭제하시겠습니까? \n(삭제된 페이지는 복구할 수 없습니다.)");
+    	if(con){
     		$.ajax({
         		url: 'pageDelete.do',
         		data: JSON.stringify(list[index]),
@@ -203,7 +201,7 @@
         			console.log("error");
         			pageTab();
         		},
-        	})
+        	});
     	}
     }
     
@@ -342,3 +340,110 @@
     		}
     	});
     }
+    
+    function pageSave(){
+    	var index = $('.ui-selected').index();
+    	
+    	for(i = 0; i<selectedObj.length; i++){
+    		$obj = selectedObj[i];
+    		$obj.children().remove('.ui-resizable-handle');
+            if($obj.hasClass('ui-draggable'))
+            	$obj.draggable('destroy');
+            $obj.children('.ui-rotatable-handle').hide();
+            if($obj.hasClass('ui-selected'))
+            	$obj.removeClass('ui-selected');
+    	}
+    	
+    	list[index].content = $('.canvas-container').html();
+    	console.log(JSON.stringify(list[index]));
+    	
+    	$.ajax({
+    		url: 'pageSave.do',
+    		type: 'post',
+    		cache: false,
+    		data: JSON.stringify(list[index]),
+    		contentType: "application/json; charset=UTF-8",
+    		success: function(data){
+    			console.log('save success');
+    		},
+    		error: function(){
+    			console.log("error");
+    		}
+    	});
+    	
+    }
+    
+    function pageAllSave(){
+    	var index = $('.ui-selected').index();
+    	
+    	for(i = 0; i<selectedObj.length; i++){
+    		$obj = selectedObj[i];
+    		$obj.children().remove('.ui-resizable-handle');
+            if($obj.hasClass('ui-draggable'))
+            	$obj.draggable('destroy');
+            $obj.children('.ui-rotatable-handle').hide();
+            if($obj.hasClass('ui-selected'))
+            	$obj.removeClass('ui-selected');
+    	}
+    	
+    	list[index].content = $('.canvas-container').html();
+    	console.log(JSON.stringify(list[index]));
+    	
+    	$.ajax({
+    		url: 'pageAllSave.do',
+    		type: 'post',
+    		cache: false,
+    		data: JSON.stringify(list),
+    		contentType: "application/json; charset=UTF-8",
+    		success: function(data){
+    			console.log('allsave success');
+    		},
+    		error: function(){
+    			console.log("error");
+    		}
+    	});
+    	
+    }
+    
+    function pageOutPdf(){
+    	var temp = $('canvas-container').html();
+    	/*for(var i = 0; i < list.length; i++){
+    		$('body').append('<div id="pdf">'+list[i].content+'</div>');
+    	}*/
+    	
+    	/*for(var i = 0; i < list.length; i++){
+    		$('.canvas-container').html(list[i].content);
+    		renderImage();
+    	}
+    	$('.canvas-container').html(temp);*/
+    }
+    
+    function renderImage(){
+    	var content = [];
+    	for(var i = 0; i < list.length; i++){
+    		content[i] = list[i].content; 
+    	}
+    	console.log(content);
+    	
+    	for(var i = 0; i < content.length; i++){
+    		html2canvas(content[i], {
+                onrendered: function (canvas) {
+
+                    // 캔버스를 이미지로 변환
+                    var imgData = canvas.toDataURL('image/png');
+                   console.log(imgData);
+                    var doc = new jsPDF('l', 'mm');
+                    
+                    // 첫 페이지 출력
+                    doc.addImage(imgData, 'PNG', 0, 0);
+                    doc.save('page.pdf');
+                }
+            });
+    	}
+    	
+    	
+    }
+    
+    
+    
+    

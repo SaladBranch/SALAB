@@ -187,6 +187,7 @@ public class MongoService {
 		Query query = new Query(new Criteria().andOperator(
 					Criteria.where("_id").is(p.get_id())
 				));
+		
 		mongoOps.save(p, collection);
 	}
 	

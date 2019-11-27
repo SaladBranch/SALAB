@@ -124,7 +124,8 @@
         </div>
         
         <div class="row recent-files">
-        	<c:forEach var="pfile" items="${privateFile }">
+        	<c:if test="${!empty privateFile }">
+        		<c:forEach var="pfile" items="${privateFile }">
         		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
@@ -155,123 +156,8 @@
 	                </div>
            		</div>
         	</c:forEach>
+        	</c:if>
         	
-            <div class="file-grid" onclick="location.href='epFile.do'">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             
             <div class="file-grid">
                 <div class="new-file" onclick="javascript:location.href='insert_newprivateFile.do?userno=${loginMember.userno }'">

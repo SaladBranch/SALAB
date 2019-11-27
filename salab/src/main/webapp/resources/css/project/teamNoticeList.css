@@ -1,0 +1,86 @@
+
+table {
+    text-align: center;
+    width: 100%;
+    
+}
+
+table th {
+    color: ;
+    min-height: 30px;
+    margin: 5px 0px;
+    border-spacing: 10px;
+    text-align: left;
+}
+
+tr > th:nth-child(1) {
+    width: 20%;
+}
+
+table th {
+    text-align: center;
+    height: 30px;
+    width: 300px;
+    border-spacing: 30px;
+    font-size: 0.9em;
+}
+
+table th:nth-child(1) {
+    margin-left: 10px;
+    width: 3%;
+}
+
+table th:nth-child(2) {
+    width: 20%;
+}
+
+table th:nth-child(3) {
+    width: 4%;
+}
+
+table tr:nth-child(1) {
+    height: 30px;
+}
+
+table tr:nth-child(n+2) {
+    height: 30px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+table tr:nth-child(n+2):hover {
+background-color: rgba(237, 147, 137,0.2);
+
+border-radius: 14px;
+}
+
+table tr > td:nth-child(2n) {
+    text-align: left;
+    padding-left: 40px;
+}
+
+.notice-writing {
+    float: right;
+    margin-top: 13px;
+    margin-right: 15px;
+
+}
+
+.notice-writing::before,
+.notice-writing::after {
+    content: "-";
+}
+
+/*페이지이동*/
+
+.paging {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#notice-paging span {
+    font-size: 0.8em;
+    cursor: pointer;
+    padding: 0px 3px;
+
+}
+

@@ -1,12 +1,17 @@
 package com.sesame.salab.privatefile.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -17,6 +22,9 @@ import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 @Controller
 public class PrivateFileController {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private String collection = "page";
+	
 	@Autowired
 	private PrivateFileService pfService;
 	
@@ -33,7 +41,7 @@ public class PrivateFileController {
 		page.setUserno(Integer.parseInt(userno));
 		page.setFileno(pfile.getPfileno());
 		page.setPageno(1);
-		page.setContent("<div id='droppable' class='canvas ui-widget-content'>" + 
+		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
 				"</div>");
 		page.setPagename("Untitled");
@@ -42,7 +50,7 @@ public class PrivateFileController {
 		mgService.createFirstPage(page);
 		
 		//생성한 페이지 바로 가져옴
-		 ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+		 ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
 		mgService.close();
 		mv.addObject("userno", userno);
 		mv.addObject("fileno", pfile.getPfileno());
@@ -55,14 +63,13 @@ public class PrivateFileController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "pageTab.do", method = RequestMethod.POST)
+	@RequestMapping(value = "pageTab.do", method = RequestMethod.POST, produces="text/plain; charset=UTF-8")
 	public ModelAndView findInConditionMongo(Page page, ModelAndView mv) {
 		mv.setViewName("jsonView");
 		
-		System.out.println(page.toString());
-		
 		MongoService mgService = new MongoService();
-		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage("page", page);
+		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
+		
 		Gson gson = new Gson();
 		String result = gson.toJson(pageList);
 		mv.addObject("page", pageList);
@@ -73,12 +80,11 @@ public class PrivateFileController {
 	@RequestMapping(value="newPage.do", method=RequestMethod.POST)
 	public ModelAndView newPage(Page page, ModelAndView mv) {
 		MongoService mgService = new MongoService();
-		String collection = "page";
 		int result = mgService.countPage(page, collection);
 		System.out.println(result);
 		mv.setViewName("jsonView");
 		
-		page.setContent("<div id='droppable' class='canvas ui-widget-content'>" + 
+		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
 				"</div>");
 		page.setPagename("Untitled");
@@ -88,6 +94,75 @@ public class PrivateFileController {
 		mgService.close();
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="pageDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageDelete(@RequestBody Page page) {
+		MongoService mgService = new MongoService();
+		mgService.pageDelete(collection, page);
+		logger.info("deletePage :: " + page.toString());
+		
+		List<Page> list = mgService.selectUpdatePageNo(collection, page);
+		for(Page p : list) {
+			logger.info(p.toString());
+			mgService.updatePageNo(collection, p, "delete");
+		}
+		
+		mgService.close();
+	}
+	
+	@RequestMapping(value="pageCopy.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageCopy(@RequestBody Page page) {
+		MongoService mgService = new MongoService();
+		List<Page> list = mgService.selectUpdatePageNo(collection, page);
+		for(Page p : list) {
+			mgService.updatePageNo(collection, p, "copy");
+		}
+		page.set_id(null);
+		page.setPagename("Copy of " + page.getPagename());
+		page.setPageno(page.getPageno() + 1);
+		System.out.println(page.toString());
+		
+		mgService.insertNewPage(page, collection);
+		
+		mgService.close();
+	}
+	
+	@RequestMapping(value="pageMove.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageMove(@RequestBody List<Page> page) {
+		MongoService mgService = new MongoService();
+		
+		for(Page p : page) {
+			mgService.saveDoc(collection, p);
+		}
+		
+		mgService.close();
+		
+	}
+	
+	@RequestMapping(value="pageSave.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageSave(@RequestBody Page page) {
+		MongoService mgService = new MongoService();
+		
+		logger.info(page.toString());
+		
+		mgService.saveDoc(collection, page);
+		mgService.close();
+	}
+	
+	@RequestMapping(value="pageAllSave.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void pageAllSave(@RequestBody List<Page> list) {
+		MongoService mgService = new MongoService();
+		
+		for(Page p : list) {
+			mgService.saveDoc(collection, p);
+		}
+		mgService.close();
 	}
 	
 }

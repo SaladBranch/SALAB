@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.MongoClient;
 import com.sesame.salab.page.model.vo.Page;
@@ -64,18 +65,27 @@ public class MongoService {
 	}
 	
 	//find one
-	public Fruit findOne(String findCollection, Fruit findCondition) {
-		Criteria criteria = new Criteria("_id");
-		criteria.is(findCondition.get_id());
+	public Page findOne(String findCollection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").is(page.getPageno())
+		));
 		
-		Query query = new Query(criteria);
-		Fruit fruit = mongoOps.findOne(query, Fruit.class, findCollection);
-		return fruit;
+		return mongoOps.findOne(query, Page.class, findCollection);
+	}
+	
+	public Page findId(String findCollection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("_id").is(page.get_id())
+		));
+		
+		return mongoOps.findOne(query, Page.class, findCollection);
 	}
 	
 	//find all
-	public List<Fruit> findAll(String findCollection){
-		return mongoOps.findAll(Fruit.class, findCollection);
+	public List<Page> findAll(String findCollection){
+		return mongoOps.findAll(Page.class, findCollection);
 	}
 	
 	//find in condition
@@ -108,7 +118,7 @@ public class MongoService {
 		Query query = new Query(new Criteria().andOperator(
 				Criteria.where("userno").is(page.getUserno()),
 				Criteria.where("fileno").is(page.getFileno())
-				));
+				)).with(new Sort(Sort.Direction.ASC, "pageno"));
 		return mongoOps.find(query, Page.class, collection);
 	}
 
@@ -123,8 +133,62 @@ public class MongoService {
 		Query query = new Query(new Criteria().andOperator(
 				Criteria.where("userno").is(page.getUserno()),
 				Criteria.where("fileno").is(page.getFileno())
+		)).with(new Sort(Sort.Direction.DESC, "pageno")).limit(1);
+		
+		List<Page> findpage = mongoOps.find(query, Page.class, collection);
+		
+		return findpage.get(0).getPageno();
+	}
+
+
+	public void pageDelete(String collection, Page page) {
+		// 페이지 삭제용 메소드
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").is(page.getPageno())
+		));
+		
+		mongoOps.remove(query, collection);
+	}
+
+	
+	public List<Page> selectUpdatePageNo(String collection, Page page) {
+		//페이지 삭제 후 삭제한 페이지보다 큰 페이지 번호 셀렉트하는 메소드
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").gt(page.getPageno())
+		)).with(new Sort(Sort.Direction.ASC, "pageno"));
+		
+		return mongoOps.find(query, Page.class, collection);
+	}
+
+	public void updatePageNo(String collection, Page page, String job) {
+		//위에 메소드로 페이지번호 업데이트
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").is(page.getPageno())
+		));
+		Update update = null;
+		if(job.equals("delete")) {
+			update = new Update().set("pageno", (page.getPageno() - 1));
+		}else if(job.equals("copy")) {
+			update = new Update().set("pageno", (page.getPageno() + 1));
+		}
+		
+		mongoOps.updateFirst(query, update, collection);
+		
+	}
+
+	public void saveDoc(String collection, Page p) {
+		// TODO Auto-generated method stub
+		Query query = new Query(new Criteria().andOperator(
+					Criteria.where("_id").is(p.get_id())
 				));
 		
-		return (int) mongoOps.count(query, collection);
+		mongoOps.save(p, collection);
 	}
+	
 }

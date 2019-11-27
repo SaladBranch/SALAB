@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/editFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/components.css" type="text/css">
+    <link rel="stylesheet" href="/salab/vendors/css/jquery.minicolors.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>파일명 | Salab</title>
@@ -41,7 +42,7 @@
                 <div class="canvas-size">
                     <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
                 </div>
-                <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_blank.png"></button>
+                <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_full.png"></button>
             </div>
         </div>
     </nav>
@@ -54,13 +55,13 @@
                 페이지<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-page-menu">
                     <li><a onclick="newPage()">새 페이지</a></li>
-                    <li><a href="#">페이지 복사</a></li>
-                    <li><a href="#">페이지 삭제</a></li>
-                    <li><a href="#">페이지 이름 변경</a></li>
-                    <li><a href="#">저장</a></li>
-                    <li><a href="#">전체 저장</a></li>
-                    <li><a href="#">내보내기</a></li>
-                    <li><a href="#">전체 내보내기</a></li>
+                    <li><a href="javascript:" onclick="pageCopy();">페이지 복사</a></li>
+                    <li><a href="javascript:" onclick="pageDelete();">페이지 삭제</a></li>
+                    <li><a href="javascript:">페이지 이름 변경</a></li>
+                    <li><a href="javascript:" onclick="pageSave();">저장</a></li>
+                    <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
+                    <li><a href="javascript:" onclick="pageOutPdf();">내보내기</a></li>
+                    <li><a href="javascript:">전체 내보내기</a></li>
                 </ul>
             </li>
             
@@ -227,6 +228,47 @@
     </div>
     
     <div class="right-side-bar">
+        <div class="canvas-menu">
+            <div class="canvas-tab active-tab">Canvas</div>
+            <div class="canvas-view">
+                <h5>view</h5>
+                <div class="canvas-opt" id="cansvas-grid">
+                    <label class="chk-label grid-chk">격자무늬 보이기<input type="checkbox"><span class="checkmark"></span></label>
+                </div>
+                <div class="canvas-opt" id="canvas-background">
+                    <label class="chk-label back-chk">캔버스 배경<input type="checkbox"><span class="checkmark"></span></label>
+                </div>
+            </div>
+            <div class="canvas-sizing">
+                <h5>size</h5>
+                <div id="canvas-sizing">Desktop <span>1440x1024</span></div>
+                <span class="open-options">&#9660;</span>
+                <ul id="canvas-sizing-opt">
+                    <li>Desktop <span>1440x1024</span></li>
+                    <li>MacBook <span>1152x700</span></li>
+                    <li>MacBook Pro <span>1440x900</span></li>
+                    <li>iMac <span>1280x720</span></li>
+                    <hr>
+                    <li>iPad Pro <span>1024x1336</span></li>
+                    <li>iPad <span>768x1024</span></li>
+                    <li>iPhone 6/7/8 <span>375x667</span></li>
+                    <li>Android <span>360x640</span></li>
+                    <hr>
+                    <li>16:9 <span>1600x900</span></li>
+                    <li>16:10 <span>1920x1200</span></li>
+                    <li>4:3 <span>1600x1200</span></li>
+                    <hr>
+                    <li>custom</li>
+                </ul>
+                <label class="radio-label">portrait<input type="radio"><span class="radiomark"></span></label>
+                <label class="radio-label">landscape<input type="radio"><span class="radiomark"></span></label>
+                <div class='canvas-custom-sizing'>
+	            	<div id='custom-width'><input type='number'>px</div><span>&times;</span>
+	            	<div id='custom-height'><input type='number'>px</div>
+	           	</div>
+            </div>
+            
+        </div>
         <div class="tab-menu">
             <div class="tab figure-tab active-tab">Figure</div>
             <div class="tab text-tab">Text</div>
@@ -316,7 +358,7 @@
             	</div>
         	</div>
         	<div class="text-tab-content">
-            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-shape-comps');">
+            	<div class="text-category text-shape" onclick="toggleComps(this, '.text-font-comps');">
                 	<p>&#9660;</p>FONT
             	</div>
             	<div class="text-font-comps">
@@ -367,28 +409,55 @@
             	</div>
         	</div>
         </div>
+        <div class="canvas-content">
+        </div>
     </div>
     
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/html2canvas.min.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/editPrivateFile/page.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
+    	
+    	/* //페이지넘버 담을 전역변수
+    	var listno = new Array(); */
     $(function(){
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
     	<c:forEach items="${pageList }" var="item">
-    		list.push("${item.content }");
+    		list.push({
+    			content: `${item.content}`,
+    			pageno: "${item.pageno}",
+    			fileno: "${item.fileno}",
+    			userno: "${item.userno}",
+    			pagename: "${item.pagename}",
+    			_id: "${item._id }"
+    		});
     	</c:forEach>
     	
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
+        
+        $('.grid-chk input').on('change', function(){
+            if($(this).is(':checked')){
+            	$('#droppable').addClass('grid-canvas');
+            	$('#droppable').attr('data-grid', true)
+            }else{
+            	$('#droppable').removeClass('grid-canvas');
+            	$('#droppable').attr('data-grid', false);
+            }
+                
+        });
     });
     $('.page-tab').click(function(){
     	
@@ -457,7 +526,7 @@
     }
     
     $('.figure-tab').click(function(){
-        $('.tab-menu .tab').each(function(){
+        $('.right-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
         $('.figure-tab').addClass('active-tab');
@@ -466,7 +535,7 @@
     });
     
     $('.text-tab').click(function(){
-        $('.tab-menu .tab').each(function(){
+        $('.right-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
         $('.text-tab').addClass('active-tab');
@@ -488,101 +557,6 @@
             $('.main-toggle-menu').hide();    
         }
     });
-    
-    //page 탭 리스트 불러오는 ajax
-    function pageTab(){
-    	$.ajax({
-    		url: 'pageTab.do',
-    		type: 'post',
-    		data: {
-    			userno: ${userno},
-    			fileno: ${fileno}
-    		},
-    		dataType: 'json',
-    		success: function(data){
-    			console.log(data.page[0].pageno);
-    			$('.page-tab-content').html('');
-    			for(var i =0; i < data.page.length; i++){
-    				$('.page-tab-content').append(
-        					'<li class="page-item">' +
-    						'<div class="page">' +
-        	                '<div class="page-top">' +
-        	                    '<div class="page-thumbnail">' +
-        	                        '<img src="/salab/resources/img/whitebox.png">' +
-        	                    '</div>'+
-        	                '</div>' +
-        	                '<div class="page-name">' + 
-        	                    '<input type="text" class="page-title" value="Untitled">' +
-        	                '</div>' +
-        	            '</div>'	+ 
-        	            '</li>'
-        			);
-    			}
-    			
-    			$('.page-tab-content').append(
-    					'<div class="newpage" onclick="newPage()">' +
-    	                '&#43;' +
-    	            '</div>'	
-    			);
-    		},
-    		error: function(){
-    			
-    		}
-    	});
-    }
-    
-    function newPage(){
-    	console.log('check');
-    	$.ajax({
-    		url: 'newPage.do',
-    		type: 'post',
-    		dataType: 'json',
-    		data: {
-    			userno: ${userno},
-    			fileno: ${fileno}
-    		},
-    		success: function(data){
-    			console.log("ok");
-    			pageTab();
-    		},
-    		error:function(){
-    			
-    		}
-    	});
-    }
-    
-    //페이지 셀렉트시에 페이지를 변경시켜줄 함수
-    function pageContent(index){
-    	var no = index;
-    	$('.canvas-container').html(list[no]);
-    	$all = $('#multiselect');
-    	$('#droppable').selectable({
-            filter: " > .obj",
-            start: function(){
-                selectedObj = new Array();
-            },
-            selected: function(e, ui){
-                selectedObj.push($(ui.selected));
-            },
-            unselected: function(e, ui){
-                $(ui.unselected).children().remove('.ui-resizable-handle');
-                if($(ui.unselected).hasClass('ui-draggable'))
-                    $(ui.unselected).draggable('destroy');
-                $(ui.unselected).children('.ui-rotatable-handle').hide();
-            },
-            stop: function(){
-                addControl();
-            }
-        });
-        rightMouseListner();
-        leftMouseListner();
-        
-    }
-    
-    function tempStorage(index){
-    	var no = index;
-    	list[no] = $('.canvas-container').html();
-    }
     
     </script>
     

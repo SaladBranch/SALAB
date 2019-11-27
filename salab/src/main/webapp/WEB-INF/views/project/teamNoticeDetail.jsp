@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
     
-    <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
-    <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
+     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/project/teamNoticeCommon.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/project/teamNoticeDetail.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <script type="text/javascript">
@@ -22,8 +23,10 @@
     	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
     }
     </script>
-    <title>최근 파일 | Salab</title>
+    <title>Project | Salab</title>
 </head>
+
+<body>
 <body>
     <header>
         <nav class="top-bar">
@@ -55,7 +58,7 @@
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
                                 <li><a href="userMain.do">계정 설정하기</a></li>
-                                <li><a href="noticelist.do">도움말</a></li>
+                                <li><a href="userNotice.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
                         </div>
@@ -64,7 +67,7 @@
             </div>
         </nav>
     </header>
-    
+
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="search-bar">
@@ -91,83 +94,44 @@
             </div>
         </div>
     </div>
-    <div id="right-click-menu" class="right-click-menu">
-        <ul>
-            <li><a href="#">파일열기</a></li>
-            <li><a href="#">파일 정보 설정</a></li>
-            <li><a href="#">사본만들기</a></li>
-            <li><a href="#">웹테스트</a></li>
-            <li><a href="#">삭제</a></li>
-        </ul>
-    </div>
-    <div id="multi-right-click-menu" class="multi-right-click-menu">
-        <ul>
-            <li><a href="#"><span></span>개 파일 사본만들기</a></li>
-            <li><a href="#"><span></span>개 파일 삭제</a></li>
-        </ul>
-    </div>
     <div class="right-main-side">
-        <div class="focus"></div>
-        <div class="sort-standard">
-            <div class="sort-by">
-                <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">최근 본 파일</span>
+        <div class="focus"></div> <!-- 여백 -->
+        <div class="sort-by  absolute icon-positioning">
+           <i class="fas fa-chevron-left"></i>
+        </div>
+        <sector>
+            <div class="notice-grid">
+                <div class="notice-header">공지사항</div>
+                <div class="notice-body">
+                    <div>
+                        <div class="notice-title">
+                            <input class="hideInputText" type="text" placeholder=" :Notice Title" maxlength="40">
+                            <span id="writedDate">18.11.10</span>
+
+                        </div>
+                        <div id="check">
+                            <textarea class="notice-contentbox" rows="12" placeholder=":Notice Content" ></textarea>
+                        </div>
+
+                    </div>
+                    <div class="buttonbox">
+                        <div class="button">
+                            수정하기
+                        </div>
+                        <div class="button">
+                            삭제하기
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="sort-standards">
-                <ul>
-                    <li><a href="#" class="sort-active">최근 본 파일</a></li>
-                    <li><a href="#">파일 명</a></li>
-                    <li><a href="#">파일 생성 일자</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="row recent-files">
-        	<c:if test="${!empty privateFile }">
-        		<c:forEach var="pfile" items="${privateFile }">
-        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
-	                <div class="file-container">
-	                    <div class="file-thumbnail">
-	                        
-	                    </div>
-	                    <div class="file-info">
-	                        <div class="about-file">
-	                            <div class="file-name">
-	                                <c:out value="${pfile.pfiletitle }"/>
-	                            </div>
-	                            <div class="file-edited">
-	                                5분 전 편집 in 개인파일1
-	                            </div>
-	                        </div>
-	                        <div class="file-options">
-	                            <div class="file-options-btn">&#8942;</div>
-	                            <div class="file-options-menu">
-	                                <ul>
-	                                    <li><a href="#">파일열기</a></li>
-	                                    <li><a href="#">파일 정보 설정</a></li>
-	                                    <li><a href="#">사본만들기</a></li>
-	                                    <li><a href="#">웹테스트</a></li>
-	                                    <li><a href="#">삭제</a></li>
-	                                </ul>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-           		</div>
-        	</c:forEach>
-        	</c:if>
-        	
-            
-            <div class="file-grid">
-                <div class="new-file" onclick="javascript:location.href='insert_newprivateFile.do?userno=${loginMember.userno }'">
-                    &#43; 새 파일
-                </div>
-            </div>
-        </div>
+
+
+        </sector>
+
+
+
     </div>
-    
-    
+
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
 </body>

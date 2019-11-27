@@ -330,7 +330,6 @@ $(function(){
         $focus.css('top', top);
         $focus.css('height', height);        
     }
-    
 });
 
 //canvas sizing
@@ -370,6 +369,8 @@ $(function(){
         if($(this).text() != 'custom'){
             $('#canvas-sizing').html($(this).html());
             $('#canvas-sizing-opt').hide();
+            $('.canvas-sizing label').show();
+        	$('.canvas-custom-sizing').hide();
             var width = Number($(this).children('span').text().split('x')[0]);
             var height = Number($(this).children('span').text().split('x')[1]);
             $('#droppable').css({
@@ -384,6 +385,15 @@ $(function(){
             	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
             }
             $('#droppable').attr('data-canvas', $(this).html().split(' <')[0]);
+        }else{
+        	$('#canvas-sizing').html('custom');
+        	$('#canvas-sizing-opt').hide();
+        	$('#droppable').attr('data-canvas', 'custom');
+        	$('.canvas-sizing label').hide();
+        	$('.canvas-custom-sizing').show();
+        	
+        	$('#custom-width input').val(Number($('#droppable').css('width').replace('px', '')));
+        	$('#custom-height input').val(Number($('#droppable').css('height').replace('px', '')));
         }
     });
     
@@ -403,6 +413,13 @@ $(function(){
     			height: width + 'px'
     		});
 	});
+    
+    $('#custom-width input').on('focusout', function(){
+    	$('#droppable').css('width', $(this).val()+'px');
+    });
+    $('#custom-height input').on('focusout', function(){
+    	$('#droppable').css('height', $(this).val()+'px');
+    });
 });
 
 $('#droppable').bind('DOMSubtreeModified', function(e){

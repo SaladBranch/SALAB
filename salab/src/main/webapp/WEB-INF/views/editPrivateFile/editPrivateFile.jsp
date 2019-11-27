@@ -262,7 +262,12 @@
                 </ul>
                 <label class="radio-label">portrait<input type="radio"><span class="radiomark"></span></label>
                 <label class="radio-label">landscape<input type="radio"><span class="radiomark"></span></label>
+                <div class='canvas-custom-sizing'>
+	            	<div id='custom-width'><input type='number'>px</div><span>&times;</span>
+	            	<div id='custom-height'><input type='number'>px</div>
+	           	</div>
             </div>
+            
         </div>
         <div class="tab-menu">
             <div class="tab figure-tab active-tab">Figure</div>

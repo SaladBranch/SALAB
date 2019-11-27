@@ -837,6 +837,36 @@ ol.page-tab-content li{
     left:6px;
 }
 
+.canvas-custom-sizing{
+	display: none;
+	width: 90%;
+	margin: 0 5%;
+	font-size: 15px;
+}
+.canvas-custom-sizing div{
+	display: inline-block;
+	margin: 15px 0;
+}
+.canvas-custom-sizing span{
+	font-weight: bold;
+	margin: 0 10px;
+}
+
+#custom-width input, #custom-height input{
+	width: 70px;
+	text-align: right;
+	padding: 3px;
+}
+
+#custom-width input::-webkit-outer-spin-button,
+#custom-width input::-webkit-inner-spin-button,
+#custom-height input::-webkit-outer-spin-button,
+#custom-height input::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+
 
 /*-------------------------*/
 /* Canvas */

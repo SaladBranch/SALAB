@@ -52,6 +52,7 @@ public class NoticeController {
 		return mv;
 	}
 	
+	//공지사항 상세
 	@RequestMapping(value="noticeDetail.do")
 	public ModelAndView noticeDetailMethod(ModelAndView mv, @RequestParam(value="noticeno") int noticeno , @RequestParam(value="page", required=false) String currentPage) throws Exception {
 		

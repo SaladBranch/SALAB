@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -93,15 +94,21 @@
 					<ul>
 						<li>
 							<p class="qna_title">제목</p>
-							<input type="text" id="qna_box_title" name="qna_box_title">
+							<input type="text" id="qna_box_title" name="qna_box_title" value="${requestScope.qna.qnatitle }" readonly >
 						</li>
 						<li>
 							<p class="qna_content">내용</p>
-							<textarea id="qna_box_content" name="qna_box_content"></textarea>
+							<textarea id="qna_box_content" name="qna_box_content" readonly="readonly" >${requestScope.qna.qnacontent }</textarea>
 						</li>
 						<li>
 							<p class="qna_ans">답변</p>
-							<textarea id="qna_box_ans" name="qna_box_ans"></textarea>
+							<c:if test="${!empty requestScope.qna.qnareplycontent }">
+								<textarea id="qna_box_ans" name="qna_box_ans" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
+							</c:if>
+							<c:if test="${empty requestScope.qna.qnareplycontent }">
+								<textarea id="qna_box_ans" name="qna_box_ans" readonly="readonly" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
+								
+							</c:if>
 						</li>
 						<li>
 							<span class="qna_back_btn" onclick="back_qna();">목록으로</span>

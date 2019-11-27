@@ -10,21 +10,25 @@
 		<result property="qnatitle" column="QNATITLE" />
 		<result property="qnacontent" column="QNACONTENT" />
 		<result property="qnadate" column="QNADATE" />
-		<result property="qnareqlycontent" column="QNAREPLYCONTENT" />
+		<result property="qnareplycontent" column="QNAREPLYCONTENT" />
 		<result property="qnareplydate" column="QNAREPLYDATE" />
 		<result property="qnareplyyn" column="QNAREPLYYN" />
 	</resultMap>
 	
-	<select id="selectList" parameterType="Paging" resultMap="resultQna">
-		select * from (select rownum rnum, qnano, qnatitle, qnadate, qnareplyyn from (select * from qna order by qnano desc))where rnum between #{startRow} and #{endRow}
+	<select id="selectList" parameterType="HashMap" resultMap="resultQna">
+		select * from (select rownum rnum, qnano, qnatitle, qnadate, qnareplyyn from (select * from qna where userno = #{userno} order by qnano desc))where rnum between #{paging.startRow} and #{paging.endRow}
 	</select>
 	
 	<select id="listCount" resultType="int">
-		select count(*) from qna
+		select count(*) from qna where userno = #{userno}
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultMap="resultQna">
 		select * from qna where qnano = #{qnano}
 	</select>
+	
+	<insert id="qnaInsert" parameterType="Qna">
+		insert into qna values(seq_qnano.nextval, null,  #{userno} , #{qnatitle}, #{qnacontent}, default, null, null, 'N')
+	</insert>
 
 </mapper>

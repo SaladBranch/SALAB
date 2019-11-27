@@ -67,7 +67,7 @@
             </div>
             <div class="recent-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+                <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
@@ -75,7 +75,7 @@
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>
@@ -86,15 +86,15 @@
     	</div>
         <div class="faq_bottom">
         	<ul>
-        		<c:forEach var="faqlist" items="${requestScope.list }">
+        		<c:forEach var="faq" items="${requestScope.faqlist }">
 	        		<li class="faq_open">
 	        			<ul>
-							<li class="faq_open_category"><span>${faqlist.faqcategory }</span></li>
-							<li class="faq_open_title"><span>${faqlist.faqtitle }</span></li>
+							<li class="faq_open_category"><span>${faq.faqcategory }</span></li>
+							<li class="faq_open_title"><span>${faq.faqtitle }</span></li>
 							<li class="faq_open_plus"><span>+</span></li>
 							<li class="faq_open_minus"><span>-</span></li>
 							<div class="faq_box">
-								<p>${faqlist.faqcontent }</p>
+								<p>${faq.faqcontent }</p>
 							</div>
 		        		</ul>
 	        		</li>

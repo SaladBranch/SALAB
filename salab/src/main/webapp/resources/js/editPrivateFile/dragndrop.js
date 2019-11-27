@@ -5,7 +5,6 @@ var canvas = ".canvas-container";
 var $focus = $('.focus');
 var $all = $('#multiselect');
 var appendElement = "";
-var editable = "true"; // right-side-bar 자동 오픈 여부
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
@@ -45,10 +44,13 @@ function includeElement(X, Y, temp) {
 }
 function leftMouseListner(){
     $(document).on('click', function(){
-        toggleContext(0); 
+        toggleContext(0);
     });
     $('#droppable').on('click', function(){
         toggleContext(0);
+    });
+    $(document).on('dblclick', "#droppable .obj", function(){
+        $(this).children(".obj-comp").focus();
     });
 }
 function rightMouseListner(){
@@ -111,18 +113,49 @@ function addControl(){
         $obj = selectedObj[0];
         $obj.append(resize_handler.code);
         $obj.children('.ui-rotatable-handle').show();
+        var __dx;
+        var __dy;
+        var __scale=0.5;
+        var __recoupLeft, __recoupTop;
+        
         $obj.draggable({ //select 된놈은 드래그 가능
-            start: function(e, ui){
-                $focus.hide();
+            cancel: '.ui-resizable-handle',
+            drag: function (event, ui) {
+                //resize bug fix ui drag `enter code here`
+                __dx = ui.position.left - ui.originalPosition.left;
+                __dy = ui.position.top - ui.originalPosition.top;
+                //ui.position.left = ui.originalPosition.left + ( __dx/__scale);
+                //ui.position.top = ui.originalPosition.top + ( __dy/__scale );
+                ui.position.left = ui.originalPosition.left + (__dx);
+                ui.position.top = ui.originalPosition.top + (__dy);
+                //
+                ui.position.left += __recoupLeft;
+                ui.position.top += __recoupTop;
             },
-            cancel: '.ui-rotatable-handle'
+            start: function (event, ui) {
+                $focus.hide();
+                //resize bug fix ui drag
+                var left = parseInt($(this).css('left'), 10);
+                left = isNaN(left) ? 0 : left;
+                var top = parseInt($(this).css('top'), 10);
+                top = isNaN(top) ? 0 : top;
+                __recoupLeft = left - ui.position.left;
+                __recoupTop = top - ui.position.top;
+            },
+            stop: function (event, ui) {
+                $(this).css('cursor', 'default');
+            }
         }).rotatable({
-            degrees: getRotateDegree($obj)
+            degrees: getRotateDegree($obj),
+            stop : function() {
+            	formatChange();
+            },
+            wheelRotate: false
         });
         //group obj는 also resize 대상 변경
         if($obj.hasClass('group-obj')){
             $obj.resizable({
-                handles:{
+            	handles:{
                     'n': '.ui-resizable-n',  
                     'e': '.ui-resizable-e',  
                     's': '.ui-resizable-s',
@@ -132,7 +165,10 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
-                alsoResize: $obj.children('.obj')
+                alsoResize: $obj.children('.obj'),
+                stop: function(){
+                    formatChange();
+                }
             });
         }else{
             $obj.resizable({
@@ -146,14 +182,13 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
-                alsoResize: "this .obj-comp"
+                alsoResize: "this .obj-comp",
+                stop: function(){
+                    formatChange();
+                }
             });
         }
-        formatChange($obj);
-        if (editable == "true") {
-        	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
-        	$(".right-side-bar").fadeIn(300);
-        }
+        formatChange();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
     	console.log("복수 선택");
@@ -171,6 +206,7 @@ function addControl(){
             top: 0,
             left: 0           
         });
+        formatChange();
     }
 }
 
@@ -211,54 +247,11 @@ $(function(){
         },
         stop: function(){
             addControl();
+            // select 실행 시 cursor out
+            window.getSelection().removeAllRanges();
         }
     });
     
-    $('.page-tab-content').selectable({
-        cancel: '.ui-selected',
-        filter: '>li',
-        start: function(){
-        	//페이지를 셀렉트했을때 변경된 작업에대해서 임시저장하는 함
-        	$( ".page-tab-content .ui-selected").each(function(){
-                var index = $( ".page-tab-content li" ).index($(this));
-                tempStorage(index);
-            });
-        },
-        stop: function(){
-        	//페이지를 셀렉트 했을때 안의 content 가 바뀌게 하는 함수
-        	$( ".page-tab-content .ui-selected").each(function() {
-                var index = $( ".page-tab-content li" ).index($(this));
-                pageContent(index);
-        	});
-        }
-    }).sortable({
-        items: "> li",
-        placeholder: "ui-selected",
-        axis: 'y',
-        handle: 'div, .ui-selected',
-        cancel: '.newpage',
-        helper: function(e, item){
-            if ( ! item.hasClass('ui-selected') ) {
-              item.parent().children('.ui-selected').removeClass('ui-selected');
-              item.addClass('ui-selected');
-            }
-            var selected = item.parent().children('.ui-selected').clone();
-            ph = item.outerHeight() * selected.length;
-            item.data('multidrag', selected).siblings('.ui-selected').remove();
-            return $('<li/>').append(selected).css({
-                'list-style':"none",
-                padding: 0
-            });
-        },
-        start: function(e, ui) {
-            ui.placeholder.css({'height':ph});
-        },
-        stop: function(e, ui) {
-            var selected = ui.item.data('multidrag');
-            ui.item.after(selected);
-            ui.item.remove();
-        }
-    });
     //canvas 위의 마우스 드래깅
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
@@ -338,4 +331,62 @@ $(function(){
         $focus.css('height', height);        
     }
     
+});
+
+//canvas sizing
+$(function(){
+    $('.right-side-bar .tab-menu').hide();
+    $('.right-side-bar .tab-content').hide();
+    $('.back-chk input').on('change', function(){
+        var defaultVal = $('#droppable').css('background-color');
+        var $colorpic = $('<div class="canvas-colorpic"></div>')
+        if($(this).is(':checked')){
+            $('#canvas-background').append($colorpic);
+            $('.canvas-colorpic').minicolors({
+                control: 'hue',
+                position: 'bottom right',
+                defaultValue: defaultVal,
+                change: function(hex, opacity){
+                    $('#droppable').css('background-color', hex);
+                }
+            });
+        }else{
+            $('.minicolors').remove();
+            $('#droppable').css('background-color', '#fff');
+        }
+    });
+    
+    $('#canvas-sizing').on('click', function(){
+        $options = $('#canvas-sizing-opt');
+        if($options.css('display') == "none"){
+            $options.show();
+        }else{
+            $options.hide();
+        }
+    });
+    
+    $('#canvas-sizing-opt li').on('click', function(){
+        if($(this).text() != 'custom'){
+            $('#canvas-sizing').html($(this).html());
+            $('#canvas-sizing-opt').hide();
+            var width = $(this).children('span').text().split('x')[0] + 'px';
+            var height = $(this).children('span').text().split('x')[1] + 'px';
+            $('#droppable').css({
+                width: width,
+                height: height
+            });
+        }
+    });
+});
+
+$('#droppable').bind('DOMSubtreeModified', function(e){
+    if($('#droppable .ui-selected').length > 0){
+        $('.right-side-bar .canvas-menu').hide();
+        $('.right-side-bar .tab-menu').show();
+        $('.right-side-bar .tab-content').show();
+    }else{
+        $('.right-side-bar .canvas-menu').show();
+        $('.right-side-bar .tab-menu').hide();
+        $('.right-side-bar .tab-content').hide();
+    }
 });

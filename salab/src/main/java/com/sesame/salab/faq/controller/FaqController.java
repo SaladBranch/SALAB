@@ -24,10 +24,10 @@ public class FaqController {
 	//faq 목록 조회
 	@RequestMapping(value="faqlist.do")
 	public ModelAndView faqListMethod(ModelAndView mv, Faq faq) throws Exception{
-		List<Faq> list = faqService.faqList();
+		List<Faq> faqlist = faqService.faqList();
 		
-		if(list != null) {
-			mv.addObject("list", list);
+		if(faqlist != null) {
+			mv.addObject("faqlist", faqlist);
 			mv.setViewName("help/userFAQ");
 		}else {
 			mv.addObject("message", "faq 조회 실패");

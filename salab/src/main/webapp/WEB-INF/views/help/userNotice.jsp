@@ -66,7 +66,7 @@
             </div>
             <div class="recent-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+                <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
@@ -74,17 +74,18 @@
             </div>
             <div class="trashcan">
                 <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="userQnA.do">1:1문의</a>
+                <a href="qnalist.do">1:1문의</a>
             </div>
         </div>
     </div>
-
+    
     <div class="right-main-side">
        <div class="notice_top">
           <p>공지사항</p>
        </div>
         <div class="notice_bottom">
            <ul>
+              <!-- 목록 상단 -->
               <li class="notice_head">
                  <ul>
                     <li class="notice_head_no"><span>NO</span></li>
@@ -92,49 +93,96 @@
                     <li class="notice_head_date"><span>날짜</span></li>
                  </ul>
               </li>
-              <li class="notice_list">
-                 <ul>
-                	<a href="userNoticeDetail.do">
-                    <li class="notice_head_no"><span>4</span></li>
-                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
-                    <li class="notice_head_date"><span>19-10-23</span></li>
-                   	</a>
-                 </ul>
-              </li>
-              <li class="notice_list">
-                 <ul>
-                    <a href="#">
-                    <li class="notice_head_no"><span>3</span></li>
-                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
-                    <li class="notice_head_date"><span>19-10-23</span></li>
-                   	</a>
-                 </ul>
-              </li>
-              <li class="notice_list">
-                 <ul>
-                    <a href="#">
-                    <li class="notice_head_no"><span>2</span></li>
-                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
-                    <li class="notice_head_date"><span>19-10-23</span></li>
-                   	</a>
-                 </ul>
-              </li>
-              <li class="notice_list">
-                 <ul>
-                    <a href="#">
-                    <li class="notice_head_no"><span>1</span></li>
-                    <li class="notice_head_title"><span>10-23 공지사항입니다. 새로운 업데이트 내용을 확인하세요.</span></li>
-                    <li class="notice_head_date"><span>19-10-23</span></li>
-                   	</a>
-                 </ul>
-              </li>
-              <li class="notice_list">
-                 <ul>
-                    <li class="notice_head_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
-                 </ul>
-              </li>
+              <!-- 목록 상단 -->
+				
+              	<!-- 목록 -->
+				<c:if test="${!empty requestScope.noticelist }">
+					<c:forEach var="notice" items="${requestScope.noticelist }">
+						<c:url var="noticeDetail" value="noticeDetail.do">
+							<c:param name="noticeno" value="${notice.noticeno }" />
+							<c:param name="page" value="${paging.currentPage }" />
+						</c:url>
+						<li class="notice_list">
+							<ul>
+								<a href="${noticeDetail }">
+									<li class="notice_head_no"><span>${notice.noticeno }</span></li>
+									<li class="notice_head_title"><span>${notice.noticetitle }</span></li>
+									<li class="notice_head_date"><span>${notice.noticedate }</span></li>
+								</a>
+							</ul>
+						</li>
+					</c:forEach>
+				</c:if>
+              	<!-- 목록 -->
+              
+				<!-- 목록 == null -->
+				<c:if test="${empty requestScope.noticelist }">
+					<li class="notice_list">
+						<ul>
+							<li class="notice_head_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
+						</ul>
+					</li>
+				</c:if>
+				<!-- 목록 == null -->
            </ul>
         </div>
+        
+        <!-- 페이징 처리 -->
+        <div class="box_footer">
+       		<ul>
+	       		<li class="paging_list">
+		       		<ul>
+						<!-- 처음 -->
+						<c:if test="${paging.currentPage eq 1 }">
+							<li class="paging_btn">[처음]</li>
+						</c:if>
+						<c:if test="${paging.currentPage ne 1 }">
+							<li class="paging_btn"><a href="noticelist.do?page=1">[처음]</a></li>
+						</c:if>
+						<!-- 처음 -->
+						
+						<!-- 이전-->
+						<c:if test="${paging.startPage eq 1 }">
+							<li class="paging_btn">[이전]</li>
+						</c:if>
+						<c:if test="${paging.startPage ne 1 }">
+							<li class="paging_btn"><a href="noticelist.do?page=${paging.startPage - 1 }">[이전]</a></li>
+						</c:if>
+						<!-- 이전-->
+						
+						<!-- 현재 Page 숫자 목록 -->
+						<c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+							<c:if test="${pageno eq paging.currentPage }">		
+								<li class="paging_no_this">[${ pageno }]</li>
+							</c:if>
+							<c:if test="${pageno ne paging.currentPage }">
+								<a href="noticelist.do?page=${ pageno }"><li class="paging_no">${ pageno }</li></a>
+							</c:if>
+						</c:forEach>
+						<!-- 현재 Page 숫자 목록 -->
+						
+						<!-- 다음-->
+						<c:if test="${paging.endPage eq paging.maxPage}">
+							<li class="paging_btn">[다음]</li>
+						</c:if>
+						<c:if test="${paging.endPage ne paging.maxPage}">
+							<li class="paging_btn"><a href="noticelist.do?page=${paging.endPage + 1 }">[다음]</a></li>
+						</c:if>
+						<!-- 다음-->
+						
+						<!-- 끝 -->
+						<c:if test="${paging.currentPage ge paging.maxPage }">
+							<li class="paging_btn">[끝]</li>
+						</c:if>
+						<c:if test="${paging.currentPage lt paging.maxPage }">
+							<li class="paging_btn"><a href="noticelist.do?page=${paging.maxPage }">[끝]</a></li>
+						</c:if>
+						<!-- 끝 -->
+					</ul>
+				</li>
+       		</ul>
+        </div>
+        <!-- 페이징 처리 -->
     </div>
 
 </body>

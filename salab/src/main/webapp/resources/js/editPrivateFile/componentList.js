@@ -172,7 +172,16 @@ var contextmenu = {
         <a href="javascript:pasteObject();" class="pasteObj">붙여넣기</a>
         <a href="javascript:cloneObject();" class="cloneObj">복제하기</a>
         <div class="boundary"></div>
-        <a href="">순서</a>
+        <ul>        
+        <li class="orderObj">순서<span><i class="fas fa-caret-right"></i></span>
+            <ul class="orderObj-sub">
+                <li><a href="javascript:send_forward();" class="send-forward">맨 앞으로</a></li>
+                <li><a href="javascript:send_front();" class="send-front">앞으로</a></li>
+                <li><a href="javascript:send_back();" class="send-back">뒤로</a></li>
+                <li><a href="javascript:send_backward();" class="send-backward">맨 뒤로</a></li>
+            </ul>
+        </li>
+        </ul>   
         <div class="boundary"></div>
         <a href="">보내기</a>
         `
@@ -188,7 +197,16 @@ var contextmenu = {
         <a href="javascript:pasteObject();" class="pasteObj">붙여넣기</a>
         <a href="javascript:cloneObject();" class="cloneObj">복제하기</a>
         <div class="boundary"></div>
-        <a href="">순서</a>
+        <ul>        
+        <li class="orderObj">순서<span><i class="fas fa-caret-right"></i></span>
+            <ul class="orderObj-sub">
+                <li><a href="javascript:send_forward();" class="send-forward">맨 앞으로</a></li>
+                <li><a href="javascript:send_front();" class="send-front">앞으로</a></li>
+                <li><a href="javascript:send_back();" class="send-back">뒤로</a></li>
+                <li><a href="javascript:send_backward();" class="send-backward">맨 뒤로</a></li>
+            </ul>
+        </li>
+        </ul>
         `
     }
 }

@@ -11,7 +11,15 @@
 		<result property="noticedate" column="NOTICEDATE" />
 	</resultMap>
 	
-	<select id="selectList" parameterType="hashmap" resultMap="resultNotice">
+	<select id="selectList" parameterType="Paging" resultMap="resultNotice">
+		select * from (select rownum rnum, noticeno, noticetitle,noticedate from (select * from notice order by noticeno desc))where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="listCount" resultType="int">
+		select count(*) from notice
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="resultNotice">
 		select * from notice where noticeno = #{noticeno}
 	</select>
 </mapper>

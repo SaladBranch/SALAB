@@ -397,7 +397,7 @@ ol.page-tab-content li{
 /*Right Side Bar*/
 /*-------------------------*/
 .right-side-bar{
-    display: none;
+    display: block;
     position: absolute;
     width: 230px;
     height: calc(100vh - 40px);
@@ -444,6 +444,7 @@ ol.page-tab-content li{
 .figure-shape-comps {
     font-size: 15px;
     margin : 10px 0px 0px 0px;
+    padding : 0px 0px 10px 0px;
     border-bottom: 1px solid #c6c6c6;
 }
 .figure-line-comps {
@@ -458,13 +459,16 @@ ol.page-tab-content li{
 	width : 190px;
 	height : 35px;
 	border : 1px solid white;
-	margin : 0px auto 5px auto;
+	margin : 0px 19.5px 5px 19.5px;
 	padding : 0px 0px 0px 10px;
 }
 .figure-item span {
-	width : 30px;
+	width : 32px;
 	margin : 8px 0px 0px 0px;
 	float : left;
+}
+.figure-item#radius span {
+	width : 50px;
 }
 .figure-item input[type=number] {
 	width : 50px;
@@ -554,7 +558,13 @@ ol.page-tab-content li{
 	margin : 1px 0px 0px 10px;
 	float : left;
 }
-
+.togglable p {
+	width : 20px;
+	height : 20px;
+	font-size : 13px;
+	margin : 8px 10px 0px 0px;
+	float : right;
+}
 
 .text-tab-content {
 	display : none;
@@ -590,11 +600,13 @@ ol.page-tab-content li{
 .text-font-comps {
     font-size: 15px;
     margin : 10px 0px 0px 0px;
+    padding-bottom : 10px;
     border-bottom: 1px solid #c6c6c6;
 }
 .text-shape-comps {
     font-size: 15px;
     margin : 10px 0px 0px 0px;
+    padding-bottom : 10px;
     border-bottom: 1px solid #c6c6c6;
 }
 .text-item {
@@ -604,9 +616,20 @@ ol.page-tab-content li{
 	margin : 0px auto 5px auto;
 	padding : 0px 0px 0px 10px;
 }
+.text-item#effect {
+	height : 30px;
+	margin : 0px 19.5px 5px 19.5px;
+}
 .text-item span {
 	width : 30px;
 	margin : 8px 0px 0px 0px;
+	float : left;
+}
+.text-item .fontType {
+	width : 100px;
+	height : 25px;
+	margin : 4px 0px 0px 10px;
+	padding-top : 4px;
 	float : left;
 }
 .text-item input[type=number] {
@@ -647,17 +670,186 @@ ol.page-tab-content li{
 	border-radius : 5px;
 	float : left;
 }
+.text-effect {
+	width : 26px;
+	height : 26px;
+	margin : 0px 0px 0px 10px;
+	border : 1px solid white;
+	border-radius : 3px;
+	float : left;
+}
+.text-effect img {
+	width : 20px;
+	height : 20px;
+	margin : 2px;
+}
+.text-font-droplist {
+	display : none;
+	position : absolute;
+	width : 99px;
+	font-size : 14px;
+	border : 1px solid gray;
+	float : left;
+	background : white;
+}
+.text-font-droplist .component {
+	width : 97px;
+	height : 25px;
+	font-size : 14px;
+	padding : 0px 0px 0px 5px;
+	border-bottom : 1px solid gray;
+	float : left;
+	cursor : pointer;
+}
+.text-sort {
+	width : 26px;
+	height : 26px;
+	margin : 0px 0px 0px 10px;
+	border : 1px solid white;
+	border-radius : 3px;
+	float : left;
+}
+.text-sort img {
+	width : 20px;
+	height : 20px;
+	margin : 2px;
+}
+/*--------------------------*/
+/* right-side-bar canvas */
+/*--------------------------*/
+.canvas-tab{
+    border-bottom: 1px solid #c6c6c6;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.canvas-view h5, .canvas-sizing h5{
+    padding-left: 15px;
+    margin: 15px 0;
+}
+.canvas-sizing:before{
+    display: block;
+    content: "";
+    width: 100%;
+    border-top: 1px solid #c6c6c6;
+}
+.canvas-opt{
+    margin: 15px 0;
+    position: relative;
+}
+.grid-chk, .back-chk{
+    font-size: 13px !important;
+    margin-left: 16px;
+    padding-top: 2px !important;
+    padding-left: 30px !important;
+}
+.checkmark{
+    width: 17px;
+    height: 17px;
+    border-radius: 0;
+    border: 1px solid #c7c7c7;
+    background-color: #fff;
+}
+.chk-label:hover .checkmark{
+    background-color: #eee;
+    border: 1px solid #9f9f9f;
+}
+.checkmark:after{
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: #000;
+}
+.grid-chk input:checked ~ .checkmark,
+.back-chk input:checked ~ .checkmark{
+    background-color: #fff;
+}
+
+#canvas-background .minicolors{
+    position: absolute !important;
+    top: -7px;
+    right: 20px;
+}
+#canvas-background .minicolors-swatch{
+    width: 40px !important;
+    height: 20px !important;
+}
+
+.grid-canvas{
+    background-image: linear-gradient(rgba(102,102,102,.2) 2px,transparent 2px),linear-gradient(90deg,rgba(102,102,102,.2) 2px,transparent 2px),linear-gradient(rgba(102,102,102,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(102,102,102,.2) 1px,transparent 1px) !important;
+    background-size: 100px 100px,100px 100px,20px 20px,20px 20px !important;
+    background-position: -2px -2px,-2px -2px,-1px -1px,-1px -1px !important;
+}
+
+#canvas-sizing{
+    position: relative;
+    width: 90%;
+    margin: 0 5%;
+    font-size: 13px;
+    line-height: 25px;
+    padding: 3px;
+    border: 1px solid #000;
+}
+.open-options{
+    position: absolute;
+    font-size: 10px;
+    right: 20px;
+    top: 213px;
+}
+
+#canvas-sizing-opt{
+    display: none;
+    position: absolute;
+    width: 90%;
+    margin: 0 5%;
+    font-size: 13px;
+    line-height: 25px;
+    background: #222222;
+    padding: 5px 0;
+    z-index: 99;
+}
+#canvas-sizing-opt hr{
+    border: 0;
+    border-top: 1px solid #fff;
+}
+#canvas-sizing-opt li{
+    padding: 0 10px;
+    color: #fff;
+}
+#canvas-sizing-opt li:hover{
+    background: #00a8ff;
+}
+#canvas-sizing-opt li span{
+    float: right;
+}
+.canvas-sizing .radio-label{
+    margin: 10px 0 0 15px;
+    padding-top: 0;
+}
+.canvas-sizing .radiomark{
+    width: 20px;
+    height: 20px;
+}
+.radiomark:after{
+    top:5px;
+    left:6px;
+}
+
+
 /*-------------------------*/
 /* Canvas */
 /*-------------------------*/
 .canvas-container{
-    width: calc(100% - 230px);
+    width: calc(100% - 460px);
     height: calc(100vh - 40px);
     position: absolute;
     top: 40px;
     left: 230px;
     background: #cecece;
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 #droppable{
@@ -667,16 +859,17 @@ ol.page-tab-content li{
     margin: 5% auto;
 }
 
+/*우클릭 메뉴*/
 .context-menu{
     display: none;
     position: absolute;
-    z-index: 99;
+    z-index: 999;
     background: #2c2c2c;
     width: 180px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
     padding: 5px 0;
 }
-.context-menu a{
+.context-menu a, .context-menu>ul>li{
     display: block;
     color: #fff;
     font-size: 13px;
@@ -686,6 +879,7 @@ ol.page-tab-content li{
 .context-menu a:hover{
     background: #00a8ff;
 }
+.context-menu>ul{cursor: pointer; position: relative;}
 .disabled{
     color: #797979 !important;
     cursor: default;
@@ -700,4 +894,23 @@ ol.page-tab-content li{
     margin: 2px 0;
     height: 1px;
     background: #9a9a9a;
+}
+.context-menu li span{
+    float: right;
+    font-size: 12px;
+    margin-right: 10px;
+    line-height: 100%;
+}
+.orderObj:hover .orderObj-sub{display: block;}
+.orderObj-sub{
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    left: 180px;
+    top: -2px;
+    background: #2c2c2c;
+    width: 180px;
+    padding: 6px 0;
+    border: 1px solid #000;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }

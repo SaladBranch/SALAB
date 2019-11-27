@@ -883,10 +883,20 @@ ol.page-tab-content li{
 }
 
 #droppable{
-    width: 80%;
-    height: 80%;
+	position: relative;
+    width: 1440px;
+    height: 1024px;
     background: #fff;
-    margin: 5% auto;
+    margin: 5% 5%;
+}
+#droppable:after{
+	content: "";
+	width: calc(1440px * 0.05);
+	height: 100vh;
+	display: block;
+	position: absolute;
+	right: calc(1440px * -0.05);
+	background: #cecece;
 }
 
 /*우클릭 메뉴*/

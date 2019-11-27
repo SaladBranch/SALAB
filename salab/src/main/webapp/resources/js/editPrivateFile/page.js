@@ -179,7 +179,15 @@
         	$('.canvas-sizing .radio-label input').eq(0).prop('checked', false);
         	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
         }
-        	
+        
+        //page 오른쪽 여백
+        var dwidth = Number($('#droppable').css('width').replace('px', ''));
+        var cwidth = Number($('.canvas-container').css('width').replace('px', ''));
+        if(dwidth > cwidth){
+        	$('#droppable').css('margin', '5% 5%');
+        }else{
+        	$('#droppable').css('margin', '5% auto');
+        }
     }
 
     //페이지 삭제용 함수

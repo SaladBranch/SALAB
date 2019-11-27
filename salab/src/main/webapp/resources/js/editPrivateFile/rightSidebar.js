@@ -13,6 +13,7 @@
             $(this).removeClass('clickedItem');
             $(this).css("border", "1px solid white");
             $(this).children("input").css("border", "1px solid white");
+            $(this).children().children("input").css("border", "1px solid white");
         });
         if (!$(this).is(".dropdownable")) {
         	$(".figure-line-droplist").slideUp(100);
@@ -25,6 +26,7 @@
         	} else if ($(this).attr("id") == "font") {
         		textfontClicked();
             	$(".figure-line-droplist").slideUp(100);
+            	console.log( PFont.list() );
         	}
         }
         $(this).addClass('clickedItem');
@@ -33,6 +35,8 @@
         	maintainCursor();
     	$(this).children("input").focus();
         $(this).children("input").css("border", "1px solid skyblue");
+    	$(this).children().children("input").focus();
+        $(this).children().children("input").css("border", "1px solid skyblue");
     });
 
 	// component 안의 ratiofix
@@ -93,10 +97,12 @@
 // input change
     
     $(".right-side-bar input").on("focusin", function() {
-    	maintainCursor();
+    	var inputID = $(this).attr("id");
+    	if (inputID == "text" || inputID == "textground")
+    		maintainCursor();
     });
 
-	$(".right-side-bar input").on("change keyup paste focusout", function(event) {
+	$(".right-side-bar input[type=number]").on("change keyup paste focusout", function(event) {
 
     	var type = $(this).parents().attr("id");
     	var value = $(this).val();
@@ -480,8 +486,8 @@
     	
     	// 배경색
     	var backgroundColor = checkAttr("backgroundColor", target);
+		$(".figure-shape-comps .figure-item[id=backgroundColor] .minicolors-swatch-color").css("background", (backgroundColor == "diffrent" ? "white" : backgroundColor));
 		$(".figure-shape-comps .figure-item[id=backgroundColor] input").val(backgroundColor == "diffrent" ? "" : backgroundColor);
-		$(".figure-shape-comps .figure-item[id=backgroundColor] .colorView").css({ background : (backgroundColor == "diffrent" ? "white" : backgroundColor) });
 
 		// 선 타입
     	var kinds = checkAttr("kinds", target);
@@ -491,9 +497,9 @@
     	
     	// 선 색상
 		var lineColor = checkAttr("lineColor", target);
+		$(".figure-line-comps .figure-item[id=lineColor] .minicolors-swatch-color").css("background", (lineColor == "diffrent" ? "white" : lineColor));
 		$(".figure-line-comps .figure-item[id=lineColor] input").val(lineColor == "diffrent" ? "" : lineColor);
-		$(".figure-line-comps .figure-item[id=lineColor] .colorView").css({ background : (lineColor == "diffrent" ? "white" : lineColor) });
-		
+	
     	// 선 굵기
 		var lineWeight_t = checkAttr("lineWeight_t", target);
 		var lineWeight_l = checkAttr("lineWeight_l", target);
@@ -555,10 +561,10 @@
     	$(".text-font-comps .text-item[id=size] input").val(fontSize == "diffrent" ? "" : fontSize);
     	
     	// font 색상
-    	var fontColor = checkAttr("fontColor", target);
+		var fontColor = checkAttr("fontColor", target);
+		$(".text-font-comps .text-item[id=textColor] .minicolors-swatch-color").css("background", (fontColor == "diffrent" ? "white" : fontColor));
 		$(".text-font-comps .text-item[id=textColor] input").val(fontColor == "diffrent" ? "" : fontColor);
-		$(".text-font-comps .text-item[id=textColor] .colorView").css({ background : (fontColor == "diffrent" ? "white" : fontColor) });
-
+		
     	// text effect
     	var bold = checkAttr("bold", target);
     	var italic = checkAttr("italic", target);
@@ -568,7 +574,12 @@
     	clickOption("italic", (italic != "diffrent" ? italic : "false"));
     	clickOption("underline", (underline != "diffrent" ? underline : "false"));
     	clickOption("strikethrough", (strikethrough != "diffrent" ? strikethrough : "false"));
-    	
+
+    	// font 강조 색상
+		var textgroundColor = checkAttr("textgroundColor", target);
+		$(".text-font-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
+		$(".text-font-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "" : textgroundColor);
+		
     	// text sort
     	var sort = checkAttr("sort", target);
     	
@@ -625,7 +636,7 @@
 	// input 변화
     function applyChange(type) {
     	
-    	console.log("type : " + type);
+    	//console.log("type : " + type);
 
     	var object = $("div.ui-selected");
 		var target = $("div.ui-selected .obj-comp");
@@ -657,14 +668,7 @@
 
             	// 배경 색
         		if (type == "backgroundColor") {
-                	var backgroundColor = $(".figure-shape-comps .figure-item[id=backgroundColor] input").val().split("#")[1];
-                	var backgroundColor1 = parseInt(backgroundColor.substring(0, 2), 16);
-                	var backgroundColor2 = parseInt(backgroundColor.substring(2, 4), 16);
-                	var backgroundColor3 = parseInt(backgroundColor.substring(4, 6), 16);
-                	
-                	$(this).css({
-                		background : "rgb(" + backgroundColor1 + ", " + backgroundColor2 + ", " + backgroundColor3 + ")"
-                	});
+                	$(this).css("background", $(".figure-shape-comps .figure-item[id=backgroundColor] input").val());
         		}
 
             	// 선 종류
@@ -677,14 +681,11 @@
 
             	// 선 색
         		if (type == "lineColor") {
-                	var lineColor = $(".figure-line-comps .figure-item[id=lineColor] input").val().split("#")[1];
-                	var lineColor1 = parseInt(lineColor.substring(0, 2), 16);
-                	var lineColor2 = parseInt(lineColor.substring(2, 4), 16);
-                	var lineColor3 = parseInt(lineColor.substring(4, 6), 16);
-                	$(this).css("border-top", $(this).css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-                	$(this).css("border-left", $(this).css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-                	$(this).css("border-right", $(this).css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
-                	$(this).css("border-bottom", $(this).css("border-top").split("rgb")[0] + "rgb(" + lineColor1 + ", " + lineColor2 + ", " + lineColor3 + ")");
+                	var lineColor = $(".figure-line-comps .figure-item[id=lineColor] input").val();
+                	$(this).css("border-top", $(this).css("border-top").split("rgb")[0] + lineColor);
+                	$(this).css("border-left", $(this).css("border-top").split("rgb")[0] + lineColor);
+                	$(this).css("border-right", $(this).css("border-top").split("rgb")[0] + lineColor);
+                	$(this).css("border-bottom", $(this).css("border-top").split("rgb")[0] + lineColor);
         		}
         		
         		// 선 굵기
@@ -740,6 +741,8 @@
         		    	$(this).css("color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
             		    clearAll("color");
         		    }
+        		    $('.colorView').minicolors("hide");
+        		    clearEnterable();
         		}
 
         		if (type == "text-effect-bold") {
@@ -806,6 +809,25 @@
         		    }
         		}
 
+            	// text 강조 색
+        		if (type == "textgroundColor") {
+    				var textgroundColor = $(".text-shape-comps .text-item[id=textgroundColor] input").val().split("#")[1];
+                	var textgroundColor1 = parseInt(textgroundColor.substring(0, 2), 16);
+                	var textgroundColor2 = parseInt(textgroundColor.substring(2, 4), 16);
+                	var textgroundColor3 = parseInt(textgroundColor.substring(4, 6), 16);
+
+                	var textSelected = $("span.text-selected");
+        		    if (textSelected.length > 0) {
+        		    	textSelected.html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + textSelected.html() + "</span>");
+            			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+        		    } else {
+        		    	$(this).html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + $(this).html() + "</span>");
+        		    }
+        		    clearChanged("background");
+        		    $('.colorView').minicolors("hide");
+        		    clearEnterable();
+        		}
+
         		if (type == "text-sort") {
                 	if ($(".text-sort[id=justify]").is(".clicked"))
                     	$(this).css("text-align", "justify");
@@ -843,17 +865,18 @@
         $('.enterable').each(function(){
             $(this).removeClass('clickedItem');
             $(this).css("border", "1px solid white");
-            $(this).children("input").css("border", "1px solid white");
+        });
+        $('.enterable input').each(function(){
+            $(this).css("border", "1px solid white");
         });
 	}
 
     function maintainCursor() {
 		var focused = window.getSelection();
-		console.log(focused);
 		if (focused.rangeCount > 0) {
 			var target = focused.getRangeAt(0).commonAncestorContainer.parentElement.className + " ";
 			// cursor 드래그 된 것이 있을 경우
-			if (focused.focusNode != null && $("span.text-selected").length == 0 && target.startsWith("obj-comp")) {
+			if (focused.focusNode != null && $("span.text-selected").length == 0 && (!target.startsWith("text-item") && !target.startsWith("font-item"))) {
 				wrapTag(focused.getRangeAt(0), "span", "text-selected", "background", "lightgray");
 			}
 		}
@@ -883,6 +906,21 @@
 	function checkAttr(type, object) {
 
     	var result = "start";
+
+		if (type == "textgroundColor") {
+			var value;
+    		$("div.ui-selected .obj-comp span").each(function() {
+    			if (result != "diffrent") {
+        			value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
+        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+            		if (result == "start")
+            			result = value;
+            		else if (result != "diffrent" ? result != value : false)
+            			result = "diffrent";
+    			}
+        	});
+    		return result;
+		}
 
 		object.each(function() {
 			if (result != "diffrent") {
@@ -966,7 +1004,7 @@
     				value = $(this).css("text-decoration").includes("underline") ? "true" : "false";
     			if (type == "strikethrough") 
     				value = $(this).css("text-decoration").includes("line-through") ? "true" : "false";
-    			
+
     			if (type == "sort") {
     				value = $(this).css("text-align");
     			}

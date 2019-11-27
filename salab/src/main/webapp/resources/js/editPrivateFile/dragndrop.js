@@ -5,7 +5,6 @@ var canvas = ".canvas-container";
 var $focus = $('.focus');
 var $all = $('#multiselect');
 var appendElement = "";
-var editable = "true"; // right-side-bar 자동 오픈 여부
 
 function initSelect(){
     var $lastone = $('#droppable .obj').last();
@@ -45,10 +44,13 @@ function includeElement(X, Y, temp) {
 }
 function leftMouseListner(){
     $(document).on('click', function(){
-        toggleContext(0); 
+        toggleContext(0);
     });
     $('#droppable').on('click', function(){
         toggleContext(0);
+    });
+    $(document).on('dblclick', "#droppable .obj", function(){
+        $(this).children(".obj-comp").focus();
     });
 }
 function rightMouseListner(){
@@ -111,19 +113,49 @@ function addControl(){
         $obj = selectedObj[0];
         $obj.append(resize_handler.code);
         $obj.children('.ui-rotatable-handle').show();
+        var __dx;
+        var __dy;
+        var __scale=0.5;
+        var __recoupLeft, __recoupTop;
+        
         $obj.draggable({ //select 된놈은 드래그 가능
-            start: function(e, ui){
-                $focus.hide();
+            cancel: '.ui-resizable-handle',
+            drag: function (event, ui) {
+                //resize bug fix ui drag `enter code here`
+                __dx = ui.position.left - ui.originalPosition.left;
+                __dy = ui.position.top - ui.originalPosition.top;
+                //ui.position.left = ui.originalPosition.left + ( __dx/__scale);
+                //ui.position.top = ui.originalPosition.top + ( __dy/__scale );
+                ui.position.left = ui.originalPosition.left + (__dx);
+                ui.position.top = ui.originalPosition.top + (__dy);
+                //
+                ui.position.left += __recoupLeft;
+                ui.position.top += __recoupTop;
             },
-            cancel: '.ui-rotatable-handle'
+            start: function (event, ui) {
+                $focus.hide();
+                //resize bug fix ui drag
+                var left = parseInt($(this).css('left'), 10);
+                left = isNaN(left) ? 0 : left;
+                var top = parseInt($(this).css('top'), 10);
+                top = isNaN(top) ? 0 : top;
+                __recoupLeft = left - ui.position.left;
+                __recoupTop = top - ui.position.top;
+            },
+            stop: function (event, ui) {
+                $(this).css('cursor', 'default');
+            }
         }).rotatable({
             degrees: getRotateDegree($obj),
+            stop : function() {
+            	formatChange();
+            },
             wheelRotate: false
         });
         //group obj는 also resize 대상 변경
         if($obj.hasClass('group-obj')){
             $obj.resizable({
-                handles:{
+            	handles:{
                     'n': '.ui-resizable-n',  
                     'e': '.ui-resizable-e',  
                     's': '.ui-resizable-s',
@@ -133,7 +165,10 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
-                alsoResize: $obj.children('.obj')
+                alsoResize: $obj.children('.obj'),
+                stop: function(){
+                    formatChange();
+                }
             });
         }else{
             $obj.resizable({
@@ -147,14 +182,13 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
-                alsoResize: "this .obj-comp"
+                alsoResize: "this .obj-comp",
+                stop: function(){
+                    formatChange();
+                }
             });
         }
-        formatChange($obj);
-        if (editable == "true") {
-        	$(".open-edit").children("img").attr("src", "/salab/resources/img/openedit_full.png");
-        	$(".right-side-bar").fadeIn(300);
-        }
+        formatChange();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
     	console.log("복수 선택");
@@ -172,6 +206,7 @@ function addControl(){
             top: 0,
             left: 0           
         });
+        formatChange();
     }
 }
 
@@ -212,6 +247,8 @@ $(function(){
         },
         stop: function(){
             addControl();
+            // select 실행 시 cursor out
+            window.getSelection().removeAllRanges();
         }
     });
     
@@ -293,5 +330,106 @@ $(function(){
         $focus.css('top', top);
         $focus.css('height', height);        
     }
+});
+
+//canvas sizing
+$(function(){
+    $('.right-side-bar .tab-menu').hide();
+    $('.right-side-bar .tab-content').hide();
+    $('.back-chk input').on('change', function(){
+        var $colorpic = $('<div class="canvas-colorpic"></div>')
+        if($(this).is(':checked')){
+            $('#canvas-background').append($colorpic);
+            $('.canvas-colorpic').minicolors({
+                control: 'hue',
+                position: 'bottom right',
+                defaultValue: $('#droppable').attr('data-background'),
+                change: function(hex, opacity){
+                    $('#droppable').css('background-color', hex);
+                    $('#droppable').attr('data-background', hex);
+                }
+            });
+        }else{
+            $('.minicolors').remove();
+            $('#droppable').css('background-color', '#fff');
+            $('#droppable').attr('data-background', '#ffffff');
+        }
+    });
     
+    $('#canvas-sizing').on('click', function(){
+        $options = $('#canvas-sizing-opt');
+        if($options.css('display') == "none"){
+            $options.show();
+        }else{
+            $options.hide();
+        }
+    });
+    
+    $('#canvas-sizing-opt li').on('click', function(){
+        if($(this).text() != 'custom'){
+            $('#canvas-sizing').html($(this).html());
+            $('#canvas-sizing-opt').hide();
+            $('.canvas-sizing label').show();
+        	$('.canvas-custom-sizing').hide();
+            var width = Number($(this).children('span').text().split('x')[0]);
+            var height = Number($(this).children('span').text().split('x')[1]);
+            $('#droppable').css({
+                width: width + 'px',
+                height: height + 'px'
+            });
+            if(width < height){
+            	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
+            	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
+            }else{
+            	$('.canvas-sizing .radio-label input').eq(0).prop('checked', false);
+            	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
+            }
+            $('#droppable').attr('data-canvas', $(this).html().split(' <')[0]);
+        }else{
+        	$('#canvas-sizing').html('custom');
+        	$('#canvas-sizing-opt').hide();
+        	$('#droppable').attr('data-canvas', 'custom');
+        	$('.canvas-sizing label').hide();
+        	$('.canvas-custom-sizing').show();
+        	
+        	$('#custom-width input').val(Number($('#droppable').css('width').replace('px', '')));
+        	$('#custom-height input').val(Number($('#droppable').css('height').replace('px', '')));
+        }
+    });
+    
+    $('.canvas-sizing .radio-label').on('click', function(){
+    	var index = $('.canvas-sizing .radio-label').index($(this));
+    	$('.canvas-sizing .radio-label input').eq(1-index).prop('checked', false);
+    	var width = Number($('#droppable').css('width').replace('px', ''));
+    	var height = Number($('#droppable').css('height').replace('px', ''));
+    	if($(this).text() === 'portrait' && width > height)    
+    		$('#droppable').css({
+    			width: height + 'px',
+    			height: width + 'px'
+    		});
+    	else if($(this).text() === 'landscape' && height > width)
+    		$('#droppable').css({
+    			width: height + 'px',
+    			height: width + 'px'
+    		});
+	});
+    
+    $('#custom-width input').on('focusout', function(){
+    	$('#droppable').css('width', $(this).val()+'px');
+    });
+    $('#custom-height input').on('focusout', function(){
+    	$('#droppable').css('height', $(this).val()+'px');
+    });
+});
+
+$('#droppable').bind('DOMSubtreeModified', function(e){
+    if($('#droppable .ui-selected').length > 0){
+        $('.right-side-bar .canvas-menu').hide();
+        $('.right-side-bar .tab-menu').show();
+        $('.right-side-bar .tab-content').show();
+    }else{
+        $('.right-side-bar .canvas-menu').show();
+        $('.right-side-bar .tab-menu').hide();
+        $('.right-side-bar .tab-content').hide();
+    }
 });

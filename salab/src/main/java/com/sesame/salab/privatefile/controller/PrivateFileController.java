@@ -41,7 +41,7 @@ public class PrivateFileController {
 		page.setUserno(Integer.parseInt(userno));
 		page.setFileno(pfile.getPfileno());
 		page.setPageno(1);
-		page.setContent("<div id='droppable' class='canvas ui-widget-content'>" + 
+		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
 				"</div>");
 		page.setPagename("Untitled");
@@ -84,7 +84,7 @@ public class PrivateFileController {
 		System.out.println(result);
 		mv.setViewName("jsonView");
 		
-		page.setContent("<div id='droppable' class='canvas ui-widget-content'>" + 
+		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
 				"</div>");
 		page.setPagename("Untitled");

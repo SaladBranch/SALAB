@@ -114,6 +114,20 @@ public class PageController {
     	  return "userPage/userUpgrade";
    	}
    	
+   	@RequestMapping(value="teamNoticeList.do")
+   	public String teamNoticeListMethod() {
+   		return "project/teamNoticeList";
+   	}
+   	@RequestMapping(value="teamNoticeDetail.do")
+   	public String teamNoticeDetailMethod() {
+   		return "project/teamNoticeDetail";
+   	}
+   	@RequestMapping(value="teamNoticeWrite.do")
+   	public String teamNoticeWriteMethod() {
+   		return "project/teamNoticeWrite";
+   	}
+   	   	
+   	
    	//세준
    	@RequestMapping(value="newTeam.do")
    	public String createProjectMethod() {

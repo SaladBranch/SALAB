@@ -1,0 +1,59 @@
+.buttonbox {
+    float: right;
+    margin-right: 10px;
+}
+
+.button {
+    cursor: pointer;
+    font-size: 0.8em;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.hideInputText {
+    background: none;
+    border: none;
+    font-weight: 500;
+    font-size: 14pt;
+    font-size: 30pt;
+}
+
+.hideInputText:placeholder-shown {
+    background: none;
+    border: none;
+    font-weight: 500;
+    font-size: 18pt;
+}
+
+.hideInputText:focus {
+    border: none;
+    font-weight: none;
+    border-bottom: 1.5px solid  #0295e5;
+}
+
+.notice-title > span {
+    color: red;
+    font-size: 0.8em;
+    padding-top: 26px;
+    float: right;
+}
+
+.notice-title > input[type="text"] {
+    font-size: 24px;
+    max-width: 100%;
+    min-width: 40%;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.notice-contentbox {
+    font-size: 0.95em;
+    width: 100%;
+    resize: none;
+    padding: 20px 40px;
+}
+.notice-contentbox:focus{
+    border-bottom: 1.5px solid  #0295e5;
+}
+
+#writedDate {}

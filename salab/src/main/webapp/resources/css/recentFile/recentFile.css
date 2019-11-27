@@ -15,7 +15,7 @@ body{
     height: 40px;
     align-items: center;
     background: #2c2c2c;
-    fill: #fff;
+/*     fill: #fff; */
     color: #fff;
     justify-content: flex-start;
     z-index: 5;

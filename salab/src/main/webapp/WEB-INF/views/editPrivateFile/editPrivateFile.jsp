@@ -249,10 +249,10 @@
                     <li>MacBook Pro <span>1440x900</span></li>
                     <li>iMac <span>1280x720</span></li>
                     <hr>
-                    <li>iPad Pro<span>1024x1336</span></li>
-                    <li>iPad<span>768x1024</span></li>
-                    <li>iPhone 6/7/8<span>375x667</span></li>
-                    <li>Android<span>360x640</span></li>
+                    <li>iPad Pro <span>1024x1336</span></li>
+                    <li>iPad <span>768x1024</span></li>
+                    <li>iPhone 6/7/8 <span>375x667</span></li>
+                    <li>Android <span>360x640</span></li>
                     <hr>
                     <li>16:9 <span>1600x900</span></li>
                     <li>16:10 <span>1920x1200</span></li>
@@ -442,10 +442,14 @@
         $('.lib-tab-content').hide();
         
         $('.grid-chk input').on('change', function(){
-            if($(this).is(':checked'))
-                $('#droppable').addClass('grid-canvas');
-            else
-                $('#droppable').removeClass('grid-canvas');
+            if($(this).is(':checked')){
+            	$('#droppable').addClass('grid-canvas');
+            	$('#droppable').attr('data-grid', true)
+            }else{
+            	$('#droppable').removeClass('grid-canvas');
+            	$('#droppable').attr('data-grid', false);
+            }
+                
         });
     });
     $('.page-tab').click(function(){

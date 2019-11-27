@@ -134,6 +134,37 @@
         rightMouseListner();
         leftMouseListner();
         
+        //페이지별 color 다르게 적용
+        var $colorpic = $('<div class="canvas-colorpic"></div>')
+        if($('#droppable').attr('data-background') != "#ffffff"){
+        	$('.back-chk input').prop('checked', true);
+        	$('#canvas-background').append($colorpic);
+            $('.canvas-colorpic').minicolors({
+                control: 'hue',
+                position: 'bottom right',
+                defaultValue: $('#droppable').attr('data-background'),
+                change: function(hex, opacity){
+                    $('#droppable').css('background-color', hex);
+                    $('#droppable').attr('data-background', hex);
+                }
+            });
+        }else{
+        	$('.minicolors').remove();
+        	$('.back-chk input').prop('checked', false);
+        }
+        
+        //페이지별 grid 여부
+        if($('#droppable').attr('data-grid') === 'true')
+        	$('.grid-chk input').prop('checked', true);
+        else
+        	$('.grid-chk input').prop('checked', false);
+        
+        //페이지별 canvas size
+        $('#canvas-sizing-opt li').each(function(){
+        	if($(this).html().split(' <')[0] === $('#droppable').attr('data-canvas'))
+        		$('#canvas-sizing').html($(this).html());
+        });
+        	
     }
 
     //페이지 삭제용 함수

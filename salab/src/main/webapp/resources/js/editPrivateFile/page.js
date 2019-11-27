@@ -164,6 +164,15 @@
         	if($(this).html().split(' <')[0] === $('#droppable').attr('data-canvas'))
         		$('#canvas-sizing').html($(this).html());
         });
+        
+        //페이지별 방향
+        if(Number($('#droppable').css('width').replace('px', '')) < Number($('#droppable').css('height').replace('px', ''))){
+        	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
+        	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
+        }else{
+        	$('.canvas-sizing .radio-label input').eq(0).prop('checked', false);
+        	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
+        }
         	
     }
 

@@ -370,16 +370,39 @@ $(function(){
         if($(this).text() != 'custom'){
             $('#canvas-sizing').html($(this).html());
             $('#canvas-sizing-opt').hide();
-            var width = $(this).children('span').text().split('x')[0] + 'px';
-            var height = $(this).children('span').text().split('x')[1] + 'px';
+            var width = Number($(this).children('span').text().split('x')[0]);
+            var height = Number($(this).children('span').text().split('x')[1]);
             $('#droppable').css({
-                width: width,
-                height: height
+                width: width + 'px',
+                height: height + 'px'
             });
+            if(width < height){
+            	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
+            	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
+            }else{
+            	$('.canvas-sizing .radio-label input').eq(0).prop('checked', false);
+            	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
+            }
             $('#droppable').attr('data-canvas', $(this).html().split(' <')[0]);
-            
         }
     });
+    
+    $('.canvas-sizing .radio-label').on('click', function(){
+    	var index = $('.canvas-sizing .radio-label').index($(this));
+    	$('.canvas-sizing .radio-label input').eq(1-index).prop('checked', false);
+    	var width = Number($('#droppable').css('width').replace('px', ''));
+    	var height = Number($('#droppable').css('height').replace('px', ''));
+    	if($(this).text() === 'portrait' && width > height)    
+    		$('#droppable').css({
+    			width: height + 'px',
+    			height: width + 'px'
+    		});
+    	else if($(this).text() === 'landscape' && height > width)
+    		$('#droppable').css({
+    			width: height + 'px',
+    			height: width + 'px'
+    		});
+	});
 });
 
 $('#droppable').bind('DOMSubtreeModified', function(e){

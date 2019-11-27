@@ -189,6 +189,7 @@ function addControl(){
             });
         }
         formatChange();
+        clearEnterable();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
     	console.log("복수 선택");

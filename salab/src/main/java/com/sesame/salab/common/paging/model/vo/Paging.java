@@ -46,15 +46,15 @@ public class Paging implements Serializable {
    //페이징 메소드 
    public void makePage(int listCount, int curPage) {
       
-      this.setCurrentPage(curPage);
-      this.setListCount(listCount);
+      this.setCurrentPage(curPage); //현재 페이지
+      this.setListCount(listCount); //총 페이지 개수
       
-      this.setMaxPage((int)((double)listCount / limit + add));
+      this.setMaxPage((int)((double)listCount / limit + add));  // 마지막페이지
       //this.setStartPage((int)((double)currentPage / underlimit + add));
-      this.setStartPage(    ((curPage -1)/ underlimit) * underlimit + 1      );
-      this.setEndPage(startPage + underlimit - 1);
-      this.setStartRow((curPage -1 ) * limit +1 );
-      this.setEndRow( startRow + limit - 1 );
+      this.setStartPage(    ((curPage -1)/ underlimit) * underlimit + 1      );  // 페이징목록의 시작페이지
+      this.setEndPage(startPage + underlimit - 1);	//페이징목록의 마지막페이지
+      this.setStartRow((curPage -1 ) * limit +1 );	//시작 열
+      this.setEndRow( startRow + limit - 1 );	//끝 열
       
       if(maxPage < endPage) {
          endPage = maxPage;

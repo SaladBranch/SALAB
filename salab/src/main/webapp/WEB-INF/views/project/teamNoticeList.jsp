@@ -92,7 +92,7 @@
         <div class="focus"></div> <!-- 여백 -->
 
         <div class="sort-by  absolute icon-positioning">
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left" onclick="goBack()"></i>
         </div>
 
         <sector>
@@ -107,8 +107,9 @@
                             <th>작성자</th>
                         </tr>
 
-                        <c:forEach var="notice" items="${showList}">
-                            <tr>
+                        <c:forEach var="notice" items="${requestScope.noticelist}">
+                            <tr class="clickNotice" value="${notice.pnoticeno}">
+                                <input type="hidden" value="${notice.pnoticeno}">
                                 <td>${notice.pnoticedate}</td>
                                 <td>${notice.pnoticetitle}</td>
                                 <td>${notice.pnoticewriter}</td>
@@ -117,15 +118,30 @@
 
                     </table>
                 </div>
-                <div id="notice-writing" class="notice-writing button"><span>게시글 작성</span></div>
+                <div id="notice-writing" class="notice-writing button" onclick="writeNotice(projectno.value)"><span>게시글 작성</span></div>
 
                 <div id="notice-paging" class="paging" value="">
-                    <input id="countNotice" type="hidden" value="${listAttr.countNotice}">
-                    <input id="startPage" type="hidden" value="${listAttr.startPage}">
-                    <input id="endPage" type="hidden" value="${listAttr.endPage}">
-                    <input id="nowPage" type="hidden" value="${listAttr.nowPage}">
+                    <input id="nowPage" type="hidden" value="${paging.currentPage}">
+                    <c:if test="${paging.maxPage >= 5}">
+                        <c:if test="${paging.startPage eq 1}">
+                            <span class="donTouch">
+                                <</span> </c:if> <c:if test="${paging.startPage != 1}">
+                                    <span id="firstPage" onclick="moveListPage(${paging.startPage-1})">
+                                        <</span> </c:if> </c:if> <c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+                                            <span onclick="moveListPage(${ pageno })">${ pageno }</span>
+                                            </c:forEach>
 
-                   <!-- <%--                     <% if(  ${listAttr.countNotice} >=7 ) { %>
+                                            <c:if test="${paging.maxPage gt 5}">
+                                                <c:if test="${paging.endPage eq paging.maxPage}">
+                                                    <span class="donTouch">> </span>
+                                                </c:if>
+                                                <c:if test="${paging.endPage != paging.maxPage}">
+                                                    <span id="lastPage" onclick="moveListPage(${paging.endPage+1})">></span>
+                                                </c:if>
+                                            </c:if>
+
+
+                                            <!-- <%--                     <% if(  ${listAttr.countNotice} >=7 ) { %>
 
                     <%}%>
                                       <% if(${listAttr.countNotice} >5){%>
@@ -165,9 +181,13 @@
     <div>
     </div>
 
-
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/project/teamNoticeList.js"></script>
+    <script type="text/javascript">
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 
 </html>

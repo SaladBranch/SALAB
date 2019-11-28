@@ -1,8 +1,7 @@
-
 table {
     text-align: center;
     width: 100%;
-    
+
 }
 
 table th {
@@ -47,10 +46,11 @@ table tr:nth-child(n+2) {
     font-size: 0.8em;
     cursor: pointer;
 }
-table tr:nth-child(n+2):hover {
-background-color: rgba(237, 147, 137,0.2);
 
-border-radius: 14px;
+table tr:nth-child(n+2):hover {
+    background-color: rgba(237, 147, 137, 0.2);
+
+    border-radius: 14px;
 }
 
 table tr > td:nth-child(2n) {
@@ -84,3 +84,8 @@ table tr > td:nth-child(2n) {
 
 }
 
+.donTouch {
+    cursor: default !important;
+    color: #c3c3c3;
+
+}

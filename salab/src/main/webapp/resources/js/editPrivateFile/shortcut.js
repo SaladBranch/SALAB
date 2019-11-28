@@ -1,5 +1,8 @@
 var copiedObj = [];
 var cutted = 0; //복사인지, 잘라내기한건지 구분하기 위한 변수
+var undo = [];
+var redo = [];
+
 $(document).on('keydown', function(e){
     if(e.keyCode == 46){ //delete
         deleteObject();
@@ -7,11 +10,26 @@ $(document).on('keydown', function(e){
     if(e.ctrlKey && e.keyCode == 67 && $('#droppable .ui-selected').length > 0){ //ctrl+c
         copyObject();
     }
-    if(e.ctrlKey && e.keyCode == 88 && $('#droppable .ui-selected').length > 0){ //ctrl+x
-        cutObject();
+    if(e.ctrlKey && e.keyCode == 83){//ctrl+s
+    	e.preventDefault();
+    	pageSave();
     }
-    if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){ //ctrl+z
+    if(e.ctrlKey && e.shiftKey && e.keyCode==83){ //ctrl+shift+s
+    	e.preventDefault();
+    	pageAllSave();
+    }
+    if(e.ctrlKey && e.keyCode == 88 && $('#droppable .ui-selected').length > 0){ //ctrl+x
+    	undo.push($('.canvas-container').html());
+        cutObject();
+        redo.push($('.canvas-container').children());
+    }
+    if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){ //ctrl+v
+    	undo.push($('.canvas-container').html());
         pasteObject();
+        redo.push($('.canvas-container').children());
+    }
+    if(e.ctrlKey && e.keyCode == 90 && undo.length>0){//ctrl+z
+    	undoPage();
     }
     if(e.ctrlKey && e.keyCode == 65){ //ctrl+a
         e.preventDefault();
@@ -42,6 +60,7 @@ function cutObject(){
 function pasteObject(){
     var $all = $('#multiselect');
     selectedObj = new Array();
+    
     if(copiedObj.length == 1){
         var $newObj = copiedObj[0].clone();
         $('#droppable .obj').each(function(){
@@ -80,7 +99,6 @@ function pasteObject(){
         copiedObj = new Array();
         cutted = 0;
     }
-    
 }
 //복제하기
 function cloneObject(){
@@ -158,6 +176,36 @@ function selectAll(){
     });
     addControl();
 }
+
+//실행취소
+function undoPage(){
+	$('.canvas-container').html(undo[undo.length-1]);
+	undo.pop();
+	$all = $('#multiselect');
+	$('#droppable').selectable({
+        filter: " > .obj",
+        start: function(){
+            selectedObj = new Array();
+        },
+        selected: function(e, ui){
+            selectedObj.push($(ui.selected));
+        },
+        unselected: function(e, ui){
+            $(ui.unselected).children().remove('.ui-resizable-handle');
+            if($(ui.unselected).hasClass('ui-draggable'))
+                $(ui.unselected).draggable('destroy');
+            $(ui.unselected).children('.ui-rotatable-handle').hide();
+        },
+        stop: function(){
+            addControl();
+        }
+    });
+    rightMouseListner();
+    leftMouseListner();
+}
+
+
+
 //맨앞으로
 var zIndex = 0;
 function send_forward(){

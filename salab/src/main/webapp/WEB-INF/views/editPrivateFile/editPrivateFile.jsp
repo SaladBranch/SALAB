@@ -41,6 +41,20 @@
             <div class="top-right-menus">
                 <div class="canvas-size">
                     <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
+                    <div class="top-canvas-opts">
+                        <input type="number" min="10" max="500" onkeyup="linkZoom(this.value);">
+                        <hr>
+                        <ul>
+                            <li>25%</li>
+                            <li>50%</li>
+                            <li>75%</li>
+                            <li>100%</li>
+                            <li>150%</li>
+                            <li>200%</li>
+                            <li>300%</li>
+                            <li>400%</li>
+                        </ul>
+                    </div>
                 </div>
                 <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_full.png"></button>
             </div>
@@ -280,19 +294,19 @@
             	</div>
             	<div class="figure-shape-comps">
             		<div class="figure-item enterable" id="width">
-            			<span>가로</span><input type="number" value="0"><span>px</span>
+            			<span class="tab-content-text">가로</span><input type="number" value="0"><span class="tab-content-text">px</span>
             		</div>
             		<div class="figure-item enterable" id="height">
-            			<span>세로</span><input type="number" value="0"><span>px</span>
+            			<span class="tab-content-text">세로</span><input type="number" value="0"><span class="tab-content-text">px</span>
             		</div>
             		<div class="figure-item checkbox" id="size-ratioFix">
 						<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">도형 비율 고정</span>
             		</div>
             		<div class="figure-item enterable" id="rotation">
-            			<span>회전</span><input type="number" value="0"><span>%</span>
+            			<span class="tab-content-text">회전</span><input type="number" value="0"><span class="tab-content-text">%</span>
             		</div>
             		<div class="figure-item enterable" id="backgroundColor">
-            			<span>배경</span><div class="colorView"></div><input type="text" value="#FFFFFF">
+            			<span class="tab-content-text">배경</span><input class="colorView" id="background">
             		</div>
             	</div>
             	<div class="figure-category figure-line" onclick="toggleComps(this, '.figure-line-comps');">
@@ -300,26 +314,26 @@
             	</div>
             	<div class="figure-line-comps">
             		<div class="figure-item enterable dropdownable" id="kinds">
-            			<span>종류</span><div class="line"><hr></div>
+            			<span class="tab-content-text">종류</span><div class="line"><hr></div>
             		</div>
             		<div class="figure-item enterable" id="lineColor">
-            			<span>색상</span><div class="colorView"></div><input type="text" value="#FFFFFF">
+            			<span class="tab-content-text">색상</span><input class="colorView" id="line">
             		</div>
             		<div class="figure-item togglable" id="weight" onclick="toggleItems('weight');">
-            			<span>굵기</span><p>&#9660;</p>
+            			<span class="tab-content-text">굵기</span><p>&#9660;</p>
             		</div>
             		<div class="weight-tab">
 	            		<div class="figure-item enterable" id="weight-top">
-	            			<span>T</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">T</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item enterable" id="weight-left">
-	            			<span>L</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">L</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item enterable" id="weight-right">
-	            			<span>R</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">R</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item enterable" id="weight-bottom">
-	            			<span>B</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">B</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item checkbox" id="weight-ratioFix">
 							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">테두리 비율 고정</span>
@@ -335,20 +349,20 @@
             		</div>
             		
             		<div class="figure-item togglable" id="radius" onclick="toggleItems('radius');">
-            			<span>모서리</span><p>&#9660;</p>
+            			<span class="tab-content-text">모서리</span><p>&#9660;</p>
             		</div>
             		<div class="radius-tab">
 	            		<div class="figure-item enterable" id="radius-top-left">
-	            			<span>T - L</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">T - L</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item enterable" id="radius-top-right">
-	            			<span>T - R</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">T - R</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item enterable" id="radius-bottom-left">
-	            			<span>B - L</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">B - L</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item enterable" id="radius-bottom-right">
-	            			<span>B - R</span><input type="number" value="0"><span>px</span>
+	            			<span class="tab-content-text">B - R</span><input type="number" value="0"><span class="tab-content-text">px</span>
 	            		</div>
 	            		<div class="figure-item checkbox" id="radius-ratioFix">
 							<div class="checkbox"><img src="/salab/resources/img/rightsidebar_check.png"></div><span class="checkbox">모서리 비율 고정</span>
@@ -363,16 +377,16 @@
             	</div>
             	<div class="text-font-comps">
             		<div class="text-item enterable dropdownable" id="font">
-            			<span>폰트</span><div class="fontType"></div><input type="hidden">
+            			<span class="tab-content-text">폰트</span><div class="fontType"></div><input type="hidden">
             		</div>
             		<div class="text-item enterable" id="size">
-            			<span>크기</span><input type="number" value="20"><span>px</span>
+            			<span class="tab-content-text">크기</span><input type="number" value="20"><span class="tab-content-text">px</span>
             		</div>
             		<div class="text-item enterable" id="textColor">
-            			<span>색상</span><div class="colorView"></div><input type="text" value="#000000">
+            			<span class="tab-content-text">색상</span><input class="colorView" id="text">
             		</div>
             		<div class="text-item" id="effect">
-            			<span>효과</span>
+            			<span class="tab-content-text">효과</span>
             		</div>
             		<div class="text-item" id="effect-list">
             			<div class="text-effect" id="bold"><img src="/salab/resources/img/text_Bold.png"></div>
@@ -394,11 +408,11 @@
                 	<p>&#9660;</p>SHAPE
             	</div>
             	<div class="text-shape-comps">
-            		<div class="text-item enterable" id="textgroundcolor">
-            			<span>강조</span><div class="colorView"></div><input type="text" value="#000000">
+            		<div class="text-item enterable" id="textgroundColor">
+            			<span class="tab-content-text">강조</span><input class="colorView" id="textground">
             		</div>
             		<div class="text-item" id="sort">
-            			<span>정렬</span>
+            			<span class="tab-content-text">정렬</span>
             		</div>
             		<div class="text-item" id="sort-list">
             			<div class="text-sort" id="justify"><img src="/salab/resources/img/text_Justify.png"></div>
@@ -461,6 +475,21 @@
             }
                 
         });
+        
+		$('.colorView').minicolors({
+            control: 'hue',
+            position : "bottom right",
+            defaultValue: "#FFFFFF",
+            letterCase : "uppercase",
+            change: function(hex, opacity){
+                switch ($(this).attr("id")) {
+                	case "background" : applyChange("backgroundColor"); break;
+                	case "line" : applyChange("lineColor"); break;
+                	case "text" : applyChange("textColor"); break;
+                	case "textground" : applyChange("textgroundColor"); break;
+                }
+            }
+        });
     });
     $('.page-tab').click(function(){
     	
@@ -509,11 +538,13 @@
     function toggleEdit(btn){
         if($('.right-side-bar').css("display") == "none"){
         	$(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
-            $('.right-side-bar').fadeIn(300);
+            $('.right-side-bar').show();
+            $('.canvas-container').css('width', 'calc(100% - 460px)');
         }else{
             $(btn).children("img").attr("src", "/salab/resources/img/openedit_blank.png");
-            $('.right-side-bar').fadeOut(300);
+            $('.right-side-bar').hide();
             editable = "false";
+            $('.canvas-container').css('width', 'calc(100% - 230px)');
         }
     }
 
@@ -561,6 +592,49 @@
         }
     });
     
+    /* canvas size 조절 열기 */
+    $('.canvas-size p').on('click', function(){
+    	if($('.top-canvas-opts').css('display') == 'none'){
+    		$('.top-canvas-opts').show();
+    		$('.top-canvas-opts input').val(Number($('.canvas-size p span').text().split('%')[0]));
+    	}else
+    		$('.top-canvas-opts').hide();
+    });
+    $('.top-canvas-opts ul li').on('click', function(){
+    	controlCanvasZoom(Number($(this).text().split('%')[0]));
+    });
+    $(document).on('mousedown', function(e){
+    	if(!$(e.target).is('.top-canvas-opts *'))
+    		$('.top-canvas-opts').hide();
+        if(!$(e.target).is('#canvas-sizing-opt *'))
+        	$('#canvas-sizing-opt').hide();
+    });
+    
+    $('.top-canvas-opts input').on('focusout', function(){
+    	controlCanvasZoom($(this).val());
+    });
+    
+    function linkZoom(scale){
+    	if(window.event.keyCode == 13)
+    		controlCanvasZoom(scale);
+    }
+    
+    function controlCanvasZoom(scale){
+    	if(scale >= 10 && scale <=500){
+        	$('.canvas-size p span').text(scale + '%');
+        	$('#droppable').css('transform', 'scale(' + (scale/100) + ', ' + (scale/100) + ')');
+        	$('.top-canvas-opts').hide();
+        	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
+    		
+        	var changedWidth = $('#droppable').width() * scale/100;
+            if(changedWidth > $('.canvas-container').width())
+            	$('#droppable').css('margin', '5% 5%');
+            else{
+            	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
+            }
+            	
+    	}
+    }
     </script>
     
 </body>

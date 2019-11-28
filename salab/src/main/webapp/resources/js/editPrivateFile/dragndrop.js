@@ -189,6 +189,7 @@ function addControl(){
             });
         }
         formatChange();
+        clearEnterable();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
     	console.log("복수 선택");
@@ -256,7 +257,7 @@ $(function(){
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *"))
+    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts"))
             mode = false;
         else{
             mode = true;
@@ -373,10 +374,20 @@ $(function(){
         	$('.canvas-custom-sizing').hide();
             var width = Number($(this).children('span').text().split('x')[0]);
             var height = Number($(this).children('span').text().split('x')[1]);
-            $('#droppable').css({
-                width: width + 'px',
-                height: height + 'px'
-            });
+            if(width < Number($('.canvas-container').css('width').replace('px', ''))){
+            	$('#droppable').css({
+                    width: width + 'px',
+                    height: height + 'px',
+                    margin: '5% auto'
+                });
+            }else{
+            	$('#droppable').css({
+                    width: width + 'px',
+                    height: height + 'px',
+                    margin: '5% 5%'
+                });
+            }
+            
             if(width < height){
             	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
             	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
@@ -416,10 +427,19 @@ $(function(){
     
     $('#custom-width input').on('focusout', function(){
     	$('#droppable').css('width', $(this).val()+'px');
+    	if(Number($(this).val()) < Number($('.canvas-container').css('width').replace('px', '')))
+    		$('#droppable').css('margin', '5% auto');
     });
     $('#custom-height input').on('focusout', function(){
     	$('#droppable').css('height', $(this).val()+'px');
     });
+    if(Number($('#droppable').css('width').replace('px', '')) < Number($('#droppable').css('height').replace('px', ''))){
+    	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
+    	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
+    }else{
+    	$('.canvas-sizing .radio-label input').eq(0).prop('checked', false);
+    	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
+    }
 });
 
 $('#droppable').bind('DOMSubtreeModified', function(e){

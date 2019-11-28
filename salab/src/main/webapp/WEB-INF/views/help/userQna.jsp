@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -108,17 +109,23 @@
         		
         		<!-- 목록 -->
         		<c:if test="${!empty requestScope.qnalist }">
-        			<c:forEach var="qna" items="${requestScope.qnalist }">
+        			<c:set var="lcount" value="${requestScope.paging.listCount - ((requestScope.paging.currentPage-1) * requestScope.paging.limit)}"/>
+        			<c:forEach var="qna" items="${requestScope.qnalist }" varStatus="i" >
+        				<c:url var="qnaDetail" value="qnaDetail.do">
+							<c:param name="qnano" value="${qna.qnano }" />
+							<c:param name="page" value="${paging.currentPage }" />
+						</c:url>
 		        		<li class="qna_list">
 		        			<ul>
-		        				<a href="userQnaDetail.do">
-			        				<li class="qna_head_no"><span>${qna.qnano }</span></li>
+		        				<a href="${qnaDetail }">
+			        				<li class="qna_head_no"><span><c:out value="${lcount }" /></span></li>
 			        				<li class="qna_head_title"><span>${qna.qnatitle }</span></li>
 			        				<li class="qna_head_date"><span>${qna.qnadate }</span></li>
 			        				<li class="qna_head_yn"><span>${qna.qnareplyyn }</span></li>
 		        				</a>
 		        			</ul>
 		        		</li>
+		        		<c:set var="lcount" value="${lcount - 1 }" />
 	        		</c:forEach>
         		</c:if>
         		<!-- 목록 -->

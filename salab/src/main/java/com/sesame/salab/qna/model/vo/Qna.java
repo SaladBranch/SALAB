@@ -15,7 +15,7 @@ public class Qna implements Serializable {
 	private String qnatitle;
 	private String qnacontent;
 	private Date qnadate;
-	private String qnareqlycontent;
+	private String qnareplycontent;
 	private Date qnareplydate;
 	private String qnareplyyn;
 	
@@ -24,7 +24,7 @@ public class Qna implements Serializable {
 	}
 
 	public Qna(int qnano, String adminid, int userno, String qnatitle, String qnacontent, Date qnadate,
-			String qnareqlycontent, Date qnareplydate, String qnareplyyn) {
+			String qnareplycontent, Date qnareplydate, String qnareplyyn) {
 		super();
 		this.qnano = qnano;
 		this.adminid = adminid;
@@ -32,7 +32,7 @@ public class Qna implements Serializable {
 		this.qnatitle = qnatitle;
 		this.qnacontent = qnacontent;
 		this.qnadate = qnadate;
-		this.qnareqlycontent = qnareqlycontent;
+		this.qnareplycontent = qnareplycontent;
 		this.qnareplydate = qnareplydate;
 		this.qnareplyyn = qnareplyyn;
 	}
@@ -85,12 +85,12 @@ public class Qna implements Serializable {
 		this.qnadate = qnadate;
 	}
 
-	public String getQnareqlycontent() {
-		return qnareqlycontent;
+	public String getQnareplycontent() {
+		return qnareplycontent;
 	}
 
-	public void setQnareqlycontent(String qnareqlycontent) {
-		this.qnareqlycontent = qnareqlycontent;
+	public void setQnareplycontent(String qnareplycontent) {
+		this.qnareplycontent = qnareplycontent;
 	}
 
 	public Date getQnareplydate() {
@@ -112,9 +112,11 @@ public class Qna implements Serializable {
 	@Override
 	public String toString() {
 		return "Qna [qnano=" + qnano + ", adminid=" + adminid + ", userno=" + userno + ", qnatitle=" + qnatitle
-				+ ", qnacontent=" + qnacontent + ", qnadate=" + qnadate + ", qnareqlycontent=" + qnareqlycontent
+				+ ", qnacontent=" + qnacontent + ", qnadate=" + qnadate + ", qnareplycontent=" + qnareplycontent
 				+ ", qnareplydate=" + qnareplydate + ", qnareplyyn=" + qnareplyyn + "]";
 	}
+
+	
 	
 	
 

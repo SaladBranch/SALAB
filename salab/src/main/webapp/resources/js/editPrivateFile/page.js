@@ -24,6 +24,29 @@
         pageContent(index);
         $('.page-item').eq(index).addClass('ui-selected');
         
+        $('#droppable').on('dragenter', function(e){
+        	$(this).addClass('drag-over');
+        	console.log('enter');
+        }).on('dragleave', function(e){
+        	$(this).removeClass('drag-over');
+        	console.log('leave');
+        }).on('dragover', function(e){
+        	e.stopPropagation();
+        	e.preventDefault();
+        	console.log('over');
+        }).on('drop', function(e){
+        	console.log('drop');
+        	e.preventDefault();
+        	/*$(this).removeClass('drag-over');*/
+        	
+        	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
+        	for(var i = 0; i < files.length; i++) {
+        	var file = files[i];
+        	//var size = uploadFiles.push(file); //업로드 목록에 추가
+        	preview(file, size - 1); //미리보기 만들기
+        	}
+        });
+        
     });
     
     var pindex;
@@ -50,9 +73,6 @@
         },
         stop: function(event, ui){
         	pindex = ui.item.index();
-            console.log("도착점: " +pindex);
-            console.log("도착점의 pno :: " + list[pindex].pageno);
-            console.log("stop 에서의 beforeindex :: " + beforepindex);
             if(beforepindex != pindex){
                 
             	if(beforepindex < pindex){
@@ -86,7 +106,6 @@
                 for(var i = 0; i < list.length; i++){
                 	console.log(JSON.stringify(list[i]));
                 }
-                console.log("=======================");
                 
                 $.ajax({
                 	url: 'pageMove.do',
@@ -96,7 +115,6 @@
                 	data: JSON.stringify(list),
                 	success: function(){
                 		console.log('pageMove!!');
-                		/*pageTab();*/
                 	},error: function(){
                 		console.log('error');
                 	}
@@ -109,7 +127,6 @@
     //페이지 셀렉트시에 페이지를 변경시켜줄 함수
     function pageContent(index){
     	var no = index;
-    	console.log('pageContent :: ' + no);
     	$('.canvas-container').html(list[no].content);
     	$all = $('#multiselect');
     	$('#droppable').selectable({
@@ -433,42 +450,127 @@
     	
     }
     
-    function pageOutPdf(){
-    	var temp = $('canvas-container').html();
-    	/*for(var i = 0; i < list.length; i++){
-    		$('body').append('<div id="pdf">'+list[i].content+'</div>');
-    	}*/
-    	
-    	/*for(var i = 0; i < list.length; i++){
-    		$('.canvas-container').html(list[i].content);
-    		renderImage();
-    	}
-    	$('.canvas-container').html(temp);*/
+
+    	$('#droppable').on('dragenter', function(e){
+        	$(this).addClass('drag-over');
+        	console.log('enter');
+        }).on('dragleave', function(e){
+        	$(this).removeClass('drag-over');
+        	console.log('leave');
+        }).on('dragover', function(e){
+        	e.stopPropagation();
+        	e.preventDefault();
+        	console.log('over');
+        }).on('drop', function(e){
+        	console.log('drop');
+        	e.preventDefault();
+        	/*$(this).removeClass('drag-over');*/
+        	
+        	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
+        	for(var i = 0; i < files.length; i++) {
+        	var file = files[i];
+        	//var size = uploadFiles.push(file); //업로드 목록에 추가
+        	preview(file, size - 1); //미리보기 만들기
+        	}
+        });
+    
+    function preview(file, idx){
+    	var reader = new FileReader();
+    	reader.onload = (function(f, idx){
+    		return function(e){
+    			var div = '<div class="obj">' +
+    			'<img src="' + e.target.result + '" title="' + escape(f.name) + '" class="obj-comp"/>' +
+    			'</div>';
+    			$('#droppable').append(div);
+    		};
+    	})(file, idx);
+    	reader.readAsDataURL(file);
     }
     
-    function renderImage(){
-    	var content = [];
-    	for(var i = 0; i < list.length; i++){
-    		content[i] = list[i].content; 
-    	}
-    	console.log(content);
+    //pdf 일시정지
+    /*function pageOutPdf(){
+    	var temp = $('.canvas-container').html();
+    	$('.canvas-container').html('');
+    	var $pdf = $('body').append('<div id="pdf" style="display: none"></div>');
     	
-    	for(var i = 0; i < content.length; i++){
-    		html2canvas(content[i], {
-                onrendered: function (canvas) {
-
-                    // 캔버스를 이미지로 변환
-                    var imgData = canvas.toDataURL('image/png');
-                   console.log(imgData);
-                    var doc = new jsPDF('l', 'mm');
-                    
-                    // 첫 페이지 출력
-                    doc.addImage(imgData, 'PNG', 0, 0);
-                    doc.save('page.pdf');
-                }
-            });
+    	for(var i = 0; i < list.length; i++){
+    		$('#pdf').append(list[i].content);
+    		console.log($('#pdf').find('.canvas:eq('+i+')').html());
     	}
+    	
+    	console.log('for in');
+    	for(var i = 0; i < list.length; i++){
+        		renderPNG(i);
+        }
+    	$('.canvas-container').html(temp);
     }
+    function renderPNG(i){
+    	if(i < list.length -1){
+    		setTimeout(function(){
+        		var imgData = new Image();
+        		html2canvas($('.canvas:eq(0)')[0], { allowTaint: true }).then(function(canvas) {
+                    calculatePDF_height_width("#render",0);
+                    imgData.src = canvas.toDataURL("image/png", 1.0);
+                    pdf = new jsPDF('l', 'pt', PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, HTML_Width, HTML_Height);
+                    
+
+                    downImage(imgData.src, 'test'+i+'.png');
+                });
+        	}, 0);
+        		console.log(i);
+        	}else{
+        		setTimeout(function(){
+        		var imgData = new Image();
+        		html2canvas($('.canvas:eq(1)')[0], { allowTaint: true }).then(function(canvas) {
+                    calculatePDF_height_width(".canvas", 1);
+                    imgData.src = canvas.toDataURL("image/png", 1.0);
+                    downImage(imgData.src, 'test'+i+'.png');
+                    pdf = new jsPDF('l', 'pt', PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, HTML_Width, HTML_Height);
+         
+                    	//Save PDF Doc	
+                        pdf.save("HTML-Document.pdf"); 
+
+                        //Generate BLOB object
+                        var blob = pdf.output("blob");
+
+                        //Getting URL of blob object
+                        var blobURL = URL.createObjectURL(blob);
+
+                        //Showing PDF generated in iFrame element
+                        var iframe = document.getElementById('sample-pdf');
+                        iframe.src = blobURL;
+
+                        //Setting download link
+                        var downloadLink = document.getElementById('pdf-download-link');
+                        downloadLink.href = blobURL;
+
+                });
+        	  	}, 0);
+        	}
+
+    }
+    
+    function downImage(uri, name){
+    	var link = document.createElement('a');
+    	link.download = name;
+    	link.href = uri;
+    	document.body.appendChild(link);
+    	link.click();
+    }
+    
+    function calculatePDF_height_width(selector,index){
+    	 page_section = $(selector).eq(index);
+    	 HTML_Width = page_section.width();
+    	 HTML_Height = page_section.height();
+    	 top_left_margin = 15;
+    	 PDF_Width = HTML_Width + (top_left_margin * 2);
+    	 PDF_Height = (PDF_Width * 1.2) + (top_left_margin * 2);
+    	 canvas_image_width = HTML_Width;
+    	 canvas_image_height = HTML_Height;
+    }*/
+    
     
     
     

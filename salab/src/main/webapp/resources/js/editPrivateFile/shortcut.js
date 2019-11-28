@@ -257,11 +257,15 @@ function ScrollZoom(container, max_scale, factor){
         target.css('transform', 'scale(' + (scale) + ', ' + (scale) + ')');
         $('.canvas-size p span').text(Math.floor(scale*100) + "%");
         var changedWidth = $('#droppable').width() * Math.floor(scale*100)/100;
+        var changedHeight = $('#droppable').height() * Math.floor(scale*100)/100;
         
         if(changedWidth > container.width())
         	$('#droppable').css('margin', '5% 5%');
-        else
+        else{
         	$('#droppable').css('margin-left', (container.width() - changedWidth)/2);
+        	$('#droppable').css('margin-top', (container.height() - changedHeight)/2);
+        }
+        	
         $('.canvas-container').scrollTop(-pos.y);
         $('.canvas-container').scrollLeft(-pos.x);
     }

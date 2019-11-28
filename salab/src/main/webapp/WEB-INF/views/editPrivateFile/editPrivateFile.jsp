@@ -41,6 +41,20 @@
             <div class="top-right-menus">
                 <div class="canvas-size">
                     <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
+                    <div class="top-canvas-opts">
+                        <input type="number" min="10" max="500" onkeyup="linkZoom(this.value);">
+                        <hr>
+                        <ul>
+                            <li>25%</li>
+                            <li>50%</li>
+                            <li>75%</li>
+                            <li>100%</li>
+                            <li>150%</li>
+                            <li>200%</li>
+                            <li>300%</li>
+                            <li>400%</li>
+                        </ul>
+                    </div>
                 </div>
                 <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_full.png"></button>
             </div>
@@ -573,6 +587,51 @@
         }
     });
     
+    /* canvas size 조절 열기 */
+    $('.canvas-size p').on('click', function(){
+    	if($('.top-canvas-opts').css('display') == 'none'){
+    		$('.top-canvas-opts').show();
+    		$('.top-canvas-opts input').val(Number($('.canvas-size p span').text().split('%')[0]));
+    	}else
+    		$('.top-canvas-opts').hide();
+    });
+    $('.top-canvas-opts ul li').on('click', function(){
+    	controlCanvasZoom(Number($(this).text().split('%')[0]));
+    });
+    $(document).on('mousedown', function(e){
+    	if(!$(e.target).is('.top-canvas-opts *'))
+    		$('.top-canvas-opts').hide();
+        if(!$(e.target).is('#canvas-sizing-opt *'))
+        	$('#canvas-sizing-opt').hide();
+    });
+    
+    $('.top-canvas-opts input').on('focusout', function(){
+    	controlCanvasZoom($(this).val());
+    });
+    
+    function linkZoom(scale){
+    	if(window.event.keyCode == 13)
+    		controlCanvasZoom(scale);
+    }
+    
+    function controlCanvasZoom(scale){
+    	if(scale >= 10 && scale <=500){
+        	$('.canvas-size p span').text(scale + '%');
+        	$('#droppable').css('transform', 'scale(' + (scale/100) + ', ' + (scale/100) + ')');
+        	$('.top-canvas-opts').hide();
+        	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
+    		
+        	var changedWidth = $('#droppable').width() * scale/100;
+        	var changedHeight = $('#droppable').height() * scale/100;
+            if(changedWidth > $('.canvas-container').width())
+            	$('#droppable').css('margin', '5% 5%');
+            else{
+            	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
+            	$('#droppable').css('margin-top', ($('.canvas-container').height() - changedHeight)/2);
+            }
+            	
+    	}
+    }
     </script>
     
 </body>

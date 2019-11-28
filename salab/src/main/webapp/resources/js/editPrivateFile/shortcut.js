@@ -214,7 +214,7 @@ function ScrollZoom(container, max_scale, factor){
     var pos = {x:0, y:0};
     var zoom_target = {x:0, y:0};
     var zoom_point = {x:0, y:0};
-    var scale = 1;
+    var scale = Number($('.canvas-size p span').text().split('%')[0])/100;
     target.css('transform-origin', '0 0');
     target.on('mousewheel DOMMouseScroll', scrolled);
     
@@ -228,14 +228,16 @@ function ScrollZoom(container, max_scale, factor){
             var delta = e.delta || e.originalEvent.wheelDelta;
             if(delta===undefined)
                 delta = e.originalEvent.detail;
-            delta = Math.max(-1,Math.min(1,delta))
-            
+            delta = Math.max(-1,Math.min(1,delta)) //1 or -1
             zoom_target.x = (zoom_point.x - pos.x)/scale
             zoom_target.y = (zoom_point.y - pos.y)/scale
             
-            scale += delta*factor*scale;
-            scale = Math.max(1, Math.min(max_scale, scale));
-            
+            if(scale < 0.6) 
+            	factor = 0.05;
+            else 
+            	factor = 0.1;
+            scale += delta*factor;
+            scale = Math.max(0.1, Math.min(max_scale, scale));
             pos.x = -zoom_target.x * scale + zoom_point.x
             pos.y = -zoom_target.y * scale + zoom_point.y
             
@@ -253,8 +255,13 @@ function ScrollZoom(container, max_scale, factor){
     }
     function update(){
         target.css('transform', 'scale(' + (scale) + ', ' + (scale) + ')');
-        $('.canvas-size p span').text(Math.floor(scale*10)*10 + "%");
-        console.log(pos.x)
+        $('.canvas-size p span').text(Math.floor(scale*100) + "%");
+        var changedWidth = $('#droppable').width() * Math.floor(scale*100)/100;
+        
+        if(changedWidth > container.width())
+        	$('#droppable').css('margin', '5% 5%');
+        else
+        	$('#droppable').css('margin-left', (container.width() - changedWidth)/2);
         $('.canvas-container').scrollTop(-pos.y);
         $('.canvas-container').scrollLeft(-pos.x);
     }

@@ -433,6 +433,13 @@ $(function(){
     $('#custom-height input').on('focusout', function(){
     	$('#droppable').css('height', $(this).val()+'px');
     });
+    if(Number($('#droppable').css('width').replace('px', '')) < Number($('#droppable').css('height').replace('px', ''))){
+    	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
+    	$('.canvas-sizing .radio-label input').eq(1).prop('checked', false);
+    }else{
+    	$('.canvas-sizing .radio-label input').eq(0).prop('checked', false);
+    	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
+    }
 });
 
 $('#droppable').bind('DOMSubtreeModified', function(e){

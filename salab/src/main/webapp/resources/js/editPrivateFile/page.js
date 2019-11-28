@@ -133,6 +133,7 @@
         rightMouseListner();
         leftMouseListner();
         
+        
         //페이지별 color 다르게 적용
         var $colorpic = $('<div class="canvas-colorpic"></div>')
         if($('#droppable').attr('data-background') != "#ffffff"){
@@ -188,6 +189,12 @@
         }else{
         	$('#droppable').css('margin', '5% auto');
         }
+        
+        //page zoom 맞춰주기
+        var scaleValues = $('#droppable').css('transform');
+        var zoomPercent = (scaleValues ==='none')? 1 : ((scaleValues.split('(')[1]).split(')')[0]).split(',')[0];
+        $('.canvas-size p span').text(Math.floor(100*zoomPercent) + "%");
+        var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1)
     }
 
     //페이지 삭제용 함수

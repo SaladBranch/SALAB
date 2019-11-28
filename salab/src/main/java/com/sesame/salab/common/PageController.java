@@ -118,10 +118,7 @@ public class PageController {
    	public String teamNoticeListMethod() {
    		return "project/teamNoticeList";
    	}
-   	@RequestMapping(value="teamNoticeDetail.do")
-   	public String teamNoticeDetailMethod() {
-   		return "project/teamNoticeDetail";
-   	}
+
    	@RequestMapping(value="teamNoticeWrite.do")
    	public String teamNoticeWriteMethod() {
    		return "project/teamNoticeWrite";

@@ -194,7 +194,20 @@
         var scaleValues = $('#droppable').css('transform');
         var zoomPercent = (scaleValues ==='none')? 1 : ((scaleValues.split('(')[1]).split(')')[0]).split(',')[0];
         $('.canvas-size p span').text(Math.floor(100*zoomPercent) + "%");
-        var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1)
+        var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
+        
+        //페이지 바꼈을때도 obj 선택하면 메뉴 바뀌게 다시 한 번 지정
+        $('#droppable').bind('DOMSubtreeModified', function(e){
+            if($('#droppable .ui-selected').length > 0){
+                $('.right-side-bar .canvas-menu').hide();
+                $('.right-side-bar .tab-menu').show();
+                $('.right-side-bar .tab-content').show();
+            }else{
+                $('.right-side-bar .canvas-menu').show();
+                $('.right-side-bar .tab-menu').hide();
+                $('.right-side-bar .tab-content').hide();
+            }
+        });
     }
 
     //페이지 삭제용 함수

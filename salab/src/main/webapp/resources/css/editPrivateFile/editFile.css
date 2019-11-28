@@ -129,6 +129,61 @@ svg{
     width: 18px;
     margin-top: 5px;
 }
+
+/*오른쪽 상단 canvas options */
+.top-canvas-opts{
+	display: none;
+    position: absolute;
+    background: #343434;
+    top: 45px;
+    right: 40px;
+    width: 180px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+}
+.top-canvas-opts:before{
+    content:"";
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #343434;
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: block;
+    right: 10px;
+    top: -5px;
+}
+
+.top-canvas-opts ul li{
+    font-size: 15px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 15px;
+}
+.top-canvas-opts ul li:hover{
+    background: #414141;
+}
+.top-canvas-opts ul li:last-of-type{
+    margin-bottom: 7px;
+}
+
+.top-canvas-opts input{
+    width: 90%;
+    margin: 0 5%;
+    border: 1.5px solid #00a8ff;
+    background: #343434;
+    color: #fff;
+    padding: 3px;
+    font-size: 15px;
+    border-radius: 3px;
+}
+
+.top-canvas-opts hr{
+    border: 0;
+    border-top: 1px solid #fff;
+    margin: 5px 0;
+}
+
 /*-------------------------*/
 /*왼쪽 상단 메인 토글 메뉴*/
 /*-------------------------*/
@@ -884,12 +939,12 @@ ol.page-tab-content li{
 #custom-width input::-webkit-outer-spin-button,
 #custom-width input::-webkit-inner-spin-button,
 #custom-height input::-webkit-outer-spin-button,
-#custom-height input::-webkit-inner-spin-button{
+#custom-height input::-webkit-inner-spin-button,
+.top-canvas-opts input::-webkit-outer-spin-button,
+.top-canvas-opts input::-webkit-inner-spin-button{
 	-webkit-appearance: none;
 	margin: 0;
 }
-
-
 
 /*-------------------------*/
 /* Canvas */

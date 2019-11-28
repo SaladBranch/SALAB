@@ -74,6 +74,7 @@ public class PrivateFileController {
 		String result = gson.toJson(pageList);
 		mv.addObject("page", pageList);
 		mgService.close();
+		
 		return mv;
 	}
 	

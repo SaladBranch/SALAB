@@ -413,6 +413,8 @@
         </div>
     </div>
     
+    <div id="render" style="display: none;">왜 이러는걸까요</div>
+    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
@@ -428,6 +430,7 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
+    	//var pdf,page_section,HTML_Width,HTML_Height,top_left_margin,PDF_Width,PDF_Height,canvas_image_width,canvas_image_height;
     	
     	/* //페이지넘버 담을 전역변수
     	var listno = new Array(); */

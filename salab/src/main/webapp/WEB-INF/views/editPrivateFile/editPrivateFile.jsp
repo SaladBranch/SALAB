@@ -535,11 +535,13 @@
     function toggleEdit(btn){
         if($('.right-side-bar').css("display") == "none"){
         	$(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
-            $('.right-side-bar').fadeIn(300);
+            $('.right-side-bar').show();
+            $('.canvas-container').css('width', 'calc(100% - 460px)');
         }else{
             $(btn).children("img").attr("src", "/salab/resources/img/openedit_blank.png");
-            $('.right-side-bar').fadeOut(300);
+            $('.right-side-bar').hide();
             editable = "false";
+            $('.canvas-container').css('width', 'calc(100% - 230px)');
         }
     }
 
@@ -622,12 +624,10 @@
         	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
     		
         	var changedWidth = $('#droppable').width() * scale/100;
-        	var changedHeight = $('#droppable').height() * scale/100;
             if(changedWidth > $('.canvas-container').width())
             	$('#droppable').css('margin', '5% 5%');
             else{
             	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
-            	$('#droppable').css('margin-top', ($('.canvas-container').height() - changedHeight)/2);
             }
             	
     	}

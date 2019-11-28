@@ -216,6 +216,7 @@ svg{
     left: 0;
     flex-direction: column;
     z-index: 1;
+    border-right: 1px solid #a8a8a8;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -897,6 +898,7 @@ ol.page-tab-content li{
 	position: absolute;
 	right: calc(1440px * -0.05);
 	background: #cecece;
+	z-index: -1;
 }
 
 /*우클릭 메뉴*/

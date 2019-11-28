@@ -109,7 +109,6 @@
     //페이지 셀렉트시에 페이지를 변경시켜줄 함수
     function pageContent(index){
     	var no = index;
-    	console.log('pageContent :: ' + no);
     	$('.canvas-container').html(list[no].content);
     	$all = $('#multiselect');
     	$('#droppable').selectable({

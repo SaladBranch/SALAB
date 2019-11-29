@@ -90,7 +90,7 @@
 				<form action="qnaInsert.do" method="post" enctype="multipart/form-data">
 					<p class="qna_fromAdmin">From. SALAB</p>
 					<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
-					<p class="qna_info_faq"><u><a href="userFAQ.do">FAQ바로가기</a></u></p>
+					<p class="qna_info_faq"><u><a href="faqlist.do">FAQ바로가기</a></u></p>
 					<ul>
 						<li>
 							<p class="qna_title">제목</p>

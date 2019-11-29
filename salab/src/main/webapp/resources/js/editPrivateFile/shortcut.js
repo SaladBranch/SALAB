@@ -19,17 +19,17 @@ $(document).on('keydown', function(e){
     	pageAllSave();
     }
     if(e.ctrlKey && e.keyCode == 88 && $('#droppable .ui-selected').length > 0){ //ctrl+x
-    	undo.push($('.canvas-container').html());
         cutObject();
-        redo.push($('.canvas-container').children());
     }
     if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){ //ctrl+v
-    	undo.push($('.canvas-container').html());
         pasteObject();
-        redo.push($('.canvas-container').children());
+//        redo.push($('.canvas-container').children());
     }
-    if(e.ctrlKey && e.keyCode == 90 && undo.length>0){//ctrl+z
+    if(e.ctrlKey && e.keyCode == 90){//ctrl+z
     	undoPage();
+    }
+    if(e.ctrlKey && e.keyCode == 89){//ctrl+y
+    	redoPage();
     }
     if(e.ctrlKey && e.keyCode == 65){ //ctrl+a
         e.preventDefault();
@@ -37,6 +37,9 @@ $(document).on('keydown', function(e){
     }
 });
 function deleteObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     for(i = 0; i<selectedObj.length; i++){
         selectedObj[i].remove();
     }
@@ -50,6 +53,9 @@ function copyObject(){
     });
 }
 function cutObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     copiedObj = new Array();
     $('#droppable .ui-selected').each(function(){
         copiedObj.push($(this));
@@ -58,6 +64,9 @@ function cutObject(){
     cutted = 1;
 }
 function pasteObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     var $all = $('#multiselect');
     selectedObj = new Array();
     
@@ -102,11 +111,17 @@ function pasteObject(){
 }
 //복제하기
 function cloneObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     copyObject();
     pasteObject();
 }
 //그룹화
 function groupObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     var $group = $('<div class="group-obj obj ui-selected"></div>')
     var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
     for(i = 0; i<selectedObj.length; i++){
@@ -150,6 +165,9 @@ function groupObject(){
 }
 //그룹해제
 function ungroupObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     if(selectedObj[0].hasClass('group-obj')){
         $group = selectedObj[0];
         selectedObj = new Array();
@@ -179,6 +197,11 @@ function selectAll(){
 
 //실행취소
 function undoPage(){
+	var undo = list[$('.page-item').index($('.page-item.ui-selected'))].undo;
+	var redo = list[$('.page-item').index($('.page-item.ui-selected'))].redo;
+	
+	redo.push($('.canvas-container').html());
+	
 	$('.canvas-container').html(undo[undo.length-1]);
 	undo.pop();
 	$all = $('#multiselect');
@@ -202,13 +225,70 @@ function undoPage(){
     });
     rightMouseListner();
     leftMouseListner();
+    $('#droppable').bind('DOMSubtreeModified', function(e){
+        if($('#droppable .ui-selected').length > 0){
+            $('.right-side-bar .canvas-menu').hide();
+            $('.right-side-bar .tab-menu').show();
+            $('.right-side-bar .tab-content').show();
+        }else{
+            $('.right-side-bar .canvas-menu').show();
+            $('.right-side-bar .tab-menu').hide();
+            $('.right-side-bar .tab-content').hide();
+        }
+    });
 }
 
+//다시실행(redo)
+function redoPage(){
+	var undo = list[$('.page-item').index($('.page-item.ui-selected'))].undo;
+	var redo = list[$('.page-item').index($('.page-item.ui-selected'))].redo;
+	
+	undo.push($('.canvas-container').html());
+	
+	$('.canvas-container').html(redo[redo.length-1]);
+	redo.pop();
+	
+	$all = $('#multiselect');
+	$('#droppable').selectable({
+        filter: " > .obj",
+        start: function(){
+            selectedObj = new Array();
+        },
+        selected: function(e, ui){
+            selectedObj.push($(ui.selected));
+        },
+        unselected: function(e, ui){
+            $(ui.unselected).children().remove('.ui-resizable-handle');
+            if($(ui.unselected).hasClass('ui-draggable'))
+                $(ui.unselected).draggable('destroy');
+            $(ui.unselected).children('.ui-rotatable-handle').hide();
+        },
+        stop: function(){
+            addControl();
+        }
+    });
+    rightMouseListner();
+    leftMouseListner();
+    $('#droppable').bind('DOMSubtreeModified', function(e){
+        if($('#droppable .ui-selected').length > 0){
+            $('.right-side-bar .canvas-menu').hide();
+            $('.right-side-bar .tab-menu').show();
+            $('.right-side-bar .tab-content').show();
+        }else{
+            $('.right-side-bar .canvas-menu').show();
+            $('.right-side-bar .tab-menu').hide();
+            $('.right-side-bar .tab-content').hide();
+        }
+    });
+}
 
 
 //맨앞으로
 var zIndex = 0;
 function send_forward(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     var max = 0;
     $('#droppable .obj').each(function(){
         var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
@@ -222,6 +302,9 @@ function send_forward(){
 }
 //앞으로
 function send_front(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     for(i = 0; i<selectedObj.length; i++){
         var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
         selectedObj[i].css('z-index', Number(num) + 1);
@@ -229,6 +312,9 @@ function send_front(){
 }
 //뒤로
 function send_back(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     for(i = 0; i<selectedObj.length; i++){
         var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
         if(num != 0)
@@ -243,6 +329,9 @@ function send_back(){
 }
 //맨뒤로
 function send_backward(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	
     $('#droppable .obj').each(function(){
         var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
         $(this).css('z-index', Number(num) + 1);

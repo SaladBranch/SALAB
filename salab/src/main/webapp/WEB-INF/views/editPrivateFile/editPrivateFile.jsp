@@ -457,7 +457,9 @@
     			fileno: "${item.fileno}",
     			userno: "${item.userno}",
     			pagename: "${item.pagename}",
-    			_id: "${item._id }"
+    			_id: "${item._id }",
+    			undo: new Array(),
+    			redo: new Array()
     		});
     	</c:forEach>
     	

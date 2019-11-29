@@ -1,0 +1,350 @@
+@charset "UTF-8";
+.clear {
+    clear: both;
+}
+
+.left {
+    float: left;
+    margin-left: 10px;
+}
+
+.right {
+    float: right;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}
+
+/*grid*/
+.part-grid {
+    border: 0.5px solid gray;
+    border-radius: 2px;
+    padding: 1% 2%;
+}
+
+.top-out-grid {
+    width: 95%;
+    margin-top: 2%;
+    margin-left: 4%;
+}
+
+.grid-division {
+    float: left;
+    width: 40%;
+    max-height: 650px;
+    padding: 0px 1px;
+    margin-right: 10px;
+}
+
+.grid-division:nth-child(2) {
+    width: 40%;
+}
+
+section {
+    padding: 0px;
+
+}
+
+/*네임박스*/
+.Blank {
+    height: 100px;
+    padding-top: 10px;
+
+}
+
+.teamLogo {
+    float: left;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    background-color: firebrick;
+}
+
+.name-box {
+    float: left;
+    height: 70px;
+    vertical-align: middle;
+    padding: 4% 4px;
+}
+
+/*최근파일*/
+.file-section {}
+
+.recentFile-grid {
+    height: 400px;
+    width: 100%;
+    padding: 2% 1%;
+
+
+}
+
+.file-grid {
+    display: inline-block;
+    position: relative;
+    width: 48%;
+    margin: 2% 1%;
+    float: left;
+}
+
+.file-container {
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 170px;
+    background-color: #dddddd;
+    border: 1.5px solid #bfbfbf;
+    border-radius: 3px;
+    cursor: default;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+}
+
+.file-name {
+    line-height: 30px;
+    height: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/*우측페이지*/
+
+
+/*공지사항*/
+.noticePreview-title {}
+
+.moreNotice {}
+
+.notice-grid {
+    height: 180px;
+}
+
+/*table*/
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table td {
+    padding: 0px;
+    text-align: center;
+    font-size: 0.8em;
+    overflow: hidden;
+    height: 26px;
+}
+
+table td:nth-child(2) {
+    width: 20%;
+    overflow: hidden;
+}
+
+table td:nth-child(3) {
+    text-align: left;
+    padding-left: 15px;
+    width: 65%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+table td:nth-child(4) {
+    width: 15%;
+    overflow: hidden;
+}
+
+table tr {
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+table tr:hover {
+    background-color: rgba(237, 147, 137, 0.2);
+    border-radius: 14px;
+}
+
+
+
+
+/*멤버*/
+.member-section {
+    margin-top: 15px;
+}
+
+.member-grid {
+    height: 180px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.memberList {
+    font-size: 14px;
+}
+
+.memberList > div {
+    margin: 2px 0px;
+    vertical-align: middle;
+}
+
+.member-icon {
+    float: left;
+    width: 10%;
+}
+
+.member-name {
+    float: left;
+    width: 77%;
+}
+
+.member-setup {
+    float: right;
+
+    cursor: pointer;
+}
+
+.member-setup-grid {
+    width: 10%;
+    margin-right: 5px;
+    text-align: center;
+}
+
+.setting-menu {
+    position: absolute;
+    margin-left: 4%;
+    background-color: #383a39;
+    width: 100px;
+    text-align: left;
+    padding: 6px 0px;
+}
+
+.setting-menu > div {
+    height: 23%;
+    padding-left: 10px;
+    font-size: 1em;
+    color: #FAFAFA;
+    background-color: #383a39;
+     border: 0.5px solid #383a39;
+
+}
+
+.setting-menu > div:hover {
+    color: #383a39;
+    background-color: #FAFAFA;
+    cursor: pointer;
+     border: 0.5px solid #383a39;
+}
+
+
+
+
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    background-color: #F5F5F5;
+    width: 1px;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 3px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #D62929;
+}
+
+
+/*****modal section*****/
+.modalOutline {
+    position: fixed;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Black w/ opacity */
+    z-index: 4;
+
+}
+
+.modalContent {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 35%;
+    box-shadow: 0px 1px 3px;
+    min-height: 160px;
+    z-index: 5;
+}
+
+.modalContent input[type="button"] {
+    margin-right: 18px;
+}
+
+.modal-title {
+    font-size: 0.8em;
+}
+
+.modal-text {
+    font-size: 0.7em;
+    margin: 15px 0px;
+}
+
+.modal-text2 {
+    font-size: 0.8em;
+    margin: 15px 0px;
+}
+
+.modalContent input[type="email"] {
+    width: 97%;
+    padding-left: 15px;
+    font-size: 0.8em;
+    height: 24px;
+}
+
+.inviteBtn {
+    float: right;
+
+}
+
+#invite-modalContent {
+    height: 200px;
+}
+
+.modalBtn {
+    position: relative;
+    float: right;
+    border-radius: 3px;
+    background-color: white;
+    margin-top: 10px;
+    margin-right: 15px;
+    border: 0.7px solid gray;
+    box-shadow: 2px 1px gray;
+    cursor: pointer;
+    min-height: 24px;
+    padding: 7px 14px;
+    color: gray;
+    width: 80px;
+    height: 28px;
+    text-align: center;
+    font-size: 9pt;
+    font-weight: 300;
+
+}

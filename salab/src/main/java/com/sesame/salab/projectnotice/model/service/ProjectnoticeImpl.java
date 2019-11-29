@@ -36,7 +36,7 @@ public class ProjectnoticeImpl implements ProjectnoticeService{
 	}
 
 	@Override
-	public List<Qna> testList(HashMap<String, Object> map) {
+	public List<Projectnotice> testList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return pnDao.testList(map);
 	}

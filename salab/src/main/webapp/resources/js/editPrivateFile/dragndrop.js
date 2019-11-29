@@ -40,6 +40,7 @@ function includeElement(X, Y, temp) {
     var comp = module.obj_code;
 	
     list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+    $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	$("#droppable").append(comp);
     initSelect();
 }
@@ -131,6 +132,7 @@ function addControl(){
             },
             start: function (event, ui) {
             	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 $focus.hide();
                 var left = parseInt($(this).css('left'), 10);
                 left = isNaN(left) ? 0 : left;
@@ -146,6 +148,7 @@ function addControl(){
             degrees: getRotateDegree($obj),
             start: function(){
             	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
             },
             stop: function() {
             	formatChange();
@@ -188,6 +191,7 @@ function addControl(){
                 alsoResize: "this .obj-comp",
                 start: function(){
                 	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+                	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 },
                 stop: function(){
                     formatChange();
@@ -211,6 +215,7 @@ function addControl(){
         $all.draggable({
         	start: function(){
         		list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+        		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
         	}
         }).css({
             top: 0,
@@ -318,6 +323,7 @@ $(function(){
             module.setX(200);
             module.setY(100);
             list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
             $(target).append(module.obj_code);
             initSelect();
             clicks = 0;

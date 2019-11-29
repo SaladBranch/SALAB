@@ -39,6 +39,7 @@ $(document).on('keydown', function(e){
 function deleteObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     for(i = 0; i<selectedObj.length; i++){
         selectedObj[i].remove();
@@ -55,6 +56,7 @@ function copyObject(){
 function cutObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     copiedObj = new Array();
     $('#droppable .ui-selected').each(function(){
@@ -66,6 +68,7 @@ function cutObject(){
 function pasteObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     var $all = $('#multiselect');
     selectedObj = new Array();
@@ -113,6 +116,7 @@ function pasteObject(){
 function cloneObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     copyObject();
     pasteObject();
@@ -121,6 +125,7 @@ function cloneObject(){
 function groupObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     var $group = $('<div class="group-obj obj ui-selected"></div>')
     var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
@@ -167,6 +172,7 @@ function groupObject(){
 function ungroupObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     if(selectedObj[0].hasClass('group-obj')){
         $group = selectedObj[0];
@@ -201,9 +207,13 @@ function undoPage(){
 	var redo = list[$('.page-item').index($('.page-item.ui-selected'))].redo;
 	
 	redo.push($('.canvas-container').html());
+	$('#top-redo-btn img').attr('src', '/salab/resources/img/rightarrow.png');
 	
 	$('.canvas-container').html(undo[undo.length-1]);
 	undo.pop();
+	
+	if(undo.length === 0)
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow_disabled.png').css('cursor', 'default');
 	
 	selectedObj = new Array();
 	$('#droppable .ui-selected').each(function(){
@@ -252,9 +262,13 @@ function redoPage(){
 	var redo = list[$('.page-item').index($('.page-item.ui-selected'))].redo;
 	
 	undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
 	$('.canvas-container').html(redo[redo.length-1]);
 	redo.pop();
+	
+	if(redo.length === 0)
+		$('#top-redo-btn img').attr('src', '/salab/resources/img/rightarrow_disabled.png').css('cursor', 'default');
 	
 	selectedObj = new Array();
 	$('#droppable .ui-selected').each(function(){
@@ -303,6 +317,7 @@ var zIndex = 0;
 function send_forward(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     var max = 0;
     $('#droppable .obj').each(function(){
@@ -319,6 +334,7 @@ function send_forward(){
 function send_front(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     for(i = 0; i<selectedObj.length; i++){
         var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
@@ -329,6 +345,7 @@ function send_front(){
 function send_back(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     for(i = 0; i<selectedObj.length; i++){
         var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
@@ -346,6 +363,7 @@ function send_back(){
 function send_backward(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
 	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
     $('#droppable .obj').each(function(){
         var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');

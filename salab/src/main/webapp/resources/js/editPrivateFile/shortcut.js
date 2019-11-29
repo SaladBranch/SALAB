@@ -204,6 +204,12 @@ function undoPage(){
 	
 	$('.canvas-container').html(undo[undo.length-1]);
 	undo.pop();
+	
+	selectedObj = new Array();
+	$('#droppable .ui-selected').each(function(){
+		selectedObj.push($(this));
+	});
+	
 	$all = $('#multiselect');
 	$('#droppable').selectable({
         filter: " > .obj",
@@ -215,9 +221,9 @@ function undoPage(){
         },
         unselected: function(e, ui){
             $(ui.unselected).children().remove('.ui-resizable-handle');
+            $(ui.unselected).children('.ui-rotatable-handle').hide();
             if($(ui.unselected).hasClass('ui-draggable'))
                 $(ui.unselected).draggable('destroy');
-            $(ui.unselected).children('.ui-rotatable-handle').hide();
         },
         stop: function(){
             addControl();
@@ -236,6 +242,8 @@ function undoPage(){
             $('.right-side-bar .tab-content').hide();
         }
     });
+    
+    addControl();
 }
 
 //다시실행(redo)
@@ -248,6 +256,11 @@ function redoPage(){
 	$('.canvas-container').html(redo[redo.length-1]);
 	redo.pop();
 	
+	selectedObj = new Array();
+	$('#droppable .ui-selected').each(function(){
+		selectedObj.push($(this));
+	});
+	
 	$all = $('#multiselect');
 	$('#droppable').selectable({
         filter: " > .obj",
@@ -280,6 +293,8 @@ function redoPage(){
             $('.right-side-bar .tab-content').hide();
         }
     });
+    
+    addControl();
 }
 
 

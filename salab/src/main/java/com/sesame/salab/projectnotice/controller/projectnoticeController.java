@@ -51,7 +51,7 @@ public class projectnoticeController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("paging", paging);
 		map.put("projectno", projectno);
-		List<Qna> pnoticelist = pnService.testList(map);
+		List<Projectnotice> pnoticelist = pnService.testList(map);
 		System.out.println(pnoticelist.size());
 
 		if (pnoticelist != null) {

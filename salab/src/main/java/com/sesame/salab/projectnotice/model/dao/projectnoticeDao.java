@@ -36,7 +36,7 @@ public class projectnoticeDao {
 		return sqlSession.selectList("projectnoticeMapper.selectList", paging);
 	}
 
-	public List<Qna> testList(HashMap<String, Object> map) {
+	public List<Projectnotice> testList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		System.out.println(map.get("paging").toString());
 		System.out.println(sqlSession.selectList("projectnoticeMapper.testList", map));

@@ -43,14 +43,19 @@ function includeElement(X, Y, temp) {
     initSelect();
 }
 function leftMouseListner(){
-    $(document).on('click', function(){
+    $(document).on('click', function(event){
         toggleContext(0);
     });
     $('#droppable').on('click', function(){
         toggleContext(0);
     });
-    $(document).on('dblclick', "#droppable .obj", function(){
-        $(this).children(".obj-comp").focus();
+    $(document).on('dblclick', "#droppable .obj", function(event){
+        $(this).draggable("destroy");
+        $("#droppable").selectable("destroy");
+        $(this).children().remove('.ui-resizable-handle');
+        $(this).children('.ui-rotatable-handle').hide();
+        $(this).children(".obj-comp").attr("contenteditable", "true");
+        $(this).children(".obj-comp").selectText();
     });
 }
 function rightMouseListner(){
@@ -231,11 +236,12 @@ $(function(){
     //애초에 모든 controller들이 붙어서 온 상태이다. 염두해두도록
     rightMouseListner();
     leftMouseListner();
-    
+
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){
             selectedObj = new Array();
+            clearCursor();
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -248,24 +254,26 @@ $(function(){
         },
         stop: function(){
             addControl();
-            // select 실행 시 cursor out
-            window.getSelection().removeAllRanges();
         }
     });
-    
+
     //canvas 위의 마우스 드래깅
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *"))
+    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *")) {
             mode = false;
-        else{
+    	}
+        else {
             mode = true;
             startX = e.clientX;
             startY = e.clientY;
             width = height = 0;
             $focus.show();
+            clearCursor();
         }
+    	if (!$(e.target).is("#droppable .obj *"))
+	        $(".obj-comp").attr("contenteditable", "false");
     }).on('mousemove', function(e){
         if(appendElement != ""){
             moveDragging();
@@ -293,7 +301,7 @@ $(function(){
             appendElement = "";
         }
     });
-    
+
     //obj 삽입
     var clicks = 0; //더블클릭 판별용 변수
     var target = "#droppable"; //object append할 변수
@@ -315,6 +323,7 @@ $(function(){
             appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
+        clearCursor();
     });
     
     //마우스 움직일 때 드래그 영역 설정 함수

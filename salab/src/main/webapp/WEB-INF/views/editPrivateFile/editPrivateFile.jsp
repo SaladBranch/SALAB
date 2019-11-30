@@ -363,10 +363,10 @@
             	</div>
             	<div class="text-font-comps">
             		<div class="text-item enterable dropdownable" id="font">
-            			<span class="tab-content-text">폰트</span><div class="fontType"></div><input type="hidden">
+            			<span class="tab-content-text">폰트</span><div class="fontType"></div><p>&#9660;</p>
             		</div>
             		<div class="text-item enterable" id="size">
-            			<span class="tab-content-text">크기</span><input type="number" value="20"><span class="tab-content-text">px</span>
+            			<span class="tab-content-text">크기</span><input type="number" id="size" value="20"><span class="tab-content-text">px</span>
             		</div>
             		<div class="text-item enterable" id="textColor">
             			<span class="tab-content-text">색상</span><input class="colorView" id="text">
@@ -382,11 +382,9 @@
             		</div>
             		
             		<div class= "text-font-droplist">
-            			<div class="component" id="1" onclick="textFontChange('굴림', 'Gulim')">굴림</div>
-            			<div class="component" id="2" onclick="textFontChange('돋움', 'Dotum')">돋움</div>
-            			<div class="component" id="3" onclick="textFontChange('바탕', 'Batang')">바탕</div>
-            			<div class="component" id="4" onclick="textFontChange('궁서', 'Gungsuh')">궁서</div>
-            			<div class="component" id="5" onclick="textFontChange('맑은 고딕', 'Malgun Gothic')">맑은 고딕</div>
+            			<c:forEach var="font" items="${fontList }">
+            			<div class="component" style="font-family : ${font}" onclick="textFontChange('${font}')">${font}</div>
+            			</c:forEach>
             		</div>
             		
             	</div>
@@ -528,7 +526,7 @@
             editable = "false";
         }
     }
-
+    
     function toggleItems(menu){
     	var target = $("." + menu + "-tab");
 		if (target.css("display") == "none"){
@@ -545,8 +543,8 @@
             $(this).removeClass('active-tab'); 
         });
         $('.figure-tab').addClass('active-tab');
-        $('.figure-tab-content').show();
         $('.text-tab-content').hide();
+        $('.figure-tab-content').fadeIn(200);
     });
     
     $('.text-tab').click(function(){
@@ -555,7 +553,7 @@
         });
         $('.text-tab').addClass('active-tab');
         $('.figure-tab-content').hide();
-        $('.text-tab-content').show();
+        $('.text-tab-content').fadeIn(200);
     });
 
     $('.top-bar-menu input').click(function(){

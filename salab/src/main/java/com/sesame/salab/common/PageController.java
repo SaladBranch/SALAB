@@ -1,6 +1,9 @@
 
 package com.sesame.salab.common;
 
+import java.awt.GraphicsEnvironment;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,31 +86,35 @@ public class PageController {
 		return "trashCan/trashCan";
 	}
   
-  @RequestMapping(value="epFile.do")
-	public String toEditPrivateFileMethod(@RequestParam("userno")String userno, @RequestParam("fileno")String fileno, HttpServletRequest req) {
-	  MongoService mgService = new MongoService();
-	  Page page = new Page();
-	  page.setUserno(Integer.parseInt(userno));
-	  page.setFileno(Integer.parseInt(fileno));
-	  List<Page> pageList = (List<Page>)mgService.findPage("page", page);
-	  
-	  req.setAttribute("pageList", pageList);
-	  req.setAttribute("userno", page.getUserno());
-	  req.setAttribute("fileno", page.getFileno());
+	@RequestMapping(value="epFile.do")
+	public String toEditPrivateFileMethod(@RequestParam("userno")String userno, @RequestParam("fileno")String fileno, HttpServletRequest req) throws UnsupportedEncodingException {
+		MongoService mgService = new MongoService();
+		Page page = new Page();
+		page.setUserno(Integer.parseInt(userno));
+		page.setFileno(Integer.parseInt(fileno));
+		List<Page> pageList = (List<Page>)mgService.findPage("page", page);
+
+		// 컴퓨터에 갖고있는 font 가져오기
+		List<String> fontList = new ArrayList<String>();
+		GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		String[] fonts = e.getAvailableFontFamilyNames();
+		
+		for (String font : fonts) {
+			fontList.add(font);
+		}
+
+		req.setAttribute("pageList", pageList);
+		req.setAttribute("userno", page.getUserno());
+		req.setAttribute("fileno", page.getFileno());
+		req.setAttribute("fontList", fontList);
 		return "editPrivateFile/editPrivateFile";
 	}
 
-	// 승진 테스트페이지 이동
-	@RequestMapping(value="textTest.do")
-	public String toTestSEUNGJIN() {
-		return "textTest";
-	}
-
 	//건우
-	  @RequestMapping(value="userMain.do")
-  	 public String toUserPageMainMethod() {
-  	    return "userPage/userPageMain";
- 	  }
+	@RequestMapping(value="userMain.do")
+  	public String toUserPageMainMethod() {
+		return "userPage/userPageMain";
+	}
  
    	@RequestMapping(value="userUpgrade.do")
    	public String toUserAccountUpgradeMethod() {

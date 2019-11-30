@@ -129,7 +129,7 @@
         		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
-	                        
+	                        ${pfile.pfilethumbnail }
 	                    </div>
 	                    <div class="file-info">
 	                        <div class="about-file">

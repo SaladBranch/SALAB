@@ -1,12 +1,8 @@
 package com.sesame.salab.projectnotice.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,187 +10,117 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sesame.salab.common.paging.model.vo.Paging;
+import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.notice.controller.NoticeController;
 import com.sesame.salab.projectnotice.model.service.ProjectnoticeService;
 import com.sesame.salab.projectnotice.model.vo.Projectnotice;
-
+import com.sesame.salab.qna.model.vo.Qna;
 
 @Controller
 public class projectnoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
-	
+
 	@Autowired
 	private ProjectnoticeService pnService;
-	
-	@RequestMapping(value="searchNoticeList.do")
-   	public String teamNoticeDetailMethod(/*@RequestParam("projectno")String projectno ,*/ HttpSession session,Projectnotice projectnotice2) {
-   		logger.info("searchNoticeList.do 진입..");
-   		//테스트키 noticeno = 2
-   		Projectnotice projectnotice = new Projectnotice();
-   		projectnotice.setProjectno(2);
-   		System.out.println(projectnotice.toString());
-   		List<Projectnotice> noticeList =  pnService.searchNoticeList(projectnotice);
-   		logger.info("총 페이지 개수 : "+noticeList.size());
-  		int countNotice= noticeList.size()/10;//총 페이지개수
 
-  		int startPage = 1;
-  		int endPage=5;
+	@RequestMapping(value = "projectNoticelist.do")
+	public ModelAndView projectNoticelistMethod(ModelAndView mv, Projectnotice projectnotice,
+			@RequestParam(value = "page", required = false) String currentPage) throws Exception {
 
-  		int nowPage=7;
-  		List<Projectnotice> showList = new ArrayList<Projectnotice>();
-  		if(noticeList.size() < nowPage*10 && noticeList.size() > nowPage*10-10) {//마지막페이지일경우
-  			System.out.println("if에 걸림");
-  			int gap = noticeList.size() -  (nowPage*10-10);
-  			System.out.println("갭 : " +gap);
-  			for(int i =(nowPage*10)-10; i < (nowPage*10-10)+gap; i++ ) {
-  	  			System.out.println("i값 : " +i);
-  	  			System.out.println((nowPage*10-10)+gap);
-  	  			System.out.println(" _ "+noticeList.get(i).getPnoticeno());
-  	  			showList.add(noticeList.get(i));
-  			}
-  		}else {
-  		for( int i = nowPage*10-10 ; i <nowPage*10  ; i++) {//마지막페이지가 아닐경우
-  			System.out.print("i값 : " +i);
-  			System.out.println(" _ "+noticeList.get(i).getPnoticeno());
-	  		showList.add(noticeList.get(i));
-  			}
-  		}
-  		HashMap<String, Integer> listAttr = new HashMap<String, Integer>();
-  		listAttr.put("countNotice", countNotice);
-  		listAttr.put("startPage", 1);
-  		listAttr.put("endPage", 5);
-  		listAttr.put("nowPage", nowPage); 		 
-  		session.setAttribute("showList", showList);
-  		session.setAttribute("listAttr", listAttr);
-   		return "project/teamNoticeList";
-   	}
-	@RequestMapping(value="noticeMain.do")
-   	public ModelAndView noticeListMainMethod(/*@RequestParam("projectno")String projectno ,*/ HttpSession session, ModelAndView mv) {
-		logger.info("searchNoticeList.do 진입..");
-   		//테스트키 noticeno = 2
-   		Projectnotice projectnotice = new Projectnotice();
-   		projectnotice.setProjectno(2);
-   		System.out.println(projectnotice.toString());
-   		List<Projectnotice> noticeList =  pnService.searchNoticeList(projectnotice);
-   		logger.info("총 페이지 개수 : "+noticeList.size());
-  		int countNotice= noticeList.size()/10+1;//총 페이지개수
+		int curPage;
+		projectnotice.setProjectno(2);// 테스트 값
+		int projectno = 2;
 
-  		int startPage = 1;
-  		int endPage=5;
+		if (currentPage != null && Integer.parseInt(currentPage) != 0) {
+			curPage = Integer.parseInt(currentPage);
+			logger.info(curPage + "번 페이지 진입.");
+		} else {
+			curPage = 1;
+		}
 
-  		int nowPage=1;
-  		List<Projectnotice> showList = new ArrayList<Projectnotice>();
-  		for( int i = nowPage*10-10 ; i <nowPage*10  ; i++) {//첫번째페이지.
-  			System.out.print("i값 : " +i);
-  			System.out.println(" _ "+noticeList.get(i).getPnoticeno());
-	  		showList.add(noticeList.get(i));
-  			}
-  		HashMap<String, Integer> listAttr = new HashMap<String, Integer>();
-  		listAttr.put("countNotice", countNotice);
-  		listAttr.put("startPage", 1);
-  		listAttr.put("endPage", 5);
-  		listAttr.put("nowPage", nowPage); 		 
+		int listCount = pnService.listCount(projectno); // DB에서 현재 총 Row수 가져옴
+		System.out.println(listCount + "개수 의 리스트");
+		Paging paging = new Paging(); // 현재 페이지
+		paging.setLimit(10); // 한페이지에 10개의 리스트
+		paging.makePage(listCount, curPage); // 페이징 처리함
 
-  		mv.addObject(showList);
-  		mv.addObject(listAttr);
-  		 		
-  		mv.setViewName("project/teamNoticeList");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", paging);
+		map.put("projectno", projectno);
+		List<Projectnotice> pnoticelist = pnService.testList(map);
+		System.out.println(pnoticelist.size());
+
+		if (pnoticelist != null) {
+			mv.addObject("noticelist", pnoticelist);
+			mv.addObject("paging", paging);
+			mv.setViewName("project/teamNoticeList");
+		} else {
+			mv.addObject("message", "프로젝트 공지사항 조회 실패");
+			mv.setViewName("common/error");
+		}
+
+		return mv;
+	}
+
+	@RequestMapping(value="projectNotiRegist.do")
+	public String projectNotiRegistMethod(Projectnotice projectnotice, HttpSession session) throws Exception {
+		if(projectnotice != null) {
+		System.out.println(projectnotice.toString());
+		}else {
+			System.out.println("null왔다리");
+		}
+		Member member = (Member) session.getAttribute("loginMember");
+		int projectno=2;//테스트값
+		projectnotice.setProjectno(projectno);
+		projectnotice.setPnoticewriter(member.getUsername());
+		pnService.noticeRegist(projectnotice);
+
+		return "forward:/projectNoticelist.do";
+	}
+   	@RequestMapping(value="teamNoticeDetail.do")
+   	public ModelAndView teamNoticeDetailMethod(ModelAndView mv,Projectnotice projectnotice ) {
+   		if(projectnotice != null) {
+   			System.out.println(projectnotice.toString());
+   			projectnotice = pnService.selectTeamNotice(projectnotice);
+   			mv.addObject("projectnotice", projectnotice);
+   			System.out.println(projectnotice.toString());
+   	   		mv.setViewName("project/teamNoticeDetail");
+   		}else{
+			mv.addObject("message", "프로젝트 공지사항 조회 실패");
+			mv.setViewName("common/error");
+		}
    		return mv;
-	
-	}
-
-	
-	@RequestMapping(value="pageListPrint.do", method=RequestMethod.POST)
-   	public void pageListPrintMethod ( @RequestParam("projectno") String pno, HttpServletResponse response, HttpSession session) throws IOException {
-		logger.info("pageListPrint 진입. projectno : "+pno);
-		Projectnotice projectnotice = new Projectnotice();
-   		projectnotice.setProjectno(Integer.parseInt(pno));
-		List<Projectnotice> noticeList =  pnService.searchNoticeList(projectnotice);
-   		logger.info("총 페이지 개수 : "+noticeList.size());
-  		int countNotice= noticeList.size()/10+1;//총 페이지개수
-        PrintWriter out = null;
-	try {
-	    out = response.getWriter();
-	    out.append(String.valueOf(countNotice));
-	    out.flush();	
-	} catch (Exception e) {
-	e.printStackTrace();
-	}
-		out.close();
-            
-
-	}
-	@RequestMapping(value="noticeListPrint.do", method=RequestMethod.POST)
-	public ModelAndView noticeListPrintMethod ( @RequestParam("pageno") String pageno,@RequestParam("projectno") String projectno, HttpServletResponse response, HttpSession session, ModelAndView mv) throws IOException {
-		logger.info("noticeListPrint 진입. pageno : "+pageno +", projectno : "+projectno);
-		
-		Projectnotice projectnotice = new Projectnotice();
-   		projectnotice.setProjectno(Integer.parseInt(projectno));
-   		System.out.println(projectnotice.toString());
-   		List<Projectnotice> noticeList =  pnService.searchNoticeList(projectnotice);
-   		logger.info("총 페이지 개수 : "+noticeList.size());
-  		int countNotice= noticeList.size()/10;//총 페이지개수
-		
-
-  		int startPage = 1;
-  		int endPage=5;
-
-  		int nowPage=Integer.parseInt(pageno);
-  		List<Projectnotice> showList = new ArrayList<Projectnotice>();
-  		if(noticeList.size() < nowPage*10 && noticeList.size() > nowPage*10-10) {//마지막페이지일경우
-  			System.out.println("if에 걸림");
-  			int gap = noticeList.size() -  (nowPage*10-10);
-  			System.out.println("갭 : " +gap);
-  			for(int i =(nowPage*10)-10; i < (nowPage*10-10)+gap; i++ ) {
-  	  			System.out.println("i값 : " +i);
-  	  			System.out.println((nowPage*10-10)+gap);
-  	  			System.out.println(" _ "+noticeList.get(i).getPnoticeno());
-  	  			showList.add(noticeList.get(i));
-  			}
-  		}else {
-  		for( int i = nowPage*10-10 ; i <nowPage*10  ; i++) {//마지막페이지가 아닐경우
-  			System.out.print("i값 : " +i);
-  			System.out.println(" _ "+noticeList.get(i).getPnoticeno());
-	  		showList.add(noticeList.get(i));
-  			}
-  		}
-  		
-  		mv.setViewName("jsonView");
-  		mv.addObject("showList", showList);
-  		/*JSONObject sendj = new JSONObject();
-
-		JSONArray jar = new JSONArray();
-		
-		for(Projectnotice p : showList) {
-			JSONObject job = new JSONObject();
-			job.put("pnoticeno", p.getPnoticeno());
-			job.put("projectno", p.getProjectno());
-			job.put("pnoticetitle", URLEncoder.encode(p.getPnoticetitle(), "utf-8"));
-			job.put("pnoticecontent", URLEncoder.encode(p.getPnoticecontent(), "utf-8"));
-			job.put("pnoticewriter", p.getPnoticedate());
-			
-			jar.add(job);
+   	}
+	@RequestMapping(value="modifiedNotice.do")
+   	public ModelAndView modifiedNoticeMethod(ModelAndView mv,Projectnotice projectnotice ) {
+   		if(projectnotice != null) {
+   			System.out.println(projectnotice.toString());
+   			int result= pnService.modifiedNotice(projectnotice);
+   			System.out.println("결과 : "+result);
+   	   		mv.setViewName("forward:/projectNoticelist.do");
+   		}else{
+			mv.addObject("message", "프로젝트 공지사항 조회 실패");
+			mv.setViewName("common/error");
 		}
-		sendj.put("list", jar);
-		
-		response.setContentType("application/json; charset=UTF-8");
-		PrintWriter out =null;
-		try {
-			out= response.getWriter();
-			out.append(sendj.toJSONString());
-			out.flush();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		System.out.println("ㅇㅇㅇㅇ");
-		out.close();*/
-  		
-  		return mv;
+		return mv;
 	}
-
-
+	
+	
+	@RequestMapping(value="deleteNotice.do")
+   	public ModelAndView deleteNoticeMethod(ModelAndView mv,Projectnotice projectnotice ) {
+   		if(projectnotice != null) {
+   			System.out.println(projectnotice.toString());
+   			int result= pnService.deleteNotice(projectnotice);
+   			System.out.println("결과 : "+result);
+   	   		mv.setViewName("forward:/projectNoticelist.do");
+   		}else{
+			mv.addObject("message", "프로젝트 공지사항 삭제 실패");
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
 }

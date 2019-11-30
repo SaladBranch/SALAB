@@ -32,8 +32,8 @@
                 <span></span>
                 <span></span>
             </div>
-            <button><img src="/salab/resources/img/leftarrow.png"></button>
-            <button><img src="/salab/resources/img/rightarrow.png"></button>
+            <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
+            <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
             <button><i class="far fa-play-circle"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
@@ -41,6 +41,20 @@
             <div class="top-right-menus">
                 <div class="canvas-size">
                     <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
+                    <div class="top-canvas-opts">
+                        <input type="number" min="10" max="500" onkeyup="linkZoom(this.value);">
+                        <hr>
+                        <ul>
+                            <li>25%</li>
+                            <li>50%</li>
+                            <li>75%</li>
+                            <li>100%</li>
+                            <li>150%</li>
+                            <li>200%</li>
+                            <li>300%</li>
+                            <li>400%</li>
+                        </ul>
+                    </div>
                 </div>
                 <button class="open-edit" onclick="toggleEdit(this);"><img src="/salab/resources/img/openedit_full.png"></button>
             </div>
@@ -60,8 +74,8 @@
                     <li><a href="javascript:">페이지 이름 변경</a></li>
                     <li><a href="javascript:" onclick="pageSave();">저장</a></li>
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
-                    <li><a href="javascript:" onclick="pageOutPdf();">내보내기</a></li>
-                    <li><a href="javascript:">전체 내보내기</a></li>
+                    <li><a href="javascript:" onclick="Thumnail();">내보내기</a></li>
+                    <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
                 </ul>
             </li>
             
@@ -123,7 +137,7 @@
         	<li class="page-item ui-selectee ui-selected">
             	<div class="page ui-sortable-handle">
             		<div class="page-top ui-sortable-handle">
-            			<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            			<div class="page-thumbnail"></div>
             		</div>
             		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
             	</div>
@@ -132,7 +146,7 @@
            			<li class="page-item">
             		<div class="page">
             			<div class="page-top">
-            				<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            				<div class="page-thumbnail"></div>
             			</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
             		</div>
@@ -411,6 +425,8 @@
         </div>
     </div>
     
+    <div id="render" style="display: none;">왜 이러는걸까요</div>
+    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
@@ -423,13 +439,14 @@
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
     	
-    	/* //페이지넘버 담을 전역변수
-    	var listno = new Array(); */
+    	
     $(function(){
+    	
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
     	<c:forEach items="${pageList }" var="item">
     		list.push({
@@ -438,10 +455,19 @@
     			fileno: "${item.fileno}",
     			userno: "${item.userno}",
     			pagename: "${item.pagename}",
-    			_id: "${item._id }"
+    			thumbnail: `${item.thumbnail}`,
+    			_id: "${item._id }",
+    			undo: new Array(),
+    			redo: new Array()
+
     		});
     	</c:forEach>
     	
+   
+	   		for(var i = 0; i < list.length; i++){
+	   			$('.page-thumbnail:eq('+i+')').html(list[i].thumbnail);
+	   		} 
+
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
@@ -519,11 +545,13 @@
     function toggleEdit(btn){
         if($('.right-side-bar').css("display") == "none"){
         	$(btn).children("img").attr("src", "/salab/resources/img/openedit_full.png");
-            $('.right-side-bar').fadeIn(300);
+            $('.right-side-bar').show();
+            $('.canvas-container').css('width', 'calc(100% - 460px)');
         }else{
             $(btn).children("img").attr("src", "/salab/resources/img/openedit_blank.png");
-            $('.right-side-bar').fadeOut(300);
+            $('.right-side-bar').hide();
             editable = "false";
+            $('.canvas-container').css('width', 'calc(100% - 230px)');
         }
     }
     
@@ -570,6 +598,50 @@
             $('.main-toggle-menu').hide();    
         }
     });
+    
+    /* canvas size 조절 열기 */
+    $('.canvas-size p').on('click', function(){
+    	if($('.top-canvas-opts').css('display') == 'none'){
+    		$('.top-canvas-opts').show();
+    		$('.top-canvas-opts input').val(Number($('.canvas-size p span').text().split('%')[0]));
+    	}else
+    		$('.top-canvas-opts').hide();
+    });
+    $('.top-canvas-opts ul li').on('click', function(){
+    	controlCanvasZoom(Number($(this).text().split('%')[0]));
+    });
+    $(document).on('mousedown', function(e){
+    	if(!$(e.target).is('.top-canvas-opts *'))
+    		$('.top-canvas-opts').hide();
+        if(!$(e.target).is('#canvas-sizing-opt *'))
+        	$('#canvas-sizing-opt').hide();
+    });
+    
+    $('.top-canvas-opts input').on('focusout', function(){
+    	controlCanvasZoom($(this).val());
+    });
+    
+    function linkZoom(scale){
+    	if(window.event.keyCode == 13)
+    		controlCanvasZoom(scale);
+    }
+    
+    function controlCanvasZoom(scale){
+    	if(scale >= 10 && scale <=500){
+        	$('.canvas-size p span').text(scale + '%');
+        	$('#droppable').css('transform', 'scale(' + (scale/100) + ', ' + (scale/100) + ')');
+        	$('.top-canvas-opts').hide();
+        	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
+    		
+        	var changedWidth = $('#droppable').width() * scale/100;
+            if(changedWidth > $('.canvas-container').width())
+            	$('#droppable').css('margin', '5% 5%');
+            else{
+            	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
+            }
+            	
+    	}
+    }
     
     </script>
     

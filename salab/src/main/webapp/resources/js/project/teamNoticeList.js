@@ -1,10 +1,15 @@
 $(document).ready(function () {
+    alert("페이지진입");
+    $('.clickNotice').click(function () {
+        var projectno = $(this).children().val();
+        readNotice(projectno);
+    });
     /*
         $(".modalOutline").click(function () {
             HideOnBush();
         });*/
-    alert("페이지진입");
- //   pageListPrint(countNotice);
+
+    //   pageListPrint(countNotice);
 
     //페이지전체 개수로 페이지이동만들기
     /*   pageListPrint();
@@ -14,6 +19,24 @@ $(document).ready(function () {
        noticeListPrint(1);
        console.log("ddd");*/
 });
+
+function readNotice(pnoticeno) {
+    var projectno = $("#projectno").val();
+    location.href = 'teamNoticeDetail.do?pnoticeno=' + pnoticeno + "&projectno=" + projectno;
+}
+
+function moveListPage(page) {
+    alert(page);
+    location.href = 'projectNoticelist.do?page=' + page;
+
+}
+
+function writeNotice() {
+    location.href = 'teamNoticeWrite.do';
+
+}
+
+
 
 function pageListPrint(countNotice) {
     console.log($('showList'));
@@ -32,26 +55,26 @@ function pageListPrint(countNotice) {
 }
 
 
-    function noticeListPrint(pageno) {
-        console.log("페이지리스트불러오기. pageno : " + pageno);
-        $.ajax({
-            url: "noticeListPrint.do",
-            data: {
-                pageno: pageno,
-                projectno: $("#projectno").val()
-            },
-            type: 'post',
-            dataType: "json",
-            success: function (data) {
-                console.log("ㅇㅇㅇ");
+function noticeListPrint(pageno) {
+    console.log("페이지리스트불러오기. pageno : " + pageno);
+    $.ajax({
+        url: "noticeListPrint.do",
+        data: {
+            pageno: pageno,
+            projectno: $("#projectno").val()
+        },
+        type: 'post',
+        dataType: "json",
+        success: function (data) {
+            console.log("ㅇㅇㅇ");
 
-            },
-            error: function (status, request, errorData) {
-                alert('에러');
-                console.log("error code : " + request.status + "\nMessage : " + request.responseText +
-                    "\nError : " + errorData);
-            }
+        },
+        error: function (status, request, errorData) {
+            alert('에러');
+            console.log("error code : " + request.status + "\nMessage : " + request.responseText +
+                "\nError : " + errorData);
+        }
 
 
-        });
-    }
+    });
+}

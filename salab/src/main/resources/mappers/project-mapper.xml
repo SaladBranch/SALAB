@@ -20,4 +20,11 @@
 		select * from (select projectno from project where userno = #{userno} and projectname = #{projectname} order by PROJECTCREATEDATE desc) where rownum=1
 	</select>
 	
+	<select id="selectProject" parameterType="Project" resultType="Project">
+		select * from project where projectno=#{projectno}
+	</select>
+	<select id="selectProjectMemeber" parameterType="ProjectMember" resultType="ProjectMember">
+		select USERNO, USERNAME, PROJECTJOINDATE, USERAUTH ,USERPROFILE_O  from MEMBER_PROJECT inner join member using (userno) where projectno=#{projectno}
+	</select>
+	
 </mapper>

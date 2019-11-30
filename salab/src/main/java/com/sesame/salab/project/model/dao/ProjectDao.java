@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.project.model.vo.Project;
+import com.sesame.salab.project.model.vo.ProjectMember;
 
 @Repository
 public class ProjectDao {
@@ -35,6 +36,15 @@ public class ProjectDao {
 		// TODO Auto-generated method stub
 		Project p = sqlSession.selectOne("projectMapper.selectProjectNo", project);
 		return p.getProjectno();
+	}
+
+	public Project selectProject(Project project) {
+		return sqlSession.selectOne("projectMapper.selectProject", project);
+	}
+
+	public List<ProjectMember> selectProjectMemeber(int projectno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("projectMapper.selectProjectMemeber", projectno);
 	}
 
 }

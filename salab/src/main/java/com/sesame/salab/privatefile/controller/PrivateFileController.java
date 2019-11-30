@@ -1,8 +1,17 @@
 package com.sesame.salab.privatefile.controller;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +38,7 @@ public class PrivateFileController {
 	private PrivateFileService pfService;
 	
 	@RequestMapping("insert_newprivateFile.do")
-	public ModelAndView insertNewPage(@RequestParam("userno")String userno, ModelAndView mv) {
+	public ModelAndView insertNewPage(@RequestParam("userno")String userno, ModelAndView mv, HttpServletRequest request) {
 		MongoService mgService = new MongoService();
 		
 		int result = pfService.insertNewPrivateFile(userno);
@@ -45,6 +54,8 @@ public class PrivateFileController {
 				"<div id='multiselect'></div>" +
 				"</div>");
 		page.setPagename("Untitled");
+		String sbase64 = encodeToString(request.getSession().getServletContext().getRealPath("/resources/thumbnail.txt"));
+		page.setThumbnail("<img src='"+sbase64+"'>");
 		
 		//파일 생성후 바로 첫페이지 생성
 		mgService.createFirstPage(page);
@@ -55,7 +66,8 @@ public class PrivateFileController {
 		mv.addObject("userno", userno);
 		mv.addObject("fileno", pfile.getPfileno());
 		mv.addObject("pageList", pageList);
-		mv.setViewName("editPrivateFile/editPrivateFile");
+		mv.setViewName("redirect:epFile.do");
+		
 		if(result <= 0) {
 			mv.setViewName("common/error");
 		}
@@ -75,14 +87,17 @@ public class PrivateFileController {
 		mv.addObject("page", pageList);
 		mgService.close();
 		
+		
+		
 		return mv;
 	}
 	
 	@RequestMapping(value="newPage.do", method=RequestMethod.POST)
-	public ModelAndView newPage(Page page, ModelAndView mv) {
+	public ModelAndView newPage(Page page, ModelAndView mv, HttpServletRequest request) throws IOException {
 		MongoService mgService = new MongoService();
 		int result = mgService.countPage(page, collection);
-		System.out.println(result);
+		
+		String sbase64 = encodeToString(request.getSession().getServletContext().getRealPath("/resources/thumbnail.txt"));
 		mv.setViewName("jsonView");
 		
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
@@ -90,9 +105,14 @@ public class PrivateFileController {
 				"</div>");
 		page.setPagename("Untitled");
 		page.setPageno(result + 1);
+		logger.info(sbase64);
+		page.setThumbnail("<img src='"+sbase64+"'/>");
 		
 		mgService.insertNewPage(page, collection);
 		mgService.close();
+		
+		//새페이지 생성 후 최근변경일 업데이트
+		changeLastModified(page.getUserno(), page.getFileno());
 		
 		return mv;
 	}
@@ -111,6 +131,9 @@ public class PrivateFileController {
 		}
 		
 		mgService.close();
+		
+		//페이지 삭제 후 최근변경일 업데이트
+		changeLastModified(page.getUserno(), page.getFileno());
 	}
 	
 	@RequestMapping(value="pageCopy.do", method=RequestMethod.POST)
@@ -129,6 +152,10 @@ public class PrivateFileController {
 		mgService.insertNewPage(page, collection);
 		
 		mgService.close();
+		
+		//페이지 복사 후 최근변경일 업데이트
+		changeLastModified(page.getUserno(), page.getFileno());
+		
 	}
 	
 	@RequestMapping(value="pageMove.do", method=RequestMethod.POST)
@@ -142,6 +169,9 @@ public class PrivateFileController {
 		
 		mgService.close();
 		
+		//페이지무브 후 최근변경일 업데이트
+		changeLastModified(page.get(0).getUserno(), page.get(0).getFileno());
+		
 	}
 	
 	@RequestMapping(value="pageSave.do", method=RequestMethod.POST)
@@ -153,17 +183,53 @@ public class PrivateFileController {
 		
 		mgService.saveDoc(collection, page);
 		mgService.close();
+		
+		//저장 후 최근변경일 업데이트
+		changeLastModified(page.getUserno(), page.getFileno());
 	}
 	
 	@RequestMapping(value="pageAllSave.do", method=RequestMethod.POST)
 	@ResponseBody
 	public void pageAllSave(@RequestBody List<Page> list) {
 		MongoService mgService = new MongoService();
-		
+		logger.info(list.get(0).toString());
 		for(Page p : list) {
 			mgService.saveDoc(collection, p);
 		}
 		mgService.close();
+		
+		//저장 후 마지막 변경일 업데이트
+		changeLastModified(list.get(0).getUserno(), list.get(0).getFileno());
+		
 	}
 	
+	//페이지 안에서 변경이 일어나면 최근변경일 수정용 메소드
+	public int changeLastModified(int userno, int pfileno) {
+		PrivateFile pfile = new PrivateFile();
+		pfile.setUserno(userno);
+		pfile.setPfileno(pfileno);
+		return pfService.changeLastModified(pfile);
+	}
+	
+	public String encodeToString(String path) {
+		 String a = "";
+	     File file = new File(path);
+	    
+	     try {
+	    	 BufferedReader inFiles = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8"));
+	    
+	         String line = "";
+	 
+	            while((line = inFiles.readLine()) != null) {
+	                if(line.trim().length() > 0) {
+	                    a += line;
+	                }
+	            }
+	            //System.out.println("line : "+a);
+	                inFiles.close();    
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }            
+	        return a;
+	}
 }

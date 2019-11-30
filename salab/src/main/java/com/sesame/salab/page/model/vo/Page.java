@@ -7,6 +7,7 @@ public class Page {
 	private int pageno;
 	private String content;
 	private String pagename;
+	private String thumbnail;
 	
 	
 	public Page() {
@@ -14,7 +15,7 @@ public class Page {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Page(String _id, int userno, int fileno, int pageno, String content, String pagename) {
+	public Page(String _id, int userno, int fileno, int pageno, String content, String pagename, String thumbnail) {
 		super();
 		this._id = _id;
 		this.userno = userno;
@@ -22,6 +23,7 @@ public class Page {
 		this.pageno = pageno;
 		this.content = content;
 		this.pagename = pagename;
+		this.thumbnail = thumbnail;
 	}
 
 	public String get_id() {
@@ -72,11 +74,19 @@ public class Page {
 	public void setPagename(String pagename) {
 		this.pagename = pagename;
 	}
+	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
 	@Override
 	public String toString() {
 		return "Page [_id=" + _id + ", userno=" + userno + ", fileno=" + fileno + ", pageno=" + pageno + ", content="
-				+ content + ", pagename=" + pagename + "]";
+				+ content + ", pagename=" + pagename + ", thumbnail=" + thumbnail + "]";
 	}
 
 }

@@ -30,10 +30,23 @@ public class PageController {
 	@RequestMapping(value="recentFile.do")
 	public String toRecentFileMethod(HttpSession session, HttpServletRequest request) {
 		String viewFileName = "recentFile/recentFile";
+		MongoService mgService = new MongoService();
 		Member member = (Member) session.getAttribute("loginMember");
-		logger.info(member.toString());
+
 		List<PrivateFile> privateFile = pfService.selectList(member.getUserno());
+		
 		if( privateFile != null) {
+			for(PrivateFile pf : privateFile) {
+				Page p = new Page();
+				p.setFileno(pf.getPfileno());
+				p.setUserno(pf.getUserno());
+				p.setPageno(1);
+				Page page = mgService.findOne("page", p);
+				pf.setPfilethumbnail(page.getThumbnail());
+				logger.info(pf.toString());
+			}
+			mgService.close();
+		
 			request.setAttribute("privateFile", privateFile);
 		}else {
 			viewFileName = "common/error";

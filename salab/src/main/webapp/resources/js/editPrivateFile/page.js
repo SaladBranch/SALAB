@@ -316,17 +316,7 @@
             	            '</li>'
             			);
     					
-    					if(dataSet.thumbnail == "<img src='/salab/resources/img/whitebox.png'/>"){
-    						var fr= new FileReader();
-    						fr.onload = function(e) {
-    							$('.page-thumbnail:eq('+i+')').html(e.target.result);
-    						};       
-    						fr.readAsDataURL(dataSet.thumbnail);
-    						console.log(result);
-    						
-    					}else{
-    						$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
-    					}
+    					$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
     				}else{
     					$('.page-tab-content').append(
             					'<li class="page-item">' +
@@ -343,17 +333,7 @@
             	            '</li>'
             			);
 
-    					if(dataSet.thumbnail == "<img src='/salab/resources/img/whitebox.png'/>"){
-    						var fr= new FileReader();
-    						fr.onload = function(e) {
-    							$('.page-thumbnail:eq('+i+')').html(e.target.result);
-    						};       
-    						fr.readAsDataURL(dataSet.thumbnail);
-    						console.log(result);
-    						
-    					}else{
-    						$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
-    					}
+    					$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
     				}
     				list[i] = dataSet;
     			}

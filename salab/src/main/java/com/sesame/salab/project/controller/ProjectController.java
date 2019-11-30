@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sesame.salab.common.MailUtils;
@@ -158,4 +160,40 @@ public class ProjectController {
 	return mv;
 	}
 
+	@RequestMapping(value="changeAuth.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String changeAuthMethod(ModelAndView mv, Project project,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("changeAuth.do 진입");
+	
+	response.setContentType("application/json; charset=UTF-8");
+	
+	JSONObject job = new JSONObject();
+	job.put("result", "success");
+	job.put("title", "test return json object");
+	job.put("writer", URLEncoder.encode("박건우", "UTF-8"));
+	job.put("content", URLEncoder.encode("json 객체를 뷰로 리턴하는 테스트", "UTF-8"));
+	
+	return job.toJSONString();
+	
+	}
+	@RequestMapping(value="inviteEmailCheck.do", method= RequestMethod.POST)
+	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException {
+		logger.info("진입");
+		response.setContentType("text/html; charset=UTF-8");
+		int result = pService.inviteEmailCheck(useremail,projectno);
+		PrintWriter out = response.getWriter();
+		if(result== 2) {
+			//초대기능 넣기
+			out.append("inviteSuccess");
+		}
+		else if(result==1) {
+			out.append("joinedMember");
+		}
+		else if(result==0){
+			out.append("fail");
+		}
+		out.flush();
+		out.close();
+	}
+		
 }

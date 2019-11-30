@@ -20,4 +20,6 @@ public interface ProjectService {
 
 	List<ProjectMember> selectProjectMemeber(int projectno);
 
+	int inviteEmailCheck(String useremail, int projectno);
+
 }

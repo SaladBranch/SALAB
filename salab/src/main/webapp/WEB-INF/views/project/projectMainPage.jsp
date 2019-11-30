@@ -27,10 +27,11 @@
         <nav class="top-bar">
             <div class="top-bar-title">
                 <div class="top-bar-titleText">${project.projectname}</div>
+                <input id="projectno" type="hidden" value="${project.projectno}">
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="logo.png"></a>
+                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
                 </div>
                 <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
             </div>
@@ -46,7 +47,7 @@
                 <div class="add-btn">&#43;</div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="default_profile.png" alt="">
+                        <img src="/salab/resources/img/default_profile.png" alt="">
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
@@ -297,21 +298,30 @@
                     <!--teamMember-grid -->
                     <div>
                         <div class="left">팀 원</div>
-                        <div class="right"> 팀원 초대하기</div>
+                        <div class="right" onclick="inviteModalToggle()"> 팀원 초대하기</div>
                     </div>
                     <div class="member-grid part-grid clear scrollbar" id="style-2">
                         <!--팀원리스트-->
-                        <c:forEach var="memberList" items="${requestScope.memberList}">
+                        <c:forEach var="memberList" items="${requestScope.memberList}" varStatus="i">
                         
                         <div class="memberList">
-                            <div class="member-icon inline">아이콘</div>
+                            <div class="member-icon inline">
+								<c:if test="${memberList.userprofile_o ==null }"><img width="18" height="18"  src="/salab/resources/img/default_profile.png" alt=""></c:if>
+								<c:if test="${memberList.userprofile_o !=null }">dd</c:if>
+							</div>
                             <div class="member-name inline">${memberList.username}</div>
                             <div class="member-setup-grid inline">
-                                <span class="member-setup">&#8942;</span>
-                                <div class="setting-menu">
-                                    <div>Team Reader</div>
-                                    <div>Can Edit</div>
-                                    <div>only Read</div>
+                            	<c:if test="${memberList.userauth =='LEADER'}"><img width="12" height="12" src="/salab/resources/img/leader.png" alt=""></c:if>
+                                <c:if test="${memberList.userauth == 'CAN_EDIT'}"><img width="12" height="12" src="/salab/resources/img/can-edit.png" alt=""></c:if>
+                                <c:if test="${memberList.userauth == 'ONLY_READ'}"><img width="12" height="12" src="/salab/resources/img/only-read.png" alt=""></c:if>
+                                
+                                <span class="member-setup" onclick="openMenu()">&#8942;</span>
+                                <div id="setting-menu" class="setting-menu hide">
+                                	<c:if test="${memberList.userauth != 'LEADER'}">
+                                    	<div class="hidedMenu" onclick="changeUserAuth(${memberList.userno},'LEADER')">Team Reader</div>
+                                    </c:if>
+                                    <div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
+                                    <div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
                                     <div>Kick</div>
                                 </div>
                             </div>
@@ -325,11 +335,11 @@
                     <!--modal-->
                     <div class="">
                         <!-- 팀원초대하기 modal-->
-                        <div class="modalOutline hide">
+                        <div class="modalOutline hide" onclick="inviteModalToggle()">
                             <div id="invite-modalContent" class="modalContent">
                                 <span class="modal-title">팀 원 초대하기</span>
-                                <p class="modal-text">함께할 팀원의 SALAB계정을 입력해 주세요.<br>계정 확인 후, 해당 이메일로 메일을 발송합니다.<br>해당 이메일에서 수락을 할 경우,Project에 참여할 수 있습니다.</p>
-                                <input type="email" placeholder="SALAB@GAMIL.COM">
+                                <p class="modal-text">함께할 팀원의 SALAB계정을 입력해 주세요.<br>계정 확인 후, 해당 이메일로 메일을 발송합니다.<br>해당 이메일에서 수락을 할 경우,Project에 참여할 수 있습니다.<br>대소문자를 정확하게 확인해 주세요.</p>
+                                <input id="inviteEmail" type="email" placeholder="SALAB@GAMIL.COM">
                                 <div class="inviteBtn modalBtn">초대하기</div>
                             </div>
                         </div>
@@ -360,5 +370,6 @@
 
 
 </body>
-
+    <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/project/projectMain.js"></script>
 </html>

@@ -16,7 +16,7 @@ public interface ProjectnoticeService {
 
 	List<Projectnotice> noticeList(Paging paging);
 
-	List<Qna> testList(HashMap<String, Object> map);
+	List<Projectnotice> testList(HashMap<String, Object> map);
 
 	void noticeRegist(Projectnotice projectnotice);
 

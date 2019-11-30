@@ -1,4 +1,6 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +12,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="../../../resources/css/help/help2.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/admin/adminNotice2.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
@@ -21,7 +23,7 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">도움말</div>
+                <div class="top-bar-titleText">관리자</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -44,12 +46,12 @@
                         <img src="/salab/resources/img/default_profile.png" alt="">
                     </div>
                     <div class="profile-name">
-                        <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
+                        <p>#<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
                                 <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="userNotice.do">도움말</a></li>
-                                <li><a href="logout.do">로그아웃</a></li>
+                                <li><a href="#">도움말</a></li>
+                                <li><a href="#">로그아웃</a></li>
                             </ul>
                         </div>
                     </div>
@@ -62,50 +64,24 @@
             <div class="menu-title">
                 <span>도움말</span>
             </div>
-            <div class="recent-file active-menu">
-                <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
-                <a href="userNotice.do">공지사항</a>
+            <div class="ad-member">
+                <a href="adminMember.do">회원정보</a>
             </div>
-            <div class="private-file">
-                <!-- <div class="icon-wrapper"><i class="far fa-file"></i></div>  -->
-                <a href="#">자주 찾는 질문</a>
+            <div class="ad-notice active-menu">
+                <a href="adminNotice.do">공지사항</a>
             </div>
-            <div class="trashcan">
-                <!-- <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>  -->
-                <a href="#">1:1문의</a>
+            <div class="ad-faq">
+                <a href="adminFaq.do">자주 찾는 질문</a>
+            </div>
+            <div class="ad-qna">
+                <a href="adminQna.do">1:1문의</a>
             </div>
         </div>
     </div>
 
     <div class="right-main-side">
-    	<div class="notice_head">
-    		<p>공지사항</p>
-    	</div>
-        <div class="notice_body">
-            <ul>
-            	<li class="notice_list_top">
-            		<span class="notice_no">번호</span>
-            		<span class="notice_title"><a href="#">제목</a></span>
-            		<span class="notice_date">날짜</span>
-            	</li>
-            	<li class="notice_list">
-            		<span class="notice_no">3</span>
-            		<span class="notice_title"><a href="#">공지사항3</a></span>
-            		<span class="notice_date">19-11-03</span>
-            	</li>
-            	<li class="notice_list">
-            		<span class="notice_no">2</span>
-            		<span class="notice_title"><a href="#">공지</a></span>
-            		<span class="notice_date">19-10-29</span>
-            	</li>
-            	<li class="notice_list">
-            		<span class="notice_no">1</span>
-            		<span class="notice_title"><a href="#">공지사항1</a></span>
-            		<span class="notice_date">19-10-21</span>
-            	</li>
-            </ul>
-        </div>
+    	
     </div>
-
+    
 </body>
 </html>

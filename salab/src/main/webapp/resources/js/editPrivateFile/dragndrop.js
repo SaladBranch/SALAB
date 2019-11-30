@@ -39,18 +39,25 @@ function includeElement(X, Y, temp) {
     module.setY(Y);
     var comp = module.obj_code;
 	
+    list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+    $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	$("#droppable").append(comp);
     initSelect();
 }
 function leftMouseListner(){
-    $(document).on('click', function(){
+    $(document).on('click', function(event){
         toggleContext(0);
     });
     $('#droppable').on('click', function(){
         toggleContext(0);
     });
-    $(document).on('dblclick', "#droppable .obj", function(){
-        $(this).children(".obj-comp").focus();
+    $(document).on('dblclick', "#droppable .obj", function(event){
+        $(this).draggable("destroy");
+        $("#droppable").selectable("destroy");
+        $(this).children().remove('.ui-resizable-handle');
+        $(this).children('.ui-rotatable-handle').hide();
+        $(this).children(".obj-comp").attr("contenteditable", "true");
+        $(this).children(".obj-comp").selectText();
     });
 }
 function rightMouseListner(){
@@ -121,20 +128,17 @@ function addControl(){
         $obj.draggable({ //select 된놈은 드래그 가능
             cancel: '.ui-resizable-handle',
             drag: function (event, ui) {
-                //resize bug fix ui drag `enter code here`
                 __dx = ui.position.left - ui.originalPosition.left;
                 __dy = ui.position.top - ui.originalPosition.top;
-                //ui.position.left = ui.originalPosition.left + ( __dx/__scale);
-                //ui.position.top = ui.originalPosition.top + ( __dy/__scale );
                 ui.position.left = ui.originalPosition.left + (__dx);
                 ui.position.top = ui.originalPosition.top + (__dy);
-                //
                 ui.position.left += __recoupLeft;
                 ui.position.top += __recoupTop;
             },
             start: function (event, ui) {
+            	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 $focus.hide();
-                //resize bug fix ui drag
                 var left = parseInt($(this).css('left'), 10);
                 left = isNaN(left) ? 0 : left;
                 var top = parseInt($(this).css('top'), 10);
@@ -147,7 +151,11 @@ function addControl(){
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
-            stop : function() {
+            start: function(){
+            	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+            },
+            stop: function() {
             	formatChange();
             },
             wheelRotate: false
@@ -166,6 +174,9 @@ function addControl(){
                     'nw': '.ui-resizable-nw',  
                 },
                 alsoResize: $obj.children('.obj'),
+                start: function(){
+                	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+                },
                 stop: function(){
                     formatChange();
                 }
@@ -183,6 +194,10 @@ function addControl(){
                     'nw': '.ui-resizable-nw',  
                 },
                 alsoResize: "this .obj-comp",
+                start: function(){
+                	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+                	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+                },
                 stop: function(){
                     formatChange();
                 }
@@ -192,7 +207,6 @@ function addControl(){
         clearEnterable();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
-    	console.log("복수 선택");
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
             $obj.children().remove('.ui-resizable-handle');
@@ -203,7 +217,12 @@ function addControl(){
                 $obj.addClass('ui-selected');
             $all.append($obj);
         }
-        $all.draggable().css({
+        $all.draggable({
+        	start: function(){
+        		list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+        		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+        	}
+        }).css({
             top: 0,
             left: 0           
         });
@@ -231,11 +250,12 @@ $(function(){
     //애초에 모든 controller들이 붙어서 온 상태이다. 염두해두도록
     rightMouseListner();
     leftMouseListner();
-    
+
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){
             selectedObj = new Array();
+            clearCursor();
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -248,24 +268,26 @@ $(function(){
         },
         stop: function(){
             addControl();
-            // select 실행 시 cursor out
-            window.getSelection().removeAllRanges();
         }
     });
-    
+
     //canvas 위의 마우스 드래깅
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts"))
+    	      if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts"))
             mode = false;
-        else{
+    	}
+        else {
             mode = true;
             startX = e.clientX;
             startY = e.clientY;
             width = height = 0;
             $focus.show();
+            clearCursor();
         }
+    	if (!$(e.target).is("#droppable .obj *"))
+	        $(".obj-comp").attr("contenteditable", "false");
     }).on('mousemove', function(e){
         if(appendElement != ""){
             moveDragging();
@@ -293,7 +315,7 @@ $(function(){
             appendElement = "";
         }
     });
-    
+
     //obj 삽입
     var clicks = 0; //더블클릭 판별용 변수
     var target = "#droppable"; //object append할 변수
@@ -308,6 +330,8 @@ $(function(){
             var module = getModule($(this).attr("id"));
             module.setX(200);
             module.setY(100);
+            list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
             $(target).append(module.obj_code);
             initSelect();
             clicks = 0;
@@ -315,6 +339,7 @@ $(function(){
             appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
+        clearCursor();
     });
     
     //마우스 움직일 때 드래그 영역 설정 함수

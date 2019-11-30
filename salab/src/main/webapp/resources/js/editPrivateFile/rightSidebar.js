@@ -26,7 +26,6 @@
         	} else if ($(this).attr("id") == "font") {
         		textfontClicked();
             	$(".figure-line-droplist").slideUp(100);
-            	console.log( PFont.list() );
         	}
         }
         $(this).addClass('clickedItem');
@@ -98,7 +97,7 @@
     
     $(".right-side-bar input").on("focusin", function() {
     	var inputID = $(this).attr("id");
-    	if (inputID == "text" || inputID == "textground")
+    	if (inputID == "size" || inputID == "text" || inputID == "textground")
     		maintainCursor();
     });
 
@@ -239,6 +238,10 @@
 			}
     	}
 
+    	if (type == "size") {
+			applyType = "fontSize";
+    	}
+
     	if (type == "textColor") {
 			$(this).val(filterValue("color", value));
 			changeColor("text");
@@ -251,7 +254,7 @@
     			$(this).blur();
     	}
     	else if (eventType == "focusout") {
-            window.getSelection().removeAllRanges();
+    		clearCursor();
             clearEnterable();
     		applyChange(applyType);
     	}
@@ -319,11 +322,10 @@
      
 // line style 선택
 
-	// line dropdownList 마우스 enter 시 색상 변화
-    $(".figure-line-droplist .component").on("mouseenter", function() {
-    	$(".figure-line-droplist .component").each(function() {
+    $(".text-font-droplist .component").on("mouseenter", function() {
+    	$(".text-font-droplist .component").each(function() {
     		$(this).css("background", "white");
-    	});
+    	})
     	$(this).css("background", "lightgray");
     });
     
@@ -367,7 +369,7 @@
     	if ($(".text-font-droplist").css("display") == "none") {
          	$(".text-font-droplist").css({
          		top : $(".text-item .fontType").position().top + 31,
-         		left : $(".text-item .fontType").position().left + 9
+         		left : $(".text-item .fontType").position().left - 35
          	});
          	$(".text-font-droplist").slideDown(100);
     	} else {
@@ -376,10 +378,9 @@
     }
 
     // font 클릭 시 dropdownList component 클릭 시 변경
-    function textFontChange(title, style){
+    function textFontChange(style){
      	$(".text-font-droplist").slideUp(100);
-     	$(".text-item[id=font] .fontType").html(title);
-     	$(".text-item[id=font] input").val(style);
+     	$(".text-item[id=font] .fontType").html(style);
  		applyChange("font");
 		clearEnterable();
     }
@@ -528,34 +529,7 @@
     	
     	// TEXT
 		var fontType = checkAttr("fontType", target);
-    	var fontName = fontType;
-    	
-    	switch (fontName) {
-    		case "Gulim" :
-    			fontName = "굴림";
-    			break;
-    		case "Dotum" :
-    			fontName = "돋움";
-    			break;
-    		case "Batang" :
-    			fontName = "바탕";
-    			break;
-    		case "Gungsuh" :
-    			fontName = "궁서";
-    			break;
-    		case "Malgun Gothic" :
-    			fontName = "맑은 고딕";
-    			break;
-    		case "diffrent" :
-    			fontName = "";
-    			break;
-    		default : 
-    			fontName = "Roboto";
-			break;
-    	}
-    	
-    	$(".text-font-comps .text-item[id=font] .fontType").html(fontName);
-    	$(".text-font-comps .text-item[id=font] input").val(fontType);
+    	$(".text-font-comps .text-item[id=font] .fontType").html(fontType == "diffrent" ? "" : fontType.replace(/"/g, ""));
     	
     	var fontSize = checkAttr("fontSize", target);
     	$(".text-font-comps .text-item[id=size] input").val(fontSize == "diffrent" ? "" : fontSize);
@@ -717,11 +691,24 @@
         		// font
         		if (type == "font") {
         		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-family", $(".text-font-comps .text-item[id=font] input").val());
+        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
         		    	clearChanged("font-family");
         		    } else {
-        		    	$(this).css("font-family", $(".text-font-comps .text-item[id=font] input").val());
+        		    	$(this).css("font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
         		    	clearAll("font-family");
+        		    }
+        		}
+
+        		// fontSize
+        		if (type == "fontSize") {
+                	var textSelected = $("span.text-selected");
+        		    if (textSelected.length > 0) {
+        		    	textSelected.html("<span class='changed' style='font-size : " + $(".text-font-comps .text-item[id=size] input").val() + "px'>" + textSelected.html() + "</span>");
+        		    	clearChanged("font-size");
+            			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+        		    } else {
+        		    	$(this).css("font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
+        		    	clearAll("font-size");
         		    }
         		}
 
@@ -882,6 +869,11 @@
 		}
     }
     
+    function clearCursor() {
+        window.getSelection().removeAllRanges();
+		$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+    }
+    
     function wrapTag(target, typeName, className, cssType, cssProperty) {
     	if (target != null && typeName != null) {
     	    var contents = target.extractContents();
@@ -959,7 +951,7 @@
     				value = $(this).css("border-bottom-width").split("px")[0] * 1;
     			
     			if (type == "fontType") {
-    				value = $(this).css("fontFamily");
+    				value = $(this).css("fontFamily").split(", ")[0];
     		    	if (value != "diffrent") {
     		    		$("div.ui-selected .obj-comp span").each(function() {
     		    			var spanValue = $(this).css("fontFamily");
@@ -1063,5 +1055,56 @@
 
 		$(".ui-selected .obj-comp .changed").removeAttr("class");
 	    
-	} 
+	}
 	
+	$(document).on("click", function(event) {
+		if (!$(event.target).is("#size") && !$(event.target).is("#text") && !$(event.target).is("#textground")) {
+			if ($(".text-selected").length > 0)
+				$(".text-selected").content().unwrap();
+		} else {
+			clearCursor();
+		}
+	});
+
+	$(document).on("mouseleave", ".obj-comp", function() {
+		if (!$("#droppable").is(".ui-selectable")) {
+		    $('#droppable').selectable({
+		        filter: " > .obj",
+		        start: function(){
+		            selectedObj = new Array();
+		            clearCursor();
+		        },
+		        selected: function(e, ui){
+		            selectedObj.push($(ui.selected));
+		        },
+		        unselected: function(e, ui){
+		            $(ui.unselected).children().remove('.ui-resizable-handle');
+		            if($(ui.unselected).hasClass('ui-draggable'))
+		                $(ui.unselected).draggable('destroy');
+		            $(ui.unselected).children('.ui-rotatable-handle').hide();
+		        },
+		        stop: function(){
+		            addControl();
+		        }
+		    });
+		}
+		
+	});
+	
+	//editablecontent select all text
+	jQuery.fn.selectText = function() {
+    	var doc = document;
+    	var element = this[0];
+    	if (doc.body.createTextRange) {
+    		var range = document.body.createTextRange();
+    		range.moveToElementText(element);
+    		range.select();
+    	} else if (window.getSelection) {
+    		var selection = window.getSelection();        
+    		var range = document.createRange();
+    		range.selectNodeContents(element);
+    		selection.removeAllRanges();
+    		selection.addRange(range);
+    	}
+	};
+    	

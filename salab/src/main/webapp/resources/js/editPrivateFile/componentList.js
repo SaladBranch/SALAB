@@ -25,7 +25,7 @@ var obj_rect = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj"  style="position: absolute; top: ${obj_rect.insertY}px; left: ${obj_rect.insertX}px; width: 140px; height: 70px;">
+        var code = `<div class="obj" style="position: absolute; top: ${obj_rect.insertY}px; left: ${obj_rect.insertX}px; width: 140px; height: 70px;">
           <div class="obj-comp textarea obj-rect" contenteditable="true"></div>
         </div>`;
         return code;

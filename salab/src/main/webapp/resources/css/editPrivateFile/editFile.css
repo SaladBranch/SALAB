@@ -313,17 +313,20 @@ svg{
     overflow-y: auto;
 }
 .tab-content::-webkit-scrollbar-track,
-.canvas-container::-webkt-scrollbar-track{
+.canvas-container::-webkit-scrollbar-track,
+.text-font-droplist::-webkit-scrollbar-track {
     border-radius: 5px;
     background-color: #f5f5f5;
 }
 .tab-content::-webkit-scrollbar,
-.canvas-container::-webkit-scrollbar{
+.canvas-container::-webkit-scrollbar,
+.text-font-droplist::-webkit-scrollbar{
     width: 10px;
     background-color: #f5f5f5;
 }
 .tab-content::-webkit-scrollbar-thumb,
-.canvas-container::-webkit-scrollbar-thumb{
+.canvas-container::-webkit-scrollbar-thumb,
+.text-font-droplist::-webkit-scrollbar-thumb{
     border-radius: 5px;
     background-color: #aaaaaa;
 }
@@ -683,6 +686,14 @@ ol.page-tab-content li{
 	margin : 0px auto 5px auto;
 	padding : 0px 0px 0px 10px;
 }
+.text-item#font p {
+	width : 20px;
+	height : 20px;
+	margin-top : 10px;
+	margin-right : 10px;
+	font-size : 12px;
+	float : right;
+}
 .text-item#effect {
 	height : 30px;
 	margin : 0px 19.5px 5px 19.5px;
@@ -698,6 +709,8 @@ ol.page-tab-content li{
 	margin : 4px 0px 0px 10px;
 	padding-top : 4px;
 	float : left;
+	white-space: nowrap;
+    overflow: hidden;
 }
 .text-item input[type=number] {
 	width : 50px;
@@ -762,22 +775,26 @@ ol.page-tab-content li{
 	margin : 2px;
 }
 .text-font-droplist {
+	width : 180px;
+	height : 200px;
 	display : none;
 	position : absolute;
-	width : 99px;
 	font-size : 14px;
 	border : 1px solid gray;
-	float : left;
 	background : white;
+	overflow : scroll;
+	overflow-x : hidden;
 }
 .text-font-droplist .component {
-	width : 97px;
+	width : 170px;
 	height : 25px;
 	font-size : 14px;
-	padding : 0px 0px 0px 5px;
+	padding : 4px 0px 0px 5px;
 	border-bottom : 1px solid gray;
 	float : left;
 	cursor : pointer;
+	white-space: nowrap;
+    overflow: hidden;
 }
 .text-sort {
 	width : 26px;
@@ -976,6 +993,12 @@ ol.page-tab-content li{
 	right: calc(1440px * -0.05);
 	background: #cecece;
 	z-index: -1;
+}
+.obj-comp {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 /*우클릭 메뉴*/

@@ -289,16 +289,16 @@
     		success: function(data){
     			$('.page-tab-content').html('');
     			for(var i =0; i < data.page.length; i++){
-    			console.log("page["+ i +"] :: "+ JSON.stringify(data.page[i]));
     			
-    			var dataSet = {
-    					content: data.page[i].content, 
-    					pageno: data.page[i].pageno,
-    					fileno: data.page[i].fileno,
-    					userno: data.page[i].userno,
-    					pagename: data.page[i].pagename,
-    					_id: data.page[i]._id
-    			}
+	    			var dataSet = {
+	    					content: data.page[i].content, 
+	    					pageno: data.page[i].pageno,
+	    					fileno: data.page[i].fileno,
+	    					userno: data.page[i].userno,
+	    					pagename: data.page[i].pagename,
+	    					thumbnail: data.page[i].thumbnail,
+	    					_id: data.page[i]._id
+	    			}
     			
     				if(i == 0){
     					$('.page-tab-content').append(
@@ -315,6 +315,18 @@
             	            '</div>'	+ 
             	            '</li>'
             			);
+    					
+    					if(dataSet.thumbnail == "<img src='/salab/resources/img/whitebox.png'/>"){
+    						var fr= new FileReader();
+    						fr.onload = function(e) {
+    							$('.page-thumbnail:eq('+i+')').html(e.target.result);
+    						};       
+    						fr.readAsDataURL(dataSet.thumbnail);
+    						console.log(result);
+    						
+    					}else{
+    						$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
+    					}
     				}else{
     					$('.page-tab-content').append(
             					'<li class="page-item">' +
@@ -330,6 +342,18 @@
             	            '</div>'	+ 
             	            '</li>'
             			);
+
+    					if(dataSet.thumbnail == "<img src='/salab/resources/img/whitebox.png'/>"){
+    						var fr= new FileReader();
+    						fr.onload = function(e) {
+    							$('.page-thumbnail:eq('+i+')').html(e.target.result);
+    						};       
+    						fr.readAsDataURL(dataSet.thumbnail);
+    						console.log(result);
+    						
+    					}else{
+    						$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
+    					}
     				}
     				list[i] = dataSet;
     			}
@@ -400,6 +424,7 @@
     	}
     	
     	list[index].content = $('.canvas-container').html();
+    	list[index].thumbnail = $('.page-thumbnail:eq('+index+')').html();
     	console.log(JSON.stringify(list[index]));
     	
     	$.ajax({
@@ -432,6 +457,7 @@
     	}
     	
     	list[index].content = $('.canvas-container').html();
+    	list[index].thumbnail = $('.page-thumbnail:eq('+index+')').html();
     	console.log(JSON.stringify(list[index]));
     	
     	$.ajax({
@@ -485,6 +511,54 @@
     		};
     	})(file, idx);
     	reader.readAsDataURL(file);
+    }
+    
+    //썸네일인데 이것만되면....
+    function Thumnail(){
+    	var node = document.getElementById('droppable');
+    	
+    	var canvas = document.createElement('canvas');
+    	canvas.width = node.scrollWidth;
+    	canvas.height = node.scrollHeight;
+    	
+    		domtoimage.toPng(node).then(function (pngDataUrl) {
+        	    var img = new Image();
+        	    img.onload = function () {
+        	        var context = canvas.getContext('2d');
+
+        	        context.translate(canvas.width, 0);
+        	        context.scale(-1, 1);
+        	        context.drawImage(img, 0, 0);
+
+        	        $('.ui-selected .page-thumbnail').html('');
+        	        $('.ui-selected .page-thumbnail').append(img);
+        	        list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
+        	    };
+        	    
+        	    img.src = pngDataUrl;
+        	})
+        	.catch(function (error) {
+        	      console.error('oops, something went wrong!', error);
+        	});
+    		
+    }
+    
+    /*function filter(node){
+    	return (node.className !== 'obj-comp');
+    }*/
+    
+    function exportAllPdf(){
+    	pdf = new jsPDF('l', 'pt');
+    	
+    	for(var i = 0; i < list.length; i++){
+    			console.log('start');
+        		pdf.addImage($('.page-thumbnail:eq('+ i +') img').attr('src'), 'PNG', 0, 0);
+        		pdf.addPage();
+        		console.log('end');
+    	}
+    	
+    	pdf.save('test.pdf');
+    	//console.log($('.page-thumbnail:eq(0) img').attr('src'));
     }
     
     //pdf 일시정지

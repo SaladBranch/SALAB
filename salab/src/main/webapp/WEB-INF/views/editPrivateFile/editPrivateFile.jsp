@@ -74,8 +74,8 @@
                     <li><a href="javascript:">페이지 이름 변경</a></li>
                     <li><a href="javascript:" onclick="pageSave();">저장</a></li>
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
-                    <li><a href="javascript:" onclick="pageOutPdf();">내보내기</a></li>
-                    <li><a href="javascript:">전체 내보내기</a></li>
+                    <li><a href="javascript:" onclick="Thumnail();">내보내기</a></li>
+                    <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
                 </ul>
             </li>
             
@@ -137,7 +137,7 @@
         	<li class="page-item ui-selectee ui-selected">
             	<div class="page ui-sortable-handle">
             		<div class="page-top ui-sortable-handle">
-            			<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            			<div class="page-thumbnail"></div>
             		</div>
             		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
             	</div>
@@ -146,7 +146,7 @@
            			<li class="page-item">
             		<div class="page">
             			<div class="page-top">
-            				<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            				<div class="page-thumbnail"></div>
             			</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
             		</div>
@@ -441,14 +441,14 @@
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-    	//var pdf,page_section,HTML_Width,HTML_Height,top_left_margin,PDF_Width,PDF_Height,canvas_image_width,canvas_image_height;
     	
-    	/* //페이지넘버 담을 전역변수
-    	var listno = new Array(); */
+    	
     $(function(){
+    	
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
     	<c:forEach items="${pageList }" var="item">
     		list.push({
@@ -457,10 +457,16 @@
     			fileno: "${item.fileno}",
     			userno: "${item.userno}",
     			pagename: "${item.pagename}",
+    			thumbnail: `${item.thumbnail}`,
     			_id: "${item._id }"
     		});
     	</c:forEach>
     	
+   
+	   		for(var i = 0; i < list.length; i++){
+	   			$('.page-thumbnail:eq('+i+')').html(list[i].thumbnail);
+	   		} 
+
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
@@ -635,6 +641,7 @@
             	
     	}
     }
+    
     </script>
     
 </body>

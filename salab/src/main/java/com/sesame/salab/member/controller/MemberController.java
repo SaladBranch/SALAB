@@ -22,6 +22,8 @@ import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.Tempkey;
 import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.page.model.dao.MongoService;
+import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -82,13 +84,26 @@ public class MemberController {
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
 		String viewFileName = "recentFile/recentFile";
+		MongoService mgService = new MongoService();
 		logger.info("로그인 입력 정보 : " + member.toString());
 		Member loginMember = memberService.loginCheck(member);
-		
+		logger.info("로그인 후 정보" + loginMember.toString());
 		//유저메인 페이지 로딩시에 파일에대한 정보가 필요해서 추가합니다
 		List<PrivateFile> privateFile = pfService.selectList(loginMember.getUserno());
 		
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) && privateFile != null) {
+			
+			for(PrivateFile pf : privateFile) {
+				Page p = new Page();
+				p.setFileno(pf.getPfileno());
+				p.setUserno(pf.getUserno());
+				p.setPageno(1);
+				Page page = mgService.findOne("page", p);
+				pf.setPfilethumbnail(page.getThumbnail());
+				logger.info(pf.toString());
+			}
+			mgService.close();
+			
 			session.setAttribute("loginMember", loginMember);
 			requset.setAttribute("privateFile", privateFile);
 		}else {

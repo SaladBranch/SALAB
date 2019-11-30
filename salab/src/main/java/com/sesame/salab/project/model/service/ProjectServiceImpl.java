@@ -52,4 +52,10 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.selectProjectMemeber(projectno);
 	}
 
+	@Override
+	public int inviteEmailCheck(String useremail, int projectno) {
+		// TODO Auto-generated method stub
+		return pDao.inviteEmailCheck(useremail, projectno);
+	}
+
 }

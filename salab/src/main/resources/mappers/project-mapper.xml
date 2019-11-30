@@ -26,5 +26,11 @@
 	<select id="selectProjectMemeber" parameterType="ProjectMember" resultType="ProjectMember">
 		select USERNO, USERNAME, PROJECTJOINDATE, USERAUTH ,USERPROFILE_O  from MEMBER_PROJECT inner join member using (userno) where projectno=#{projectno}
 	</select>
+	<select id="enrolledEmailCheck" parameterType="String" resultType="integer">
+		select userno from member where useremail = #{useremail}
+	</select>
+	<select id="joinedMemberCheck" parameterType="HashMap" resultType="int">
+		select count(*) from member_project where userno=#{userno} and projectno =#{projectno}
+	</select>
 	
 </mapper>

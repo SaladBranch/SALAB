@@ -275,7 +275,7 @@ $(function(){
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-    	      if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts"))
+    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts")){
             mode = false;
     	}
         else {

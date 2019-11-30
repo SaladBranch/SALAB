@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -22,9 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sesame.salab.common.MailUtils;
+import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.project.model.service.ProjectService;
 import com.sesame.salab.project.model.vo.Project;
+import com.sesame.salab.project.model.vo.ProjectMember;
+import com.sesame.salab.projectnotice.model.service.ProjectnoticeService;
+import com.sesame.salab.projectnotice.model.vo.Projectnotice;
 
 @Controller
 public class ProjectController {
@@ -32,6 +37,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService pService;
+	
+	@Autowired
+	private ProjectnoticeService pnService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -115,4 +123,39 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping(value="gotoProject.do")
+	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("gotoTeamProject.do 진입");
+	if(project != null) {
+		System.out.println(project.toString());
+	}
+	// 테스트값 projectno=2
+	project.setProjectno(2);
+	//프로젝트 데이터조회
+	project = pService.selectProject(project);
+	System.out.println(project.toString());
+	
+	int listCount = pnService.listCount(project.getProjectno());
+	Paging paging = new Paging();
+	paging.makePage(listCount, 1);
+	System.out.println(paging.toString());
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	map.put("paging", paging);
+	map.put("projectno", project.getProjectno());
+	List<Projectnotice> pnoticelist = pnService.testList(map);
+	System.out.println(pnoticelist.size());
+	
+	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
+	System.out.println("멤버결과:"+memberList.toString());
+
+	
+	mv.addObject("memberList", memberList);
+	mv.addObject("noticelist", pnoticelist);
+	mv.addObject("paging", paging);
+	mv.addObject("project", project);
+  	mv.setViewName("project/projectMainPage");
+	return mv;
+	}
+
 }

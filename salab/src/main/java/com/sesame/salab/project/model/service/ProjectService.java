@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.project.model.vo.Project;
+import com.sesame.salab.project.model.vo.ProjectMember;
 
 public interface ProjectService {
 
@@ -14,5 +15,9 @@ public interface ProjectService {
 	String projectInvite(String uno);
 
 	int selectProjectNo(Project project);
+
+	Project selectProject(Project project);
+
+	List<ProjectMember> selectProjectMemeber(int projectno);
 
 }

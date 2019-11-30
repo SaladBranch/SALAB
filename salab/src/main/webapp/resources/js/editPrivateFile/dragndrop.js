@@ -39,6 +39,8 @@ function includeElement(X, Y, temp) {
     module.setY(Y);
     var comp = module.obj_code;
 	
+    list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+    $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	$("#droppable").append(comp);
     initSelect();
 }
@@ -121,20 +123,17 @@ function addControl(){
         $obj.draggable({ //select 된놈은 드래그 가능
             cancel: '.ui-resizable-handle',
             drag: function (event, ui) {
-                //resize bug fix ui drag `enter code here`
                 __dx = ui.position.left - ui.originalPosition.left;
                 __dy = ui.position.top - ui.originalPosition.top;
-                //ui.position.left = ui.originalPosition.left + ( __dx/__scale);
-                //ui.position.top = ui.originalPosition.top + ( __dy/__scale );
                 ui.position.left = ui.originalPosition.left + (__dx);
                 ui.position.top = ui.originalPosition.top + (__dy);
-                //
                 ui.position.left += __recoupLeft;
                 ui.position.top += __recoupTop;
             },
             start: function (event, ui) {
+            	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 $focus.hide();
-                //resize bug fix ui drag
                 var left = parseInt($(this).css('left'), 10);
                 left = isNaN(left) ? 0 : left;
                 var top = parseInt($(this).css('top'), 10);
@@ -147,7 +146,11 @@ function addControl(){
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
-            stop : function() {
+            start: function(){
+            	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+            },
+            stop: function() {
             	formatChange();
             },
             wheelRotate: false
@@ -166,6 +169,9 @@ function addControl(){
                     'nw': '.ui-resizable-nw',  
                 },
                 alsoResize: $obj.children('.obj'),
+                start: function(){
+                	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+                },
                 stop: function(){
                     formatChange();
                 }
@@ -183,6 +189,10 @@ function addControl(){
                     'nw': '.ui-resizable-nw',  
                 },
                 alsoResize: "this .obj-comp",
+                start: function(){
+                	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+                	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+                },
                 stop: function(){
                     formatChange();
                 }
@@ -192,7 +202,6 @@ function addControl(){
         clearEnterable();
         
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
-    	console.log("복수 선택");
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
             $obj.children().remove('.ui-resizable-handle');
@@ -203,7 +212,12 @@ function addControl(){
                 $obj.addClass('ui-selected');
             $all.append($obj);
         }
-        $all.draggable().css({
+        $all.draggable({
+        	start: function(){
+        		list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+        		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+        	}
+        }).css({
             top: 0,
             left: 0           
         });
@@ -308,6 +322,8 @@ $(function(){
             var module = getModule($(this).attr("id"));
             module.setX(200);
             module.setY(100);
+            list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+            $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
             $(target).append(module.obj_code);
             initSelect();
             clicks = 0;

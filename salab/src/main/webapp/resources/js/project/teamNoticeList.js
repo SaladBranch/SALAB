@@ -35,9 +35,7 @@ function writeNotice() {
     location.href = 'teamNoticeWrite.do';
 
 }
-function goBack(){
-    window.history.back();
-}
+
 
 
 function pageListPrint(countNotice) {

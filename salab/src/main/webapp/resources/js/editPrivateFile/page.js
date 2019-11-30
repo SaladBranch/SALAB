@@ -101,7 +101,6 @@
                     }
             	}
             	
-            	console.log(JSON.stringify(pageMoveTempStorage));
             	
                 for(var i = 0; i < list.length; i++){
                 	console.log(JSON.stringify(list[i]));
@@ -644,8 +643,3 @@
     	 canvas_image_width = HTML_Width;
     	 canvas_image_height = HTML_Height;
     }*/
-    
-    
-    
-    
-    

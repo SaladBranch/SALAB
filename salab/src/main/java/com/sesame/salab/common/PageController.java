@@ -86,6 +86,34 @@ public class PageController {
 	
 	// ~ 연영 help 페이지
 	
+	// 관리자 페이지
+	@RequestMapping(value="adminLogin.do")
+	public String toAdminLoginMethod() {
+		return "admin/adminLogin";
+	}
+	
+	@RequestMapping(value="adminMember.do")
+	public String toAdminMemberMethod() {
+		return "admin/adminMember";
+	}
+	
+	@RequestMapping(value="adminNotice.do")
+	public String toAdminNoticeMethod() {
+		return "admin/adminNotice";
+	}
+	
+	@RequestMapping(value="adminFaq.do")
+	public String toAdminFaqMethod() {
+		return "admin/adminFaq";
+	}
+	
+	@RequestMapping(value="adminQna.do")
+	public String toAdminQnaMethod() {
+		return "admin/adminQna";
+	}
+	
+	// 관리자 페이지
+	
 	@RequestMapping(value="privateFile.do")
 	public String toPrivateFileMethod() {
 		return "privateFile/privateFile";

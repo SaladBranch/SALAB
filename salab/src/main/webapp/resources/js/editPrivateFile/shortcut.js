@@ -1,5 +1,8 @@
 var copiedObj = [];
 var cutted = 0; //복사인지, 잘라내기한건지 구분하기 위한 변수
+var undo = [];
+var redo = [];
+
 $(document).on('keydown', function(e){
     if(e.keyCode == 46){ //delete
         deleteObject();
@@ -7,11 +10,26 @@ $(document).on('keydown', function(e){
     if(e.ctrlKey && e.keyCode == 67 && $('#droppable .ui-selected').length > 0){ //ctrl+c
         copyObject();
     }
+    if(e.ctrlKey && e.keyCode == 83){//ctrl+s
+    	e.preventDefault();
+    	pageSave();
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode==83){ //ctrl+shift+s
+    	e.preventDefault();
+    	pageAllSave();
+    }
     if(e.ctrlKey && e.keyCode == 88 && $('#droppable .ui-selected').length > 0){ //ctrl+x
         cutObject();
     }
-    if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){ //ctrl+z
+    if(e.ctrlKey && e.keyCode == 86 && copiedObj != ""){ //ctrl+v
         pasteObject();
+//        redo.push($('.canvas-container').children());
+    }
+    if(e.ctrlKey && e.keyCode == 90){//ctrl+z
+    	undoPage();
+    }
+    if(e.ctrlKey && e.keyCode == 89){//ctrl+y
+    	redoPage();
     }
     if(e.ctrlKey && e.keyCode == 65){ //ctrl+a
         e.preventDefault();
@@ -19,6 +37,10 @@ $(document).on('keydown', function(e){
     }
 });
 function deleteObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     for(i = 0; i<selectedObj.length; i++){
         selectedObj[i].remove();
     }
@@ -32,6 +54,10 @@ function copyObject(){
     });
 }
 function cutObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     copiedObj = new Array();
     $('#droppable .ui-selected').each(function(){
         copiedObj.push($(this));
@@ -40,8 +66,13 @@ function cutObject(){
     cutted = 1;
 }
 function pasteObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     var $all = $('#multiselect');
     selectedObj = new Array();
+    
     if(copiedObj.length == 1){
         var $newObj = copiedObj[0].clone();
         $('#droppable .obj').each(function(){
@@ -80,15 +111,22 @@ function pasteObject(){
         copiedObj = new Array();
         cutted = 0;
     }
-    
 }
 //복제하기
 function cloneObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     copyObject();
     pasteObject();
 }
 //그룹화
 function groupObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     var $group = $('<div class="group-obj obj ui-selected"></div>')
     var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
     for(i = 0; i<selectedObj.length; i++){
@@ -132,6 +170,10 @@ function groupObject(){
 }
 //그룹해제
 function ungroupObject(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     if(selectedObj[0].hasClass('group-obj')){
         $group = selectedObj[0];
         selectedObj = new Array();
@@ -158,9 +200,125 @@ function selectAll(){
     });
     addControl();
 }
+
+//실행취소
+function undoPage(){
+	var undo = list[$('.page-item').index($('.page-item.ui-selected'))].undo;
+	var redo = list[$('.page-item').index($('.page-item.ui-selected'))].redo;
+	
+	redo.push($('.canvas-container').html());
+	$('#top-redo-btn img').attr('src', '/salab/resources/img/rightarrow.png');
+	
+	$('.canvas-container').html(undo[undo.length-1]);
+	undo.pop();
+	
+	if(undo.length === 0)
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow_disabled.png').css('cursor', 'default');
+	
+	selectedObj = new Array();
+	$('#droppable .ui-selected').each(function(){
+		selectedObj.push($(this));
+	});
+	
+	$all = $('#multiselect');
+	$('#droppable').selectable({
+        filter: " > .obj",
+        start: function(){
+            selectedObj = new Array();
+        },
+        selected: function(e, ui){
+            selectedObj.push($(ui.selected));
+        },
+        unselected: function(e, ui){
+            $(ui.unselected).children().remove('.ui-resizable-handle');
+            $(ui.unselected).children('.ui-rotatable-handle').hide();
+            if($(ui.unselected).hasClass('ui-draggable'))
+                $(ui.unselected).draggable('destroy');
+        },
+        stop: function(){
+            addControl();
+        }
+    });
+    rightMouseListner();
+    leftMouseListner();
+    $('#droppable').bind('DOMSubtreeModified', function(e){
+        if($('#droppable .ui-selected').length > 0){
+            $('.right-side-bar .canvas-menu').hide();
+            $('.right-side-bar .tab-menu').show();
+            $('.right-side-bar .tab-content').show();
+        }else{
+            $('.right-side-bar .canvas-menu').show();
+            $('.right-side-bar .tab-menu').hide();
+            $('.right-side-bar .tab-content').hide();
+        }
+    });
+    
+    addControl();
+}
+
+//다시실행(redo)
+function redoPage(){
+	var undo = list[$('.page-item').index($('.page-item.ui-selected'))].undo;
+	var redo = list[$('.page-item').index($('.page-item.ui-selected'))].redo;
+	
+	undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
+	$('.canvas-container').html(redo[redo.length-1]);
+	redo.pop();
+	
+	if(redo.length === 0)
+		$('#top-redo-btn img').attr('src', '/salab/resources/img/rightarrow_disabled.png').css('cursor', 'default');
+	
+	selectedObj = new Array();
+	$('#droppable .ui-selected').each(function(){
+		selectedObj.push($(this));
+	});
+	
+	$all = $('#multiselect');
+	$('#droppable').selectable({
+        filter: " > .obj",
+        start: function(){
+            selectedObj = new Array();
+        },
+        selected: function(e, ui){
+            selectedObj.push($(ui.selected));
+        },
+        unselected: function(e, ui){
+            $(ui.unselected).children().remove('.ui-resizable-handle');
+            if($(ui.unselected).hasClass('ui-draggable'))
+                $(ui.unselected).draggable('destroy');
+            $(ui.unselected).children('.ui-rotatable-handle').hide();
+        },
+        stop: function(){
+            addControl();
+        }
+    });
+    rightMouseListner();
+    leftMouseListner();
+    $('#droppable').bind('DOMSubtreeModified', function(e){
+        if($('#droppable .ui-selected').length > 0){
+            $('.right-side-bar .canvas-menu').hide();
+            $('.right-side-bar .tab-menu').show();
+            $('.right-side-bar .tab-content').show();
+        }else{
+            $('.right-side-bar .canvas-menu').show();
+            $('.right-side-bar .tab-menu').hide();
+            $('.right-side-bar .tab-content').hide();
+        }
+    });
+    
+    addControl();
+}
+
+
 //맨앞으로
 var zIndex = 0;
 function send_forward(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     var max = 0;
     $('#droppable .obj').each(function(){
         var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
@@ -174,6 +332,10 @@ function send_forward(){
 }
 //앞으로
 function send_front(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     for(i = 0; i<selectedObj.length; i++){
         var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
         selectedObj[i].css('z-index', Number(num) + 1);
@@ -181,6 +343,10 @@ function send_front(){
 }
 //뒤로
 function send_back(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     for(i = 0; i<selectedObj.length; i++){
         var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
         if(num != 0)
@@ -195,6 +361,10 @@ function send_back(){
 }
 //맨뒤로
 function send_backward(){
+	var index = $('.page-item').index($('.page-item.ui-selected'));
+	list[index].undo.push($('.canvas-container').html());
+	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+	
     $('#droppable .obj').each(function(){
         var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
         $(this).css('z-index', Number(num) + 1);

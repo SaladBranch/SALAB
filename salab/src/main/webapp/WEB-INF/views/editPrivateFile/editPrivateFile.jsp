@@ -32,8 +32,8 @@
                 <span></span>
                 <span></span>
             </div>
-            <button><img src="/salab/resources/img/leftarrow.png"></button>
-            <button><img src="/salab/resources/img/rightarrow.png"></button>
+            <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
+            <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
             <button><i class="far fa-play-circle"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
@@ -458,7 +458,10 @@
     			userno: "${item.userno}",
     			pagename: "${item.pagename}",
     			thumbnail: `${item.thumbnail}`,
-    			_id: "${item._id }"
+    			_id: "${item._id }",
+    			undo: new Array(),
+    			redo: new Array()
+
     		});
     	</c:forEach>
     	

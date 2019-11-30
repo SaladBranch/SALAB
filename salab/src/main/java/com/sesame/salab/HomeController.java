@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="main.do", method=RequestMethod.GET)
-	public String main() {
-		return "main";
+	public String main(HttpSession session) {
+		String page = "main";
+		if(session.getAttribute("loginMember") != null)
+			page = "redirect:recentFile.do";
+		return page;
 	}
 }

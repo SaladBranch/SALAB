@@ -83,7 +83,7 @@ public class MemberController {
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
-		String viewFileName = "redirect:recentFile.do";
+		String viewFileName = "redirect:recentFile.do?sort=recent";
 		MongoService mgService = new MongoService();
 		Member loginMember = memberService.loginCheck(member);
 		

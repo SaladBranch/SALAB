@@ -36,7 +36,7 @@ public class HomeController {
 	public String main(HttpSession session) {
 		String page = "main";
 		if(session.getAttribute("loginMember") != null)
-			page = "redirect:recentFile.do";
+			page = "redirect:recentFile.do?sort=recent";
 		return page;
 	}
 }

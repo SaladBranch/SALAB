@@ -3,8 +3,9 @@ package com.sesame.salab.common;
 
 import java.awt.GraphicsEnvironment;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,41 +32,82 @@ public class PageController {
 	private PrivateFileService pfService;
 	
 	@RequestMapping(value="recentFile.do")
-	public String toRecentFileMethod(HttpSession session, HttpServletRequest request) {
+	public String toRecentFileMethod(HttpSession session, HttpServletRequest request, String sort) {
 		String viewFileName = "recentFile/recentFile";
 		MongoService mgService = new MongoService();
 		Member member = (Member) session.getAttribute("loginMember");
 		
-		/*List<PrivateFile> privateFile = pfService.selectList(member.getUserno());*/
 		List<FileList> fileList = pfService.selectListAll(member.getUserno());
+		logger.info(sort);
+		if(sort.equals("recent")) {
+			Collections.sort(fileList, new Comparator<FileList>() {
+				@Override
+				public int compare(FileList f1, FileList f2) {
+					return f2.getPfilelastmodified().compareTo(f1.getPfilelastmodified());
+				}
+			});
+			logger.info("최근 수정 순으로 정렬완료!");
+		}else if(sort.equals("name")) {
+			Collections.sort(fileList, new Comparator<FileList>() {
+				@Override
+				public int compare(FileList f1, FileList f2) {
+					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
+				}
+			});
+			logger.info("이름 순으로 정렬완료!");
+		}else if(sort.equals("date")) {
+			Collections.sort(fileList, new Comparator<FileList>() {
+				@Override
+				public int compare(FileList f1, FileList f2) {
+					return f1.getPfilecreatedate().compareTo(f2.getPfilecreatedate());
+				}
+			});
+			logger.info("생성날짜 순으로 정렬완료!");
+		}
+			
 		if(fileList != null) {
 			for(FileList pf : fileList) {
-		/*if( privateFile != null) {
-			for(PrivateFile pf : privateFile) {*/
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
 				p.setUserno(pf.getUserno());
 				p.setPageno(1);
 				/*Page page = mgService.findOne("page", p);
 				pf.setPfilethumbnail(page.getThumbnail());*/
-				logger.info(pf.toString());
 			}
 			mgService.close();
 		
-			/*request.setAttribute("privateFile", privateFile);*/
 			request.setAttribute("privateFile", fileList);
+			request.setAttribute("sort", sort);
 		}else {
 			viewFileName = "common/error";
 		}
 		return viewFileName;
 	}
 	@RequestMapping(value="privateFile.do")
-	public String toPrivateFileMethod(HttpSession session, HttpServletRequest request) {
+	public String toPrivateFileMethod(HttpSession session, HttpServletRequest request, String sort) {
 		String viewFileName = "privateFile/privateFile";
 		MongoService mgService = new MongoService();
 		Member member = (Member)session.getAttribute("loginMember");
 		
-		List<FileList> fileList = pfService.selectListAll(member.getUserno());
+		List<PrivateFile> privateFile = pfService.selectList(member.getUserno());
+		if( privateFile != null) {
+			for(PrivateFile pf : privateFile) {
+				Page p = new Page();
+				p.setFileno(pf.getPfileno());
+				p.setUserno(pf.getUserno());
+				p.setPageno(1);
+				Page page = mgService.findOne("page", p);
+				pf.setPfilethumbnail(page.getThumbnail());
+				logger.info(pf.toString());
+			}
+			mgService.close();
+		
+			request.setAttribute("privateFile", privateFile);
+			request.setAttribute("sort", sort);
+		}else {
+			viewFileName = "common/error";
+		}
+			
 		return viewFileName;
 	}
 	

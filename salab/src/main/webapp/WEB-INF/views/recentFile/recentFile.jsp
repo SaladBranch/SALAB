@@ -111,14 +111,14 @@
         <div class="sort-standard">
             <div class="sort-by">
                 <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">최근 본 파일</span>
+                <i class="fas fa-chevron-down"></i><span id="span-content">${sort }</span>
                 </div>
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="#" class="sort-active">최근 본 파일</a></li>
-                    <li><a href="#">파일 명</a></li>
-                    <li><a href="#">파일 생성 일자</a></li>
+                    <li><a href="recentFile.do?sort=recent">최근 본 파일</a></li>
+                    <li><a href="recentFile.do?sort=name">파일 명</a></li>
+                    <li><a href="recentFile.do?sort=date">파일 생성 일자</a></li>
                 </ul>
             </div>
         </div>

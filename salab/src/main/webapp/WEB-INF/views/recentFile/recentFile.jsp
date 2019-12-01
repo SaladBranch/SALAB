@@ -137,7 +137,7 @@
 	                                <c:out value="${pfile.pfiletitle }"/>
 	                            </div>
 	                            <div class="file-edited">
-	                                5분 전 편집 in 개인파일1
+	                                <span>${pfile.pfilelastmodified }</span> in 개인파일
 	                            </div>
 	                        </div>
 	                        <div class="file-options">

@@ -1,7 +1,5 @@
 package com.sesame.salab.privatefile.model.vo;
 
-import java.sql.Date;
-
 public class PrivateFile implements java.io.Serializable {
 	private static final long serialVersionUID = 1001L;
 
@@ -9,27 +7,37 @@ public class PrivateFile implements java.io.Serializable {
 	private int userno;
 	private String pfilethumbnail;
 	private String pfiletitle;
-	private Date pfilelastmodified;
+	private String pfilelastmodified;
+	private String pfilecreatedate;
 	private String trashcan;
-	
+
 	public PrivateFile() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PrivateFile(int pfileno, int userno, String pfilethumbnail, String pfiletitle, Date pfilelastmodified,
-			String trashcan) {
+	public PrivateFile(int pfileno, int userno, String pfilethumbnail, String pfiletitle, String pfilelastmodified,
+			String pfilecreatedate, String trashcan) {
 		super();
 		this.pfileno = pfileno;
 		this.userno = userno;
 		this.pfilethumbnail = pfilethumbnail;
 		this.pfiletitle = pfiletitle;
 		this.pfilelastmodified = pfilelastmodified;
+		this.pfilecreatedate = pfilecreatedate;
 		this.trashcan = trashcan;
 	}
 
 	public int getPfileno() {
 		return pfileno;
+	}
+
+	public String getPfilecreatedate() {
+		return pfilecreatedate;
+	}
+
+	public void setPfilecreatedate(String pfilecreatedate) {
+		this.pfilecreatedate = pfilecreatedate;
 	}
 
 	public void setPfileno(int pfileno) {
@@ -60,11 +68,11 @@ public class PrivateFile implements java.io.Serializable {
 		this.pfiletitle = pfiletitle;
 	}
 
-	public Date getPfilelastmodified() {
+	public String getPfilelastmodified() {
 		return pfilelastmodified;
 	}
 
-	public void setPfilelastmodified(Date pfilelastmodified) {
+	public void setPfilelastmodified(String pfilelastmodified) {
 		this.pfilelastmodified = pfilelastmodified;
 	}
 
@@ -79,8 +87,9 @@ public class PrivateFile implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "PrivateFile [pfileno=" + pfileno + ", userno=" + userno + ", pfilethumbnail=" + pfilethumbnail
-				+ ", pfiletitle=" + pfiletitle + ", pfilelastmodified=" + pfilelastmodified + ", trashcan=" + trashcan
-				+ "]";
+				+ ", pfiletitle=" + pfiletitle + ", pfilelastmodified=" + pfilelastmodified + ", pfilecreatedate="
+				+ pfilecreatedate + ", trashcan=" + trashcan + "]";
 	}
+	
 	
 }

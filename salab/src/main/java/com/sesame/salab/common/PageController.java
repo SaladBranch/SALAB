@@ -35,25 +35,37 @@ public class PageController {
 		String viewFileName = "recentFile/recentFile";
 		MongoService mgService = new MongoService();
 		Member member = (Member) session.getAttribute("loginMember");
-
-		List<PrivateFile> privateFile = pfService.selectList(member.getUserno());
 		
-		if( privateFile != null) {
-			for(PrivateFile pf : privateFile) {
+		/*List<PrivateFile> privateFile = pfService.selectList(member.getUserno());*/
+		List<FileList> fileList = pfService.selectListAll(member.getUserno());
+		if(fileList != null) {
+			for(FileList pf : fileList) {
+		/*if( privateFile != null) {
+			for(PrivateFile pf : privateFile) {*/
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
 				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				Page page = mgService.findOne("page", p);
-				/*pf.setPfilethumbnail(page.getThumbnail());*/
+				/*Page page = mgService.findOne("page", p);
+				pf.setPfilethumbnail(page.getThumbnail());*/
 				logger.info(pf.toString());
 			}
 			mgService.close();
 		
-			request.setAttribute("privateFile", privateFile);
+			/*request.setAttribute("privateFile", privateFile);*/
+			request.setAttribute("privateFile", fileList);
 		}else {
 			viewFileName = "common/error";
 		}
+		return viewFileName;
+	}
+	@RequestMapping(value="privateFile.do")
+	public String toPrivateFileMethod(HttpSession session, HttpServletRequest request) {
+		String viewFileName = "privateFile/privateFile";
+		MongoService mgService = new MongoService();
+		Member member = (Member)session.getAttribute("loginMember");
+		
+		List<FileList> fileList = pfService.selectListAll(member.getUserno());
 		return viewFileName;
 	}
 	
@@ -117,10 +129,7 @@ public class PageController {
 	
 	// 관리자 페이지
 	
-	@RequestMapping(value="privateFile.do")
-	public String toPrivateFileMethod() {
-		return "privateFile/privateFile";
-	}
+
 	
 	@RequestMapping(value="trashCan.do")
 	public String toTrashCanMethod() {

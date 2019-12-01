@@ -15,6 +15,7 @@
 		<typeAlias type="com.sesame.salab.qna.model.vo.Qna" alias="Qna" />
 		<typeAlias type="com.sesame.salab.common.paging.model.vo.Paging" alias="Paging" />
 		<typeAlias type="com.sesame.salab.page.model.vo.Page" alias="Page" />
+		<typeAlias type="com.sesame.salab.common.FileList" alias="FileList" />
 	</typeAliases>
 	
 	<mappers>

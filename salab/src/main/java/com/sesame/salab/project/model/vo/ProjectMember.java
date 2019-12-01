@@ -1,11 +1,11 @@
 package com.sesame.salab.project.model.vo;
 
 import java.sql.Date;
-
+//project main page 에서 member data담는 용도로 사용.
 public class ProjectMember implements java.io.Serializable{
 	private static final long serialVersionUID = 2404L;
 
-
+	
 	private int userno;
 	private String username;
 	private Date projectjoindate;

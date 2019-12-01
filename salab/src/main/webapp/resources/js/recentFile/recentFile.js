@@ -214,4 +214,29 @@ $(window).click(function(event){
     
 });
 
+//파일 수정 일자 정리
+$(function(){
+	$('.file-edited span').each(function(){
+		var y = $(this).text().substr(0,4);
+		var m = Number($(this).text().substr(5,2) - 1);
+		if(m == 1){
+			m = '12';
+			y--;
+		}
+		var d = $(this).text().substr(8,2);
+		var h = $(this).text().substr(11,2);
+		var mi = $(this).text().substr(14,2);
+		var fdate = new Date(y, m, d, h, mi);
+		var ndate = new Date();
+		var minute = Math.floor((ndate - fdate)/60000);
+		if(minute < 60)
+			$(this).text(minute + "분 전 편집");
+		else if(minute <= 1440)
+			$(this).text(minute/60 + "시간 전 편집");
+		else
+			$(this).text(minute/1440 + "일 전 편집");
+	});
+});
+
+
 

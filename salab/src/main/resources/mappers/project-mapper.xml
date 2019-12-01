@@ -23,7 +23,7 @@
 	<select id="selectProject" parameterType="Project" resultType="Project">
 		select * from project where projectno=#{projectno}
 	</select>
-	<select id="selectProjectMemeber" parameterType="ProjectMember" resultType="ProjectMember">
+	<select id="selectProjectMemeber" parameterType="Member_Project" resultType="Member_Project">
 		select USERNO, USERNAME, PROJECTJOINDATE, USERAUTH ,USERPROFILE_O  from MEMBER_PROJECT inner join member using (userno) where projectno=#{projectno}
 	</select>
 	<select id="enrolledEmailCheck" parameterType="String" resultType="integer">

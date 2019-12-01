@@ -45,7 +45,7 @@ public class PageController {
 				p.setUserno(pf.getUserno());
 				p.setPageno(1);
 				Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());
+				/*pf.setPfilethumbnail(page.getThumbnail());*/
 				logger.info(pf.toString());
 			}
 			mgService.close();

@@ -83,29 +83,12 @@ public class MemberController {
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
-		String viewFileName = "recentFile/recentFile";
+		String viewFileName = "redirect:recentFile.do";
 		MongoService mgService = new MongoService();
-		logger.info("로그인 입력 정보 : " + member.toString());
 		Member loginMember = memberService.loginCheck(member);
-		logger.info("로그인 후 정보" + loginMember.toString());
-		//유저메인 페이지 로딩시에 파일에대한 정보가 필요해서 추가합니다
-		List<PrivateFile> privateFile = pfService.selectList(loginMember.getUserno());
 		
-		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) && privateFile != null) {
-			
-			for(PrivateFile pf : privateFile) {
-				Page p = new Page();
-				p.setFileno(pf.getPfileno());
-				p.setUserno(pf.getUserno());
-				p.setPageno(1);
-				Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());
-				logger.info(pf.toString());
-			}
-			mgService.close();
-			
+		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
 			session.setAttribute("loginMember", loginMember);
-			requset.setAttribute("privateFile", privateFile);
 		}else {
 			viewFileName = "common/error";
 		}

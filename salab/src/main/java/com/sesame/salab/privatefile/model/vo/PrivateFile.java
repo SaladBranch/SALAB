@@ -13,7 +13,6 @@ public class PrivateFile implements java.io.Serializable {
 
 	public PrivateFile() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public PrivateFile(int pfileno, int userno, String pfilethumbnail, String pfiletitle, String pfilelastmodified,

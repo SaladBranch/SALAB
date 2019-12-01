@@ -616,7 +616,10 @@
 		var target = $("div.ui-selected .obj-comp");
 		
     	if (object.length > 0) {
-    		
+
+        	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+        	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+        	
     		target.each(function() {
     			
         		// FIGURE
@@ -872,6 +875,12 @@
     function clearCursor() {
         window.getSelection().removeAllRanges();
 		$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+		$('#droppable .obj-comp').each(function() {
+			if ($(this).attr("contenteditable") == "true") {
+				$(this).attr("contenteditable", "false");
+			}
+            textEditMode = "false";
+		})
     }
     
     function wrapTag(target, typeName, className, cssType, cssProperty) {
@@ -949,6 +958,15 @@
     				value = $(this).css("border-right-width").split("px")[0] * 1;
     			if (type == "lineWeight_b") 
     				value = $(this).css("border-bottom-width").split("px")[0] * 1;
+
+    			if (type == "lineRadius_tl") 
+    				value = $(this).css("border-top-left-radius").split("px")[0] * 1;
+    			if (type == "lineRadius_tr") 
+    				value = $(this).css("border-top-right-radius").split("px")[0] * 1;
+    			if (type == "lineRadius_bl") 
+    				value = $(this).css("border-bottom-left-radius").split("px")[0] * 1;
+    			if (type == "lineRadius_br") 
+    				value = $(this).css("border-bottom-right-radius").split("px")[0] * 1;
     			
     			if (type == "fontType") {
     				value = $(this).css("fontFamily").split(", ")[0];

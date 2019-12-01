@@ -33,7 +33,10 @@ $(document).on('keydown', function(e){
     }
     if(e.ctrlKey && e.keyCode == 65){ //ctrl+a
         e.preventDefault();
-        selectAll();
+        if ($(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0)
+        	selectAll();
+        else
+        	$(".obj-comp[contenteditable=true]").selectText();
     }
 });
 function deleteObject(){

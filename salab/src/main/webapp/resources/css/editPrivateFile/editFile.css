@@ -994,12 +994,6 @@ ol.page-tab-content li{
 	background: #cecece;
 	z-index: -1;
 }
-.obj-comp {
-    user-select: text;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-}
 
 /*우클릭 메뉴*/
 .context-menu{

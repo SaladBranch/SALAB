@@ -57,7 +57,7 @@ public class ProjectController {
 		//생성한 객체로 프로젝트 인서트
 		int result = pService.createProject(project);
 		int projectno= pService.selectProjectnoAfterCreated(Integer.parseInt(userno));
- 		String viewName = "forward:/gotoProject.do?projectno="+projectno;
+ 		String viewName = "redirect:/gotoProject.do?projectno="+projectno;
 		if(result <= 0) {
 			//프로젝트 생성실패하면 에러페이지로 이동
 			viewName = "error";

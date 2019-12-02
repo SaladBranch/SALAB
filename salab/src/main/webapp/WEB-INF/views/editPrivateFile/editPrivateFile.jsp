@@ -23,7 +23,7 @@
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / 파일명</div>
+            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">

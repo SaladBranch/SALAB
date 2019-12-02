@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="/salab/vendors/css/grid.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
-    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css" type="text/css">
-    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     

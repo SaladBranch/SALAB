@@ -75,7 +75,7 @@ public class PrivateFileController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "pageTab.do", method = RequestMethod.POST, produces="text/plain; charset=UTF-8")
+	@RequestMapping(value = "pageTab.do", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public ModelAndView findInConditionMongo(Page page, ModelAndView mv) {
 		mv.setViewName("jsonView");
 		
@@ -86,8 +86,6 @@ public class PrivateFileController {
 		String result = gson.toJson(pageList);
 		mv.addObject("page", pageList);
 		mgService.close();
-		
-		
 		
 		return mv;
 	}
@@ -231,5 +229,33 @@ public class PrivateFileController {
 	                e.printStackTrace();
 	            }            
 	        return a;
+	}
+	
+	@RequestMapping(value="pfRename.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String pfRename(PrivateFile pfile) {
+		logger.info("pfRename :: " + pfile.toString());
+		String success = "success";
+		
+		int result = pfService.pfRename(pfile);
+		if(result > 0) {
+			changeLastModified(pfile.getUserno(), pfile.getPfileno());
+		}else {
+			success = "fail";
+		}
+		
+		return success;
+	}
+	
+	@RequestMapping(value="pageRename.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String pageRename(Page page) {
+		logger.info("pageRename :: " + page.toString());
+		String success = "success";
+		MongoService mgService = new MongoService();
+		
+		mgService.pageRename(page, collection);
+		
+		return success;
 	}
 }

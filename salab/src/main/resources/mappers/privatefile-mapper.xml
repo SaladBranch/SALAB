@@ -37,5 +37,13 @@
 	<update id="updateThumbnail" parameterType="Page">
 		update privatefile set pfilethumbnail = #{thumbnail } where userno = #{userno} and pfileno = #{fileno} 
 	</update>
+	
+	<select id="selectOne" parameterType="Page" resultType="PrivateFile">
+		select * from privatefile where userno = #{userno} and pfileno = #{fileno}
+	</select>
+	
+	<update id="pfRename" parameterType="PrivateFile">
+		update privatefile set pfiletitle = #{pfiletitle} where userno = #{userno} and pfileno = #{pfileno}
+	</update>
 		
 </mapper>

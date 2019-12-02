@@ -254,5 +254,45 @@ $(function(){
 	});
 });
 
+function showModal(findKey) {
+	$("#modal-name").show();
+}
 
+$(function(){
+	$(".modalOutline").click(function () {
+		$(".modalOutline").hide();
+    });
+    
+    //모달창 클릭 시, 부모로 이벤트 전송 block
+    $(".modalContent, .modalOutline").click(function () {
+        event.stopImmediatePropagation();
+        /*        e.keypress(
+                    function () {
+                        if (e.keyCode == 32) {
+                            alert("key up SPACE")
+                        }
+                    });*/
+    });
+});
 
+function newFile(){
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "insert_newprivateFile.do");
+    document.body.appendChild(form);
+
+    var insert = document.createElement("input");
+    insert.setAttribute("type", "hidden");
+    insert.setAttribute("name", "pfiletitle");
+    insert.setAttribute("value", $("#fileName").val());
+    form.append(insert);
+
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "userno");
+    insert2.setAttribute("value", $("#userNo").val());
+
+    form.append(insert2);
+
+    form.submit();
+}

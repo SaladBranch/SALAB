@@ -4,8 +4,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="privatefileMapper">
 	
-	<insert id="insertNewPrivateFile" parameterType="int">
-		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, default, default, sysdate, default)
+	<insert id="insertNewPrivateFile" parameterType="PrivateFile">
+		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, default, #{pfiletitle}, default, default, default)
 	</insert>
 	
 	<select id="selectList" parameterType="int" resultType="PrivateFile">
@@ -17,7 +17,7 @@
 	</select>
 	
 	<update id="changeLastModified" parameterType="PrivateFile">
-		update privatefile set PFILELASTMODIFIED = sysdate where userno = #{userno} and pfileno = #{pfileno}
+		update privatefile set PFILELASTMODIFIED = TO_CHAR(sysdate, 'YYYY/MM/DD HH24:MI') where userno = #{userno} and pfileno = #{pfileno}
 	</update>
 	
 	<update id="updateThumbnail" parameterType="Page">

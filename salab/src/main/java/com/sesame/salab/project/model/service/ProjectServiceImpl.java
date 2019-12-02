@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.dao.ProjectDao;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
@@ -56,6 +57,22 @@ public class ProjectServiceImpl implements ProjectService {
 	public int inviteEmailCheck(String useremail, int projectno) {
 		// TODO Auto-generated method stub
 		return pDao.inviteEmailCheck(useremail, projectno);
+	}
+
+	@Override
+	public int changeAuth(Member_Project member_project) {
+		// TODO Auto-generated method stub
+		return  pDao.changeAuth(member_project);
+	}
+
+	@Override
+	public int memberKick(Member_Project member_project) {
+		return  pDao.memberKick(member_project);
+	}
+
+	@Override
+	public int selectProjectnoAfterCreated(int userno) {
+		return pDao.selectProjectnoAfterCreated(userno);
 	}
 
 }

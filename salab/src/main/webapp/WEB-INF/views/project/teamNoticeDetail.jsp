@@ -100,7 +100,7 @@
                     <div class="notice-header">공지사항</div>
                     <div class="notice-body">
                         <div>
-                           <!--
+                            <!--
                             <div>
                                  팀원일경우 
                                 <div class="notice-title">
@@ -140,6 +140,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </sector>
 
 
@@ -148,12 +149,12 @@
 
         <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
-            function modifiedNotice(){
+            function modifiedNotice() {
                 var no = ${projectnotice.pnoticeno};
                 var title = $("#notice-title").val();
                 var content = $("#notice-content").val();
-                console.log(no + "," + title + "," + content);
-                
+                var pno = ${projectnotice.projectno};
+
                 var form = document.createElement("form");
                 form.setAttribute("method", "post");
                 form.setAttribute("action", "modifiedNotice.do");
@@ -170,42 +171,29 @@
                 insert2.setAttribute("name", "pnoticetitle");
                 insert2.setAttribute("value", title);
                 form.append(insert2);
-                
+
                 var insert3 = document.createElement("input");
                 insert3.setAttribute("type", "hidden");
                 insert3.setAttribute("name", "pnoticecontent");
                 insert3.setAttribute("value", content);
                 form.append(insert3);
+                
+                var insert4 = document.createElement("input");
+                insert4.setAttribute("type", "hidden");
+                insert4.setAttribute("name", "projectno");
+                insert4.setAttribute("value", pno);
+                form.append(insert4);
 
                 form.submit();
-                
-                
-               /* $.ajax ({
-                    url: "modifiedNotice.do",
-                    data: {
-                        pnoticetitle: title,
-                        pnoticecontent: content,
-                        pnoticeno: no
-                    },
-                    type: "post",
-                    success: function(data) {
-                        console.log(data);
-                        alert("수정성공");
-                    },
-                    error: function() {
-                        alert("실패");
-                    }
-                })*/
-
             }
-            
 
-            function deleteNotice(){
-                var pnoticeno = ${projectnotice.pnoticeno};
-                location.href = 'deleteNotice.do?pnoticeno=' + pnoticeno;
+
+            function deleteNotice() {
+                 location.href = 'deleteNotice.do?pnoticeno=' + ${projectnotice.pnoticeno}  +"&projectno="+${projectnotice.projectno};
             }
-            function goBack(){
-                 window.history.back();
+
+            function goBack() {
+                window.history.back();
             }
         </script>
     </body>

@@ -98,7 +98,7 @@
         <sector>
             <div class="notice-grid">
                 <div class="notice-header">공지사항</div>
-                <input type="hidden" value="2" id="projectno"><!-- 프로젝트번호 수정필요-->
+                <input type="hidden" value="${requestScope.projectno}" id="projectno"><!-- 프로젝트번호 수정필요-->
                 <div class="notice-body">
                     <table cellspacing="0">
                         <tr>

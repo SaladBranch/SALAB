@@ -9,15 +9,14 @@
 	</insert>
 	
 	<!-- 건우 -->
-	<update id="setLeader" parameterType="int">
-		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'LEADER'  WHERE USERNO=#{USERNO}
+	<update id="changeAuth" parameterType="Member_Project">	  
+		UPDATE MEMBER_PROJECT  SET USERAUTH = #{userauth}  WHERE USERNO=#{userno} and projectno=#{projectno}
 	</update>
-	<update id="setCanEdit" parameterType="int">
-		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'CAN_EDIT'  WHERE USERNO=#{USERNO}
-	</update>
-	<update id="setOnlyRead" parameterType="int">
-		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'ONLY_READ'  WHERE USERNO=#{USERNO}
-	</update>
+	
+	<!-- 팀원강퇴 -->
+	<delete id="memberKick" parameterType="Member_Project"	>
+		delete from member_project  where userno=#{userno} and projectno=#{projectno}
+	</delete>
 	<update id="setAllOnlyRead" parameterType="int">
 		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'ONLY_READ'  WHERE PROJECTNO=#{PROJECTNO}
 	</update>	

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.service.ProjectService;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
@@ -55,7 +56,8 @@ public class ProjectController {
 		
 		//생성한 객체로 프로젝트 인서트
 		int result = pService.createProject(project);
-		String viewName = "project/teamPage";
+		int projectno= pService.selectProjectnoAfterCreated(Integer.parseInt(userno));
+ 		String viewName = "forward:/gotoProject.do?projectno="+projectno;
 		if(result <= 0) {
 			//프로젝트 생성실패하면 에러페이지로 이동
 			viewName = "error";
@@ -131,8 +133,6 @@ public class ProjectController {
 	if(project != null) {
 		System.out.println(project.toString());
 	}
-	// 테스트값 projectno=2
-	project.setProjectno(2);
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
 	System.out.println(project.toString());
@@ -162,16 +162,15 @@ public class ProjectController {
 
 	@RequestMapping(value="changeAuth.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String changeAuthMethod(ModelAndView mv, Project project,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("changeAuth.do 진입");
+	public String changeAuthMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("changeAuth.do 진입 : "+member_project.toString());
 	
 	response.setContentType("application/json; charset=UTF-8");
-	
 	JSONObject job = new JSONObject();
-	job.put("result", "success");
-	job.put("title", "test return json object");
-	job.put("writer", URLEncoder.encode("박건우", "UTF-8"));
-	job.put("content", URLEncoder.encode("json 객체를 뷰로 리턴하는 테스트", "UTF-8"));
+	int result = pService.changeAuth(member_project);
+
+	if(result==1) {job.put("result", "success");}
+	
 	
 	return job.toJSONString();
 	
@@ -195,5 +194,20 @@ public class ProjectController {
 		out.flush();
 		out.close();
 	}
-		
+	
+	@RequestMapping(value="memberKick.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String memberKickMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("memberKick.do 진입 : "+member_project.toString());
+	
+	response.setContentType("application/json; charset=UTF-8");
+	JSONObject job = new JSONObject();
+	int result = pService.memberKick(member_project);
+
+	if(result==1) {job.put("result", "success");}
+	
+	
+	return job.toJSONString();
+	
+	}
 }

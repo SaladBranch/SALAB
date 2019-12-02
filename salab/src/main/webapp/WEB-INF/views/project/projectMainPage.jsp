@@ -278,13 +278,16 @@
                     <!--teamNotice-grid-->
                     <div>
                         <div class="noticePreview-title left">공지사항</div>
-                        <div class="moreNotice right">더보기</div>
+                        <div class="moreNotice right" onclick="gotoPNotice()">더보기</div>
                     </div>
                     <div class="notice-grid part-grid clear">
                         <!-- NoticeList -->
-                        <table cellspacing="0px" ;>
-                            <c:forEach var="notice" items="${requestScope.noticelist}">
-                                <tr class="clickNotice" value="${notice.pnoticeno}">
+                        <table cellspacing="0px" >
+                        	<c:if test="${paging.maxPage== 0}">
+                        		<div class="notExistNotice">등록된 게시물이 없습니다.</div>
+                        	</c:if>
+                    		 <c:forEach var="notice" items="${requestScope.noticelist}">
+                                <tr class="clickNotice" value="${notice.pnoticeno}" onclick=" gotoNoticeDetail(${notice.pnoticeno})" >
                                     <input type="hidden" value="${notice.pnoticeno}">
                                     <td>${notice.pnoticedate}</td>
                                     <td>${notice.pnoticetitle}</td>
@@ -322,7 +325,7 @@
                                     </c:if>
                                     <div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
                                     <div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
-                                    <div>Kick</div>
+                                    <div onclick="memberKick(${memberList.userno})">Kick</div>
                                 </div>
                             </div>
                         </div>
@@ -335,7 +338,7 @@
                     <!--modal-->
                     <div class="">
                         <!-- 팀원초대하기 modal-->
-                        <div class="modalOutline hide" onclick="inviteModalToggle()">
+                        <div id="inviteModal" class="modalOutline hide" onclick="inviteModalToggle()">
                             <div id="invite-modalContent" class="modalContent">
                                 <span class="modal-title">팀 원 초대하기</span>
                                 <p class="modal-text">함께할 팀원의 SALAB계정을 입력해 주세요.<br>계정 확인 후, 해당 이메일로 메일을 발송합니다.<br>해당 이메일에서 수락을 할 경우,Project에 참여할 수 있습니다.<br>대소문자를 정확하게 확인해 주세요.</p>
@@ -344,24 +347,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hide">
+                    <div class="">
                         <!--메일 발송후 모달-->
-                        <div class="modalOutline">
+                        <div class="modalOutline afterEmailCheck afterInvteModal hide ">
                             <div class="modalContent">
                                 <p class="modal-text2">안내 메일이 발송되었습니다.<br>해당 이메일에서 수락시 자동으로 팀원으로 추가됩니다.</p>
                                 <div class="modalBtn">확인</div>
                             </div>
                         </div>
                     </div>
-                    <div class="hide">
+                    <div class="">
                         <!--해당메일 없음 모달-->
-                        <div class="modalOutline">
+                        <div class="modalOutline afterEmailCheck notFoundUser hide">
                             <div class="modalContent">
                                 <p class="modal-text2">해당하는 계정이 존재하지 않습니다.<br>확인하시고 다시 시도해주세요.</p>
                                 <div class="modalBtn">확인</div>
                             </div>
                         </div>
                     </div>
+                     <div class="">
+                        <!--해당메일 없음 모달-->
+                        <div class="modalOutline afterEmailCheck joinedMember hide">
+                            <div class="modalContent">
+                                <p class="modal-text2">이미 PROJECT에 참여중인 멤버입니다.</p>
+                                <div class="modalBtn">확인</div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </section>
             </div>
         </div>

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -38,6 +39,10 @@ public class PrivateFileDao {
 	public int updateThumbnail(Page page) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("privatefileMapper.updateThumbnail", page);
+	}
+
+	public List<FileList> selectListAll(int userno) {
+		return sqlSession.selectList("privatefileMapper.selectListAll", userno);
 	}
 
 }

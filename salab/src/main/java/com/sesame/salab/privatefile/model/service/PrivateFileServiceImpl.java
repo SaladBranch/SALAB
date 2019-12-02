@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.dao.PrivateFileDao;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
@@ -43,6 +44,11 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	public int updateThumbnail(Page page) {
 		// 저장, 전체저장시 파일의 썸네일 변경하는 메소드
 		return pfDao.updateThumbnail(page);
+	}
+
+	@Override
+	public List<FileList> selectListAll(int userno) {
+		return pfDao.selectListAll(userno);
 	}
 
 }

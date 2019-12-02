@@ -175,6 +175,22 @@ $('.sort-by-mention').click(function(){
         drop.show();
     }
 });
+$(function(){
+	var sort = $('#span-content');
+	if(sort.text() === 'recent'){
+		sort.text("최근 본 파일");
+		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
+		$('.sort-standards ul li').eq(0).addClass('sort-active');
+	}else if(sort.text() === 'name'){
+		sort.text("파일 명");
+		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
+		$('.sort-standards ul li').eq(1).addClass('sort-active');
+	}else if(sort.text() === 'date'){
+		sort.text("파일 생성 일자");
+		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
+		$('.sort-standards ul li').eq(2).addClass('sort-active');
+	}
+});
 
 $('.file-options-btn').click(function(){
     var index = $('.file-options-btn').index($(this));

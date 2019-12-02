@@ -52,12 +52,23 @@ function leftMouseListner(){
         toggleContext(0);
     });
     $(document).on('dblclick', "#droppable .obj", function(event){
-        $(this).draggable("destroy");
-        $("#droppable").selectable("destroy");
+    	
+    	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+    	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+    	
+    	if ($(this).is(".ui-draggable")) {
+            $(this).draggable("destroy");
+    	}
+    	if ($("#droppable").is(".ui-selectable")) {
+            $("#droppable").selectable("destroy");
+    	}
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
         $(this).children(".obj-comp").attr("contenteditable", "true");
         $(this).children(".obj-comp").selectText();
+        $('.right-side-bar .canvas-menu').hide();
+        $('.right-side-bar .tab-menu').show();
+        $('.right-side-bar .tab-content').show();
     });
 }
 function rightMouseListner(){
@@ -286,8 +297,11 @@ $(function(){
             $focus.show();
             clearCursor();
         }
-    	if (!$(e.target).is("#droppable .obj *"))
-	        $(".obj-comp").attr("contenteditable", "false");
+    	if (!$(e.target).is("#droppable .obj *")) {
+    		$("#droppable .obj-comp[contenteditable=true]").each(function() {
+    	        $(this).attr("contenteditable", "false");
+    		})
+    	}
     }).on('mousemove', function(e){
         if(appendElement != ""){
             moveDragging();
@@ -468,13 +482,15 @@ $(function(){
 });
 
 $('#droppable').bind('DOMSubtreeModified', function(e){
-    if($('#droppable .ui-selected').length > 0){
-        $('.right-side-bar .canvas-menu').hide();
-        $('.right-side-bar .tab-menu').show();
-        $('.right-side-bar .tab-content').show();
-    }else{
+	
+    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0){
         $('.right-side-bar .canvas-menu').show();
         $('.right-side-bar .tab-menu').hide();
         $('.right-side-bar .tab-content').hide();
+    } else {
+        $('.right-side-bar .canvas-menu').hide();
+        $('.right-side-bar .tab-menu').show();
+        $('.right-side-bar .tab-content').show();
     }
+    
 });

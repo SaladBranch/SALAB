@@ -303,6 +303,7 @@ body{
 .sort-active:after{
     content: "\2714";
     position: absolute;
+    color: #fff;
     right: 10px;
 }
 /*---------------------*/

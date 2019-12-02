@@ -12,6 +12,20 @@
 		select * from privatefile where userno = #{userno}
 	</select>
 	
+	<select id="selectListAll" parameterType="int" resultType="FileList">
+		SELECT PFILENO, USERNO, PFILERNAME, PFILETITLE, PFILELASTMODIFIED, PFILECREATEDATE, TRASHCAN, 'private' AS pt
+		FROM PRIVATEFILE
+		WHERE USERNO = #{userno}
+		UNION ALL
+		SELECT PRFILENO, PROJECTNO, PRFILERNAME, PRFILETITLE, PRFILELASTMODIFIED, PRFILECREATEDATE, TRASHCAN, 'team'
+		FROM PROJECTFILE
+		WHERE PROJECTNO IN(
+		  SELECT PROJECTNO FROM MEMBER_PROJECT
+		  WHERE USERNO = #{userno}
+		)
+		ORDER BY 5 DESC
+	</select>
+	
 	<select id="createPage" parameterType="int" resultType="PrivateFile">
 		select * from (select pfileno from privatefile where userno = #{userno} order by PFILELASTMODIFIED desc) where rownum = 1
 	</select>

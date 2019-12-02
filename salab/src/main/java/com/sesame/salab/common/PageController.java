@@ -51,7 +51,7 @@ public class PageController {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
 				public int compare(FileList f1, FileList f2) {
-					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
+					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
 				}
 			});
 			logger.info("이름 순으로 정렬완료!");

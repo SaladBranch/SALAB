@@ -400,8 +400,9 @@ body{
 }
 
 .file-thumbnail > img{
-	max-width: 100%;
+	max-width: 80%;
     height: 100%;
+    margin: 0 10%;
 }
 
 .file-info{

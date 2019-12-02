@@ -29,7 +29,7 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText">${requestScope.project.projectname }</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -88,7 +88,17 @@
         <div class="left-middle-side-bar">
      	   	<div class="myTeam scroll-y scrollbar">
                 <!--현재 팀 프로젝트 표시-->
-                <c:forEach var="projectList" items="${sessionScope.myProjectList}">   
+                <c:forEach var="projectList" items="${sessionScope.myProjectList}">
+                    <c:if test="${project.projectno==projectList.projectno}">
+                        <div class="clear Team-grid active">
+                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
+                            <div class="inline">
+                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
+                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${project.projectno!=projectList.projectno}">
                         <div class="clear Team-grid">
                             <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
                             <div class="inline">
@@ -96,8 +106,9 @@
                                 <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
                             </div>
                         </div>
+                    </c:if>
                 </c:forEach>
-          	 </div>
+            </div>
             <div class="new-team">
                 <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
                 <a href="newTeam.do">새로운 팀 </a>

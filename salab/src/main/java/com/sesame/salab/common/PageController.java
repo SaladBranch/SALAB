@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.member_project.model.service.Member_ProjectService;
 import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
+import com.sesame.salab.project.model.vo.Project;
 
 @Controller
 public class PageController {
@@ -30,6 +32,8 @@ public class PageController {
 	
 	@Autowired
 	private PrivateFileService pfService;
+	@Autowired
+	private Member_ProjectService mpService;
 	
 	@RequestMapping(value="recentFile.do")
 	public String toRecentFileMethod(HttpSession session, HttpServletRequest request, String sort) {
@@ -81,6 +85,9 @@ public class PageController {
 		}else {
 			viewFileName = "common/error";
 		}
+		List<Project> projectList = mpService.selectProjectList(member.getUserno());
+		session.setAttribute("myProjectList", projectList);
+		
 		return viewFileName;
 	}
 	@RequestMapping(value="privateFile.do")

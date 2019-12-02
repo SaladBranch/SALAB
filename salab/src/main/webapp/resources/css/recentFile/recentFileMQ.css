@@ -68,3 +68,79 @@
     .sort-by{padding-left: 10%;}
     .sort-standards{left:8.5%;}
 }
+
+
+/*화면좌측 팀 프로젝트 css _건우*/
+.Team-grid{
+    width: 229px;
+    height: 45px;
+    margin: 2px 0px;
+     border: 0.5 solid #fff;
+}
+.Team-grid .active{
+       background-color: rgba(40, 153, 118,0.47);
+}
+.Team-grid .icon-wrapper{
+    vertical-align: top;
+}
+.Team-grid:hover{
+   background-color: rgba(40, 153, 118,0.07);
+}
+.Team-grid a{
+    text-align: left;
+    font-size: 14px;
+    width: 100px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.inline {
+    display: inline-block;
+}
+.clear{
+    clear: both;
+}
+.scroll-y{
+    max-height: 200px;
+ overflow-y: scroll;
+    overflow-x: hidden;
+}
+.Team-grid a:visited{
+    color: inherit;
+    text-decoration: inherit;
+}
+.Team-grid a{
+        color: inherit;
+    text-decoration: inherit;
+}
+
+.teamIcon >i{
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.teamTitle, .teamFileList{
+   width: 120px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+   
+}
+
+/*scroll*/
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    background-color: #F5F5F5;
+    width: 1px;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 3px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #D62929;
+}

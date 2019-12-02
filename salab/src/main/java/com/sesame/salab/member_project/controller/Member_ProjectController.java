@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sesame.salab.common.member_project.model.service.Member_ProjectService;
+import com.sesame.salab.member_project.model.service.Member_ProjectService;
 import com.sesame.salab.member_project.model.vo.Member_Project;
 
 @Controller

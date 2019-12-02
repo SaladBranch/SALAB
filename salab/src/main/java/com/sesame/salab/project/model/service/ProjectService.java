@@ -6,6 +6,7 @@ import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 public interface ProjectService {
 
@@ -28,5 +29,9 @@ public interface ProjectService {
 	int memberKick(Member_Project member_project);
 
 	int selectProjectnoAfterCreated(int userno);
+
+	List<ProjectFile> selectMainFileList(int projectno);
+
+	List<ProjectFile> selectListAll(int projectno);
 
 }

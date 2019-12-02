@@ -35,7 +35,7 @@
                 <div class="top-bar-logoimg">
                     <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -74,11 +74,11 @@
             </div>
             <div class="recent-file active-menu">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
-                <a href="recentFile.do">최근 파일</a>
+                <a href="recentFile.do?sort=recent>">최근 파일</a>
             </div>
             <div class="private-file">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
-                <a href="privateFile.do">개인 파일</a>
+                <a href="privateFile.do?sort=recent">개인 파일</a>
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
@@ -179,10 +179,5 @@
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
-    <script type="text/javascript">
-    	$(function(){
-    		console.log(${loginMember.userno});
-    	})
-    </script>
 </body>
 </html>

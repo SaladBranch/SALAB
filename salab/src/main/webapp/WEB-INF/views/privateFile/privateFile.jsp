@@ -15,6 +15,13 @@
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
+    <script type="text/javascript">
+    function epFile(no){
+    	var fileno = no;
+    	var userno = ${loginMember.userno};
+    	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
+    }
+    </script>
     <title>개인 파일 | Salab</title>
 </head>
 <body>
@@ -27,7 +34,7 @@
                 <div class="top-bar-logoimg">
                     <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -66,11 +73,11 @@
             </div>
             <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
-                <a href="recentFile.do">최근 파일</a>
+                <a href="recentFile.do?sort=recent">최근 파일</a>
             </div>
             <div class="private-file active-menu">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
-                <a href="privateFile.do">개인 파일</a>
+                <a href="privateFile.do?sort=recent">개인 파일</a>
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
@@ -104,143 +111,70 @@
         <div class="sort-standard">
             <div class="sort-by">
                 <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">최근 본 파일</span>
+                <i class="fas fa-chevron-down"></i><span id="span-content">${sort }</span>
                 </div>
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="#" class="sort-active">최근 본 파일</a></li>
-                    <li><a href="#">파일 명</a></li>
-                    <li><a href="#">파일 생성 일자</a></li>
+                    <li><a href="privateFile.do?sort=recent">최근 본 파일</a></li>
+                    <li><a href="privateFile.do?sort=name">파일 명</a></li>
+                    <li><a href="privateFile.do?sort=date">파일 생성 일자</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="row recent-files">
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="file-grid">
-                <div class="file-container">
-                    <div class="file-thumbnail">
-                        
-                    </div>
-                    <div class="file-info">
-                        <div class="about-file">
-                            <div class="file-name">
-                                Untitled
-                            </div>
-                            <div class="file-edited">
-                                5분 전 편집 in 개인파일
-                            </div>
-                        </div>
-                        <div class="file-options">
-                            <div class="file-options-btn">&#8942;</div>
-                            <div class="file-options-menu">
-                                <ul>
-                                    <li><a href="#">파일열기</a></li>
-                                    <li><a href="#">파일 정보 설정</a></li>
-                                    <li><a href="#">사본만들기</a></li>
-                                    <li><a href="#">웹테스트</a></li>
-                                    <li><a href="#">삭제</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <c:if test="${!empty privateFile }">
+        		<c:forEach var="pfile" items="${privateFile }">
+        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+	                <div class="file-container">
+	                    <div class="file-thumbnail">
+	                        ${pfile.pfilethumbnail }
+	                    </div>
+	                    <div class="file-info">
+	                        <div class="about-file">
+	                            <div class="file-name">
+	                                <c:out value="${pfile.pfiletitle }"/>
+	                            </div>
+	                            <div class="file-edited">
+	                                <span>${pfile.pfilelastmodified }</span> in 개인파일
+	                            </div>
+	                        </div>
+	                        <div class="file-options">
+	                            <div class="file-options-btn">&#8942;</div>
+	                            <div class="file-options-menu">
+	                                <ul>
+	                                    <li><a href="#">파일열기</a></li>
+	                                    <li><a href="#">파일 정보 설정</a></li>
+	                                    <li><a href="#">사본만들기</a></li>
+	                                    <li><a href="#">웹테스트</a></li>
+	                                    <li><a href="#">삭제</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+           		</div>
+        	</c:forEach>
+        	</c:if>
+        	
             
             <div class="file-grid">
-                <div class="new-file">
+                <div class="new-file" onclick="showModal();">
                     &#43; 새 파일
                 </div>
             </div>
         </div>
     </div>
+    
+    <div id="modal-name" class="modalOutline disable ">
+    	<div id="newFile" class="modalContent z-index1">
+        	<div class="titleConfigure">Create PrivateFile</div>
+           	<input id="userNo" type="hidden" value="${loginMember.userno}">
+            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
+            <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+    	</div>
+	</div>
     
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>

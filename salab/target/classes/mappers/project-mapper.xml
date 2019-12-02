@@ -7,6 +7,9 @@
 	<insert id="createProject" parameterType="Project">
 		insert into project values(SEQ_PROJECTNO.NEXTVAL, #{projectname}, default, default, null, null, #{userno})
 	</insert>
+	<select id="selectProjectnoAfterCreated" parameterType="int" resultType="int">
+		select projectno from project where userno=#{userno} and rownum =1 order by projectno desc
+	</select>
 	
 	<select id="autocomp" parameterType="String" resultType="Member">
 		select * from member where username like '%' || #{ keyword } || '%'
@@ -26,11 +29,12 @@
 	<select id="selectProjectMemeber" parameterType="Member_Project" resultType="Member_Project">
 		select USERNO, USERNAME, PROJECTJOINDATE, USERAUTH ,USERPROFILE_O  from MEMBER_PROJECT inner join member using (userno) where projectno=#{projectno}
 	</select>
-	<select id="enrolledEmailCheck" parameterType="String" resultType="integer">
+	<select id="enrolledEmailCheck" parameterType="String" resultType="int">
 		select userno from member where useremail = #{useremail}
 	</select>
 	<select id="joinedMemberCheck" parameterType="HashMap" resultType="int">
 		select count(*) from member_project where userno=#{userno} and projectno =#{projectno}
 	</select>
+
 	
 </mapper>

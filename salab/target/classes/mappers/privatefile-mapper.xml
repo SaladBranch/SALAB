@@ -9,7 +9,21 @@
 	</insert>
 	
 	<select id="selectList" parameterType="int" resultType="PrivateFile">
-		select * from privatefile where userno = #{userno}
+		select * from privatefile where userno = #{userno} AND TRASHCAN = 'N'
+	</select>
+	
+	<select id="selectListAll" parameterType="int" resultType="FileList">
+		SELECT PFILENO, USERNO, PFILETHUMBNAIL, PFILETITLE, PFILELASTMODIFIED, PFILECREATEDATE, TRASHCAN, 'private' AS pt
+		FROM PRIVATEFILE
+		WHERE USERNO = #{userno} AND TRASHCAN = 'N'
+		UNION ALL
+		SELECT PRFILENO, PROJECTNO, PRFILETHUMBNAIL, PRFILETITLE, PRFILELASTMODIFIED, PRFILECREATEDATE, TRASHCAN, 'team'
+		FROM PROJECTFILE
+		WHERE PROJECTNO IN(
+		  SELECT PROJECTNO FROM MEMBER_PROJECT
+		  WHERE USERNO = #{userno} AND TRASHCAN = 'N'
+		)
+		ORDER BY 5 DESC
 	</select>
 	
 	<select id="createPage" parameterType="int" resultType="PrivateFile">

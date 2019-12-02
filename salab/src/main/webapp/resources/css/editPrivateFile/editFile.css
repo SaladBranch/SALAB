@@ -1050,3 +1050,19 @@ ol.page-tab-content li{
     border: 1px solid #000;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
+
+.page-title:focus{
+	user-select: auto !important;
+    border: 1.5px solid #00a8ff;
+}
+
+#file-title{
+	border: 0;
+    font-size: 15px !important;
+    user-select: auto;
+    background: #2c2c2c;
+    color: white;
+    cursor: text important;
+    z-index: 100;
+    pointer-events: auto;
+}

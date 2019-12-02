@@ -19,5 +19,9 @@ public interface PrivateFileService {
 	int updateThumbnail(Page page);
 
 	List<FileList> selectListAll(int userno);
+
+	PrivateFile selectOne(Page page);
+
+	int pfRename(PrivateFile pfile);
 	
 }

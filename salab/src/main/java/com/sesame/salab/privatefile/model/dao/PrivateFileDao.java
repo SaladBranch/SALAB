@@ -45,4 +45,14 @@ public class PrivateFileDao {
 		return sqlSession.selectList("privatefileMapper.selectListAll", userno);
 	}
 
+	public PrivateFile selectOne(Page page) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("privatefileMapper.selectOne", page);
+	}
+
+	public int pfRename(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("privatefileMapper.pfRename", pfile);
+	}
+
 }

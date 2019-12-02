@@ -17,17 +17,16 @@
     <link rel="stylesheet" href="/salab/resources/css/mainQuery.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
-	<title>이메일 전송 | SALAB</title>
+	<title>비밀번호 변경 완료 | SALAB</title>
 </head>
 <body>
 	<c:import url="../header.jsp" />
 	
     <section class="section-noti">
         <div class="row notification">
-            <h2>인증메일이 전송되었습니다!</h2>
-            <p><span class="uemail">${uemail }</span> 로 인증메일이 전송되었습니다.<br>${mention }</p>
-            <a href="https://www.${mailLink }" class="btn btn-full" target="_blank">${mailLink }로 이동</a>
-            <a class="btn btn-ghost" href="resendMail.do?uemail=${uemail}&type=resend">인증메일 다시 전송</a>
+            <h2>비밀번호 변경 완료</h2>
+            <p>비밀번호 변경이 완료되었습니다.<br>다시 로그인 해주세요.</p>
+            <a href="main.do" class="btn btn-full to-main">로그인</a>
         </div>
     </section>
     

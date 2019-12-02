@@ -62,10 +62,12 @@ $('.enroll-link').on('click', function(){
     $('.signup-form').eq(index).css('display', 'block');
 });
 $('form input').focus(function(){
-    $(this).css('border', '1.5px solid #00a8ff'); 
+	if($(this).is(!$('.findPwdForm input')))
+		$(this).css('border', '1.5px solid #00a8ff'); 
 });
 $('form input').blur(function(){
-    $(this).css('border', '1.5px solid #d8d8d8');
+	if($(this).is(!$('.findPwdForm input')))
+		$(this).css('border', '1.5px solid #d8d8d8');
 });
 
 /* Enroll validation */
@@ -88,7 +90,6 @@ function enrollValid(button){
     	$button.html(origintext);
     	return false;
     }else{
-    	console.log("회원가입 연결중...")
     	$loader = $("<div class='loader'></div>")
 		$button.text("");
 		$button.html($loader);
@@ -114,7 +115,6 @@ function loginValid(button){
     	alertDangerToast("비밀번호가 일치하지 않습니다.", password);
     	return false;
     }else{
-    	console.log("로그인 연결중...");
     	$loader = $("<div class='loader'></div>")
 		$button.text("");
 		$button.html($loader);

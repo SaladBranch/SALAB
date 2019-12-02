@@ -516,3 +516,22 @@ body{
     border: 0.3px solid #3ec28f;
 
 }
+
+input[type="button"] {
+    position: relative;
+    float: right;
+    margin-right: 30px;
+    border-radius: 3px;
+    background-color: white;
+   
+    border: 0.7px solid gray;
+    box-shadow: 2px 1px gray;
+    cursor: pointer;
+    min-height: 24px;
+    padding: 6px 14px;
+    color: gray;
+    height: 30px;
+    font-size: 9pt;
+    font-weight: 300; 
+    padding-bottom: 2px;
+}

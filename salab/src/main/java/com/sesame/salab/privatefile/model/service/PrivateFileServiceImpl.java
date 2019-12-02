@@ -51,4 +51,16 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 		return pfDao.selectListAll(userno);
 	}
 
+	@Override
+	public PrivateFile selectOne(Page page) {
+		// TODO Auto-generated method stub
+		return pfDao.selectOne(page);
+	}
+
+	@Override
+	public int pfRename(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.pfRename(pfile);
+	}
+
 }

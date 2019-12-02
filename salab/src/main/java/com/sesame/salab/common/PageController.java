@@ -216,6 +216,8 @@ public class PageController {
 		page.setUserno(Integer.parseInt(userno));
 		page.setFileno(Integer.parseInt(fileno));
 		List<Page> pageList = (List<Page>)mgService.findPage("page", page);
+		
+		PrivateFile pfile = pfService.selectOne(page);
 
 		// 컴퓨터에 갖고있는 font 가져오기
 		List<String> fontList = new ArrayList<String>();
@@ -226,6 +228,7 @@ public class PageController {
 			fontList.add(font);
 		}
 
+		req.setAttribute("pfile", pfile);
 		req.setAttribute("pageList", pageList);
 		req.setAttribute("userno", page.getUserno());
 		req.setAttribute("fileno", page.getFileno());

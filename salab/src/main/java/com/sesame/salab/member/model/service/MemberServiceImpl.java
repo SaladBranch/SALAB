@@ -42,4 +42,19 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.getUncheckedMember(uemail);
 	}
 
+	@Override
+	public String getCheckedMember(String uemail) {
+		return memberDao.getCheckedMember(uemail);
+	}
+
+	@Override
+	public Member getMemberForPwd(Member member) {
+		return memberDao.getMemberForPwd(member);
+	}
+
+	@Override
+	public int initChangePwd(Member member) {
+		return memberDao.initchangePwd(member);
+	}
+
 }

@@ -24,13 +24,15 @@
 	<c:import url="../header.jsp" />
 	
     <section class="section-findpwd">
-        <div class="row findpwd">
-            <h2>비밀번호 변경</h2>
-            <p>등록하신 계정의 이메일을 입력해주세요.</p>
-            <form action="resendMail.do" name="findPwdForm" class="findPwdForm" method="post">
-            	<input type="hidden" name="type" value="find">
-	            <input type="email" name="uemail" class="findPwdMail" placeholder="이메일" required>
-	            <button type="submit" class="btn btn-full" onclick="validEmail();">인증메일 전송</button>
+        <div class="row newpwd">
+            <h2>비밀번호 재설정</h2>
+            <p>새로운 비밀번호를 입력해주세요.<br><span>비밀번호는 영소문자로 숫자나 특수문자를 하나 이상 포함하여 20글자 미만으로 지정해주세요.</span></p>
+            <form action="initChangePwd.do" name="findPwdForm" class="findPwdForm" method="post">
+            	<input type="hidden" name="useremail" value="${pmember.useremail }">
+            	<input type="hidden" name="userauthkey" value="${pmember.userauthkey }">
+            	<input type="password" placeholder="새 비밀번호" name="userpwd" class="newpwd" required>
+            	<input type="password" placeholder="비밀번호 확인" name="userpwdchk" class="newpwdchk" required>
+	            <button type="submit" class="btn btn-full" onclick="validPwd();">비밀번호 변경</button>
             </form>
         </div>
     </section>
@@ -40,23 +42,23 @@
     <script type="text/javascript" src="/salab/vendors/js/toast.js"></script>
     <script type="text/javascript" src="/salab/resources/js/main.js"></script>
     <script type="text/javascript">
-    	function validEmail(){
+    	function validPwd(){
+    		var regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
     		var form = document.findPwdForm;
-    		var email = form.uemail;
+    		var pwd = form.userpwd;
+    		var pwdchk = form.userpwdchk;
     		var $button = $('.findPwdForm button');
-    		var origintext = $button.text();
-    		
-    		if(!isValidEmail(email))
+    		if(!isValidPwd(pwd))
     			return false;
-    		else if(isExistEmail(email, $button) == "none"){
-    			event.preventDefault();
-    			alertDangerToast("등록되지 않은 이메일입니다.", email);
-    			$button.html(origintext);
-    			return false;
+    		else if(pwdchk.value == ""){
+    	    	event.preventDefault();
+    	    	alertDangerToast("비밀번호를 다시 한 번 입력해주세요", pwdchk);
+    	    	return false;
+    		}else if(pwdchk.value != pwd.value){
+    	    	event.preventDefault();
+    	    	alertDangerToast("비밀번호를 정확하게 입력해주세요", pwdchk);
+    	    	return false;
     		}else{
-    			$loader = $("<div class='loader'></div>");
-    			$button.text("");
-    			$button.html($loader);
     			return true;
     		}
     	}

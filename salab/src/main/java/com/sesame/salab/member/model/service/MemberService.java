@@ -9,4 +9,7 @@ public interface MemberService {
 	int isExistEmail(String useremail);
 	void deleteUncheckedMail(String uemail);
 	String getUncheckedMember(String uemail);
+	String getCheckedMember(String uemail);
+	Member getMemberForPwd(Member member);
+	int initChangePwd(Member member);
 }

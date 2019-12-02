@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
 
@@ -68,6 +69,19 @@ public class ProjectDao {
 		 }
 		 
 		 return result;
+	}
+
+	public int changeAuth(Member_Project member_project) {
+		return sqlSession.update("member_projectMapper.changeAuth", member_project);
+	}
+
+	public int memberKick(Member_Project member_project) {
+		return sqlSession.delete("member_projectMapper.memberKick", member_project);
+	}
+
+	public int selectProjectnoAfterCreated(int userno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("projectMapper.selectProjectnoAfterCreated", userno);
 	}
 
 }

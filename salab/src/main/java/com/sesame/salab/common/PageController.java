@@ -71,8 +71,8 @@ public class PageController {
 				p.setFileno(pf.getPfileno());
 				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				/*Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());*/
+				Page page = mgService.findOne("page", p);
+				pf.setPfilethumbnail(page.getThumbnail());
 			}
 			mgService.close();
 		

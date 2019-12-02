@@ -1,7 +1,7 @@
 package com.sesame.salab.common;
 
 public class FileList implements java.io.Serializable{
-	public static final long SerialVersionUID = 9001L;
+	public static final long SerialVersionUID = 9010L;
 	
 	private int pfileno;
 	private int userno;

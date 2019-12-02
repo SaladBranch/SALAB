@@ -30,10 +30,8 @@ public class projectnoticeController {
 	@RequestMapping(value = "projectNoticelist.do")
 	public ModelAndView projectNoticelistMethod(ModelAndView mv, Projectnotice projectnotice,
 			@RequestParam(value = "page", required = false) String currentPage) throws Exception {
-
 		int curPage;
-		projectnotice.setProjectno(2);// 테스트 값
-		int projectno = 2;
+		int projectno = projectnotice.getProjectno();
 
 		if (currentPage != null && Integer.parseInt(currentPage) != 0) {
 			curPage = Integer.parseInt(currentPage);
@@ -55,6 +53,7 @@ public class projectnoticeController {
 		System.out.println(pnoticelist.size());
 
 		if (pnoticelist != null) {
+			mv.addObject("projectno",projectno);
 			mv.addObject("noticelist", pnoticelist);
 			mv.addObject("paging", paging);
 			mv.setViewName("project/teamNoticeList");
@@ -74,12 +73,11 @@ public class projectnoticeController {
 			System.out.println("null왔다리");
 		}
 		Member member = (Member) session.getAttribute("loginMember");
-		int projectno=2;//테스트값
-		projectnotice.setProjectno(projectno);
+
 		projectnotice.setPnoticewriter(member.getUsername());
 		pnService.noticeRegist(projectnotice);
 
-		return "forward:/projectNoticelist.do";
+		return "forward:/projectNoticelist.do?"+projectnotice.getProjectno() ;
 	}
    	@RequestMapping(value="teamNoticeDetail.do")
    	public ModelAndView teamNoticeDetailMethod(ModelAndView mv,Projectnotice projectnotice ) {
@@ -101,7 +99,7 @@ public class projectnoticeController {
    			System.out.println(projectnotice.toString());
    			int result= pnService.modifiedNotice(projectnotice);
    			System.out.println("결과 : "+result);
-   	   		mv.setViewName("forward:/projectNoticelist.do");
+   	   		mv.setViewName("forward:/projectNoticelist.do?"+projectnotice.getProjectno());
    		}else{
 			mv.addObject("message", "프로젝트 공지사항 조회 실패");
 			mv.setViewName("common/error");
@@ -116,7 +114,7 @@ public class projectnoticeController {
    			System.out.println(projectnotice.toString());
    			int result= pnService.deleteNotice(projectnotice);
    			System.out.println("결과 : "+result);
-   	   		mv.setViewName("forward:/projectNoticelist.do");
+   	   		mv.setViewName("forward:/projectNoticelist.do?"+projectnotice.getProjectno());
    		}else{
 			mv.addObject("message", "프로젝트 공지사항 삭제 실패");
 			mv.setViewName("common/error");

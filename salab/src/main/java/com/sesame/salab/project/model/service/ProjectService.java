@@ -3,6 +3,7 @@ package com.sesame.salab.project.model.service;
 import java.util.List;
 
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
 
@@ -21,5 +22,11 @@ public interface ProjectService {
 	List<ProjectMember> selectProjectMemeber(int projectno);
 
 	int inviteEmailCheck(String useremail, int projectno);
+
+	int changeAuth(Member_Project member_project);
+
+	int memberKick(Member_Project member_project);
+
+	int selectProjectnoAfterCreated(int userno);
 
 }

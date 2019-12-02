@@ -4,8 +4,8 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="privatefileMapper">
 	
-	<insert id="insertNewPrivateFile" parameterType="int">
-		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, default, default, default, default, default)
+	<insert id="insertNewPrivateFile" parameterType="PrivateFile">
+		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, default, #{pfiletitle}, default, default, default)
 	</insert>
 	
 	<select id="selectList" parameterType="int" resultType="PrivateFile">

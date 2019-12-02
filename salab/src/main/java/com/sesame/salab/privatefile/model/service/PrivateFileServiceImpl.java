@@ -16,9 +16,9 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	private PrivateFileDao pfDao;
 	
 	@Override
-	public int insertNewPrivateFile(String userno) {
+	public int insertNewPrivateFile(PrivateFile pfile) {
 		// 새파일 인서트용 메소드 
-		return pfDao.insertNewPrivateFile(userno);
+		return pfDao.insertNewPrivateFile(pfile);
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	}
 
 	@Override
-	public PrivateFile createPage(String userno) {
+	public PrivateFile createPage(int userno) {
 		// 새파일 생성시 페이지생성을 위해 fileno 셀렉트
 		return pfDao.createPage(userno);
 	}

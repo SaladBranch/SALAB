@@ -1,5 +1,5 @@
-.section-noti{padding-top: 65px;}
-.notification{
+.section-noti, .section-findpwd{padding-top: 65px;}
+.notification, .findpwd{
     margin: 120px auto;
     text-align: center;
 }
@@ -13,4 +13,26 @@
     margin-left: 15px;
     width: 250px;
 }
-
+/*비밀번호 찾기*/
+.findpwd{
+    width: 30%;
+    text-align: left;
+    
+}
+.findpwd form input{
+    display: block;
+    margin: 20px 0;
+    font-size: 20px;
+    line-height: 25px;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #000;
+    padding: 5px;
+}
+.findpwd .btn-full{
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+    height: 50px;
+    padding-top: 13px;
+}

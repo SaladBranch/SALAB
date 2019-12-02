@@ -129,6 +129,11 @@ public class PageController {
 			
 		return viewFileName;
 	}
+
+	@RequestMapping(value="findPwd.do")
+	public String toFindPwdMethod() {
+		return "findPwd/findPwd";
+	}
 	
 	//연영 help 페이지 ~
 	@RequestMapping(value="userNotice.do")

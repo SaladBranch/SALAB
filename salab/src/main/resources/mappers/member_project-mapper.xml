@@ -9,6 +9,9 @@
 	</insert>
 	
 	<!-- 건우 -->
+	<select id="selectProjectList" parameterType="int" resultType="Project">
+		select projectno, projectname,projectimage_o from project inner join (select projectno from member_project where userno =#{userno}) using(projectno)
+	</select>
 	<update id="changeAuth" parameterType="Member_Project">	  
 		UPDATE MEMBER_PROJECT  SET USERAUTH = #{userauth}  WHERE USERNO=#{userno} and projectno=#{projectno}
 	</update>

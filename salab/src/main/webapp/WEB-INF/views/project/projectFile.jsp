@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="/salab/vendors/css/grid.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
-    <!-- <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css" type="text/css">
-    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css" type="text/css"> -->
+    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
 
@@ -29,13 +29,13 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText">${requestScope.project.projectname }</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
                     <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -74,11 +74,11 @@
             </div>
             <div class="recent-file active-menu">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
-                <a href="recentFile.do?sort=recent>">최근 파일</a>
+                <a href="recentFile.do">최근 파일</a>
             </div>
             <div class="private-file">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
-                <a href="privateFile.do?sort=recent">개인 파일</a>
+                <a href="privateFile.do">개인 파일</a>
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
@@ -88,7 +88,17 @@
         <div class="left-middle-side-bar">
      	   	<div class="myTeam scroll-y scrollbar">
                 <!--현재 팀 프로젝트 표시-->
-                <c:forEach var="projectList" items="${sessionScope.myProjectList}">   
+                <c:forEach var="projectList" items="${sessionScope.myProjectList}">
+                    <c:if test="${project.projectno==projectList.projectno}">
+                        <div class="clear Team-grid active">
+                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
+                            <div class="inline">
+                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
+                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${project.projectno!=projectList.projectno}">
                         <div class="clear Team-grid">
                             <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
                             <div class="inline">
@@ -96,8 +106,9 @@
                                 <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
                             </div>
                         </div>
+                    </c:if>
                 </c:forEach>
-          	 </div>
+            </div>
             <div class="new-team">
                 <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
                 <a href="newTeam.do">새로운 팀 </a>
@@ -191,5 +202,10 @@
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		console.log(${loginMember.userno});
+    	})
+    </script>
 </body>
 </html>

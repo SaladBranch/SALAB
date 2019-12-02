@@ -14,8 +14,8 @@
 
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
- 
-     <link rel="stylesheet" href="/salab/resources/css/project/projectMainPage.css" type="text/css">
+
+    <link rel="stylesheet" href="/salab/resources/css/project/projectMainPage.css" type="text/css">
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
@@ -83,11 +83,35 @@
                 <a href="trashCan.do">휴지통</a>
             </div>
         </div>
-        <div class="left-middle-side-bar">
+        <div class="left-middle-side-bar scroll">
+            <div class="myTeam scroll-y scrollbar">
+                <!--현재 팀 프로젝트 표시-->
+                <c:forEach var="projectList" items="${sessionScope.myProjectList}">
+                    <c:if test="${project.projectno==projectList.projectno}">
+                        <div class="clear Team-grid active">
+                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
+                            <div class="inline">
+                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
+                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${project.projectno!=projectList.projectno}">
+                        <div class="clear Team-grid">
+                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
+                            <div class="inline">
+                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
+                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
             <div class="new-team">
                 <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
                 <a href="newTeam.do">새로운 팀 </a>
             </div>
+
         </div>
     </div>
     <div id="right-click-menu" class="right-click-menu">
@@ -112,7 +136,7 @@
                 <!-- grid안 왼쪽 -->
                 <div class="Blank">
                     <div class="teamLogo"></div>
-                    <div class="name-box"> ${project.projectname} 
+                    <div class="name-box"> ${project.projectname}
                     </div>
                 </div>
                 <section class="file-section">
@@ -120,8 +144,10 @@
                     <div class="left">최근 생성 파일</div>
                     <div class="recentFile-grid part-grid clear">
 
-                        <!--                        <c:forEach var="pfile" items="${privateFile }">
-                            <div class="file-grid" onclick="epFile(${pfile.pfileno});">
+                        <c:if test="${projectListSize ==0 }">아직파일없음음</c:if>
+
+                        <c:forEach var="pfile" items="${privateFile }">
+                            <div class="file-grid" onclick="location.href='epFile.do'">
                                 <div class="file-container">
                                     <div class="file-thumbnail">
 
@@ -129,10 +155,10 @@
                                     <div class="file-info">
                                         <div class="about-file">
                                             <div class="file-name">
-                                                <c:out value="${pfile.pfiletitle }" />
+                                                ${pfile.projectname}
                                             </div>
                                             <div class="file-edited">
-                                                5분 전 편집 in 개인파일1
+                                                5분 전 편집 in 개인파일
                                             </div>
                                         </div>
                                         <div class="file-options">
@@ -150,124 +176,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>-->
+                        </c:forEach>
 
-                        <div class="file-grid" onclick="location.href='epFile.do'">
-                            <div class="file-container">
-                                <div class="file-thumbnail">
-
-                                </div>
-                                <div class="file-info">
-                                    <div class="about-file">
-                                        <div class="file-name">
-                                            Untitled
-                                        </div>
-                                        <div class="file-edited">
-                                            5분 전 편집 in 개인파일
-                                        </div>
-                                    </div>
-                                    <div class="file-options">
-                                        <div class="file-options-btn">&#8942;</div>
-                                        <div class="file-options-menu">
-                                            <ul>
-                                                <li><a href="#">파일열기</a></li>
-                                                <li><a href="#">파일 정보 설정</a></li>
-                                                <li><a href="#">사본만들기</a></li>
-                                                <li><a href="#">웹테스트</a></li>
-                                                <li><a href="#">삭제</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-grid" onclick="location.href='epFile.do'">
-                            <div class="file-container">
-                                <div class="file-thumbnail">
-
-                                </div>
-                                <div class="file-info">
-                                    <div class="about-file">
-                                        <div class="file-name">
-                                            Untitled
-                                        </div>
-                                        <div class="file-edited">
-                                            5분 전 편집 in 개인파일
-                                        </div>
-                                    </div>
-                                    <div class="file-options">
-                                        <div class="file-options-btn">&#8942;</div>
-                                        <div class="file-options-menu">
-                                            <ul>
-                                                <li><a href="#">파일열기</a></li>
-                                                <li><a href="#">파일 정보 설정</a></li>
-                                                <li><a href="#">사본만들기</a></li>
-                                                <li><a href="#">웹테스트</a></li>
-                                                <li><a href="#">삭제</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-grid" onclick="location.href='epFile.do'">
-                            <div class="file-container">
-                                <div class="file-thumbnail">
-
-                                </div>
-                                <div class="file-info">
-                                    <div class="about-file">
-                                        <div class="file-name">
-                                            Untitled
-                                        </div>
-                                        <div class="file-edited">
-                                            5분 전 편집 in 개인파일
-                                        </div>
-                                    </div>
-                                    <div class="file-options">
-                                        <div class="file-options-btn">&#8942;</div>
-                                        <div class="file-options-menu">
-                                            <ul>
-                                                <li><a href="#">파일열기</a></li>
-                                                <li><a href="#">파일 정보 설정</a></li>
-                                                <li><a href="#">사본만들기</a></li>
-                                                <li><a href="#">웹테스트</a></li>
-                                                <li><a href="#">삭제</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-grid" onclick="location.href='epFile.do'">
-                            <div class="file-container">
-                                <div class="file-thumbnail">
-
-                                </div>
-                                <div class="file-info">
-                                    <div class="about-file">
-                                        <div class="file-name">
-                                            Untitled
-                                        </div>
-                                        <div class="file-edited">
-                                            5분 전 편집 in 개인파일
-                                        </div>
-                                    </div>
-                                    <div class="file-options">
-                                        <div class="file-options-btn">&#8942;</div>
-                                        <div class="file-options-menu">
-                                            <ul>
-                                                <li><a href="#">파일열기</a></li>
-                                                <li><a href="#">파일 정보 설정</a></li>
-                                                <li><a href="#">사본만들기</a></li>
-                                                <li><a href="#">웹테스트</a></li>
-                                                <li><a href="#">삭제</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>
@@ -282,12 +192,12 @@
                     </div>
                     <div class="notice-grid part-grid clear">
                         <!-- NoticeList -->
-                        <table cellspacing="0px" >
-                        	<c:if test="${paging.maxPage== 0}">
-                        		<div class="notExistNotice">등록된 게시물이 없습니다.</div>
-                        	</c:if>
-                    		 <c:forEach var="notice" items="${requestScope.noticelist}">
-                                <tr class="clickNotice" value="${notice.pnoticeno}" onclick=" gotoNoticeDetail(${notice.pnoticeno})" >
+                        <table cellspacing="0px">
+                            <c:if test="${paging.maxPage== 0}">
+                                <div class="notExistNotice">등록된 게시물이 없습니다.</div>
+                            </c:if>
+                            <c:forEach var="notice" items="${requestScope.noticelist}">
+                                <tr class="clickNotice" value="${notice.pnoticeno}" onclick=" gotoNoticeDetail(${notice.pnoticeno})">
                                     <input type="hidden" value="${notice.pnoticeno}">
                                     <td>${notice.pnoticedate}</td>
                                     <td>${notice.pnoticetitle}</td>
@@ -303,32 +213,32 @@
                         <div class="left">팀 원</div>
                         <div class="right" onclick="inviteModalToggle()"> 팀원 초대하기</div>
                     </div>
-                    <div class="member-grid part-grid clear scrollbar" id="style-2">
+                    <div class="member-grid part-grid clear scrollbar">
                         <!--팀원리스트-->
                         <c:forEach var="memberList" items="${requestScope.memberList}" varStatus="i">
-                        
-                        <div class="memberList">
-                            <div class="member-icon inline">
-								<c:if test="${memberList.userprofile_o ==null }"><img width="18" height="18"  src="/salab/resources/img/default_profile.png" alt=""></c:if>
-								<c:if test="${memberList.userprofile_o !=null }">dd</c:if>
-							</div>
-                            <div class="member-name inline">${memberList.username}</div>
-                            <div class="member-setup-grid inline">
-                            	<c:if test="${memberList.userauth =='LEADER'}"><img width="12" height="12" src="/salab/resources/img/leader.png" alt=""></c:if>
-                                <c:if test="${memberList.userauth == 'CAN_EDIT'}"><img width="12" height="12" src="/salab/resources/img/can-edit.png" alt=""></c:if>
-                                <c:if test="${memberList.userauth == 'ONLY_READ'}"><img width="12" height="12" src="/salab/resources/img/only-read.png" alt=""></c:if>
-                                
-                                <span class="member-setup" onclick="openMenu()">&#8942;</span>
-                                <div id="setting-menu" class="setting-menu hide">
-                                	<c:if test="${memberList.userauth != 'LEADER'}">
-                                    	<div class="hidedMenu" onclick="changeUserAuth(${memberList.userno},'LEADER')">Team Reader</div>
-                                    </c:if>
-                                    <div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
-                                    <div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
-                                    <div onclick="memberKick(${memberList.userno})">Kick</div>
+
+                            <div class="memberList">
+                                <div class="member-icon inline">
+                                    <c:if test="${memberList.userprofile_o ==null }"><img width="18" height="18" src="/salab/resources/img/default_profile.png" alt=""></c:if>
+                                    <c:if test="${memberList.userprofile_o !=null }">dd</c:if>
+                                </div>
+                                <div class="member-name inline">${memberList.username}</div>
+                                <div class="member-setup-grid inline">
+                                    <c:if test="${memberList.userauth =='LEADER'}"><img width="12" height="12" src="/salab/resources/img/leader.png" alt=""></c:if>
+                                    <c:if test="${memberList.userauth == 'CAN_EDIT'}"><img width="12" height="12" src="/salab/resources/img/can-edit.png" alt=""></c:if>
+                                    <c:if test="${memberList.userauth == 'ONLY_READ'}"><img width="12" height="12" src="/salab/resources/img/only-read.png" alt=""></c:if>
+
+                                    <span class="member-setup" onclick="openMenu()">&#8942;</span>
+                                    <div id="setting-menu" class="setting-menu hide">
+                                        <c:if test="${memberList.userauth != 'LEADER'}">
+                                            <div class="hidedMenu" onclick="changeUserAuth(${memberList.userno},'LEADER')">Team Reader</div>
+                                        </c:if>
+                                        <div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
+                                        <div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
+                                        <div onclick="memberKick(${memberList.userno})">Kick</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </c:forEach>
 
                     </div>
@@ -365,7 +275,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="">
+                    <div class="">
                         <!--해당메일 없음 모달-->
                         <div class="modalOutline afterEmailCheck joinedMember hide">
                             <div class="modalContent">
@@ -374,7 +284,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </section>
             </div>
         </div>
@@ -383,6 +293,7 @@
 
 
 </body>
-    <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="/salab/resources/js/project/projectMain.js"></script>
+<script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/salab/resources/js/project/projectMain.js"></script>
+
 </html>

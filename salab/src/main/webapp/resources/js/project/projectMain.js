@@ -6,9 +6,7 @@ $(document).ready(function () {
 
 
     });
-            if(${paging.maxPage}==0){
-           ${".notExistNotice"}.removeClass('hide');
-           }
+
     /*
         $(".modalOutline").click(function () {
             HideOnBush();

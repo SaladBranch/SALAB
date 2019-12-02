@@ -37,18 +37,18 @@ public class PrivateFileController {
 	@Autowired
 	private PrivateFileService pfService;
 	
-	@RequestMapping("insert_newprivateFile.do")
-	public ModelAndView insertNewPage(@RequestParam("userno")String userno, ModelAndView mv, HttpServletRequest request) {
+	@RequestMapping(value="insert_newprivateFile.do", method=RequestMethod.POST)
+	public ModelAndView insertNewPage(PrivateFile pfile, ModelAndView mv, HttpServletRequest request) {
 		MongoService mgService = new MongoService();
-		
-		int result = pfService.insertNewPrivateFile(userno);
+		logger.info("pfile :: "+pfile.toString());
+		int result = pfService.insertNewPrivateFile(pfile);
 		//새파일 생성후 페이지생성위한 파일넘버 가져옴
-		PrivateFile pfile = pfService.createPage(userno);
-		
+		PrivateFile pfile2 = pfService.createPage(pfile.getUserno());
+		logger.info("pfile2 :: "+pfile2.toString());
 		//mongodb에 저장할 객체생성
 		Page page = new Page();
-		page.setUserno(Integer.parseInt(userno));
-		page.setFileno(pfile.getPfileno());
+		page.setUserno(pfile.getUserno());
+		page.setFileno(pfile2.getPfileno());
 		page.setPageno(1);
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
@@ -63,8 +63,8 @@ public class PrivateFileController {
 		//생성한 페이지 바로 가져옴
 		 ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
 		mgService.close();
-		mv.addObject("userno", userno);
-		mv.addObject("fileno", pfile.getPfileno());
+		mv.addObject("userno", pfile.getUserno());
+		mv.addObject("fileno", pfile2.getPfileno());
 		mv.addObject("pageList", pageList);
 		mv.setViewName("redirect:epFile.do");
 		

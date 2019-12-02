@@ -508,7 +508,7 @@
 
         	        $('.ui-selected .page-thumbnail').html('');
         	        $('.ui-selected .page-thumbnail').append(img);
-        	        list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
+        	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
         	    };
         	    
         	    img.src = pngDataUrl;
@@ -520,26 +520,17 @@
     }
     
     function exportAllPdf(){
-    	pdf = new jsPDF('l', 'pt');
+    	pdf = new jsPDF('landscape', 'mm', 'a4', true);
     	
     	for(var i = 0; i < list.length; i++){
+    		var image = new Image();
+        	image.src= $(list[i].thumbnail).attr('src');
+    		
     			console.log('start');
-        		pdf.addImage($('.page-thumbnail:eq('+ i +') img').attr('src'), 'PNG', 0, 0);
+        		pdf.addImage(image.src, 'PNG', -10, -10, (image.width * 0.186), (image.height * 0.179));
         		pdf.addPage();
         		console.log('end');
     	}
     	
     	pdf.save('test.pdf');
     }
-    
-    
-    /*function calculatePDF_height_width(selector,index){
-    	 page_section = $(selector).eq(index);
-    	 HTML_Width = page_section.width();
-    	 HTML_Height = page_section.height();
-    	 top_left_margin = 15;
-    	 PDF_Width = HTML_Width + (top_left_margin * 2);
-    	 PDF_Height = (PDF_Width * 1.2) + (top_left_margin * 2);
-    	 canvas_image_width = HTML_Width;
-    	 canvas_image_height = HTML_Height;
-    }*/

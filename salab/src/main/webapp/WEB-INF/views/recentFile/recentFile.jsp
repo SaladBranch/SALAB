@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/salab/vendors/css/grid.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
-    
+    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
@@ -160,15 +161,28 @@
         	
             
             <div class="file-grid">
-                <div class="new-file" onclick="javascript:location.href='insert_newprivateFile.do?userno=${loginMember.userno }'">
+                <div class="new-file" onclick="showModal();">
                     &#43; 새 파일
                 </div>
             </div>
         </div>
     </div>
     
+    <div id="modal-name" class="modalOutline disable ">
+    	<div id="newFile" class="modalContent z-index1">
+        	<div class="titleConfigure">Create PrivateFile</div>
+           	<input id="userNo" type="hidden" value="${loginMember.userno}">
+            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
+            <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+    	</div>
+	</div>
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		console.log(${loginMember.userno});
+    	})
+    </script>
 </body>
 </html>

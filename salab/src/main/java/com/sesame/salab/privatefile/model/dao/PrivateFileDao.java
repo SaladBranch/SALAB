@@ -16,9 +16,9 @@ public class PrivateFileDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int insertNewPrivateFile(String userno) {
+	public int insertNewPrivateFile(PrivateFile pfile) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("privatefileMapper.insertNewPrivateFile", Integer.parseInt(userno));
+		return sqlSession.insert("privatefileMapper.insertNewPrivateFile", pfile);
 	}
 
 	public List<PrivateFile> selectList(int userno) {
@@ -26,9 +26,9 @@ public class PrivateFileDao {
 		return sqlSession.selectList("privatefileMapper.selectList", userno);
 	}
 
-	public PrivateFile createPage(String userno) {
+	public PrivateFile createPage(int userno) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("privatefileMapper.createPage", Integer.parseInt(userno));
+		return sqlSession.selectOne("privatefileMapper.createPage", userno);
 	}
 
 	public int changeLastModified(PrivateFile pfile) {

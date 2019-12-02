@@ -32,4 +32,14 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.isExistEmail(useremail);
 	}
 
+	@Override
+	public void deleteUncheckedMail(String uemail) { //인증받지 않은 회원 삭제용
+		memberDao.deleteUncheckedMail(uemail);
+	}
+
+	@Override
+	public String getUncheckedMember(String uemail) {
+		return memberDao.getUncheckedMember(uemail);
+	}
+
 }

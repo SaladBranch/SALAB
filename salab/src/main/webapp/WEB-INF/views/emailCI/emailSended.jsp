@@ -27,7 +27,7 @@
             <h2>인증메일이 전송되었습니다!</h2>
             <p><span class="uemail">${uemail }</span> 로 인증메일이 전송되었습니다.<br>링크를 클릭하시면 가입 완료 및 로그인이 가능합니다.</p>
             <a href="https://www.${mailLink }" class="btn btn-full" target="_blank">${mailLink }로 이동</a>
-            <button class="btn btn-ghost">인증메일 다시 전송</button>
+            <a class="btn btn-ghost" href="resendMail.do?uemail=${uemail}">인증메일 다시 전송</a>
         </div>
     </section>
     

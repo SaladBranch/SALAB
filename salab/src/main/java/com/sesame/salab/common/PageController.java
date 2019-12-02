@@ -38,7 +38,6 @@ public class PageController {
 		Member member = (Member) session.getAttribute("loginMember");
 		
 		List<FileList> fileList = pfService.selectListAll(member.getUserno());
-		logger.info(sort);
 		if(sort.equals("recent")) {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
@@ -46,7 +45,6 @@ public class PageController {
 					return f2.getPfilelastmodified().compareTo(f1.getPfilelastmodified());
 				}
 			});
-			logger.info("최근 수정 순으로 정렬완료!");
 		}else if(sort.equals("name")) {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
@@ -54,7 +52,6 @@ public class PageController {
 					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
 				}
 			});
-			logger.info("이름 순으로 정렬완료!");
 		}else if(sort.equals("date")) {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
@@ -62,7 +59,6 @@ public class PageController {
 					return f1.getPfilecreatedate().compareTo(f2.getPfilecreatedate());
 				}
 			});
-			logger.info("생성날짜 순으로 정렬완료!");
 		}
 			
 		if(fileList != null) {
@@ -90,6 +86,28 @@ public class PageController {
 		Member member = (Member)session.getAttribute("loginMember");
 		
 		List<PrivateFile> privateFile = pfService.selectList(member.getUserno());
+		if(sort.equals("recent")) {
+			Collections.sort(privateFile, new Comparator<PrivateFile>() {
+				@Override
+				public int compare(PrivateFile p1, PrivateFile p2) {
+					return p2.getPfilelastmodified().compareTo(p1.getPfilelastmodified());
+				}
+			});
+		}else if(sort.equals("name")) {
+			Collections.sort(privateFile, new Comparator<PrivateFile>() {
+				@Override
+				public int compare(PrivateFile p1, PrivateFile p2) {
+					return p2.getPfiletitle().compareTo(p1.getPfiletitle());
+				}
+			});
+		}else if(sort.equals("date")) {
+			Collections.sort(privateFile, new Comparator<PrivateFile>() {
+				@Override
+				public int compare(PrivateFile p1, PrivateFile p2) {
+					return p1.getPfilecreatedate().compareTo(p2.getPfilecreatedate());
+				}
+			});
+		}
 		if( privateFile != null) {
 			for(PrivateFile pf : privateFile) {
 				Page p = new Page();
@@ -100,7 +118,6 @@ public class PageController {
 				Page page = mgService.findOne("page", p);
 				logger.info("thumbnail :: " + page.getThumbnail());
 				pf.setPfilethumbnail(page.getThumbnail());
-
 			}
 			mgService.close();
 		

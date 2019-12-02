@@ -63,7 +63,7 @@
     </header>
         <div class="main-toggle-menu">
         <ul>
-            <li><a href="recentFile.do">파일 페이지로 이동</a></li>
+            <li><a href="recentFile.do?sort=recent">파일 페이지로 이동</a></li>
             <hr>
             <li id="toggle-page">
                 페이지<span><i class="fas fa-caret-right"></i></span>

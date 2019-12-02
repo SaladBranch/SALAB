@@ -11,6 +11,7 @@ import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 @Repository
 public class ProjectDao {
@@ -82,6 +83,14 @@ public class ProjectDao {
 	public int selectProjectnoAfterCreated(int userno) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("projectMapper.selectProjectnoAfterCreated", userno);
+	}
+
+	public List<ProjectFile> selectMainFileList(int projectno) {
+		return sqlSession.selectList("ProjectfileMapper.selectMainFileList", projectno);
+	}
+
+	public List<ProjectFile> selectListAll(int projectno) {
+		return sqlSession.selectList("ProjectfileMapper.selectListAll", projectno);
 	}
 
 }

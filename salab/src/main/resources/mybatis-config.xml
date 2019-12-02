@@ -17,6 +17,7 @@
 		<typeAlias type="com.sesame.salab.common.paging.model.vo.Paging" alias="Paging" />
 		<typeAlias type="com.sesame.salab.page.model.vo.Page" alias="Page" />
 		<typeAlias type="com.sesame.salab.common.FileList" alias="FileList" />
+		<typeAlias type="com.sesame.salab.projectfile.model.vo.ProjectFile" alias="ProjectFile"/>
 	</typeAliases>
 	
 	<mappers>
@@ -30,5 +31,6 @@
 		<mapper resource="mappers/faq-mapper.xml" />
 		<mapper resource="mappers/projectnotice-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml" />
+		<mapper resource="mappers/ProjectFile-mapper.xml"/>
 	</mappers>
 </configuration>

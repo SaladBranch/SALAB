@@ -10,6 +10,7 @@ import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.project.model.dao.ProjectDao;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 @Service("ProjectService")
 public class ProjectServiceImpl implements ProjectService {
@@ -73,6 +74,16 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int selectProjectnoAfterCreated(int userno) {
 		return pDao.selectProjectnoAfterCreated(userno);
+	}
+
+	@Override
+	public List<ProjectFile> selectMainFileList(int projectno) {
+		return pDao.selectMainFileList(projectno);
+	}
+
+	@Override
+	public List<ProjectFile> selectListAll(int projectno) {
+		return pDao.selectListAll(projectno);
 	}
 
 }

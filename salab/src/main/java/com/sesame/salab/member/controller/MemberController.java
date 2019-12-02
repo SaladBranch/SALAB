@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,10 +52,8 @@ public class MemberController {
 		member.setUsername(member.getUseremail().substring(0, member.getUseremail().indexOf('@')));
 		member.setUserauthkey(new Tempkey().getKey(50, false));
 		
-		logger.info("전달받은 회원정보 : " + member.toString());
-		
 		String uemail = member.getUseremail();
-		
+		memberService.deleteUncheckedMail(uemail);
 		int result = memberService.insertMember(member);
 		if(result > 0) {
 			//DB에 기본 입력 값 insert 성공 시 메일 작성
@@ -69,7 +68,24 @@ public class MemberController {
 			mv.setViewName("emailCI/emailSended");
 		}else {
 			mv.setViewName("common/error");
-			mv.addObject("message", "응 데이터 못집어넣었어");
+		}
+		return mv;
+	}
+	@RequestMapping(value="resendMail.do")
+	public ModelAndView resendMailMethod(ModelAndView mv, String uemail) throws Exception {
+		String authkey = memberService.getUncheckedMember(uemail);
+		if(!authkey.equals("")) {
+			MailUtils sendMail = new MailUtils(mailSender);
+			sendMail.setSubject("[SALAB] 회원가입 이메일 인증");
+			sendMail.setText(sendMail.emailCITemplate(uemail, authkey));
+			sendMail.setFrom("saladbranch@gmail.com", "SALAB");
+			sendMail.setTo(uemail);
+			sendMail.send();
+			mv.addObject("uemail", uemail);
+			mv.addObject("mailLink", uemail.substring(uemail.indexOf('@')+1, uemail.length()));
+			mv.setViewName("emailCI/emailSended");
+		}else {
+			mv.setViewName("common/error");
 		}
 		return mv;
 	}

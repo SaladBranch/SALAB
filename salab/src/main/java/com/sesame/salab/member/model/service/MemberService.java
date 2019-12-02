@@ -7,4 +7,6 @@ public interface MemberService {
 	int insertMember(Member member);
 	int updateEmailChecked(Member member);
 	int isExistEmail(String useremail);
+	void deleteUncheckedMail(String uemail);
+	String getUncheckedMember(String uemail);
 }

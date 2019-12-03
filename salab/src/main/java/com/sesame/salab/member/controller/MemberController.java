@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,8 @@ import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.Tempkey;
 import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.page.model.dao.MongoService;
+import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -49,10 +52,8 @@ public class MemberController {
 		member.setUsername(member.getUseremail().substring(0, member.getUseremail().indexOf('@')));
 		member.setUserauthkey(new Tempkey().getKey(50, false));
 		
-		logger.info("전달받은 회원정보 : " + member.toString());
-		
 		String uemail = member.getUseremail();
-		
+		memberService.deleteUncheckedMail(uemail);
 		int result = memberService.insertMember(member);
 		if(result > 0) {
 			//DB에 기본 입력 값 insert 성공 시 메일 작성
@@ -67,30 +68,77 @@ public class MemberController {
 			mv.setViewName("emailCI/emailSended");
 		}else {
 			mv.setViewName("common/error");
-			mv.addObject("message", "응 데이터 못집어넣었어");
+		}
+		return mv;
+	}
+	@RequestMapping(value="resendMail.do")
+	public ModelAndView resendMailMethod(ModelAndView mv, String uemail, String type) throws Exception {
+		String authkey = "";
+		if(type.equals("resend"))
+			authkey = memberService.getUncheckedMember(uemail);
+		if(type.equals("find"))
+			authkey = memberService.getCheckedMember(uemail);
+		if(!authkey.equals("")) {
+			MailUtils sendMail = new MailUtils(mailSender);
+			if(type.equals("resend")) {
+				sendMail.setSubject("[SALAB] 회원가입 이메일 인증");
+				sendMail.setText(sendMail.emailCITemplate(uemail, authkey));
+				mv.addObject("mention", "링크를 클릭하시면 가입 완료 및 로그인이 가능합니다.");
+			}else if(type.equals("find")) {
+				sendMail.setSubject("[SALAB] 비밀번호 변경");
+				sendMail.setText(sendMail.findPwdTemplate(uemail, authkey));
+				mv.addObject("mention", "링크를 클릭하시면 비밀번호 변경이 가능합니다.");
+			}
+				
+			sendMail.setFrom("saladbranch@gmail.com", "SALAB");
+			sendMail.setTo(uemail);
+			sendMail.send();
+			mv.addObject("uemail", uemail);
+			mv.addObject("mailLink", uemail.substring(uemail.indexOf('@')+1, uemail.length()));
+			mv.setViewName("emailCI/emailSended");
+		}else {
+			mv.setViewName("common/error");
 		}
 		return mv;
 	}
 	
-	@RequestMapping(value="emailchk.do", method=RequestMethod.POST)
+	@RequestMapping(value="emailchk.do", method=RequestMethod.POST) //회원가입 인증메일 인증완료
 	public String emailConfirmMethod(Member member) {
 		int result = memberService.updateEmailChecked(member);
 		return "emailCI/emailConfirm";
+	}
+	@RequestMapping(value="pwdEmailchk.do", method=RequestMethod.POST) //비밀번호찾기 인증메일 인증완료
+	public ModelAndView changePwdMethod(Member member, ModelAndView mv) {
+		Member pmember = memberService.getMemberForPwd(member);
+		if(pmember != null) {
+			mv.addObject("pmember", pmember);
+			mv.setViewName("findPwd/changePwd");
+		}else {
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+	@RequestMapping(value="initChangePwd.do", method=RequestMethod.POST)
+	public String changePwdCompleteMethod(Member member) {
+		String viewName = "";
+		member.setUserpwd(bcryptPasswordEncoder.encode(member.getUserpwd()));
+		int result = memberService.initChangePwd(member);
+		if(result > 0)
+			viewName = "findPwd/changeComplete";
+		else
+			viewName = "common/error";
+		return viewName;
 	}
 	
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
-		String viewFileName = "recentFile/recentFile";
-		logger.info("로그인 입력 정보 : " + member.toString());
+		String viewFileName = "redirect:recentFile.do?sort=recent";
+		MongoService mgService = new MongoService();
 		Member loginMember = memberService.loginCheck(member);
 		
-		//유저메인 페이지 로딩시에 파일에대한 정보가 필요해서 추가합니다
-		List<PrivateFile> privateFile = pfService.selectList(loginMember.getUserno());
-		
-		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) && privateFile != null) {
+		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
 			session.setAttribute("loginMember", loginMember);
-			requset.setAttribute("privateFile", privateFile);
 		}else {
 			viewFileName = "common/error";
 		}
@@ -135,4 +183,5 @@ public class MemberController {
 		}
 		out.close();
 	}
+	
 }

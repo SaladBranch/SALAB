@@ -62,10 +62,12 @@ $('.enroll-link').on('click', function(){
     $('.signup-form').eq(index).css('display', 'block');
 });
 $('form input').focus(function(){
-    $(this).css('border', '1.5px solid #00a8ff'); 
+	if($(this).is(!$('.findPwdForm input')))
+		$(this).css('border', '1.5px solid #00a8ff'); 
 });
 $('form input').blur(function(){
-    $(this).css('border', '1.5px solid #d8d8d8');
+	if($(this).is(!$('.findPwdForm input')))
+		$(this).css('border', '1.5px solid #d8d8d8');
 });
 
 /* Enroll validation */
@@ -77,16 +79,21 @@ function enrollValid(button){
     var email = form.useremail;
     var password = form.userpwd;
     var phone = form.userphone;
-    
+    var $button = $('.enroll-btn').eq(index);
+    var origintext = $button.text();
     //유효성 검사를 통과하지 못하거나 등록된 이메일이 존재한다면
     if(!(isValidEmail(email) && isValidPwd(password) && isValidPhone(phone))){
         return false;
-    }else if(isExistEmail(email) == "exist"){
+    }else if(isExistEmail(email, $button) == "exist"){
     	event.preventDefault();
     	alertDangerToast("이미 등록된 이메일입니다.", email);
+    	$button.html(origintext);
     	return false;
     }else{
-    	return true;
+    	$loader = $("<div class='loader'></div>")
+		$button.text("");
+		$button.html($loader);
+		return true;
     }
 }
 /* Login validation */
@@ -96,9 +103,10 @@ function loginValid(button){
     
     var email = form.useremail;
     var password = form.userpwd;
+    var $button = $('.enroll-btn').eq(index);
     if(!(isValidEmail(email) && isValidPwd(password))){
         return false;
-    }else if(isExistEmail(email) == "none"){
+    }else if(isExistEmail(email, $button) == "none"){
     	event.preventDefault();
     	alertDangerToast("등록되지 않은 이메일입니다.", email);
     	return false;
@@ -107,7 +115,10 @@ function loginValid(button){
     	alertDangerToast("비밀번호가 일치하지 않습니다.", password);
     	return false;
     }else{
-    	return true;
+    	$loader = $("<div class='loader'></div>")
+		$button.text("");
+		$button.html($loader);
+		return true;
     }
 }
 
@@ -172,7 +183,8 @@ function isValidPhone(phone){
     }
     return result;
 }
-function isExistEmail(email){
+function isExistEmail(email, $button){
+	var text = $button.text();
 	var result = "";
 	$.ajax({
 		url: "isExistEmail.do",
@@ -184,6 +196,11 @@ function isExistEmail(email){
 		},
 		error: function(request, status, errorData){
 			console.log("error code :" + request.status + " \n Message: " + request.responseText + "\n Error : " + errorData);
+		},
+		beforeSend: function(){
+			$loader = $("<div class='loader'></div>")
+			$button.text("");
+			$button.html($loader);
 		}
 	});
 	return result;

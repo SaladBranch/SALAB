@@ -175,6 +175,22 @@ $('.sort-by-mention').click(function(){
         drop.show();
     }
 });
+$(function(){
+	var sort = $('#span-content');
+	if(sort.text() === 'recent'){
+		sort.text("최근 본 파일");
+		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
+		$('.sort-standards ul li').eq(0).addClass('sort-active');
+	}else if(sort.text() === 'name'){
+		sort.text("파일 명");
+		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
+		$('.sort-standards ul li').eq(1).addClass('sort-active');
+	}else if(sort.text() === 'date'){
+		sort.text("파일 생성 일자");
+		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
+		$('.sort-standards ul li').eq(2).addClass('sort-active');
+	}
+});
 
 $('.file-options-btn').click(function(){
     var index = $('.file-options-btn').index($(this));
@@ -214,4 +230,69 @@ $(window).click(function(event){
     
 });
 
+//파일 수정 일자 정리
+$(function(){
+	$('.file-edited span').each(function(){
+		var y = $(this).text().substr(0,4);
+		var m = Number($(this).text().substr(5,2) - 1);
+		if(m == 1){
+			m = '12';
+			y--;
+		}
+		var d = $(this).text().substr(8,2);
+		var h = $(this).text().substr(11,2);
+		var mi = $(this).text().substr(14,2);
+		var fdate = new Date(y, m, d, h, mi);
+		var ndate = new Date();
+		var minute = Math.floor((ndate - fdate)/60000);
+		if(minute < 60)
+			$(this).text(minute + "분 전 편집");
+		else if(minute <= 1440)
+			$(this).text(Math.floor(minute/60) + "시간 전 편집");
+		else
+			$(this).text(Math.floor(minute/1440) + "일 전 편집");
+	});
+});
 
+function showModal(findKey) {
+	$("#modal-name").show();
+}
+
+$(function(){
+	$(".modalOutline").click(function () {
+		$(".modalOutline").hide();
+    });
+    
+    //모달창 클릭 시, 부모로 이벤트 전송 block
+    $(".modalContent, .modalOutline").click(function () {
+        event.stopImmediatePropagation();
+        /*        e.keypress(
+                    function () {
+                        if (e.keyCode == 32) {
+                            alert("key up SPACE")
+                        }
+                    });*/
+    });
+});
+
+function newFile(){
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "insert_newprivateFile.do");
+    document.body.appendChild(form);
+
+    var insert = document.createElement("input");
+    insert.setAttribute("type", "hidden");
+    insert.setAttribute("name", "pfiletitle");
+    insert.setAttribute("value", $("#fileName").val());
+    form.append(insert);
+
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "userno");
+    insert2.setAttribute("value", $("#userNo").val());
+
+    form.append(insert2);
+
+    form.submit();
+}

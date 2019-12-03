@@ -25,8 +25,8 @@ var obj_rect = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj"  style="position: absolute; top: ${obj_rect.insertY}px; left: ${obj_rect.insertX}px; width: 140px; height: 70px;">
-          <div class="obj-comp textarea obj-rect" contenteditable="true"></div>
+        var code = `<div class="obj" style="position: absolute; top: ${obj_rect.insertY}px; left: ${obj_rect.insertX}px; width: 140px; height: 70px;">
+          <div class="obj-comp textarea obj-rect" contenteditable="false"></div>
         </div>`;
         return code;
     }
@@ -42,7 +42,7 @@ var obj_brect = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_brect.insertY}px; left: ${obj_brect.insertX}px; width: 140px; height: 70px;">
-          <div class="obj-comp textarea obj-brect" contenteditable="true"></div>
+          <div class="obj-comp textarea obj-brect" contenteditable="false"></div>
         </div>`;
         return code;
     }
@@ -59,7 +59,7 @@ var obj_heading = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_heading.insertY}px; left: ${obj_heading.insertX}px; width: 200px;">
-          <div class="obj-comp textarea obj-heading" contenteditable="true">
+          <div class="obj-comp textarea obj-heading" contenteditable="false">
             <h1 style="font-size: 35px;">Heading</h1>
           </div>
         </div>`
@@ -77,7 +77,7 @@ var obj_paragraph = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 200px;">
-          <div class="obj-comp textarea obj-paragraph" contenteditable="true">
+          <div class="obj-comp textarea obj-paragraph" contenteditable="false">
             <h1 style="font-size: 35px;">Heading</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
           </div>
@@ -96,7 +96,7 @@ var obj_ellipse = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_ellipse.insertY}px; left: ${obj_ellipse.insertX}px; width: 140px; height: 70px;">
-          <div class="obj-comp textarea obj-ellipse" contenteditable="true"></div>
+          <div class="obj-comp textarea obj-ellipse" contenteditable="false"></div>
         </div>`;
         return code;
     }
@@ -112,7 +112,7 @@ var obj_square = {
     },
     obj_code: function(){
         var code = `<div class="obj"  style="position: absolute; top: ${obj_square.insertY}px; left: ${obj_square.insertX}px; width: 100px; height: 100px;">
-          <div class="obj-comp textarea obj-square" contenteditable="true"></div>
+          <div class="obj-comp textarea obj-square" contenteditable="false"></div>
         </div>`;
         return code;
     }
@@ -128,7 +128,7 @@ var obj_circle = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_circle.insertY}px; left: ${obj_circle.insertX}px; width: 100px; height: 100px;">
-          <div class="obj-comp textarea obj-circle" contenteditable="true"></div>
+          <div class="obj-comp textarea obj-circle" contenteditable="false"></div>
         </div>`;
         return code;
     }

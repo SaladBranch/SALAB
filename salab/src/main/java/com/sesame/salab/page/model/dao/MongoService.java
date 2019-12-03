@@ -190,5 +190,18 @@ public class MongoService {
 		
 		mongoOps.save(p, collection);
 	}
+
+
+	public void pageRename(Page page, String collection) {
+		// TODO Auto-generated method stub
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").is(page.getPageno())
+		));
+		
+		Update update = new Update().set("pagename", page.getPagename());
+		mongoOps.updateFirst(query, update, collection);
+	}
 	
 }

@@ -31,9 +31,24 @@
 		SELECT * FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'Y'
 	</select>
 	<select id="isExistEmail" parameterType="string" resultType="int">
-		SELECT COUNT(*) FROM MEMBER WHERE USEREMAIL = #{useremail}
+		SELECT COUNT(*) FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'Y'
 	</select>
 	<delete id="deleteAccount" parameterType="Member" >
-		 DELETE FROM MEMBER WHERE USERNO=#{userno}
+		DELETE FROM MEMBER WHERE USERNO=#{userno}
 	</delete>
+	<delete id="deleteUncheckedMail" parameterType="string">
+		DELETE FROM MEMBER WHERE USEREMAIL = #{useremail } AND USEREMAILCHECKED = 'N'
+	</delete>
+	<select id="getUncheckedMember" parameterType="string" resultType="string">
+		SELECT USERAUTHKEY FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'N'
+	</select>
+	<select id="getCheckedMember" parameterType="string" resultType="string">
+		SELECT USERAUTHKEY FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'Y'
+	</select>
+	<select id="getMemberForPwd" parameterType="Member" resultType="Member">
+		SELECT * FROM MEMBER WHERE USEREMAIL = #{useremail} AND USERAUTHKEY = #{userauthkey}
+	</select>
+	<update id="initchangePwd" parameterType="Member">
+		UPDATE MEMBER SET USERPWD = #{userpwd} WHERE USEREMAIL = #{useremail} AND USERAUTHKEY = #{userauthkey}
+	</update>
 </mapper>

@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('.clickNotice').click(function () {
         var projectno = $(this).children().val();
         readNotice(projectno);
+
     });
     /*
         $(".modalOutline").click(function () {
@@ -26,8 +27,7 @@ function readNotice(pnoticeno) {
 }
 
 function moveListPage(page) {
-    alert(page);
-    location.href = 'projectNoticelist.do?page=' + page;
+    location.href = 'projectNoticelist.do?page=' + page+'&projectno='+$("#projectno").val();
 
 }
 
@@ -35,10 +35,6 @@ function writeNotice() {
     location.href = 'teamNoticeWrite.do';
 
 }
-function goBack(){
-    window.history.back();
-}
-
 
 function pageListPrint(countNotice) {
     console.log($('showList'));

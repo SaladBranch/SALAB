@@ -288,16 +288,16 @@
     		success: function(data){
     			$('.page-tab-content').html('');
     			for(var i =0; i < data.page.length; i++){
-    			console.log("page["+ i +"] :: "+ JSON.stringify(data.page[i]));
     			
-    			var dataSet = {
-    					content: data.page[i].content, 
-    					pageno: data.page[i].pageno,
-    					fileno: data.page[i].fileno,
-    					userno: data.page[i].userno,
-    					pagename: data.page[i].pagename,
-    					_id: data.page[i]._id
-    			}
+	    			var dataSet = {
+	    					content: data.page[i].content, 
+	    					pageno: data.page[i].pageno,
+	    					fileno: data.page[i].fileno,
+	    					userno: data.page[i].userno,
+	    					pagename: data.page[i].pagename,
+	    					thumbnail: data.page[i].thumbnail,
+	    					_id: data.page[i]._id
+	    			}
     			
     				if(i == 0){
     					$('.page-tab-content').append(
@@ -314,6 +314,8 @@
             	            '</div>'	+ 
             	            '</li>'
             			);
+    					
+    					$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
     				}else{
     					$('.page-tab-content').append(
             					'<li class="page-item">' +
@@ -329,6 +331,8 @@
             	            '</div>'	+ 
             	            '</li>'
             			);
+
+    					$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
     				}
     				list[i] = dataSet;
     			}
@@ -399,7 +403,7 @@
     	}
     	
     	list[index].content = $('.canvas-container').html();
-    	console.log(JSON.stringify(list[index]));
+    	list[index].thumbnail = $('.page-thumbnail:eq('+index+')').html();
     	
     	$.ajax({
     		url: 'pageSave.do',
@@ -431,6 +435,7 @@
     	}
     	
     	list[index].content = $('.canvas-container').html();
+    	list[index].thumbnail = $('.page-thumbnail:eq('+index+')').html();
     	console.log(JSON.stringify(list[index]));
     	
     	$.ajax({
@@ -468,7 +473,6 @@
         	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
         	for(var i = 0; i < files.length; i++) {
         	var file = files[i];
-        	//var size = uploadFiles.push(file); //업로드 목록에 추가
         	preview(file, size - 1); //미리보기 만들기
         	}
         });
@@ -486,86 +490,47 @@
     	reader.readAsDataURL(file);
     }
     
-    //pdf 일시정지
-    /*function pageOutPdf(){
-    	var temp = $('.canvas-container').html();
-    	$('.canvas-container').html('');
-    	var $pdf = $('body').append('<div id="pdf" style="display: none"></div>');
+    function Thumnail(){
+    	var node = document.getElementById('droppable');
+    	
+    	var canvas = document.createElement('canvas');
+    	canvas.width = node.scrollWidth;
+    	canvas.height = node.scrollHeight;
+    	
+    		domtoimage.toPng(node).then(function (pngDataUrl) {
+        	    var img = new Image();
+        	    img.onload = function () {
+        	        var context = canvas.getContext('2d');
+
+        	        context.translate(canvas.width, 0);
+        	        context.scale(-1, 1);
+        	        context.drawImage(img, 0, 0);
+
+        	        $('.ui-selected .page-thumbnail').html('');
+        	        $('.ui-selected .page-thumbnail').append(img);
+        	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
+        	    };
+        	    
+        	    img.src = pngDataUrl;
+        	})
+        	.catch(function (error) {
+        	      console.error('oops, something went wrong!', error);
+        	});
+    		
+    }
+    
+    function exportAllPdf(){
+    	pdf = new jsPDF('landscape', 'mm', 'a4', true);
     	
     	for(var i = 0; i < list.length; i++){
-    		$('#pdf').append(list[i].content);
-    		console.log($('#pdf').find('.canvas:eq('+i+')').html());
+    		var image = new Image();
+        	image.src= $(list[i].thumbnail).attr('src');
+    		
+    			console.log('start');
+        		pdf.addImage(image.src, 'PNG', -10, -10, (image.width * 0.186), (image.height * 0.179));
+        		pdf.addPage();
+        		console.log('end');
     	}
     	
-    	console.log('for in');
-    	for(var i = 0; i < list.length; i++){
-        		renderPNG(i);
-        }
-    	$('.canvas-container').html(temp);
+    	pdf.save('test.pdf');
     }
-    function renderPNG(i){
-    	if(i < list.length -1){
-    		setTimeout(function(){
-        		var imgData = new Image();
-        		html2canvas($('.canvas:eq(0)')[0], { allowTaint: true }).then(function(canvas) {
-                    calculatePDF_height_width("#render",0);
-                    imgData.src = canvas.toDataURL("image/png", 1.0);
-                    pdf = new jsPDF('l', 'pt', PDF_Width, PDF_Height);
-                    pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, HTML_Width, HTML_Height);
-                    
-
-                    downImage(imgData.src, 'test'+i+'.png');
-                });
-        	}, 0);
-        		console.log(i);
-        	}else{
-        		setTimeout(function(){
-        		var imgData = new Image();
-        		html2canvas($('.canvas:eq(1)')[0], { allowTaint: true }).then(function(canvas) {
-                    calculatePDF_height_width(".canvas", 1);
-                    imgData.src = canvas.toDataURL("image/png", 1.0);
-                    downImage(imgData.src, 'test'+i+'.png');
-                    pdf = new jsPDF('l', 'pt', PDF_Width, PDF_Height);
-                    pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, HTML_Width, HTML_Height);
-         
-                    	//Save PDF Doc	
-                        pdf.save("HTML-Document.pdf"); 
-
-                        //Generate BLOB object
-                        var blob = pdf.output("blob");
-
-                        //Getting URL of blob object
-                        var blobURL = URL.createObjectURL(blob);
-
-                        //Showing PDF generated in iFrame element
-                        var iframe = document.getElementById('sample-pdf');
-                        iframe.src = blobURL;
-
-                        //Setting download link
-                        var downloadLink = document.getElementById('pdf-download-link');
-                        downloadLink.href = blobURL;
-
-                });
-        	  	}, 0);
-        	}
-
-    }
-    
-    function downImage(uri, name){
-    	var link = document.createElement('a');
-    	link.download = name;
-    	link.href = uri;
-    	document.body.appendChild(link);
-    	link.click();
-    }
-    
-    function calculatePDF_height_width(selector,index){
-    	 page_section = $(selector).eq(index);
-    	 HTML_Width = page_section.width();
-    	 HTML_Height = page_section.height();
-    	 top_left_margin = 15;
-    	 PDF_Width = HTML_Width + (top_left_margin * 2);
-    	 PDF_Height = (PDF_Width * 1.2) + (top_left_margin * 2);
-    	 canvas_image_width = HTML_Width;
-    	 canvas_image_height = HTML_Height;
-    }*/

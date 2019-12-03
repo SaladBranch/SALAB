@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,19 +24,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sesame.salab.common.MailUtils;
+import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.member_project.model.service.Member_ProjectService;
+import com.sesame.salab.member_project.model.vo.Member_Project;
+import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.project.model.service.ProjectService;
 import com.sesame.salab.project.model.vo.Project;
+import com.sesame.salab.project.model.vo.ProjectMember;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
+import com.sesame.salab.projectnotice.model.service.ProjectnoticeService;
+import com.sesame.salab.projectnotice.model.vo.Projectnotice;
 
 @Controller
 public class ProjectController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
+	private Member_ProjectService mpService;
+	
+	@Autowired
 	private ProjectService pService;
+	
+	@Autowired
+	private ProjectnoticeService pnService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -45,7 +65,8 @@ public class ProjectController {
 		
 		//생성한 객체로 프로젝트 인서트
 		int result = pService.createProject(project);
-		String viewName = "project/teamPage";
+		int projectno= pService.selectProjectnoAfterCreated(Integer.parseInt(userno));
+ 		String viewName = "redirect:/gotoProject.do?projectno="+projectno;
 		if(result <= 0) {
 			//프로젝트 생성실패하면 에러페이지로 이동
 			viewName = "error";
@@ -115,4 +136,165 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping(value="gotoProject.do")
+	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("gotoTeamProject.do 진입");
+	if(project != null) {
+		System.out.println(project.toString());
+	}
+	Member member = (Member) session.getAttribute("loginMember");
+	//프로젝트 데이터조회
+	project = pService.selectProject(project);
+	System.out.println(project.toString());
+	
+	int listCount = pnService.listCount(project.getProjectno());
+	Paging paging = new Paging();
+	paging.makePage(listCount, 1);
+	System.out.println(paging.toString());
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	map.put("paging", paging);
+	map.put("projectno", project.getProjectno());
+	List<Projectnotice> pnoticelist = pnService.testList(map);
+	System.out.println(pnoticelist.size());
+	
+	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
+	System.out.println("멤버결과:"+memberList.toString());
+
+	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
+	if(teamProjectList == null) {
+		System.out.println("nullllllllllll");
+	}else {
+		System.out.println("dddd"+teamProjectList);
+	}
+	List<Project> projectList = mpService.selectProjectList(member.getUserno());
+	session.removeAttribute("myProjectList");
+	session.setAttribute("myProjectList", projectList);
+	mv.addObject("projectListSize",projectList.size());
+	mv.addObject("projectList",teamProjectList);
+	mv.addObject("memberList", memberList);
+	mv.addObject("noticelist", pnoticelist);
+	mv.addObject("paging", paging);
+	mv.addObject("project", project);
+  	mv.setViewName("project/projectMainPage");
+	return mv;
+	}
+
+	@RequestMapping(value="changeAuth.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String changeAuthMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("changeAuth.do 진입 : "+member_project.toString());
+	
+	response.setContentType("application/json; charset=UTF-8");
+	JSONObject job = new JSONObject();
+	int result = pService.changeAuth(member_project);
+
+	if(result==1) {job.put("result", "success");}
+	
+	
+	return job.toJSONString();
+	
+	}
+	@RequestMapping(value="inviteEmailCheck.do", method= RequestMethod.POST)
+	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException {
+		logger.info("진입");
+		response.setContentType("text/html; charset=UTF-8");
+		int result = pService.inviteEmailCheck(useremail,projectno);
+		PrintWriter out = response.getWriter();
+		if(result== 2) {
+			//초대기능 넣기
+			out.append("inviteSuccess");
+		}
+		else if(result==1) {
+			out.append("joinedMember");
+		}
+		else if(result==0){
+			out.append("fail");
+		}
+		out.flush();
+		out.close();
+	}
+	
+	@RequestMapping(value="memberKick.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String memberKickMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("memberKick.do 진입 : "+member_project.toString());
+	
+	response.setContentType("application/json; charset=UTF-8");
+	JSONObject job = new JSONObject();
+	int result = pService.memberKick(member_project);
+
+	if(result==1) {job.put("result", "success");}
+	
+	
+	return job.toJSONString();
+	
+	}
+	
+	@RequestMapping(value="gotoProjectFile.do")
+	public ModelAndView gotoProjectFileMethod(String sort,ModelAndView mv, Project project,HttpServletRequest request,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
+	logger.info("gotoProjectFile.do 진입");
+	MongoService mgService = new MongoService();
+	if(project != null) {
+		System.out.println(project.toString());
+	}
+	Member member = (Member) session.getAttribute("loginMember");
+	//프로젝트 데이터조회
+	project = pService.selectProject(project);
+	System.out.println(project.toString());
+	
+	
+	List<ProjectFile> fileList = pService.selectListAll(project.getProjectno());
+	
+	if(fileList == null) {
+		System.out.println("nullllllllllll");
+	}else {
+		System.out.println("dddd"+fileList);
+	}
+	if(sort !=null) {
+		if(sort.equals("recent")) {
+			Collections.sort(fileList, new Comparator<ProjectFile>() {
+				@Override
+				public int compare(ProjectFile f1, ProjectFile f2) {
+					return f2.getPrfilelastmodified().compareTo(f1.getPrfilelastmodified());
+				}
+			});
+			logger.info("최근 수정 순으로 정렬완료!");
+		}else if(sort.equals("name")) {
+			Collections.sort(fileList, new Comparator<ProjectFile>() {
+				@Override
+				public int compare(ProjectFile f1, ProjectFile f2) {
+					return f1.getPrfilername().compareTo(f2.getPrfilername());
+				}
+			});
+			logger.info("이름 순으로 정렬완료!");
+		}else if(sort.equals("date")) {
+			Collections.sort(fileList, new Comparator<ProjectFile>() {
+				@Override
+				public int compare(ProjectFile f1, ProjectFile f2) {
+					return f1.getPrfilecreatedate().compareTo(f2.getPrfilecreatedate());
+				}
+			});
+			logger.info("생성날짜 순으로 정렬완료!");
+		}
+		request.setAttribute("sort", sort);
+	}
+	
+/*	if(fileList != null) {
+		for(ProjectFile pf : fileList) {
+			Page p = new Page();
+			p.setFileno(pf.getPrfileno());
+			p.setUserno(pf.getProjectno());
+			p.setPageno(1);
+			Page page = mgService.findOne("page", p);
+			pf.setPfilethumbnail(page.getThumbnail());
+		}*/
+	request.removeAttribute("privateFile");
+	request.setAttribute("privateFile", fileList);
+
+	
+	mv.addObject("project", project);
+  	mv.setViewName("project/projectFile");
+	return mv;
+	}
 }

@@ -56,7 +56,19 @@ public class MailUtils {
 				.toString();
 		return template;
 	}
-	
+
+	public String findPwdTemplate(String uemail, String authkey) {
+		String template = new StringBuffer().append("<div style='width: 500px; height: 200px; border: 2px solid #3ec28f; border-radius: 10px; margin: 0 auto;'>")
+				.append("<h1 style='font-size: 20px; padding-left: 20px; margin-top: 30px;'>[SALAB]비밀번호 변경</h1>")
+				.append("<p style='padding-left: 20px; margin-top: 30px;'>아래의 버튼을  클릭하시면 이메일 인증을 완료하고 비밀번호를 변경하실 수 있습니다.</p>")
+				.append("<form action='http://localhost:8888/salab/pwdEmailchk.do' method='post' target='_blank' style='margin-top: 20px;'>")
+				.append("<input type='hidden' name='useremail' value='" + uemail +"'>")
+				.append("<input type='hidden' name='userauthkey' value='"+ authkey +"'>")
+				.append("<button style='border:0; background: #26b17b; border-radius: 5px; padding: 10px 10px; color: #fff; font-size: 15px; margin-left: 20px;'>이메일 인증 확인</button>")
+				.append("</form></div>")
+				.toString();
+		return template;
+	}
 	//프로젝트 초대메일 발신용
 	public String projectInviteTemplate(String uno, int projectno) {
 		String template = new StringBuffer().append("<div style='width: 500px; height: 200px; border: 2px solid #3ec28f; border-radius: 10px; margin: 0 auto;'>")
@@ -70,4 +82,5 @@ public class MailUtils {
 				.toString();
 		return template;
 	}
+
 }

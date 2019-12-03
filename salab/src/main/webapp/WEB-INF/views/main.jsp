@@ -80,7 +80,7 @@
 	                <input type="password" name="userpwd" placeholder="비밀번호" required>
 	                <button type="submit" class="login-btn" onclick="loginValid(this);">로그인</button>
 	                <p class="login-ment">
-	                    <a href="#">비밀번호를 잊어버렸어요</a>
+	                    <a href="findPwd.do">비밀번호를 잊어버렸어요</a>
 	                    계정이 없으신가요? <a class="enroll-link">회원가입</a>
 	                </p>
 	            </form>
@@ -199,7 +199,7 @@
                 <input type="password" name="userpwd" placeholder="비밀번호" required>
                 <button type="submit" class="login-btn" onclick="loginValid(this);">로그인</button>
                 <p class="login-ment">
-                    <a href="#">비밀번호를 잊어버렸어요</a>
+                    <a href="findPwd.do">비밀번호를 잊어버렸어요</a>
                     계정이 없으신가요? <a class="enroll-link">회원가입</a>
                 </p>
             </form>

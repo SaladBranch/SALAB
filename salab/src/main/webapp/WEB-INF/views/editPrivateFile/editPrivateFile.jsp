@@ -23,7 +23,7 @@
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / 파일명</div>
+            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">
@@ -63,7 +63,7 @@
     </header>
         <div class="main-toggle-menu">
         <ul>
-            <li><a href="recentFile.do">파일 페이지로 이동</a></li>
+            <li><a href="recentFile.do?sort=recent">파일 페이지로 이동</a></li>
             <hr>
             <li id="toggle-page">
                 페이지<span><i class="fas fa-caret-right"></i></span>
@@ -74,8 +74,8 @@
                     <li><a href="javascript:">페이지 이름 변경</a></li>
                     <li><a href="javascript:" onclick="pageSave();">저장</a></li>
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
-                    <li><a href="javascript:" onclick="pageOutPdf();">내보내기</a></li>
-                    <li><a href="javascript:">전체 내보내기</a></li>
+                    <li><a href="javascript:" onclick="Thumnail();">내보내기</a></li>
+                    <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
                 </ul>
             </li>
             
@@ -137,7 +137,7 @@
         	<li class="page-item ui-selectee ui-selected">
             	<div class="page ui-sortable-handle">
             		<div class="page-top ui-sortable-handle">
-            			<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            			<div class="page-thumbnail"></div>
             		</div>
             		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
             	</div>
@@ -146,7 +146,7 @@
            			<li class="page-item">
             		<div class="page">
             			<div class="page-top">
-            				<div class="page-thumbnail"><img src="/salab/resources/img/whitebox.png"></div>
+            				<div class="page-thumbnail"></div>
             			</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
             		</div>
@@ -377,10 +377,10 @@
             	</div>
             	<div class="text-font-comps">
             		<div class="text-item enterable dropdownable" id="font">
-            			<span class="tab-content-text">폰트</span><div class="fontType"></div><input type="hidden">
+            			<span class="tab-content-text">폰트</span><div class="fontType"></div><p>&#9660;</p>
             		</div>
             		<div class="text-item enterable" id="size">
-            			<span class="tab-content-text">크기</span><input type="number" value="20"><span class="tab-content-text">px</span>
+            			<span class="tab-content-text">크기</span><input type="number" id="size" value="20"><span class="tab-content-text">px</span>
             		</div>
             		<div class="text-item enterable" id="textColor">
             			<span class="tab-content-text">색상</span><input class="colorView" id="text">
@@ -396,11 +396,9 @@
             		</div>
             		
             		<div class= "text-font-droplist">
-            			<div class="component" id="1" onclick="textFontChange('굴림', 'Gulim')">굴림</div>
-            			<div class="component" id="2" onclick="textFontChange('돋움', 'Dotum')">돋움</div>
-            			<div class="component" id="3" onclick="textFontChange('바탕', 'Batang')">바탕</div>
-            			<div class="component" id="4" onclick="textFontChange('궁서', 'Gungsuh')">궁서</div>
-            			<div class="component" id="5" onclick="textFontChange('맑은 고딕', 'Malgun Gothic')">맑은 고딕</div>
+            			<c:forEach var="font" items="${fontList }">
+            			<div class="component" style="font-family : ${font}" onclick="textFontChange('${font}')">${font}</div>
+            			</c:forEach>
             		</div>
             		
             	</div>
@@ -441,14 +439,14 @@
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-    	//var pdf,page_section,HTML_Width,HTML_Height,top_left_margin,PDF_Width,PDF_Height,canvas_image_width,canvas_image_height;
     	
-    	/* //페이지넘버 담을 전역변수
-    	var listno = new Array(); */
+    	
     $(function(){
+    	
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
     	<c:forEach items="${pageList }" var="item">
     		list.push({
@@ -457,12 +455,19 @@
     			fileno: "${item.fileno}",
     			userno: "${item.userno}",
     			pagename: "${item.pagename}",
+    			thumbnail: `${item.thumbnail}`,
     			_id: "${item._id }",
     			undo: new Array(),
     			redo: new Array()
+
     		});
     	</c:forEach>
     	
+   
+	   		for(var i = 0; i < list.length; i++){
+	   			$('.page-thumbnail:eq('+i+')').html(list[i].thumbnail);
+	   		} 
+
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
@@ -549,7 +554,7 @@
             $('.canvas-container').css('width', 'calc(100% - 230px)');
         }
     }
-
+    
     function toggleItems(menu){
     	var target = $("." + menu + "-tab");
 		if (target.css("display") == "none"){
@@ -566,8 +571,8 @@
             $(this).removeClass('active-tab'); 
         });
         $('.figure-tab').addClass('active-tab');
-        $('.figure-tab-content').show();
         $('.text-tab-content').hide();
+        $('.figure-tab-content').fadeIn(200);
     });
     
     $('.text-tab').click(function(){
@@ -576,7 +581,7 @@
         });
         $('.text-tab').addClass('active-tab');
         $('.figure-tab-content').hide();
-        $('.text-tab-content').show();
+        $('.text-tab-content').fadeIn(200);
     });
 
     $('.top-bar-menu input').click(function(){
@@ -637,6 +642,7 @@
             	
     	}
     }
+    
     </script>
     
 </body>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sesame.salab.common.FileList;
+import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.dao.PrivateFileDao;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -15,9 +17,9 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	private PrivateFileDao pfDao;
 	
 	@Override
-	public int insertNewPrivateFile(String userno) {
+	public int insertNewPrivateFile(PrivateFile pfile) {
 		// 새파일 인서트용 메소드 
-		return pfDao.insertNewPrivateFile(userno);
+		return pfDao.insertNewPrivateFile(pfile);
 	}
 
 	@Override
@@ -27,9 +29,38 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	}
 
 	@Override
-	public PrivateFile createPage(String userno) {
+	public PrivateFile createPage(int userno) {
 		// 새파일 생성시 페이지생성을 위해 fileno 셀렉트
 		return pfDao.createPage(userno);
+	}
+
+	@Override
+	public int changeLastModified(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.changeLastModified(pfile);
+	}
+
+	@Override
+	public int updateThumbnail(Page page) {
+		// 저장, 전체저장시 파일의 썸네일 변경하는 메소드
+		return pfDao.updateThumbnail(page);
+	}
+
+	@Override
+	public List<FileList> selectListAll(int userno) {
+		return pfDao.selectListAll(userno);
+	}
+
+	@Override
+	public PrivateFile selectOne(Page page) {
+		// TODO Auto-generated method stub
+		return pfDao.selectOne(page);
+	}
+
+	@Override
+	public int pfRename(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.pfRename(pfile);
 	}
 
 }

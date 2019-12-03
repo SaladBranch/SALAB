@@ -4,16 +4,46 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="privatefileMapper">
 	
-	<insert id="insertNewPrivateFile" parameterType="int">
-		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, null, null, default, sysdate, default)
+	<insert id="insertNewPrivateFile" parameterType="PrivateFile">
+		insert into privatefile values(SEQ_PFILENO.NEXTVAL, #{userno}, default, #{pfiletitle}, default, default, default)
 	</insert>
 	
 	<select id="selectList" parameterType="int" resultType="PrivateFile">
-		select * from privatefile where userno = #{userno}
+		select * from privatefile where userno = #{userno} AND TRASHCAN = 'N'
+	</select>
+	
+	<select id="selectListAll" parameterType="int" resultType="FileList">
+		SELECT PFILENO, USERNO, PFILETHUMBNAIL, PFILETITLE, PFILELASTMODIFIED, PFILECREATEDATE, TRASHCAN, 'private' AS pt
+		FROM PRIVATEFILE
+		WHERE USERNO = #{userno} AND TRASHCAN = 'N'
+		UNION ALL
+		SELECT PRFILENO, PROJECTNO, PRFILETHUMBNAIL, PRFILETITLE, PRFILELASTMODIFIED, PRFILECREATEDATE, TRASHCAN, 'team'
+		FROM PROJECTFILE
+		WHERE PROJECTNO IN(
+		  SELECT PROJECTNO FROM MEMBER_PROJECT
+		  WHERE USERNO = #{userno} AND TRASHCAN = 'N'
+		)
+		ORDER BY 5 DESC
 	</select>
 	
 	<select id="createPage" parameterType="int" resultType="PrivateFile">
 		select * from (select pfileno from privatefile where userno = #{userno} order by PFILELASTMODIFIED desc) where rownum = 1
 	</select>
+	
+	<update id="changeLastModified" parameterType="PrivateFile">
+		update privatefile set PFILELASTMODIFIED = TO_CHAR(sysdate, 'YYYY/MM/DD HH24:MI') where userno = #{userno} and pfileno = #{pfileno}
+	</update>
+	
+	<update id="updateThumbnail" parameterType="Page">
+		update privatefile set pfilethumbnail = #{thumbnail } where userno = #{userno} and pfileno = #{fileno} 
+	</update>
+	
+	<select id="selectOne" parameterType="Page" resultType="PrivateFile">
+		select * from privatefile where userno = #{userno} and pfileno = #{fileno}
+	</select>
+	
+	<update id="pfRename" parameterType="PrivateFile">
+		update privatefile set pfiletitle = #{pfiletitle} where userno = #{userno} and pfileno = #{pfileno}
+	</update>
 		
 </mapper>

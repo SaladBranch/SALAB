@@ -27,5 +27,25 @@ public class MemberDao {
 	public int isExistEmail(String useremail) {
 		return sqlSession.selectOne("memberMapper.isExistEmail", useremail);
 	}
+
+	public void deleteUncheckedMail(String uemail) {
+		sqlSession.delete("memberMapper.deleteUncheckedMail", uemail);
+	}
+
+	public String getUncheckedMember(String uemail) {
+		return sqlSession.selectOne("memberMapper.getUncheckedMember", uemail);
+	}
+
+	public String getCheckedMember(String uemail) {
+		return sqlSession.selectOne("memberMapper.getCheckedMember", uemail);
+	}
+
+	public Member getMemberForPwd(Member member) {
+		return sqlSession.selectOne("memberMapper.getMemberForPwd", member);
+	}
+
+	public int initchangePwd(Member member) {
+		return sqlSession.update("memberMapper.initchangePwd", member);
+	}
 	
 }

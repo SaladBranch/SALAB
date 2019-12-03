@@ -8,13 +8,17 @@
 		<typeAlias type="com.sesame.salab.payment.model.vo.Payment" alias="Payment"/>
 		<typeAlias type="com.sesame.salab.privatefile.model.vo.PrivateFile" alias="PrivateFile"/>
 		<typeAlias type="com.sesame.salab.project.model.vo.Project" alias="Project"/>
-		<typeAlias type="com.sesame.salab.member_project.model.vo.Member_Project" alias="Member_Project"/>
+		<typeAlias type="com.sesame.salab.project.model.vo.ProjectMember" alias="ProjectMember"/> <!-- Project Main Page에 member data처리용 vo -->
+		<typeAlias type="com.sesame.salab.member_project.model.vo.Member_Project" alias="Member_Project"/>		<!-- DB의 MEMBER_PROJECT 테이블. -->
 		<typeAlias type="com.sesame.salab.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.sesame.salab.faq.model.vo.Faq" alias="Faq" />
-		<typeAlias type= "com.sesame.salab.projectnotice.model.vo.Projectnotice" alias="Projectnotice" />
+		<typeAlias type="com.sesame.salab.projectnotice.model.vo.Projectnotice" alias="Projectnotice" />
 		<typeAlias type="com.sesame.salab.qna.model.vo.Qna" alias="Qna" />
 		<typeAlias type="com.sesame.salab.common.paging.model.vo.Paging" alias="Paging" />
 		<typeAlias type="com.sesame.salab.admin.model.vo.Admin" alias="Admin" />
+		<typeAlias type="com.sesame.salab.page.model.vo.Page" alias="Page" />
+		<typeAlias type="com.sesame.salab.common.FileList" alias="FileList" />
+		<typeAlias type="com.sesame.salab.projectfile.model.vo.ProjectFile" alias="ProjectFile"/>
 	</typeAliases>
 	
 	<mappers>
@@ -29,5 +33,6 @@
 		<mapper resource="mappers/projectnotice-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml" />
 		<mapper resource="mappers/admin-mapper.xml" />
+		<mapper resource="mappers/ProjectFile-mapper.xml"/>
 	</mappers>
 </configuration>

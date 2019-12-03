@@ -2,31 +2,42 @@ package com.sesame.salab.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Map;
 
-import javax.mail.MessagingException;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.google.connect.GoogleOAuth2Template;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sesame.salab.common.AuthInfo;
 import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.Tempkey;
 import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.page.model.dao.MongoService;
-import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
-import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 @Controller
 public class MemberController {
@@ -44,6 +55,15 @@ public class MemberController {
 	//요것도 파일정보 불러오는데 필요해서 했습니다
 	@Autowired
 	private PrivateFileService pfService;
+	
+	@Inject
+	private AuthInfo authInfo;
+	
+	@Autowired
+	private GoogleOAuth2Template googleOAuth2Template;
+	
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
 	
 	//처음 회원가입 시 , 회원정보 삽입하는 파트
 	@RequestMapping(value="enroll.do", method=RequestMethod.POST)
@@ -134,7 +154,6 @@ public class MemberController {
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(HttpSession session, Member member, HttpServletRequest requset) {
 		String viewFileName = "redirect:recentFile.do?sort=recent";
-		MongoService mgService = new MongoService();
 		Member loginMember = memberService.loginCheck(member);
 		
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
@@ -145,13 +164,61 @@ public class MemberController {
 		return viewFileName;
 	}
 	
+	@RequestMapping(value="googleLogin.do")
+	public String doSessionAssignActionPage(HttpServletRequest request, HttpSession session) throws Exception{
+		String code = request.getParameter("code");
+		String viewFileName = "redirect:recentFile.do?sort=recent";
+		
+		RestTemplate restTemplate = new RestTemplate(); //Access Token 및 profile 요청
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		parameters.add("code", code);
+		parameters.add("client_id", authInfo.getClientId());
+		parameters.add("client_secret", authInfo.getClientSecret());
+		parameters.add("redirect_uri", googleOAuth2Parameters.getRedirectUri());
+		parameters.add("grant_type", "authorization_code");
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
+		ResponseEntity<Map> responseEntity = restTemplate.exchange("https://www.googleapis.com/oauth2/v4/token", HttpMethod.POST, requestEntity, Map.class);
+		Map<String, Object> responseMap = responseEntity.getBody();
+		
+		String[] tokens = ((String)responseMap.get("id_token")).split("\\.");
+		Base64 base64 = new Base64(true);
+		String body = new String(base64.decode(tokens[1]));
+		
+		System.out.println(new String(Base64.decodeBase64(tokens[1]), "utf-8"));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, String> result = mapper.readValue(body, Map.class);
+		String uemail = result.get("email");
+		String upwd = result.get("sub");
+		Member tempMember = new Member();
+		tempMember.setUseremail(uemail);
+		tempMember.setUserpwd(upwd);
+		Member googleUser = memberService.chkGoogleUser(tempMember);
+		if(googleUser != null) {
+			session.setAttribute("loginMember", googleUser);
+		}else {
+			Member m = new Member();
+			m.setUseremail(uemail);
+			m.setUserpwd(upwd);
+			m.setUsername(m.getUseremail().substring(0, m.getUseremail().indexOf('@')));
+			m.setUserauthkey(upwd);
+			memberService.enrollGoogleUser(m);
+			session.setAttribute("loginMember", memberService.chkGoogleUser(m));
+		}
+			
+		return viewFileName;
+	}
+	
 	@RequestMapping(value="logout.do")
 	public String loginMethod(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			session.invalidate();
 		}
-		return "main";
+		return "redirect:main.do";
 	}
 	
 	@RequestMapping(value="isExistEmail.do", method=RequestMethod.POST)

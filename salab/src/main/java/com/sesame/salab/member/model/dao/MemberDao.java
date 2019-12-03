@@ -47,5 +47,13 @@ public class MemberDao {
 	public int initchangePwd(Member member) {
 		return sqlSession.update("memberMapper.initchangePwd", member);
 	}
+
+	public Member chkGoogleUser(Member member) {
+		return sqlSession.selectOne("memberMapper.chkGoogleUser", member);
+	}
+
+	public void enrollGoogleUser(Member member) {
+		sqlSession.insert("memberMapper.enrollGoogleUser", member);
+	}
 	
 }

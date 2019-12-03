@@ -61,7 +61,7 @@
         <div id="enroll-form" class="modal-form">
             <div class="modal-form-content">
                 <form action="enroll.do" name="signupForm" class="signup-form" method="post">
-                    <button class="google-login"><img src="/salab/resources/img/google_logo.png">Sign up with Google</button>
+                	<button class="google-login"><img src="/salab/resources/img/google_logo.png">Sign up with Google</button>
                     <p>or</p>
                     <input type="email" name="useremail" placeholder="이메일" required>
                     <input type="password" name="userpwd" placeholder="비밀번호(6글자 이상, 숫자나 특수문자 포함)" required>
@@ -211,5 +211,12 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/toast.js"></script>
     <script type="text/javascript" src="/salab/resources/js/main.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$('.google-login').on('click', function(){
+    			location.href = "${google_url}";
+    		});
+    	});
+    </script>
 </body>
 </html>

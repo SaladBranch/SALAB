@@ -27,4 +27,8 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.selectOne", noticeno);
 	}
 
+	public int noticeInsert(Notice notice) {
+		return sqlSession.insert("noticeMapper.noticeInsert", notice);
+	}
+
 }

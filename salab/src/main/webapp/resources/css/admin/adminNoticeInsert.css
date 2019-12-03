@@ -460,85 +460,19 @@ body{
     padding-left: 10px;
 }
 
+
 /**/
 
 .notice_top{
-   float: left;
-   font-size: 30pt;
-   padding: 40px 30px 25px 30px;
-   width:87%;
-   margin-left: 70px;
-   border-bottom: 2px solid black;
+	float: left;
+	font-size: 30pt;
+	padding: 40px 30px 25px 30px;
+	width:87%;
+	margin-left: 70px;
+	border-bottom: 2px solid black;
 }
 
 .notice_bottom{
-   font-size: 13pt;
-   width: 87%;
-   padding: 0px 30px;
-   display: block;
-   margin-left: 70px;
-}
-
-.notice_head{
-   font-size: 16pt;
-   text-align: center;
-   width: 100%;
-   height: 50px;
-   border-bottom: 1px solid black;
-   border-top: 1px solid black;
-   margin-top: 10px;
-}
-
-.notice_list{
-	height: 60px;
-	border-bottom: 1px solid lightgray;
-}
-
-.notice_head_no{
-   float: left;
-   text-align: center;
-   line-height: 58px;
-   font-weight: 500;
-   width: 15%;
-}
-
-.notice_head_title{
-   float: left;
-   text-align: center;
-   line-height: 58px;
-   font-weight: 500;
-   width: 70%;
-}
-
-.notice_head_date{
-   float: left;
-   text-align: center;
-   line-height: 58px;
-   font-weight: 500;
-   width: 15%;
-}
-
-.notice_head_null{
-   float: left;
-   text-align: center;
-   line-height: 58px;
-   width: 100%;
-   color: gray;
-   font-weight: 400;
-}
-
-a { 
-   text-decoration: none; 
-   color: black;
-}
-
-a:hover{
-	color: #3cb371;
-}
-
-
-/* 페이징 css */
-.box_footer{
 	font-size: 13pt;
 	width: 87%;
 	padding: 0px 30px;
@@ -546,66 +480,94 @@ a:hover{
 	margin-left: 70px;
 }
 
-.paging_list{
-	text-align: center;
-	width: 80%;
-	height: 40px;
-	margin-top: 20px;
-	padding-left: 330px;
+.notice_box{
+	border: 1px solid black;
+	width: 65%;
+	padding: 30px 40px;
+	margin: 10px 30px 10px 150px;
 }
 
-.paging_btn{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	color: gray;
-	width: 11%;
-}
-.paging_btn > a{
-	color: black;
+.notice_info{
+	padding:2px;
+	font-weight: bold;
+	font-size: 15px;
 }
 
-.paging_btn > a:hover{
+.notice_info_faq{
+	padding: 15px;
+	margin-bottom: 20px;
+	font-size: 13px;
+	border-bottom: 1px solid gray;
+}
+
+.notice_fromAdmin{
+	margin: 0px 0px 20px 5px;
+	padding-bottom: 25px;
+	font-size: 16pt;
+	font-weight: bold;
 	color: #3cb371;
+	border-bottom: 1px solid gray;
 }
 
-.paging_no{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	width: 6%;
-	color: black;
+.notice_title{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
 }
 
-.paging_no:hover{
-	background: lightgreen;
-}
-
-.paging_no_this{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	width: 6%;
-	color: #3cb371;
-}
-
-.admin_btn_box{
+#notice_box_title{
+	border: 1px solid black;
+	margin: 5px 5px 10px 5px;
+	width: 100%;
 	display: block;
-	margin: 10px 10px 10px 10px;
-	padding: 10px 15px 40px 15px;
 }
 
-.adminNoticeInsert_btn{
-	float: right;
-	font-size: 18pt;
-	font-weight: 600;
-	padding: 3px 30px 3px 30px;
+.notice_content{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#notice_box_content{
+	border: 1px solid black;
+	margin: 5px 5px 25px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 220px;
+	resize: none;
+	outline: none;
+	display: block;
+}
+
+.notice_back_btn{
+	margin: 5px 50px 0px 100px;
+	padding: 10px 40px;
 	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
 }
-
-.adminNoticeInsert_btn:hover{
+.notice_back_btn:hover{
 	border: 1px solid #3cb371;
 }
+
+.notice_insert_btn{
+	margin: 5px 20px 0px 60px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
+}
+
+.notice_insert_btn:hover{
+	border: 1px solid #3cb371;
+}
+
+a { 
+	text-decoration: none; 
+	color: black;
+}
+
+a:hover{
+	color: #3cb371;
+}
+

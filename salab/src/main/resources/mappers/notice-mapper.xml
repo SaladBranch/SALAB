@@ -22,4 +22,8 @@
 	<select id="selectOne" parameterType="int" resultMap="resultNotice">
 		select * from notice where noticeno = #{noticeno}
 	</select>
+	
+	<insert id="noticeInsert" parameterType="Notice">
+		insert into notice values(seq_noticeno.nextval, #{adminid}, #{noticetitle}, #{noticecontent}, default)
+	</insert>
 </mapper>

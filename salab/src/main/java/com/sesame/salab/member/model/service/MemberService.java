@@ -12,4 +12,6 @@ public interface MemberService {
 	String getCheckedMember(String uemail);
 	Member getMemberForPwd(Member member);
 	int initChangePwd(Member member);
+	Member chkGoogleUser(Member tempMember);
+	void enrollGoogleUser(Member m);
 }

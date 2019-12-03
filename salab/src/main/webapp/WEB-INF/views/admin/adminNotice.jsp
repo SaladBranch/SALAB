@@ -49,9 +49,7 @@
                         <p>#<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
-                                <li><a href="#">로그아웃</a></li>
+                                <li><a href="adminLogout.do">로그아웃</a></li>
                             </ul>
                         </div>
                     </div>
@@ -68,7 +66,7 @@
                 <a href="adminMember.do">회원정보</a>
             </div>
             <div class="ad-notice active-menu">
-                <a href="adminNotice.do">공지사항</a>
+                <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq">
                 <a href="adminFaq.do">자주 찾는 질문</a>
@@ -80,7 +78,120 @@
     </div>
 
     <div class="right-main-side">
-    	
+    	<div class="notice_top">
+          <p>공지사항</p>
+       </div>
+        <div class="notice_bottom">
+        
+        	<div class="admin_btn_box">
+				<a href="adminNoticeInsert.do">
+					<div class="adminNoticeInsert_btn">
+						<span>NEW</span>
+					</div>
+				</a>
+			</div>
+			
+           <ul>
+              <!-- 목록 상단 -->
+              <li class="notice_head">
+                 <ul>
+                    <li class="notice_head_no"><span>NO</span></li>
+                    <li class="notice_head_title"><span>제목</span></li>
+                    <li class="notice_head_date"><span>날짜</span></li>
+                 </ul>
+              </li>
+              <!-- 목록 상단 -->
+				
+              	<!-- 목록 -->
+				<c:if test="${!empty requestScope.adminNoticeList }">
+					<c:set var="lcount" value="${requestScope.paging.listCount - ((requestScope.paging.currentPage-1) * requestScope.paging.limit)}"/>
+					<c:forEach var="adminNotice" items="${requestScope.adminNoticeList }">
+						<c:url var="adminNoticeDetail" value="adminNoticeDetail.do">
+							<c:param name="noticeno" value="${adminNotice.noticeno }" />
+							<c:param name="page" value="${paging.currentPage }" />
+						</c:url>
+						<li class="notice_list">
+							<ul>
+								<a href="${adminNoticeDetail }">
+									<li class="notice_head_no"><span><c:out value="${lcount }" /></span></li>
+									<li class="notice_head_title"><span>${adminNotice.noticetitle }</span></li>
+									<li class="notice_head_date"><span>${adminNotice.noticedate }</span></li>
+								</a>
+							</ul>
+						</li>
+						<c:set var="lcount" value="${lcount - 1 }" />
+					</c:forEach>
+				</c:if>
+              	<!-- 목록 -->
+              
+				<!-- 목록 == null -->
+				<c:if test="${empty requestScope.adminNoticeList }">
+					<li class="notice_list">
+						<ul>
+							<li class="notice_head_null"><span>아직 등록된 공지사항이 없습니다.</span></li>
+						</ul>
+					</li>
+				</c:if>
+				<!-- 목록 == null -->
+           </ul>
+        </div>
+        
+        <!-- 페이징 처리 -->
+        <div class="box_footer">
+       		<ul>
+	       		<li class="paging_list">
+		       		<ul>
+						<!-- 처음 -->
+						<c:if test="${paging.currentPage eq 1 }">
+							<li class="paging_btn">[처음]</li>
+						</c:if>
+						<c:if test="${paging.currentPage ne 1 }">
+							<li class="paging_btn"><a href="adminNoticeList.do?page=1">[처음]</a></li>
+						</c:if>
+						<!-- 처음 -->
+						
+						<!-- 이전-->
+						<c:if test="${paging.startPage eq 1 }">
+							<li class="paging_btn">[이전]</li>
+						</c:if>
+						<c:if test="${paging.startPage ne 1 }">
+							<li class="paging_btn"><a href="adminNoticeList.do?page=${paging.startPage - 1 }">[이전]</a></li>
+						</c:if>
+						<!-- 이전-->
+						
+						<!-- 현재 Page 숫자 목록 -->
+						<c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+							<c:if test="${pageno eq paging.currentPage }">		
+								<li class="paging_no_this">[${ pageno }]</li>
+							</c:if>
+							<c:if test="${pageno ne paging.currentPage }">
+								<a href="adminNoticeList.do?page=${ pageno }"><li class="paging_no">${ pageno }</li></a>
+							</c:if>
+						</c:forEach>
+						<!-- 현재 Page 숫자 목록 -->
+						
+						<!-- 다음-->
+						<c:if test="${paging.endPage eq paging.maxPage}">
+							<li class="paging_btn">[다음]</li>
+						</c:if>
+						<c:if test="${paging.endPage ne paging.maxPage}">
+							<li class="paging_btn"><a href="adminNoticeList.do?page=${paging.endPage + 1 }">[다음]</a></li>
+						</c:if>
+						<!-- 다음-->
+						
+						<!-- 끝 -->
+						<c:if test="${paging.currentPage ge paging.maxPage }">
+							<li class="paging_btn">[끝]</li>
+						</c:if>
+						<c:if test="${paging.currentPage lt paging.maxPage }">
+							<li class="paging_btn"><a href="adminNoticeList.do?page=${paging.maxPage }">[끝]</a></li>
+						</c:if>
+						<!-- 끝 -->
+					</ul>
+				</li>
+       		</ul>
+        </div>
+        <!-- 페이징 처리 -->
     </div>
     
 </body>

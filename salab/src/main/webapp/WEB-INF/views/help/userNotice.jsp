@@ -184,6 +184,9 @@
         </div>
         <!-- 페이징 처리 -->
     </div>
+    
+    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/help/help.js"></script>
 
 </body>
 </html>

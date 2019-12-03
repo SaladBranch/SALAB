@@ -47,6 +47,10 @@ function includeElement(X, Y, temp) {
 function leftMouseListner(){
     $(document).on('click', function(event){
         toggleContext(0);
+    	if(!$(event.target).is("#droppable .obj *") && !$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *")) {
+	        window.getSelection().removeAllRanges();
+			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+    	}
     });
     $('#droppable').on('click', function(){
         toggleContext(0);
@@ -55,17 +59,19 @@ function leftMouseListner(){
     	
     	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
     	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-    	
-    	if ($(this).is(".ui-draggable")) {
-            $(this).draggable("destroy");
-    	}
-    	if ($("#droppable").is(".ui-selectable")) {
-            $("#droppable").selectable("destroy");
-    	}
+
+		$(this).addClass("text-editing");
+		$(this).children(".textarea").attr("contenteditable", "true");
+		if ($(this).is(".ui-draggable")) {
+			$(this).draggable("destroy");
+		}
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
-        $(this).children(".obj-comp").attr("contenteditable", "true");
-        $(this).children(".obj-comp").selectText();
+		
+		if ($("#droppable").is(".ui-selectable"))
+			$("#droppable").selectable("destroy");
+		$(this).children(".textarea").selectText();
+		
         $('.right-side-bar .canvas-menu').hide();
         $('.right-side-bar .tab-menu').show();
         $('.right-side-bar .tab-content').show();
@@ -266,7 +272,9 @@ $(function(){
         filter: " > .obj",
         start: function(){
             selectedObj = new Array();
-            clearCursor();
+	    	$(".text-editing").blur();
+	    	window.getSelection().removeAllRanges();
+	    	$(".text-editing").removeClass("text-editing");
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -295,9 +303,8 @@ $(function(){
             startY = e.clientY;
             width = height = 0;
             $focus.show();
-            clearCursor();
         }
-    	if (!$(e.target).is("#droppable .obj *")) {
+    	if (!$(e.target).is("#droppable .obj *") && !$(e.target).is(".figure-item *")) {
     		$("#droppable .obj-comp[contenteditable=true]").each(function() {
     	        $(this).attr("contenteditable", "false");
     		})
@@ -353,7 +360,6 @@ $(function(){
             appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
-        clearCursor();
     });
     
     //마우스 움직일 때 드래그 영역 설정 함수
@@ -483,7 +489,7 @@ $(function(){
 
 $('#droppable').bind('DOMSubtreeModified', function(e){
 	
-    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0){
+    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0 && $(".text-reselect").length == 0){
         $('.right-side-bar .canvas-menu').show();
         $('.right-side-bar .tab-menu').hide();
         $('.right-side-bar .tab-content').hide();

@@ -1,4 +1,6 @@
 
+var textSelection = "";
+
 // ** 메뉴 구성 hover, click 이벤트 모음
 
 	// component
@@ -30,11 +32,9 @@
         }
         $(this).addClass('clickedItem');
         $(this).css("border", "1px solid black");
-        if ($(this).attr("id") == "textColor")
-        	maintainCursor();
-    	$(this).children("input").focus();
+		if (!$(this).children("input").is(":focus") && !$(this).children().children("input").is(":focus"))
+			$(this).children("input").focus();
         $(this).children("input").css("border", "1px solid skyblue");
-    	$(this).children().children("input").focus();
         $(this).children().children("input").css("border", "1px solid skyblue");
     });
 
@@ -95,20 +95,12 @@
 
 // input change
     
-    $(".right-side-bar input").on("focusin", function() {
-    	var inputID = $(this).attr("id");
-    	if (inputID == "size" || inputID == "text" || inputID == "textground")
-    		maintainCursor();
-    });
-
-	$(".right-side-bar input[type=number]").on("change keyup paste focusout", function(event) {
+	$(".right-side-bar input").on("change keyup paste focusout", function(event) {
 
     	var type = $(this).parents().attr("id");
     	var value = $(this).val();
     	var eventType = event.handleObj.type;
 
-		console.log(type + "에 대한 변화를 했어요");
-		
     	var applyType = "";
     	
     	if (type == "width") {
@@ -254,7 +246,6 @@
     			$(this).blur();
     	}
     	else if (eventType == "focusout") {
-    		clearCursor();
             clearEnterable();
     		applyChange(applyType);
     	}
@@ -610,8 +601,6 @@
 	// input 변화
     function applyChange(type) {
     	
-    	//console.log("type : " + type);
-
     	var object = $("div.ui-selected");
 		var target = $("div.ui-selected .obj-comp");
 		
@@ -704,7 +693,7 @@
 
         		// fontSize
         		if (type == "fontSize") {
-                	var textSelected = $("span.text-selected");
+                	var textSelected = $(".textarea span.text-selected");
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='font-size : " + $(".text-font-comps .text-item[id=size] input").val() + "px'>" + textSelected.html() + "</span>");
         		    	clearChanged("font-size");
@@ -722,11 +711,11 @@
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
 
-                	var textSelected = $("span.text-selected");
+                	var textSelected = $(".textarea span.text-selected");
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='color : rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")'>" + textSelected.html() + "</span>");
         		    	clearChanged("color");
-            			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+            			$(".textarea .text-selected").contents().unwrap();
         		    } else {
         		    	$(this).css("color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
             		    clearAll("color");
@@ -806,7 +795,7 @@
                 	var textgroundColor2 = parseInt(textgroundColor.substring(2, 4), 16);
                 	var textgroundColor3 = parseInt(textgroundColor.substring(4, 6), 16);
 
-                	var textSelected = $("span.text-selected");
+                	var textSelected = $(".textarea span.text-selected");
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + textSelected.html() + "</span>");
             			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
@@ -832,9 +821,6 @@
     		});
     		
     	}
-    	else {
-    		console.log("선택된 엘리먼트가 없습니다.");
-    	}
     	
     }
 
@@ -846,11 +832,6 @@
 		return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
     }
 
-    // 유효성 검사 중 공백 0으로 채우기
-	function abbreviate(str, limit) {
-		return str.length <= limit ? str : str.substring(0, limit) + "...";
-    }
-	
 	function clearEnterable() {
         $('.enterable').each(function(){
             $(this).removeClass('clickedItem');
@@ -861,28 +842,6 @@
         });
 	}
 
-    function maintainCursor() {
-		var focused = window.getSelection();
-		if (focused.rangeCount > 0) {
-			var target = focused.getRangeAt(0).commonAncestorContainer.parentElement.className + " ";
-			// cursor 드래그 된 것이 있을 경우
-			if (focused.focusNode != null && $("span.text-selected").length == 0 && (!target.startsWith("text-item") && !target.startsWith("font-item"))) {
-				wrapTag(focused.getRangeAt(0), "span", "text-selected", "background", "lightgray");
-			}
-		}
-    }
-    
-    function clearCursor() {
-        window.getSelection().removeAllRanges();
-		$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-		$('#droppable .obj-comp').each(function() {
-			if ($(this).attr("contenteditable") == "true") {
-				$(this).attr("contenteditable", "false");
-			}
-            textEditMode = "false";
-		})
-    }
-    
     function wrapTag(target, typeName, className, cssType, cssProperty) {
     	if (target != null && typeName != null) {
     	    var contents = target.extractContents();
@@ -1074,23 +1033,22 @@
 		$(".ui-selected .obj-comp .changed").removeAttr("class");
 	    
 	}
-	
-	$(document).on("click", function(event) {
-		if (!$(event.target).is("#size") && !$(event.target).is("#text") && !$(event.target).is("#textground")) {
-			if ($(".text-selected").length > 0)
-				$(".text-selected").content().unwrap();
-		} else {
-			clearCursor();
-		}
+
+	$(document).on("mousemove", ".text-editing", function() {
+		if ($("#droppable").is(".ui-selectable"))
+			$("#droppable").selectable("destroy");
 	});
 
-	$(document).on("mouseleave", ".obj-comp", function() {
+	$(document).on("mouseleave", ".text-editing", function() {
 		if (!$("#droppable").is(".ui-selectable")) {
-		    $('#droppable').selectable({
+			$("#droppable").selectable({
 		        filter: " > .obj",
 		        start: function(){
 		            selectedObj = new Array();
-		            clearCursor();
+			    	$(".text-editing").blur();
+			    	window.getSelection().removeAllRanges();
+			    	$(".text-editing").children(".textarea").attr("contenteditable", "false");
+			    	$(".text-editing").removeClass("text-editing");
 		        },
 		        selected: function(e, ui){
 		            selectedObj.push($(ui.selected));
@@ -1106,9 +1064,31 @@
 		        }
 		    });
 		}
-		
 	});
 	
+	$(document).on("click", ".text-editing", function() {
+		if ($(".text-selected").length > 0) {
+			restoreSelection(textSelection);
+			$(".text-selected").addClass("text-reselect");
+			$(".text-selected").removeClass("text-selected");
+			$(".text-reselect").css("background", "none");
+		} else if ($(".text-reselect").length > 0)
+			$(".text-reselect").contents().unwrap();
+	});
+	
+	$("input").on("focusin", function() {
+		var focused = window.getSelection();
+		if (focused.rangeCount > 0) {
+			var target = focused.getRangeAt(0).commonAncestorContainer.parentElement.className + " ";
+			// cursor 드래그 된 것이 있을 경우
+			if (focused.focusNode != null) {
+	    		textSelection = saveSelection();
+				wrapTag(focused.getRangeAt(0), "span", "text-selected", "background", "lightgray");
+		        window.getSelection().removeAllRanges();    
+			}
+		}
+	});
+
 	//editablecontent select all text
 	jQuery.fn.selectText = function() {
     	var doc = document;
@@ -1125,4 +1105,28 @@
     		selection.addRange(range);
     	}
 	};
-    	
+
+	function saveSelection() {
+	    if (window.getSelection) {
+	        var sel = window.getSelection();
+	        if (sel.getRangeAt && sel.rangeCount) {
+	            return sel.getRangeAt(0);
+	        }
+	    } else if (document.selection && document.selection.createRange) {
+	        return document.selection.createRange();
+	    }
+	    return null;
+	}
+
+	function restoreSelection(range) {
+	    if (range) {
+	        if (window.getSelection) {
+	            var sel = window.getSelection();
+	            sel.removeAllRanges();
+	            sel.addRange(range);
+	        } else if (document.selection && range.select) {
+	            range.select();
+	        }
+	    }
+	}
+	

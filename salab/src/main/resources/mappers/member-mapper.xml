@@ -56,7 +56,7 @@
 	</select>
 	<insert id="enrollGoogleUser" parameterType="Member">
 		INSERT INTO MEMBER VALUES(
-		SEQ_USERNO.NEXTVAL, #{useremail} , #{userpwd} , #{username} , '01000000000', NULL, NULL, DEFAULT, DEFAULT, #{userauthkey}, 'Y' , null, null
+		SEQ_USERNO.NEXTVAL, #{useremail} , #{userpwd} , #{username} , NULL, NULL, NULL, DEFAULT, DEFAULT, #{userauthkey}, 'Y' , null, null
 		)
 	</insert>
 </mapper>

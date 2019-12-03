@@ -262,4 +262,12 @@ public class PageController {
    		request.setAttribute("projectno", projectno);
    		return "project/inviteProject";
    	}
+   	
+
+	//승진 test
+	@RequestMapping(value="testText.do")
+	public String toTestTextPage() {
+		return "testText";
+	}
+	
 }

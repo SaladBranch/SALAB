@@ -489,10 +489,11 @@
             defaultValue: "#FFFFFF",
             letterCase : "uppercase",
             change: function(hex, opacity){
+            	console.log($(this).attr("id"));
                 switch ($(this).attr("id")) {
                 	case "background" : applyChange("backgroundColor"); break;
                 	case "line" : applyChange("lineColor"); break;
-                	case "text" : applyChange("textColor"); break;
+                	case "text" : console.log("text color chnage"); applyChange("textColor"); break;
                 	case "textground" : applyChange("textgroundColor"); break;
                 }
             }

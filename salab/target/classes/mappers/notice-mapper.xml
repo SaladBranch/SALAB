@@ -26,4 +26,8 @@
 	<insert id="noticeInsert" parameterType="Notice">
 		insert into notice values(seq_noticeno.nextval, #{adminid}, #{noticetitle}, #{noticecontent}, default)
 	</insert>
+	
+	<delete id="noticeDelete" parameterType="int">
+		delete from notice where noticeno = #{noticeno}
+	</delete>
 </mapper>

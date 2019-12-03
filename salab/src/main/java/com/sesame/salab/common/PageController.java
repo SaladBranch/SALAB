@@ -175,9 +175,9 @@ public class PageController {
 	// ~ 연영 help 페이지
 	
 	// 관리자 페이지
-	@RequestMapping(value="adminLogin.do")
-	public String toAdminLoginMethod() {
-		return "admin/adminLogin";
+	@RequestMapping(value="adminMain.do")
+	public String toAdminMainMethod() {
+		return "admin/adminMain";
 	}
 	
 	@RequestMapping(value="adminMember.do")
@@ -185,9 +185,9 @@ public class PageController {
 		return "admin/adminMember";
 	}
 	
-	@RequestMapping(value="adminNotice.do")
-	public String toAdminNoticeMethod() {
-		return "admin/adminNotice";
+	@RequestMapping(value="adminNoticeInsert.do")
+	public String toAdminNoticeInsertMethod() {
+		return "admin/adminNoticeInsert";
 	}
 	
 	@RequestMapping(value="adminFaq.do")

@@ -459,3 +459,113 @@ body{
     font-size: 13px;
     padding-left: 10px;
 }
+
+/**/
+
+.notice_top{
+	float: left;
+	font-size: 30pt;
+	padding: 40px 30px 25px 30px;
+	width:87%;
+	margin-left: 70px;
+	border-bottom: 2px solid black;
+}
+
+.notice_bottom{
+	font-size: 13pt;
+	width: 87%;
+	padding: 0px 30px;
+	display: block;
+	margin-left: 70px;
+}
+
+.notice_box{
+	border: 1px solid black;
+	width: 65%;
+	padding: 30px 40px;
+	margin: 10px 30px 10px 150px;
+}
+
+.notice_info{
+	padding:2px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.notice_info_faq{
+	padding: 15px;
+	margin-bottom: 20px;
+	font-size: 13px;
+	border-bottom: 1px solid gray;
+}
+
+.notice_fromAdmin{
+	margin: 0px 0px 20px 5px;
+	padding-bottom: 25px;
+	font-size: 16pt;
+	font-weight: bold;
+	color: #3cb371;
+	border-bottom: 1px solid gray;
+}
+
+.notice_title{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#notice_box_title{
+	border: 1px solid black;
+	margin: 5px 5px 10px 5px;
+	width: 100%;
+	display: block;
+}
+
+.notice_content{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#notice_box_content{
+	border: 1px solid black;
+	margin: 5px 5px 25px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 220px;
+	resize: none;
+	outline: none;
+	display: block;
+}
+
+.notice_back_btn{
+	margin: 5px 50px 0px 100px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
+}
+.notice_back_btn:hover{
+	border: 1px solid #3cb371;
+}
+
+.notice_delete_btn{
+	margin: 5px 20px 0px 60px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
+}
+
+.notice_delete_btn:hover{
+	border: 1px solid #3cb371;
+}
+
+a { 
+	text-decoration: none; 
+	color: black;
+}
+
+a:hover{
+	color: #3cb371;
+}

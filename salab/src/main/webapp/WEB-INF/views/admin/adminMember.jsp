@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
+    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <title>USER | SALAB</title>
 </head>
 
@@ -46,12 +47,10 @@
                         <img src="/salab/resources/img/default_profile.png" alt="">
                     </div>
                     <div class="profile-name">
-                        <p>#<i class="fas fa-chevron-down"></i></p>
+                        <p>${loginAdmin.adminid }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
-                                <li><a href="#">로그아웃</a></li>
+                                <li><a href="adminLogout.do">로그아웃</a></li>
                             </ul>
                         </div>
                     </div>
@@ -68,7 +67,7 @@
                 <a href="adminMember.do">회원정보</a>
             </div>
             <div class="ad-notice">
-                <a href="adminNotice.do">공지사항</a>
+                <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq">
                 <a href="adminFaq.do">자주 찾는 질문</a>
@@ -83,5 +82,7 @@
     	
     </div>
     
+    
+    <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
 </body>
 </html>

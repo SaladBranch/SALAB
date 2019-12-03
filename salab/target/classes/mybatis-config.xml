@@ -15,6 +15,7 @@
 		<typeAlias type= "com.sesame.salab.projectnotice.model.vo.Projectnotice" alias="Projectnotice" />
 		<typeAlias type="com.sesame.salab.qna.model.vo.Qna" alias="Qna" />
 		<typeAlias type="com.sesame.salab.common.paging.model.vo.Paging" alias="Paging" />
+		<typeAlias type="com.sesame.salab.admin.model.vo.Admin" alias="Admin" />
 		<typeAlias type="com.sesame.salab.page.model.vo.Page" alias="Page" />
 	</typeAliases>
 	
@@ -29,5 +30,6 @@
 		<mapper resource="mappers/faq-mapper.xml" />
 		<mapper resource="mappers/projectnotice-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml" />
+		<mapper resource="mappers/admin-mapper.xml" />
 	</mappers>
 </configuration>

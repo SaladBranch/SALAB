@@ -2,6 +2,7 @@ package com.sesame.salab.notice.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -132,6 +133,20 @@ public class NoticeController {
 		int result = noticeService.noticeInsert(notice);
 		
 	    if(result <= 0) {
+	    	mv.setViewName("common/error");
+	    } else {
+	    	mv.setViewName("redirect:adminNoticeList.do");
+	    }
+		
+		return mv;
+	}
+	
+	//관리자 공지사항 삭제
+	@RequestMapping(value="adminNoticeDelete.do")
+	public ModelAndView adminNoticeDeleteMethod(ModelAndView mv, Notice notice, @RequestParam(value="noticeno") int noticeno) {
+		int result = noticeService.noticeDelete(noticeno);
+		
+		if(result <= 0) {
 	    	mv.setViewName("common/error");
 	    } else {
 	    	mv.setViewName("redirect:adminNoticeList.do");

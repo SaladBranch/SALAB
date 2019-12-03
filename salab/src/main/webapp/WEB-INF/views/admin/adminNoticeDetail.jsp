@@ -121,6 +121,10 @@ function back_notice(){
 <!-- 글 삭제 버튼 click -->
 <script type="text/javascript">
 function delete_notice(){
+	var result = confirm("삭제하시겠습니까?");
+	if(result){
+		location.href="adminNoticeDelete.do?noticeno=${requestScope.notice.noticeno }";
+	}
 	
 }
 </script>

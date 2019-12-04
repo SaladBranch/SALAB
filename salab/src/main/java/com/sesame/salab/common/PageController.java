@@ -82,6 +82,7 @@ public class PageController {
 			viewFileName = "common/error";
 		}
 		List<Project> projectList = mpService.selectProjectList(member.getUserno());
+		session.removeAttribute("myProjectList");
 		session.setAttribute("myProjectList", projectList);
 		
 		return viewFileName;
@@ -258,7 +259,8 @@ public class PageController {
    	}
 
    	@RequestMapping(value="teamNoticeWrite.do")
-   	public String teamNoticeWriteMethod() {
+   	public String teamNoticeWriteMethod(@RequestParam("projectno") int projectno,HttpServletRequest request) {
+   		request.setAttribute("projectno", projectno);
    		return "project/teamNoticeWrite";
    	}
    	   	

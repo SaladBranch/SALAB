@@ -5,7 +5,7 @@ public class ProjectFile implements java.io.Serializable{
 	
 	private int prfileno;
 	private int projectno;
-	private String prfilername;
+	private String prfilethumbnail;
 	private String prfiletitle;
 	private String prfilelastmodified;
 	private String prfilecreatedate;
@@ -13,12 +13,19 @@ public class ProjectFile implements java.io.Serializable{
 	
 	public ProjectFile() {}
 
-	public ProjectFile(int prfileno, int projectno, String prfilername, String prfiletitle, String prfilelastmodified,
-			String prfilecreatedate, String trashcan) {
+	@Override
+	public String toString() {
+		return "ProjectFile [prfileno=" + prfileno + ", projectno=" + projectno + ", prfilethumbnail=" + prfilethumbnail
+				+ ", prfiletitle=" + prfiletitle + ", prfilelastmodified=" + prfilelastmodified + ", prfilecreatedate="
+				+ prfilecreatedate + ", trashcan=" + trashcan + "]";
+	}
+
+	public ProjectFile(int prfileno, int projectno, String prfilethumbnail, String prfiletitle,
+			String prfilelastmodified, String prfilecreatedate, String trashcan) {
 		super();
 		this.prfileno = prfileno;
 		this.projectno = projectno;
-		this.prfilername = prfilername;
+		this.prfilethumbnail = prfilethumbnail;
 		this.prfiletitle = prfiletitle;
 		this.prfilelastmodified = prfilelastmodified;
 		this.prfilecreatedate = prfilecreatedate;
@@ -41,12 +48,12 @@ public class ProjectFile implements java.io.Serializable{
 		this.projectno = projectno;
 	}
 
-	public String getPrfilername() {
-		return prfilername;
+	public String getPrfilethumbnail() {
+		return prfilethumbnail;
 	}
 
-	public void setPrfilername(String prfilername) {
-		this.prfilername = prfilername;
+	public void setPrfilethumbnail(String prfilethumbnail) {
+		this.prfilethumbnail = prfilethumbnail;
 	}
 
 	public String getPrfiletitle() {
@@ -81,12 +88,9 @@ public class ProjectFile implements java.io.Serializable{
 		this.trashcan = trashcan;
 	}
 
-	@Override
-	public String toString() {
-		return "ProjectFile [prfileno=" + prfileno + ", projectno=" + projectno + ", prfilername=" + prfilername
-				+ ", prfiletitle=" + prfiletitle + ", prfilelastmodified=" + prfilelastmodified + ", prfilecreatedate="
-				+ prfilecreatedate + ", trashcan=" + trashcan + "]";
+	public static long getSerialversionuid() {
+		return SerialVersionUID;
 	}
-	
+
 	
 }

@@ -4,8 +4,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ProjectfileMapper">
 
-	<select id="selectMainFileList" parameterType="ProjectFile" resultType="int">
-		select * from privatefile where userno = #{userno}
+	<select id="selectMainFileList" parameterType="ProjectFile" resultType="ProjectFile">
+		<![CDATA[
+		select * from projectfile where projectno = #{projectno} and rownum<5
+		]]>
 	</select>
 	
 	<select id="selectListAll" parameterType="ProjectFile" resultType="int">

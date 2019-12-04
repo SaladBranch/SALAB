@@ -20,14 +20,20 @@
 	<delete id="memberKick" parameterType="Member_Project"	>
 		delete from member_project  where userno=#{userno} and projectno=#{projectno}
 	</delete>
+	<!-- 프리미엄없을시 모두 readonly -->
 	<update id="setAllOnlyRead" parameterType="int">
 		  UPDATE MEMBER_PROJECT  SET USERAUTH   = 'ONLY_READ'  WHERE PROJECTNO=#{PROJECTNO}
-	</update>	
+	</update>
+	<!-- Premium을 찾아서 리더로 지정 -->
 	<select id="searchNextLeader" parameterType="int"  resultType="int" >
 		 	SELECT NVL(USERNO, 0) USERNO
 			 FROM MEMBER_PROJECT INNER JOIN MEMBER USING(USERNO)
       		WHERE PROJECTNO = #{PROJECTNO} AND USERAUTH != 'LEADER'  AND rownum = 1 
       		ORDER BY PROJECTJOINDATE ASC
+	</select>
+	<!-- 프로젝트 진입시 유저 권한 검색.후 세션저장 -->
+	<select id="selectUserAuth" parameterType="HashMap" resultType="String">
+		select userauth from member_project where userno=#{userno} and  projectno=#{projectno}
 	</select>
 	
 </mapper>

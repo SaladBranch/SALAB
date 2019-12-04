@@ -1,5 +1,6 @@
 package com.sesame.salab.member_project.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.sesame.salab.member_project.model.vo.Member_Project;
@@ -10,5 +11,7 @@ public interface Member_ProjectService {
 	int insertTeamMember(Member_Project mp);
 
 	List<Project> selectProjectList(int userno);
+
+	String selectUserAuth(HashMap<String, Object> mapForAuth);
 
 }

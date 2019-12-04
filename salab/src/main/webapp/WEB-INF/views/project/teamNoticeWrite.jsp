@@ -19,14 +19,14 @@
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
-    <title>최근 파일 | Salab</title>
+    <title>Project | Salab</title>
 </head>
 
 <body>
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText">공지사항</div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -131,8 +131,9 @@
         function noticeRegist() {
             var title = $('#noticeTitie').val();
             var content = $('#noticeContent').val();
+            var projectno = ($('#projectno').val());
             alert("content: " + content);
-            location.href = 'projectNotiRegist.do?pnoticetitle=' + title + '&pnoticecontent=' + content;
+            location.href = 'projectNotiRegist.do?pnoticetitle=' + title + '&pnoticecontent=' + content+"&projectno="+projectno ;
         }
         function goBack(){
             window.history.back();

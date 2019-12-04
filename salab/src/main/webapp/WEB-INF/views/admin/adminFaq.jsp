@@ -46,12 +46,10 @@
                         <img src="/salab/resources/img/default_profile.png" alt="">
                     </div>
                     <div class="profile-name">
-                        <p>#<i class="fas fa-chevron-down"></i></p>
+                        <p>${loginAdmin.adminid }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
-                                <li><a href="#">로그아웃</a></li>
+                                <li><a href="adminLogout.do">로그아웃</a></li>
                             </ul>
                         </div>
                     </div>
@@ -68,10 +66,10 @@
                 <a href="adminMember.do">회원정보</a>
             </div>
             <div class="ad-notice">
-                <a href="adminNotice.do">공지사항</a>
+                <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq active-menu">
-                <a href="adminFaq.do">자주 찾는 질문</a>
+                <a href="adminFaqList.do">자주 찾는 질문</a>
             </div>
             <div class="ad-qna">
                 <a href="adminQna.do">1:1문의</a>
@@ -80,8 +78,58 @@
     </div>
 
     <div class="right-main-side">
-    	
+    	<div class="faq_top">
+    		<p>자주 하는 질문</p>
+    	</div>
+        <div class="faq_bottom">
+        	<ul>
+        		<li class="faq_btn">
+        			<input type="button" class="faqInsert-btn" value="NEW">
+        		</li>
+        		<c:forEach var="faq" items="${requestScope.adminFaqList }">
+	        		<li class="faq_open">
+	        			<ul>
+							<li class="faq_open_category"><span>${faq.faqcategory }</span></li>
+							<li class="faq_open_title"><span>${faq.faqtitle }</span></li>
+							<li class="faq_open_plus"><span>+</span></li>
+							<li class="faq_open_minus"><span>-</span></li>
+							<div class="faq_box">
+								<p>${faq.faqcontent }</p>
+							</div>
+		        		</ul>
+	        		</li>
+        		</c:forEach>
+        	</ul>
+        </div>
     </div>
     
+    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
+    
 </body>
+<!-- +click -->
+<script type="text/javascript">
+$(function() {
+	$(".faq_box").hide();
+	//숨김
+	
+	$(".faq_open").click(function(){
+		console.log($(this).html());
+		$(this).children("ul").children(".faq_open_minus").toggle();
+		$(this).children("ul").children(".faq_open_plus").toggle();
+		$(this).children("ul").children(".faq_box").slideToggle();
+	});
+});
+</script>
+<!-- +click -->
+
+<!-- new click -->
+<script type="text/javascript">
+$(function(){
+	$(".faqInsert-btn").click(function(){
+		location.href="adminFaqInsert.do";
+	});
+});
+</script>
+<!-- new click -->
 </html>

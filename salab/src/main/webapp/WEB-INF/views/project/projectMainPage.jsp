@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="/salab/vendors/css/grid.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
+	<link rel="stylesheet" href="/salab/vendors/css/croppie.css">
 
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
 
     <link rel="stylesheet" href="/salab/resources/css/project/projectMainPage.css" type="text/css">
 
-    <script src="https://kit.fontawesome.com/08d0951667.js"></script>
+	 <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
     <title>최근 파일 | Salab</title>
 </head>
@@ -26,7 +27,7 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">${project.projectname}</div>
+                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${project.projectname}</a></div>
                 <input id="projectno" type="hidden" value="${project.projectno}">
             </div>
             <div class="top-bar-logo">
@@ -134,7 +135,13 @@
             <div class="grid-division">
                 <!-- grid안 왼쪽 -->
                 <div class="Blank">
-                    <div class="teamLogo"></div>
+                	<label for="teamLogo">
+                    <div class="teamLogo-box">
+                    	<img src="/salab/resources/img/default-project.png" alt="">
+                    	<input type="file" id="teamLogo" accept="image/*">
+                    	<input type="hidden" name="base64img" id="base64img">
+                    </div>
+                    </label>
                     <div class="name-box"> ${project.projectname}
                     </div>
                 </div>
@@ -309,11 +316,120 @@
         </div>
     </div>
     <!--right -->
-
+    
+    <!-- croppie -->
+	<div id="profile-crop" class="modal-crop">
+        <div class="modal-crop-content">
+            <div class="crop-top clearfix">
+                <a class="close-crop">&times;</a>
+                <button class="change-img">확인</button>
+            </div>
+            <div class="crop-main">
+            </div>
+        </div>
+    </div>
+	
 
 </body>
 <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/salab/resources/js/project/projectMain.js"></script>
 <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
+<script type="text/javascript" src="/salab/vendors/js/croppie.js"></script>
+<script type="text/javascript">
+    $("#teamLogo").on("change", function() {
+        readFile(this);
+    });
+
+    var modalCrop = document.getElementById("profile-crop");
+    var basic = $('.crop-main').croppie({
+        viewport: {
+            width: 300,
+            height: 300
+        },
+        boundary: {
+            width: 400,
+            height: 500
+        },
+        showZoomer: false
+    });
+
+    function readFile(input) {
+        console.log("변경시작");
+
+        if (input.files && input.files[0]) { //파일있다면 
+            console.log("파일있다");
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                console.log("창띄울게");
+                $('.modal-crop').addClass('is-visible');
+                setTimeout(function() {
+                    $('.modal-crop').addClass('is-open');
+                }, 20);
+                $('.crop-main').croppie('bind', {
+                    url: e.target.result
+                });
+
+                $('.change-img').on('click', function() {
+                    $('.crop-main').croppie('result', {
+                        type: 'base64',
+                        format: 'jpeg',
+                        size: {
+                            width: 100,
+                            height: 100
+                        }
+                    }).then(function(resp) {
+                        /* const blobUrl = window.URL.createObjectURL(resp);
+		                $('#editImg').attr("src", blobUrl); */
+                        alert("변환된 data : " + resp);
+                        /*$('#base64img').val(resp);*/
+
+                        $('#editImg').attr("src", resp);
+/* 페이지새로고침이라 필요없음                       $('.modal-crop').removeClass('is-open');
+                        $('.modal-crop').removeClass('is-visible');*/
+                        
+                        /*rest를 <hidden>에 넣어서  imgInsert.do로 연결*/
+  {
+                            var form = document.createElement("form");
+                            form.setAttribute("method", "post");
+                            form.setAttribute("action", "#");
+                            document.body.appendChild(form);
+
+                            var insert = document.createElement("input");
+                            insert.setAttribute("type", "hidden");
+                            insert.setAttribute("name", "upfiles");
+                            insert.setAttribute("value",  resp);
+                            form.append(insert);
+      
+                            var insert2 = document.createElement("input");
+                            insert2.setAttribute("type", "hidden");
+                            insert2.setAttribute("name", "ofilename");
+                            insert2.setAttribute("value", $("#userimg").val());
+                            form.append(insert2);
+      
+                            form.submit();
+                        }
+                        /*페이지 이동.*/
+                    });
+                });
+
+                $('.close-crop').on('click', function() {
+                    input.value = "";
+                    $('.modal-crop').removeClass('is-open');
+                    $('.modal-crop').removeClass('is-visible');
+                });
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    window.onclick = function(event) {
+        if (event.target == modalCrop) {
+            $('.modal-crop').removeClass('is-open');
+            $('.modal-crop').removeClass('is-visible');
+        }
+    }
+</script>
 
 </html>

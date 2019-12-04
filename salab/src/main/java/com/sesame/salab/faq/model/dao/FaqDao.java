@@ -22,4 +22,8 @@ public class FaqDao {
 		return sqlSession.selectList("faqMapper.selectList");
 	}
 
+	public int adminFaqInsert(Faq faq) {
+		return sqlSession.insert("faqMapper.adminFaqInsert", faq);
+	}
+
 }

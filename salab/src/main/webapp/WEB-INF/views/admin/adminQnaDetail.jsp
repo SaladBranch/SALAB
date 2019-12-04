@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="/salab/resources/css/admin/adminFaqInsert.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/admin/adminQnaDetail.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
@@ -68,54 +68,68 @@
             <div class="ad-notice">
                 <a href="adminNoticeList.do">공지사항</a>
             </div>
-            <div class="ad-faq active-menu">
+            <div class="ad-faq">
                 <a href="adminFaqList.do">자주 찾는 질문</a>
             </div>
-            <div class="ad-qna">
-                <a href="adminQna.do">1:1문의</a>
+            <div class="ad-qna active-menu">
+                <a href="adminQnaList.do">1:1문의</a>
             </div>
         </div>
     </div>
 
     <div class="right-main-side">
-    	<div class="faq_top">
-    		<p>자주 하는 질문</p>
+    	<div class="qna_top">
+    		<p>1:1문의</p>
     	</div>
     	
-    	<div class="faq_bottom">
-			<div class="faq_box">
-				<p class="faq_fromAdmin">FAQ 등록</p>
-				<form action="adminFaqInsert.do" id="faqinsert" method="post" enctype="multipart/form-data">
+        <div class="qna_bottom">
+			<div class="qna_box">
+				<form action="adminQnaUpdate.do?qnano=${requestScope.qna.qnano }" id="adminQnaUpdate" method="post" enctype="multipart/form-data">
+					<p class="qna_fromMember">From. Member</p>
 					<ul>
 						<li>
-							<p class="faq_category">분류</p>
-							<input type="text" id="faq_box_category" name="faqcategory" placeholder="결제/계정/오류/협업  > 택 1 입력">
+							<p class="qna_title">제목</p>
+							<input type="text" id="qna_box_title" name="qnatitle" value="${requestScope.qna.qnatitle }" readonly >
 						</li>
 						<li>
-							<p class="faq_title">제목</p>
-							<input type="text" id="faq_box_title" name="faqtitle">
+							<p class="qna_content">내용</p>
+							<textarea id="qna_box_content" name="qnacontent" readonly="readonly" >${requestScope.qna.qnacontent }</textarea>
 						</li>
-						<li>
-							<p class="faq_content">내용</p>
-							<textarea id="faq_box_content" name="faqcontent"></textarea>
-						</li>
-						<li>
-							<input type="button" class="faq_back_btn" value="목록으로" onclick="back_faq();">
-							<input type="button" class="faq_insert_btn" value="글 등록" onclick="insert_faq();">
-						</li>
+						<c:if test="${!empty requestScope.qna.qnareplycontent }">
+							<li>
+								<p class="qna_ans">답변</p>
+								<textarea id="qna_box_ans" name="qnareplycontent" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
+							</li>
+							<li>
+								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
+								<input type="button" class="qna_update_btn" value="글 수정" onclick="finished_update();">
+							</li>
+						</c:if>
+						<c:if test="${empty requestScope.qna.qnareplycontent }">
+							<li>
+								<p class="qna_ans">답변</p>
+								<textarea id="qna_box_ans" name="qnareplycontent" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
+							</li>
+							<li>
+								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
+								<input type="button" class="qna_update_btn" value="글 수정" onclick="update_qna();">
+							</li>
+						</c:if>
 					</ul>
 				</form>
 			</div>
         </div>
+        
     </div>
     
     <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
     
 </body>
+
 <!-- 목록으로 버튼 click -->
 <script type="text/javascript">
-function back_faq(){
+function back_qna(){
 	var result = confirm("취소 하시겠습니까?");
 	
 	if(result){
@@ -125,27 +139,28 @@ function back_faq(){
 </script>
 <!-- 목록으로 버튼 click -->
 
-<!-- 글 등록 버튼 click -->
+<!-- 글 수정 버튼 click -->
 <script type="text/javascript">
-function insert_faq(){
-	var fcategory = $("#faq_box_category").val();
-	var ftitle = $("#faq_box_title").val();
-	var fcontent = $("#faq_box_content").val();
+function update_qna(){
+	var qreply = $("#qna_box_ans").val();
 	
-	if(fcategory == ""){
-		alert("분류코드를 작성해 주세요.")
-		$("#faq_box_category").focus();
-	} else if(ftitle == ""){
-		alert("제목을 입력해 주세요.");
-		$("#faq_box_title").focus();
-	} else if(fcontent == ""){
-		alert("내용을 입력해 주세요.");
-		$("#faq_box_content").focus();
+	if(qreply == ""){
+		alert("답변을 입력해 주세요.");
+		$("#qna_box_ans").focus();
 	} else{
 		alert("hi");
-		$("#faqinsert").submit();
+		$("#adminQnaUpdate").submit();
 	}
 }
 </script>
-<!-- 글 등록 버튼 click -->
+<!-- 글 수정 버튼 click -->
+
+<!-- 수정 후 click -->
+<script type="text/javascript">
+function finished_update(){
+	alert("이미 수정한 문의입니다.");
+}
+</script>
+<!-- 수정 후 click -->
+
 </html>

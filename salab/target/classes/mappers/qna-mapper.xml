@@ -19,8 +19,16 @@
 		select * from (select rownum rnum, qnano, qnatitle, qnadate, qnareplyyn from (select * from qna where userno = #{userno} order by qnano desc))where rnum between #{paging.startRow} and #{paging.endRow}
 	</select>
 	
+	<select id="adminselectList" parameterType="HashMap" resultMap="resultQna">
+		select * from (select rownum rnum, qnano, qnatitle, qnacontent, qnareplycontent, qnadate, qnareplydate, qnareplyyn from (select * from qna order by qnano desc))where rnum between #{paging.startRow} and #{paging.endRow}
+	</select>
+	
 	<select id="listCount" resultType="int">
 		select count(*) from qna where userno = #{userno}
+	</select>
+	
+	<select id="adminListCount" resultType="int">
+		select count(*) from qna
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultMap="resultQna">
@@ -30,5 +38,9 @@
 	<insert id="qnaInsert" parameterType="Qna">
 		insert into qna values(seq_qnano.nextval, null,  #{userno} , #{qnatitle}, #{qnacontent}, default, null, null, 'N')
 	</insert>
+	
+	<update id="qnaUpdate" parameterType="Qna">
+		UPDATE QNA SET adminid = #{adminid}, qnareplycontent = #{qnareplycontent}, qnareplydate = default, qnareplyyn = 'Y' where qnano = #{qnano}
+	</update>
 
 </mapper>

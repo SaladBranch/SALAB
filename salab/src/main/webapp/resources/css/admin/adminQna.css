@@ -459,3 +459,177 @@ body{
     font-size: 13px;
     padding-left: 10px;
 }
+
+/**/
+
+.qna_top{
+	float: left;
+	font-size: 30pt;
+	padding: 40px 30px 25px 30px;
+	width:87%;
+	margin-left: 70px;
+	border-bottom: 2px solid black;
+}
+
+.qna_bottom{
+	font-size: 13pt;
+	width: 87%;
+	padding: 0px 30px;
+	display: block;
+	margin-left: 70px;
+}
+
+
+input[type="radio"]{
+    position: relative;
+    opacity: 1;
+    width: 15px;
+    height: 15px;
+}
+
+.qna_btn_box{
+	display: block;
+	margin: 10px 10px 10px 10px;
+	padding: 10px 15px 40px 15px;
+}
+
+.qna_check{
+	margin: 5px;
+	font-size: 18pt;
+	font-weight: 600;
+}
+
+.qna_btn{
+	float: right;
+	font-size: 18pt;
+	font-weight: 600;
+	padding: 3px 30px 3px 30px;
+	border: 1px solid lightgreen;
+}
+
+.qna_btn:hover{
+	border: 1px solid #3cb371;
+}
+
+.qna_head{
+	font-size: 16pt;
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.qna_list{
+	text-align: center;
+	height: 55px;
+	border-bottom: 1px solid lightgray;
+}
+
+.qna_head_no{
+	float: left;
+	text-align: center;
+	line-height: 48px;
+	font-weight: 500;
+	width: 15%;
+}
+
+.qna_head_title{
+	float: left;
+	text-align: center;
+	line-height: 48px;
+	font-weight: 500;
+	width: 50%;
+}
+
+.qna_head_date{
+	float: left;
+	text-align: center;
+	line-height: 48px;
+	font-weight: 500;
+	width: 20%;
+}
+
+.qna_head_yn{
+	float: left;
+	text-align: center;
+	line-height: 48px;
+	font-weight: 500;
+	width: 15%;
+}
+
+.qna_head_null{
+	float: left;
+	text-align: center;
+	line-height: 55px ;
+	width:100%;
+	color: gray;
+	font-weight: 400;
+}
+
+a { 
+	text-decoration: none; 
+	color: black;
+}
+
+a:hover{
+	color: #3cb371;
+}
+
+
+/* 페이징 css */
+.box_footer{
+	font-size: 13pt;
+	width: 87%;
+	padding: 0px 30px;
+	display: block;
+	margin-left: 70px;
+}
+
+.paging_list{
+	text-align: center;
+	width: 80%;
+	height: 40px;
+	margin-top: 20px;
+	padding-left: 330px;
+}
+
+.paging_btn{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	color: gray;
+	width: 11%;
+}
+.paging_btn > a{
+	color: black;
+}
+
+.paging_btn > a:hover{
+	color: #3cb371;
+}
+
+.paging_no{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	width: 6%;
+	color: black;
+}
+
+.paging_no:hover{
+	background: lightgreen;
+}
+
+.paging_no_this{
+	float: left;
+	text-align: center;
+	line-height: 38px;
+	font-weight: 500;
+	width: 6%;
+	color: #3cb371;
+}
+

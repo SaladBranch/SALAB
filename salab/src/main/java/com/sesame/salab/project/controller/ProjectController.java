@@ -147,18 +147,32 @@ public class ProjectController {
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
 	
+	//프로젝트 내에 공지사항 확인
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	map.put("paging", paging);
 	map.put("projectno", project.getProjectno());
 	List<Projectnotice> pnoticelist = pnService.testList(map);
 	
+	//멤버 리스트 확인
 	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
-
+	System.out.println("멤버결과:"+memberList.toString());
+	
+	//페이지메인에 표시될 프로젝트 확인 (최대4개)
 	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
+
+	//현재 유저의 유저권한 확인
+	HashMap<String, Object> mapForAuth = new HashMap<String, Object>();
+	mapForAuth.put("userno", member.getUserno());
+	mapForAuth.put("projectno", project.getProjectno());
+	String userAuth = mpService.selectUserAuth(mapForAuth);
+	session.setAttribute("userauth", userAuth);
+	System.out.println(userAuth);
+	
+	//화면 좌측, 유저의 프로젝트 리스트 재 확인
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
 	session.removeAttribute("myProjectList");
 	session.setAttribute("myProjectList", projectList);
-	mv.addObject("projectListSize",projectList.size());
+
 	mv.addObject("projectList",teamProjectList);
 	mv.addObject("memberList", memberList);
 	mv.addObject("noticelist", pnoticelist);
@@ -184,16 +198,22 @@ public class ProjectController {
 	
 	}
 	@RequestMapping(value="inviteEmailCheck.do", method= RequestMethod.POST)
-	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException {
+	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException, MessagingException {
 		logger.info("진입");
 		response.setContentType("text/html; charset=UTF-8");
 		int result = pService.inviteEmailCheck(useremail,projectno);
 		PrintWriter out = response.getWriter();
-		if(result== 2) {
-			//초대기능 넣기
+		if(result>0) {
+			MailUtils sendMail = new MailUtils(mailSender);
+			sendMail.setSubject("[SALAB] 프로젝트 참여");
+			sendMail.setText(sendMail.projectInviteTemplate(String.valueOf(result), projectno));
+			sendMail.setFrom("saladbranch@gmail.com", "SALAB");
+			sendMail.setTo(useremail);
+			sendMail.send();
+		
 			out.append("inviteSuccess");
 		}
-		else if(result==1) {
+		else if(result<0) {
 			out.append("joinedMember");
 		}
 		else if(result==0){
@@ -252,7 +272,7 @@ public class ProjectController {
 			Collections.sort(fileList, new Comparator<ProjectFile>() {
 				@Override
 				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfilername().compareTo(f2.getPrfilername());
+					return f1.getPrfiletitle().compareTo(f2.getPrfiletitle());
 				}
 			});
 			logger.info("이름 순으로 정렬완료!");

@@ -83,6 +83,7 @@
                 <a href="trashCan.do">휴지통</a>
             </div>
         </div>
+
         <div class="left-middle-side-bar">
         	<c:if test="${!empty sessionScope.myProjectList }">
         		<div class="myTeam">
@@ -142,39 +143,47 @@
                     <div class="left">최근 생성 파일</div>
                     <div class="recentFile-grid part-grid clear">
 
-                        <c:if test="${projectListSize ==0 }">아직파일없음음</c:if>
-
-                        <c:forEach var="pfile" items="${privateFile }">
-                            <div class="file-grid" onclick="location.href='epFile.do'">
-                                <div class="file-container">
-                                    <div class="file-thumbnail">
-
-                                    </div>
-                                    <div class="file-info">
-                                        <div class="about-file">
-                                            <div class="file-name">
-                                                ${pfile.projectname}
-                                            </div>
-                                            <div class="file-edited">
-                                                5분 전 편집 in 개인파일
-                                            </div>
-                                        </div>
-                                        <div class="file-options">
-                                            <div class="file-options-btn">&#8942;</div>
-                                            <div class="file-options-menu">
-                                                <ul>
-                                                    <li><a href="#">파일열기</a></li>
-                                                    <li><a href="#">파일 정보 설정</a></li>
-                                                    <li><a href="#">사본만들기</a></li>
-                                                    <li><a href="#">웹테스트</a></li>
-                                                    <li><a href="#">삭제</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                        
+						<c:if test="${empty projectList }"> 
+							<div class="file-grid">
+				                <div class="new-file" onclick="showModal();">
+				                    &#43; 새 파일
+				                </div>
+				            </div>
+						</c:if>
+						<c:if test="${!empty projectList }"> 
+	                        <c:forEach var="pfile" items="${projectList}">
+	                            <div class="file-grid" onclick="location.href='epFile.do'">
+	                                <div class="file-container">
+	                                    <div class="file-thumbnail">
+	
+	                                    </div>
+	                                    <div class="file-info">
+	                                        <div class="about-file">
+	                                            <div class="file-name">
+	                                                ${pfile.prfiletitle}
+	                                            </div>
+	                                            <div class="file-edited">
+	                                                5분 전 편집 in 개인파일
+	                                            </div>
+	                                        </div>
+	                                        <div class="file-options">
+	                                            <div class="file-options-btn">&#8942;</div>
+	                                            <div class="file-options-menu">
+	                                                <ul>
+	                                                    <li><a href="#">파일열기</a></li>
+	                                                    <li><a href="#">파일 정보 설정</a></li>
+	                                                    <li><a href="#">사본만들기</a></li>
+	                                                    <li><a href="#">웹테스트</a></li>
+	                                                    <li><a href="#">삭제</a></li>
+	                                                </ul>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </c:forEach>
+                        </c:if>
 
                     </div>
                 </section>
@@ -209,36 +218,48 @@
                     <!--teamMember-grid -->
                     <div>
                         <div class="left">팀 원</div>
-                        <div class="right" onclick="inviteModalToggle()"> 팀원 초대하기</div>
+                        <c:if test="${sessionScope.userauth == 'LEADER'}">
+                            <div class="right" onclick="inviteModalToggle()"> 팀원 초대하기</div>
+                        </c:if>
                     </div>
                     <div class="member-grid part-grid clear scrollbar">
                         <!--팀원리스트-->
-                        <c:forEach var="memberList" items="${requestScope.memberList}" varStatus="i">
-
-                            <div class="memberList">
-                                <div class="member-icon inline">
-                                    <c:if test="${memberList.userprofile_o ==null }"><img width="18" height="18" src="/salab/resources/img/default_profile.png" alt=""></c:if>
-                                    <c:if test="${memberList.userprofile_o !=null }">dd</c:if>
-                                </div>
-                                <div class="member-name inline">${memberList.username}</div>
-                                <div class="member-setup-grid inline">
-                                    <c:if test="${memberList.userauth =='LEADER'}"><img width="12" height="12" src="/salab/resources/img/leader.png" alt=""></c:if>
-                                    <c:if test="${memberList.userauth == 'CAN_EDIT'}"><img width="12" height="12" src="/salab/resources/img/can-edit.png" alt=""></c:if>
-                                    <c:if test="${memberList.userauth == 'ONLY_READ'}"><img width="12" height="12" src="/salab/resources/img/only-read.png" alt=""></c:if>
-
-                                    <span class="member-setup" onclick="openMenu()">&#8942;</span>
-                                    <div id="setting-menu" class="setting-menu hide">
-                                        <c:if test="${memberList.userauth != 'LEADER'}">
-                                            <div class="hidedMenu" onclick="changeUserAuth(${memberList.userno},'LEADER')">Team Reader</div>
-                                        </c:if>
-                                        <div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
-                                        <div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
-                                        <div onclick="memberKick(${memberList.userno})">Kick</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-
+                        <div class="memberList">
+                      	  <c:forEach var="memberList" items="${requestScope.memberList}" varStatus="i">
+	                      	  	<div class="member-line">
+	                                <div class="member-icon inline">
+	                                    <c:if test="${memberList.userprofile_o ==null }"><img width="18" height="18" src="/salab/resources/img/default_profile.png" alt=""></c:if>
+	                                    <c:if test="${memberList.userprofile_o !=null }">dd</c:if>
+	                                </div>
+	                                <div class="member-name inline">${memberList.username}</div>
+	                                <div class="member-setup-grid inline">
+	                                    <c:if test="${memberList.userauth =='LEADER'}"><img width="12" height="12" src="/salab/resources/img/leader.png" alt=""></c:if>
+	                                    <c:if test="${memberList.userauth == 'CAN_EDIT'}"><img width="12" height="12" src="/salab/resources/img/can-edit.png" alt=""></c:if>
+	                                    <c:if test="${memberList.userauth == 'ONLY_READ'}"><img width="12" height="12" src="/salab/resources/img/only-read.png" alt=""></c:if>
+	                                    <c:if test="${sessionScope.userauth == 'LEADER'}">
+	                                    	<c:if test="${memberList.userauth =='LEADER'}">
+	                                    	<span class="member-setup hidden" onclick="openMenu()">&#8942;</span>
+			                                    <div id="setting-menu" class="setting-menu hide">	                                    		                                  		
+			                                           	<div class="hidedMenu" onclick="changeUserAuth(${memberList.userno},'LEADER')">Team Reader</div>                                   
+			                                        	<div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
+			                                      	 	<div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
+			                                     	   <div onclick="memberKick(${memberList.userno})">Kick</div>
+			                                    </div>
+	                                    	</c:if>
+	                                    	<c:if test="${memberList.userauth !='LEADER'}">	 
+		 	                                   <span class="member-setup" onclick="openMenu()">&#8942;</span>
+			                                    <div id="setting-menu" class="setting-menu hide">	                                    		                                  		
+			                                           	<div class="hidedMenu" onclick="changeUserAuth(${memberList.userno},'LEADER')">Team Reader</div>                                   
+			                                        	<div onclick="changeUserAuth(${memberList.userno},'CAN_EDIT')">Can Edit</div>
+			                                      	 	<div onclick="changeUserAuth(${memberList.userno},'ONLY_READ')">only Read</div>
+			                                     	   <div onclick="memberKick(${memberList.userno})">Kick</div>
+			                                    </div>
+		                                    </c:if>
+		                                </c:if>
+	                                </div>
+	                          	</div>
+                      	  </c:forEach>
+                        </div>
                     </div>
 
                 </section>

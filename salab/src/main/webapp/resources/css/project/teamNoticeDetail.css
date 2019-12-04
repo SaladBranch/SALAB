@@ -31,6 +31,7 @@
     border-bottom: 1.5px solid  #0295e5;
 }
 
+
 .notice-title > span {
     color: red;
     font-size: 0.8em;
@@ -38,7 +39,7 @@
     float: right;
 }
 
-.notice-title > input[type="text"] {
+.notice-title > input[type="text"], .notice-title > div {
     font-size: 24px;
     max-width: 100%;
     min-width: 40%;
@@ -51,9 +52,35 @@
     width: 100%;
     resize: none;
     padding: 20px 40px;
+    background: #fff;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 0.5px solid gray;
+}
+#check> textarea{
+    
 }
 .notice-contentbox:focus{
     border-bottom: 1.5px solid  #0295e5;
 }
 
 #writedDate {}
+
+/*scroll*/
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    background-color: #F5F5F5;
+    width: 1px;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 2px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #00a0f4;
+}

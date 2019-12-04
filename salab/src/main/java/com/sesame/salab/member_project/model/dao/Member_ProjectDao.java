@@ -1,5 +1,6 @@
 package com.sesame.salab.member_project.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +23,11 @@ public class Member_ProjectDao {
 
 	public List<Project> selectProjectList(int userno) {
 		return sqlSession.selectList("member_projectMapper.selectProjectList", userno);
+	}
+
+	public String selectUserAuth(HashMap<String, Object> mapForAuth) {
+		return sqlSession.selectOne("member_projectMapper.selectUserAuth", mapForAuth);
+
 	}
 
 }

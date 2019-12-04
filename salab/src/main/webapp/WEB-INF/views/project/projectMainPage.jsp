@@ -19,7 +19,7 @@
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
-    <title>최근 파일 | Salab</title>
+    <title>${project.projectname } | Salab</title>
 </head>
 
 <body>
@@ -96,7 +96,7 @@
 							<c:if test="${project.projectno ne projectList.projectno }">
 								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							</c:if>
-							<a href="gotoProjectFile.do?projectno=${projectList.projectno }">프로젝트 파일</a>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
 					</c:forEach>
 				</div>

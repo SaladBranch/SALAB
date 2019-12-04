@@ -305,3 +305,24 @@ function newFile(){
 
     form.submit();
 }
+
+function newTeamFile(){
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "insert_newteamFile.do");
+    document.body.appendChild(form);
+
+    var insert = document.createElement("input");
+    insert.setAttribute("type", "hidden");
+    insert.setAttribute("name", "prfiletitle");
+    insert.setAttribute("value", $("#fileName").val());
+    form.append(insert);
+
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "projectno");
+    insert2.setAttribute("value", $("#projectNo").val());
+    form.append(insert2);
+
+    form.submit();
+}

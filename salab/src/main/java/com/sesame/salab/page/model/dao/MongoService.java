@@ -74,6 +74,15 @@ public class MongoService {
 		
 		return mongoOps.findOne(query, Page.class, findCollection);
 	}
+	public Page findTeamOne(String findCollection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("projectno").is(page.getProjectno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").is(page.getPageno())
+		));
+		
+		return mongoOps.findOne(query, Page.class, findCollection);
+	}
 	
 	public Page findId(String findCollection, Page page) {
 		Query query = new Query(new Criteria().andOperator(
@@ -117,6 +126,14 @@ public class MongoService {
 	public List<Page> findPage(String collection, Page page) {
 		Query query = new Query(new Criteria().andOperator(
 				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno())
+				)).with(new Sort(Sort.Direction.ASC, "pageno"));
+		return mongoOps.find(query, Page.class, collection);
+	}
+	
+	public List<Page> findTeamPage(String collection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("projectno").is(page.getProjectno()),
 				Criteria.where("fileno").is(page.getFileno())
 				)).with(new Sort(Sort.Direction.ASC, "pageno"));
 		return mongoOps.find(query, Page.class, collection);

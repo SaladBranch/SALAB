@@ -69,14 +69,21 @@ public class PageController {
 			for(FileList pf : fileList) {
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
-				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());
+				if(pf.getPt().equals("private")) {
+					p.setUserno(pf.getUserno());
+					Page page = mgService.findOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}else {
+					p.setProjectno(pf.getUserno());
+					Page page = mgService.findTeamOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}
+				
 			}
 			mgService.close();
 		
-			request.setAttribute("privateFile", fileList);
+			request.setAttribute("fileList", fileList);
 			request.setAttribute("sort", sort);
 		}else {
 			viewFileName = "common/error";

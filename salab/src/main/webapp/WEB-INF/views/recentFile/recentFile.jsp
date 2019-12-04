@@ -90,7 +90,7 @@
 						<div class="each-team">
 							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
 							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
-							<a href="gotoProjectFile.do?projectno=${projectList.projectno }">프로젝트 파일</a>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -140,8 +140,8 @@
         </div>
         
         <div class="row recent-files">
-        	<c:if test="${!empty privateFile }">
-        		<c:forEach var="pfile" items="${privateFile }">
+        	<c:if test="${!empty fileList}">
+        		<c:forEach var="pfile" items="${fileList }">
         		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
@@ -153,7 +153,9 @@
 	                                <c:out value="${pfile.pfiletitle }"/>
 	                            </div>
 	                            <div class="file-edited">
-	                                <span>${pfile.pfilelastmodified }</span> in 개인파일
+	                                <span>${pfile.pfilelastmodified }</span>
+	                                <c:if test="${pfile.pt eq 'private'}"> in 개인파일</c:if>
+	                                <c:if test="${pfile.pt eq 'team'}"> in ${pfile.pfiletitle}</c:if>
 	                            </div>
 	                        </div>
 	                        <div class="file-options">

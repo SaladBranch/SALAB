@@ -91,7 +91,7 @@
 						<div class="each-team">
 							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
 							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
-							<a href="gotoProjectFile.do?projectno=${projectList.projectno }">프로젝트 파일</a>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
 					</c:forEach>
 				</div>

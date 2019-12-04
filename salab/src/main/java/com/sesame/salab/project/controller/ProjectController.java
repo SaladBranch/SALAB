@@ -166,7 +166,6 @@ public class ProjectController {
 	mapForAuth.put("projectno", project.getProjectno());
 	String userAuth = mpService.selectUserAuth(mapForAuth);
 	session.setAttribute("userauth", userAuth);
-	System.out.println(userAuth);
 	
 	//화면 좌측, 유저의 프로젝트 리스트 재 확인
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
@@ -239,70 +238,5 @@ public class ProjectController {
 	
 	}
 	
-	@RequestMapping(value="gotoProjectFile.do")
-	public ModelAndView gotoProjectFileMethod(String sort,ModelAndView mv, Project project,HttpServletRequest request,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("gotoProjectFile.do 진입");
-	MongoService mgService = new MongoService();
-	if(project != null) {
-		System.out.println(project.toString());
-	}
-	Member member = (Member) session.getAttribute("loginMember");
-	//프로젝트 데이터조회
-	project = pService.selectProject(project);
-	System.out.println(project.toString());
-	
-	
-	List<ProjectFile> fileList = pService.selectListAll(project.getProjectno());
-	
-	if(fileList == null) {
-		System.out.println("nullllllllllll");
-	}else {
-		System.out.println("dddd"+fileList);
-	}
-	if(sort !=null) {
-		if(sort.equals("recent")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f2.getPrfilelastmodified().compareTo(f1.getPrfilelastmodified());
-				}
-			});
-			logger.info("최근 수정 순으로 정렬완료!");
-		}else if(sort.equals("name")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfiletitle().compareTo(f2.getPrfiletitle());
-				}
-			});
-			logger.info("이름 순으로 정렬완료!");
-		}else if(sort.equals("date")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfilecreatedate().compareTo(f2.getPrfilecreatedate());
-				}
-			});
-			logger.info("생성날짜 순으로 정렬완료!");
-		}
-		request.setAttribute("sort", sort);
-	}
-	
-/*	if(fileList != null) {
-		for(ProjectFile pf : fileList) {
-			Page p = new Page();
-			p.setFileno(pf.getPrfileno());
-			p.setUserno(pf.getProjectno());
-			p.setPageno(1);
-			Page page = mgService.findOne("page", p);
-			pf.setPfilethumbnail(page.getThumbnail());
-		}*/
-	request.removeAttribute("privateFile");
-	request.setAttribute("privateFile", fileList);
 
-	
-	mv.addObject("project", project);
-  	mv.setViewName("project/projectFile");
-	return mv;
-	}
 }

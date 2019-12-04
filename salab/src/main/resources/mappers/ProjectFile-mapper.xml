@@ -10,8 +10,23 @@
 		]]>
 	</select>
 	
-	<select id="selectListAll" parameterType="ProjectFile" resultType="int">
-		select * from privatefile where userno = #{userno}
-	</select>	
-		
+	<select id="getFileList" parameterType="int" resultType="ProjectFile">
+		SELECT * FROM PROJECTFILE WHERE PROJECTNO = #{projectno }
+	</select>
+	
+	<insert id="insertNewTeamFile" parameterType="ProjectFile">
+		INSERT INTO PROJECTFILE VALUES(
+			SEQ_PRFILENO.NEXTVAL, #{projectno }, NULL, #{prfiletitle}, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<select id="getFileNo" parameterType="int" resultType="ProjectFile">
+		SELECT * FROM 
+		(SELECT PRFILENO FROM PROJECTFILE WHERE PROJECTNO = #{projectno} ORDER BY PRFILELASTMODIFIED DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<select id="selectOne" parameterType="Page" resultType="ProjectFile">
+		SELECT * FROM PROJECTFILE WHERE PROJECTNO = #{projectno} AND PRFILENO = #{fileno}
+	</select>
 </mapper>

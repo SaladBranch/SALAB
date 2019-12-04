@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService{
 	public int initChangePwd(Member member) {
 		return memberDao.initchangePwd(member);
 	}
-
+	
 	@Override
 	public Member chkGoogleUser(Member member) {
 		return memberDao.chkGoogleUser(member);
@@ -66,5 +66,4 @@ public class MemberServiceImpl implements MemberService{
 	public void enrollGoogleUser(Member m) {
 		memberDao.enrollGoogleUser(m);
 	}
-
 }

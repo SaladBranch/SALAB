@@ -31,6 +31,15 @@ $(document).ready(function(){
             }
         })
     }
+    
+    $('.projectName').each(function(){
+        var name = $(this).text();
+        if(name.length > 11){
+            $(this).text(name.substr(0, 11) + '...');    
+        }
+    });
+    
+    
 });
 
 /* 마우스 선택영역 만들기 */

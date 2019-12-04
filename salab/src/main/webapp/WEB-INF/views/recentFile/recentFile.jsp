@@ -84,22 +84,27 @@
             </div>
         </div>
         <div class="left-middle-side-bar">
-     	   	<div class="myTeam scroll-y scrollbar">
-                <!--현재 팀 프로젝트 표시-->
-                <c:forEach var="projectList" items="${sessionScope.myProjectList}">   
-                        <div class="clear Team-grid">
-                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
-                            <div class="inline">
-                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
-                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
-                            </div>
-                        </div>
-                </c:forEach>
-          	 </div>
-            <div class="new-team">
-                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="newTeam.do">새로운 팀 </a>
-            </div>
+        	<c:if test="${!empty sessionScope.myProjectList }">
+        		<div class="myTeam">
+					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
+						<div class="each-team">
+							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
+							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }">프로젝트 파일</a>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="new-team" style="border-top: 1px solid #e2e2e2;">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
+        	<c:if test="${empty sessionScope.myProjectList }">
+        		<div class="new-team">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
         </div>
     </div>
     <div id="right-click-menu" class="right-click-menu">

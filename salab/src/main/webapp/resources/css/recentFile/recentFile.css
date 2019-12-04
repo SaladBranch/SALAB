@@ -228,6 +228,40 @@ body{
     background: #cbedff;
 }
 
+/* team menu */
+.myTeam{
+    height: calc(100vh - 285px);
+    overflow-y: auto;
+}
+.each-team .icon-wrapper{
+    position: relative;
+    z-index: 99;
+}
+.each-team{
+    position: relative;
+	height: 70px;
+}
+.each-team i{
+    font-size: 14px;
+    line-height: 40px;
+}
+.each-team a:first-of-type{
+    display: inline-block;
+    color: #2c2c2c;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    font-size: 15px;
+    padding-left: 58px;
+    line-height: 40px;
+}
+.each-team a:last-of-type{
+    display: block;
+    color: #2c2c2c;
+    font-size: 13px;
+    padding-left: 58px;
+    line-height: 30px;
+}
 /*----------------------------*/
 /*Right Main Side*/
 /*----------------------------*/

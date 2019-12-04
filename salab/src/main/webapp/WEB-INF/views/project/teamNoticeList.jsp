@@ -98,7 +98,7 @@
         <sector>
             <div class="notice-grid">
                 <div class="notice-header">공지사항</div>
-                <input type="hidden" value="${requestScope.projectno}" id="projectno"><!-- 프로젝트번호 수정필요-->
+                <input type="hidden" value="${requestScope.projectno}" id="projectno">
                 <div class="notice-body">
                     <table cellspacing="0">
                         <tr>
@@ -118,16 +118,19 @@
 
                     </table>
                 </div>
-                <div id="notice-writing" class="notice-writing button" onclick="writeNotice(projectno.value)"><span>게시글 작성</span></div>
-
+                <c:if test="${sessionScope.userauth =='LEADER' }">
+                	<div id="notice-writing" class="notice-writing button" onclick="writeNotice(${requestScope.projectno})"><span>게시글 작성</span></div>
+				</c:if>
                 <div id="notice-paging" class="paging" value="">
                     <input id="nowPage" type="hidden" value="${paging.currentPage}">
                     <c:if test="${paging.maxPage >= 5}">
                         <c:if test="${paging.startPage eq 1}">
                             <span class="donTouch">
-                                <</span> </c:if> <c:if test="${paging.startPage != 1}">
+                                <</span> 
+                        </c:if> <c:if test="${paging.startPage != 1}">
                                     <span id="firstPage" onclick="moveListPage(${paging.startPage-1})">
-                                        <</span> </c:if> </c:if> <c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+                                        <</span>
+                                        </c:if> </c:if> <c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
                                             <span onclick="moveListPage(${ pageno })">${ pageno }</span>
                                             </c:forEach>
 
@@ -140,35 +143,6 @@
                                                 </c:if>
                                             </c:if>
 
-
-                                            <!-- <%--                     <% if(  ${listAttr.countNotice} >=7 ) { %>
-
-                    <%}%>
-                                      <% if(${listAttr.countNotice} >5){%>
-                    <span>←</span>
-                    <c:forEach var="i" begin='1' end='5'>
-                        <span>${ i }</span>
-                    </c:forEach>
-                    <span>→</span>
-                    <%}%>
-                    <c:if test="${listAttr.countNotice  < 6} ">
-                       
-                    </c:if>
-                    <c:if test="${listAttr.countNotice >= 5 } ">
-                        <span>←</span>
-                        <c:forEach var="i" begin='1' end='5'>
-                            <span>${ i }</span>
-                        </c:forEach>
-                        <span>→</span>
-                    </c:if>
-                    <c:if test="${listAttr.countNotice eq 7} ">
-                        <span>←</span>
-                        <c:forEach var="i" begin='1' end='5'>
-                            <span>${ i }</span>
-                        </c:forEach>
-                        <span>→</span>
-                    </c:if>
-                     --%>-->
                 </div>
             </div>
 

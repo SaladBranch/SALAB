@@ -31,8 +31,8 @@ function moveListPage(page) {
 
 }
 
-function writeNotice() {
-    location.href = 'teamNoticeWrite.do';
+function writeNotice(projectno) {
+    location.href = 'teamNoticeWrite.do?projectno='+projectno;
 
 }
 

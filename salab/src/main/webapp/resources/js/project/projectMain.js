@@ -95,23 +95,24 @@ function gotoPNotice(){
 function gotoNoticeDetail(no){
     location.href = 'teamNoticeDetail.do?pnoticeno=' + no+'&projectno='+$('#projectno').val();
 }
+
 //팀원 권한 메뉴창 toggle
 function openMenu() {
-    $(".setting-menu").addClass('hide');
     $(event.target.nextElementSibling).toggleClass('hide');
 }
 //모달끄기 버튼_
 $(".modalOutline").click(function () {
-    $(".modalOutline").addClass('hide');
+    $(".modalOutline").toggleClass('hide');
 })
 //확인창만 닫기 기능
 $(".modalBtn").click(function () {
-    $(".afterEmailCheck").addClass('hide');
+    $(event.target.parentElement.parentElement).toggle();
 })
 
 //팀원 초대창 toggle
 function inviteModalToggle() {
-    $("#inviteModal").removeClass('hide');
+    $("#inviteModal").toggle();
+    event.stopImmediatePropagation();
 }
 
 $(".modalContent").click(function () {
@@ -132,12 +133,12 @@ $(".inviteBtn").click(function () {
 
             if (data == 'inviteSuccess') {
                 $("#inviteEmail").val("");
-                $("#inviteModal").toggleClass('hide');
-                $(".afterInvteModal").removeClass('hide');
+                $("#inviteModal").toggle();
+                $(".afterInvteModal").toggle();
             } else if (data == 'joinedMember') {
-                $(".joinedMember").toggleClass('hide');
+                $(".joinedMember").toggle();
             } else {
-                $(".notFoundUser").toggleClass('hide');
+                $(".notFoundUser").toggle();
             }
         },
         error: function (status, request, errorData) {

@@ -139,38 +139,39 @@ public class ProjectController {
 	@RequestMapping(value="gotoProject.do")
 	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
 	logger.info("gotoTeamProject.do 진입");
-	if(project != null) {
-		System.out.println(project.toString());
-	}
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
-	System.out.println(project.toString());
 	
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
-	System.out.println(paging.toString());
 	
+	//프로젝트 내에 공지사항 확인
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	map.put("paging", paging);
 	map.put("projectno", project.getProjectno());
 	List<Projectnotice> pnoticelist = pnService.testList(map);
-	System.out.println(pnoticelist.size());
 	
+	//멤버 리스트 확인
 	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
 	System.out.println("멤버결과:"+memberList.toString());
-
+	
+	//페이지메인에 표시될 프로젝트 확인 (최대4개)
 	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
-	if(teamProjectList == null) {
-		System.out.println("nullllllllllll");
-	}else {
-		System.out.println("dddd"+teamProjectList);
-	}
+
+	//현재 유저의 유저권한 확인
+	HashMap<String, Object> mapForAuth = new HashMap<String, Object>();
+	mapForAuth.put("userno", member.getUserno());
+	mapForAuth.put("projectno", project.getProjectno());
+	String userAuth = mpService.selectUserAuth(mapForAuth);
+	session.setAttribute("userauth", userAuth);
+	
+	//화면 좌측, 유저의 프로젝트 리스트 재 확인
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
 	session.removeAttribute("myProjectList");
 	session.setAttribute("myProjectList", projectList);
-	mv.addObject("projectListSize",projectList.size());
+
 	mv.addObject("projectList",teamProjectList);
 	mv.addObject("memberList", memberList);
 	mv.addObject("noticelist", pnoticelist);
@@ -196,16 +197,22 @@ public class ProjectController {
 	
 	}
 	@RequestMapping(value="inviteEmailCheck.do", method= RequestMethod.POST)
-	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException {
+	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException, MessagingException {
 		logger.info("진입");
 		response.setContentType("text/html; charset=UTF-8");
 		int result = pService.inviteEmailCheck(useremail,projectno);
 		PrintWriter out = response.getWriter();
-		if(result== 2) {
-			//초대기능 넣기
+		if(result>0) {
+			MailUtils sendMail = new MailUtils(mailSender);
+			sendMail.setSubject("[SALAB] 프로젝트 참여");
+			sendMail.setText(sendMail.projectInviteTemplate(String.valueOf(result), projectno));
+			sendMail.setFrom("saladbranch@gmail.com", "SALAB");
+			sendMail.setTo(useremail);
+			sendMail.send();
+		
 			out.append("inviteSuccess");
 		}
-		else if(result==1) {
+		else if(result<0) {
 			out.append("joinedMember");
 		}
 		else if(result==0){
@@ -231,70 +238,5 @@ public class ProjectController {
 	
 	}
 	
-	@RequestMapping(value="gotoProjectFile.do")
-	public ModelAndView gotoProjectFileMethod(String sort,ModelAndView mv, Project project,HttpServletRequest request,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("gotoProjectFile.do 진입");
-	MongoService mgService = new MongoService();
-	if(project != null) {
-		System.out.println(project.toString());
-	}
-	Member member = (Member) session.getAttribute("loginMember");
-	//프로젝트 데이터조회
-	project = pService.selectProject(project);
-	System.out.println(project.toString());
-	
-	
-	List<ProjectFile> fileList = pService.selectListAll(project.getProjectno());
-	
-	if(fileList == null) {
-		System.out.println("nullllllllllll");
-	}else {
-		System.out.println("dddd"+fileList);
-	}
-	if(sort !=null) {
-		if(sort.equals("recent")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f2.getPrfilelastmodified().compareTo(f1.getPrfilelastmodified());
-				}
-			});
-			logger.info("최근 수정 순으로 정렬완료!");
-		}else if(sort.equals("name")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfilername().compareTo(f2.getPrfilername());
-				}
-			});
-			logger.info("이름 순으로 정렬완료!");
-		}else if(sort.equals("date")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfilecreatedate().compareTo(f2.getPrfilecreatedate());
-				}
-			});
-			logger.info("생성날짜 순으로 정렬완료!");
-		}
-		request.setAttribute("sort", sort);
-	}
-	
-/*	if(fileList != null) {
-		for(ProjectFile pf : fileList) {
-			Page p = new Page();
-			p.setFileno(pf.getPrfileno());
-			p.setUserno(pf.getProjectno());
-			p.setPageno(1);
-			Page page = mgService.findOne("page", p);
-			pf.setPfilethumbnail(page.getThumbnail());
-		}*/
-	request.removeAttribute("privateFile");
-	request.setAttribute("privateFile", fileList);
 
-	
-	mv.addObject("project", project);
-  	mv.setViewName("project/projectFile");
-	return mv;
-	}
 }

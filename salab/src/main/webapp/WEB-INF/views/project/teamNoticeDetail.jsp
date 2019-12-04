@@ -100,24 +100,25 @@
                     <div class="notice-header">공지사항</div>
                     <div class="notice-body">
                         <div>
-                            <!--
+                           
+                             <c:if test="${sessionScope.userauth!='LEADER' }">
                             <div>
-                                 팀원일경우 
-                                <div class="notice-title">
-                                    <div class="hideInputText">${projectnotice.pnoticetitle}</div>
-                                    <span>${projectnotice.pnoticedate}</span>
-
-                                </div>
                                 <div>
-                                    <div class="notice-contentbox">
-                                        ${projectnotice.pnoticecontent}
+                                    <div class="notice-title">
+                                        <input readonly  class="hideInputText" type="text" placeholder=" :Notice Title" maxlength="40" value="${projectnotice.pnoticetitle}">
+                                        <span id="writedDate">${projectnotice.pnoticedate}</span>
+
+                                    </div>
+                                    <div id="check">
+                                        <div class="notice-contentbox" rows="12" placeholder=":Notice Content">${projectnotice.pnoticecontent}</div>
                                     </div>
 
                                 </div>
                             </div>
-                            -->
+                            </c:if>
+                           
+                            <c:if test="${sessionScope.userauth=='LEADER' }">
                             <div>
-                                <!-- 팀장일 경우 -->
                                 <div>
                                     <div class="notice-title">
                                         <input id="notice-title" class="hideInputText" type="text" placeholder=" :Notice Title" maxlength="40" value="${projectnotice.pnoticetitle}">
@@ -125,7 +126,7 @@
 
                                     </div>
                                     <div id="check">
-                                        <textarea id="notice-content" class="notice-contentbox" rows="12" placeholder=":Notice Content">${projectnotice.pnoticecontent}</textarea>
+                                        <textarea  id="notice-content" class="notice-contentbox scrollbar" rows="12" placeholder=":Notice Content">${projectnotice.pnoticecontent}</textarea>
                                     </div>
 
                                 </div>
@@ -138,6 +139,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

@@ -33,6 +33,15 @@ $(document).ready(function(){
             }
         })
     }
+    
+    $('.projectName').each(function(){
+        var name = $(this).text();
+        if(name.length > 11){
+            $(this).text(name.substr(0, 11) + '...');    
+        }
+    });
+    
+    
 });
 
 /* 마우스 선택영역 만들기 */
@@ -301,6 +310,27 @@ function newFile(){
     insert2.setAttribute("name", "userno");
     insert2.setAttribute("value", $("#userNo").val());
 
+    form.append(insert2);
+
+    form.submit();
+}
+
+function newTeamFile(){
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "insert_newteamFile.do");
+    document.body.appendChild(form);
+
+    var insert = document.createElement("input");
+    insert.setAttribute("type", "hidden");
+    insert.setAttribute("name", "prfiletitle");
+    insert.setAttribute("value", $("#fileName").val());
+    form.append(insert);
+
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "projectno");
+    insert2.setAttribute("value", $("#projectNo").val());
     form.append(insert2);
 
     form.submit();

@@ -1,5 +1,6 @@
 package com.sesame.salab.member_project.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class Member_ProjectServiceImpl implements Member_ProjectService{
 	@Override
 	public List<Project> selectProjectList(int userno) {
 		return mpDao.selectProjectList(userno);
+	}
+
+	@Override
+	public String selectUserAuth(HashMap<String, Object> mapForAuth) {
+		// TODO Auto-generated method stub
+		return mpDao.selectUserAuth(mapForAuth);
 	}
 
 	

@@ -31,7 +31,4 @@ public interface ProjectService {
 	int selectProjectnoAfterCreated(int userno);
 
 	List<ProjectFile> selectMainFileList(int projectno);
-
-	List<ProjectFile> selectListAll(int projectno);
-
 }

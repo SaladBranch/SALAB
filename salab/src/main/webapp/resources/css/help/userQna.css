@@ -477,14 +477,6 @@ body{
 	margin-left: 70px;
 }
 
-
-input[type="radio"]{
-    position: relative;
-    opacity: 1;
-    width: 15px;
-    height: 15px;
-}
-
 .qna_btn_box{
 	display: block;
 	margin: 10px 10px 10px 10px;

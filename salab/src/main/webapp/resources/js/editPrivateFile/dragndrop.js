@@ -61,6 +61,17 @@ function leftMouseListner(){
     	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
     	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 
+    	if($all.html() != ""){
+            $all.children().each(function(){
+                $(this).css({
+                    left: Number($(this).css('left').replace('px', '')) + Number($all.css('left').replace('px', '')) + 'px',
+                    top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px'
+                });
+                $(this).removeClass('ui-selected');
+                $(this).appendTo($('#droppable')); 
+            });
+        }
+        
 		$(this).addClass("text-editing");
 		$(this).children(".textarea").attr("contenteditable", "true");
 		if ($(this).is(".ui-draggable")) {
@@ -317,7 +328,7 @@ $(function(){
             width = height = 0;
             $focus.show();
         }
-    	if (!$(e.target).is("#droppable .obj *") && !$(e.target).is(".figure-item *")) {
+    	if(!$(e.target).is("#droppable .obj *") && !$(e.target).is(".tab-menu *") && !$(e.target).is(".text-item *") && !$(e.target).is(".figure-item *") && !$(e.target).is(".minicolors-panel *")) {
     		$("#droppable .obj-comp[contenteditable=true]").each(function() {
     	        $(this).attr("contenteditable", "false");
     		})

@@ -16,4 +16,10 @@ public interface QnaService {
 
 	int qnaInsert(Qna qna);
 
+	int adminListCount();
+
+	List<Qna> adminQnaList(HashMap<String, Object> map);
+
+	int qnaUpdate(Qna qna);
+
 }

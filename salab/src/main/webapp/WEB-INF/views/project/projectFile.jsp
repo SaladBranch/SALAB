@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="/salab/vendors/css/grid.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
-    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css" type="text/css">
-    <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
 
@@ -23,7 +21,7 @@
     	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
     }
     </script>
-    <title>최근 파일 | Salab</title>
+    <title>${project.projectname } | Salab</title>
 </head>
 <body>
     <header>
@@ -35,7 +33,7 @@
                 <div class="top-bar-logoimg">
                     <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -72,13 +70,13 @@
                 <i class="fas fa-search" id="search-icon"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
-            <div class="recent-file active-menu">
+            <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
-                <a href="recentFile.do">최근 파일</a>
+                <a href="recentFile.do?sort=recent">최근 파일</a>
             </div>
             <div class="private-file">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
-                <a href="privateFile.do">개인 파일</a>
+                <a href="privateFile.do?sort=recent">개인 파일</a>
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
@@ -86,33 +84,32 @@
             </div>
         </div>
         <div class="left-middle-side-bar">
-     	   	<div class="myTeam scroll-y scrollbar">
-                <!--현재 팀 프로젝트 표시-->
-                <c:forEach var="projectList" items="${sessionScope.myProjectList}">
-                    <c:if test="${project.projectno==projectList.projectno}">
-                        <div class="clear Team-grid active">
-                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
-                            <div class="inline">
-                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
-                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
-                            </div>
-                        </div>
-                    </c:if>
-                    <c:if test="${project.projectno!=projectList.projectno}">
-                        <div class="clear Team-grid">
-                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
-                            <div class="inline">
-                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
-                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
-                            </div>
-                        </div>
-                    </c:if>
-                </c:forEach>
-            </div>
-            <div class="new-team">
-                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="newTeam.do">새로운 팀 </a>
-            </div>
+        	<c:if test="${!empty sessionScope.myProjectList }">
+        		<div class="myTeam">
+					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
+						<div class="each-team">
+							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
+							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							<c:if test="${project.projectno eq projectList.projectno }">
+								<a class="active-menu" href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
+							</c:if>
+							<c:if test="${project.projectno ne projectList.projectno }">
+								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>	
+							</c:if>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="new-team" style="border-top: 1px solid #e2e2e2;">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
+        	<c:if test="${empty sessionScope.myProjectList }">
+        		<div class="new-team">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
         </div>
     </div>
     <div id="right-click-menu" class="right-click-menu">
@@ -140,28 +137,28 @@
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="recentFile.do?sort=recent">최근 본 파일</a></li>
-                    <li><a href="recentFile.do?sort=name">파일 명</a></li>
-                    <li><a href="recentFile.do?sort=date">파일 생성 일자</a></li>
+                    <li><a href="gotoProjectFile.do?sort=recent?projectno=${project.projectno }">최근 본 파일</a></li>
+                    <li><a href="gotoProjectFile.do?sort=name?projectno=${project.projectno }">파일 명</a></li>
+                    <li><a href="gotoProjectFile.do?sort=date?projectno=${project.projectno }">파일 생성 일자</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="row recent-files">
-        	<c:if test="${!empty privateFile }">
-        		<c:forEach var="pfile" items="${privateFile }">
-        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+        	<c:if test="${!empty fileList }">
+        		<c:forEach var="tfile" items="${fileList }">
+        		<div class="file-grid" onclick="epFile(${tfile.prfileno});">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
-	                        ${pfile.pfilethumbnail }
+	                        ${tfile.prfilethumbnail }
 	                    </div>
 	                    <div class="file-info">
 	                        <div class="about-file">
 	                            <div class="file-name">
-	                                <c:out value="${pfile.pfiletitle }"/>
+	                                <c:out value="${tfile.prfiletitle }"/>
 	                            </div>
 	                            <div class="file-edited">
-	                                <span>${pfile.pfilelastmodified }</span> in 개인파일
+	                                <span>${tfile.prfilelastmodified }</span> in 개인파일
 	                            </div>
 	                        </div>
 	                        <div class="file-options">
@@ -193,19 +190,14 @@
     
     <div id="modal-name" class="modalOutline disable ">
     	<div id="newFile" class="modalContent z-index1">
-        	<div class="titleConfigure">Create PrivateFile</div>
-           	<input id="userNo" type="hidden" value="${loginMember.userno}">
+        	<div class="titleConfigure">Create TeamFile</div>
+           	<input id="projectNo" type="hidden" value="${project.projectno}">
             <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
-            <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+            <input class="" type="button" id="id-change-btn" value="New file" onclick="newTeamFile();">
     	</div>
 	</div>
     
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
-    <script type="text/javascript">
-    	$(function(){
-    		console.log(${loginMember.userno});
-    	})
-    </script>
 </body>
 </html>

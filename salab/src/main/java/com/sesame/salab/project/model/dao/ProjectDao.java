@@ -62,10 +62,10 @@ public class ProjectDao {
 			 int joinedCheck= sqlSession.selectOne("projectMapper.joinedMemberCheck", map);
 			 if(joinedCheck ==0) {
 				 System.out.println("초대가능멤버");
-				 result=2;
+				 result=membercheck;
 			 }else {
 				 System.out.println("이미초대된멤버");
-				 result=1;
+				 result=-1;
 			 }
 		 }
 		 

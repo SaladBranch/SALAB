@@ -459,3 +459,172 @@ body{
     font-size: 13px;
     padding-left: 10px;
 }
+
+.qna_top{
+	float: left;
+	font-size: 30pt;
+	padding: 40px 30px 25px 30px;
+	width:87%;
+	margin-left: 70px;
+	border-bottom: 2px solid black;
+}
+
+.qna_bottom{
+	font-size: 13pt;
+	width: 87%;
+	padding: 0px 30px;
+	display: block;
+	margin-left: 70px;
+}
+
+.qna_box{
+	border: 1px solid black;
+	width: 65%;
+	padding: 20px 40px;
+	margin: 10px 30px 10px 150px;
+}
+
+.qna_fromMember{
+	margin: 0px 0px 15px 5px;
+	padding-bottom: 15px;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #3cb371;
+	border-bottom: 1px solid gray;
+}
+
+.qna_info{
+	padding:2px;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.qna_info_faq{
+	padding: 10px 15px 10px 15px;
+	margin-bottom: 15px;
+	font-size: 12px;
+	border-bottom: 1px solid gray;
+}
+
+.qna_title{
+	margin: 5px 5px 5px 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#qna_box_title{
+	border: 1px solid black;
+	margin: 3px 5px 7px 5px;
+	width: 100%;
+}
+
+.qna_content{
+	margin: 5px 5px 5px 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#qna_box_content{
+	border: 1px solid black;
+	margin: 3px 5px 7px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 90px;
+	font-size: 12pt;
+	resize: none;
+	outline: none;
+	overflow: auto;
+	overflow-sytyle:  none;
+}
+
+#qna_box_content::-webkit-scrollbar {
+	display: none;
+}
+
+.qna_ans{
+	margin: 5px 5px 5px 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#qna_box_ans{
+	border: 1px solid black;
+	margin: 3px 5px 20px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 90px;
+	font-size: 12pt;
+	resize: none;
+	outline: none;
+	overflow: auto;
+	overflow-sytyle:  none;
+}
+
+#qna_box_ans::-webkit-scrollbar {
+	display: none;
+}
+
+.qna_back_btn{
+	margin: 5px 50px 0px 100px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
+}
+
+.qna_back_btn:hover{
+	border: 1px solid #3cb371;
+}
+
+.qna_update_btn{
+	margin: 5px 20px 0px 60px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
+}
+
+.qna_update_btn:hover{
+	border: 1px solid #3cb371;
+}
+
+a { 
+	text-decoration: none; 
+	color: black;
+}
+
+a:hover{
+	color: #3cb371;
+}
+
+input:focus::-webkit-input-placeholder { 
+	color: transparent; 
+}
+
+input:focus::-moz-placeholder { 
+	color: transparent; 
+} 
+
+input:focus:-ms-input-placeholder { 
+	color: transparent; 
+} 
+
+input:focus::-ms-input-placeholder { 
+	color: transparent; 
+}
+
+textarea:focus::-webkit-input-placeholder { 
+	color: transparent; 
+}
+
+textarea:focus::-moz-placeholder { 
+	color: transparent; 
+} 
+
+textarea:focus:-ms-input-placeholder { 
+	color: transparent; 
+} 
+
+textarea:focus::-ms-input-placeholder { 
+	color: transparent; 
+}

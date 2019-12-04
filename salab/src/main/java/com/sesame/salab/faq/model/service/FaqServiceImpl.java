@@ -19,4 +19,14 @@ public class FaqServiceImpl implements FaqService{
 		return faqDao.faqList();
 	}
 
+	@Override
+	public List<Faq> adminFaqList() {
+		return faqDao.adminFaqList();
+	}
+
+	@Override
+	public int adminFaqInsert(Faq faq) {
+		return faqDao.adminFaqInsert(faq);
+	}
+
 }

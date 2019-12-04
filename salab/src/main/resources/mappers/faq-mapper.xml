@@ -12,6 +12,10 @@
 	</resultMap>
 	
 	<select id="selectList" resultMap="resultFaq">
-		SELECT * FROM FAQ
+		SELECT * FROM FAQ ORDER BY FAQCATEGORY
 	</select>
+	
+	<insert id="adminFaqInsert" parameterType="Faq">
+		INSERT INTO FAQ VALUES(SEQ_FAQNO.NEXTVAL, #{adminid}, #{faqcategory}, #{faqtitle}, #{faqcontent})
+	</insert>
 </mapper>

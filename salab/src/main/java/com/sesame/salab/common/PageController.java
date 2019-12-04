@@ -69,19 +69,27 @@ public class PageController {
 			for(FileList pf : fileList) {
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
-				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());
+				if(pf.getPt().equals("private")) {
+					p.setUserno(pf.getUserno());
+					Page page = mgService.findOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}else {
+					p.setProjectno(pf.getUserno());
+					Page page = mgService.findTeamOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}
+				
 			}
 			mgService.close();
 		
-			request.setAttribute("privateFile", fileList);
+			request.setAttribute("fileList", fileList);
 			request.setAttribute("sort", sort);
 		}else {
 			viewFileName = "common/error";
 		}
 		List<Project> projectList = mpService.selectProjectList(member.getUserno());
+		session.removeAttribute("myProjectList");
 		session.setAttribute("myProjectList", projectList);
 		
 		return viewFileName;
@@ -195,6 +203,11 @@ public class PageController {
 		return "admin/adminFaq";
 	}
 	
+	@RequestMapping(value="adminFaqInsert.do")
+	public String toAdminFaqInsertMethod() {
+		return "admin/adminFaqInsert";
+	}
+	
 	@RequestMapping(value="adminQna.do")
 	public String toAdminQnaMethod() {
 		return "admin/adminQna";
@@ -301,7 +314,8 @@ public class PageController {
    	}
 
    	@RequestMapping(value="teamNoticeWrite.do")
-   	public String teamNoticeWriteMethod() {
+   	public String teamNoticeWriteMethod(@RequestParam("projectno") int projectno,HttpServletRequest request) {
+   		request.setAttribute("projectno", projectno);
    		return "project/teamNoticeWrite";
    	}
    	   	

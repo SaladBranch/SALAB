@@ -15,7 +15,7 @@ body{
     height: 40px;
     align-items: center;
     background: #2c2c2c;
-    fill: #fff;
+/*     fill: #fff; */
     color: #fff;
     justify-content: flex-start;
     z-index: 5;
@@ -198,24 +198,30 @@ body{
     margin-left: 7%;
 }
 
-.recent-file{margin-top: 10px;}
-.recent-file,
-.private-file,
-.trashcan,
+.ad-member{margin-top: 15px;}
+
+.ad-member,
+.ad-notice,
+.ad-faq,
+.ad-qna,
 .new-team{
     width: 100%;
     height: 40px;
 }
-.recent-file i,
-.private-file i,
-.trashcan i,
+
+.ad-member i,
+.ad-notice i,
+.ad-faq i,
+.ad-qna i,
 .new-team i{
     font-size: 17px;
     line-height: 40px;
 }
-.recent-file a,
-.private-file a,
-.trashcan a,
+
+.ad-member a,
+.ad-notice a,
+.ad-faq a,
+.ad-qna a,
 .new-team a{
     display: inline-block;
     color: #2c2c2c;
@@ -264,7 +270,7 @@ body{
     margin-right: 5px;
 }
 .sort-by-mention{
-    width: 100px;
+    width: 120px;
 }
 .sort-standards{
     z-index: 5;
@@ -355,7 +361,7 @@ body{
     max-width: 96%;
     margin: 0 auto;
 }
-.recent-files{
+.ad-faqs{
     width: 96%;
     margin: 0 auto;
 }
@@ -454,13 +460,10 @@ body{
     padding-left: 10px;
 }
 
-.menu-title{
-	margin-top: 40px;
-	height: 35px;
-	padding: 10px 3px;
-}
 
-.qna_top{
+/**/
+
+.faq_top{
 	float: left;
 	font-size: 30pt;
 	padding: 40px 30px 25px 30px;
@@ -469,7 +472,7 @@ body{
 	border-bottom: 2px solid black;
 }
 
-.qna_bottom{
+.faq_bottom{
 	font-size: 13pt;
 	width: 87%;
 	padding: 0px 30px;
@@ -477,100 +480,98 @@ body{
 	margin-left: 70px;
 }
 
-.qna_box{
+.faq_box{
 	border: 1px solid black;
 	width: 65%;
-	padding: 20px 40px;
+	padding: 30px 40px;
 	margin: 10px 30px 10px 150px;
 }
 
-.qna_fromAdmin{
-	margin: 0px 0px 15px 5px;
-	padding-bottom: 5px;
-	font-size: 14pt;
-	font-weight: bold;
-	color: #3cb371;
-}
-
-.qna_info{
+.faq_info{
 	padding:2px;
 	font-weight: bold;
-	font-size: 13px;
+	font-size: 15px;
 }
 
-.qna_info_faq{
-	padding: 10px 15px 10px 15px;
-	margin-bottom: 15px;
-	font-size: 12px;
+.faq_info_faq{
+	padding: 15px;
+	margin-bottom: 20px;
+	font-size: 13px;
 	border-bottom: 1px solid gray;
 }
 
-.qna_title{
+.faq_fromAdmin{
+	margin: 0px 0px 20px 5px;
+	padding-bottom: 25px;
+	font-size: 16pt;
+	font-weight: bold;
+	color: #3cb371;
+	border-bottom: 1px solid gray;
+}
+
+.faq_category{
 	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
+	font-size: 14pt;
 	font-weight: bold;
 }
 
-#qna_box_title{
+#faq_box_category{
 	border: 1px solid black;
-	margin: 3px 5px 7px 5px;
+	margin: 5px 5px 10px 5px;
 	width: 100%;
+	display: block;
 }
 
-.qna_content{
+.faq_title{
 	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
+	font-size: 14pt;
 	font-weight: bold;
 }
 
-#qna_box_content{
+#faq_box_title{
 	border: 1px solid black;
-	margin: 3px 5px 7px 5px;
+	margin: 5px 5px 10px 5px;
+	width: 100%;
+	display: block;
+}
+
+.faq_content{
+	margin: 5px 5px 5px 10px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#faq_box_content{
+	border: 1px solid black;
+	margin: 5px 5px 25px 5px;
 	padding: 5px;
 	width: 100%;
-	height: 90px;
-	font-size: 12pt;
+	height: 120px;
 	resize: none;
 	outline: none;
-	overflow: auto;
-	overflow-sytyle:  none;
+	display: block;
 }
 
-#qna_box_content::-webkit-scrollbar {
-	display: none;
-}
-
-.qna_ans{
-	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
-	font-weight: bold;
-}
-
-#qna_box_ans{
-	border: 1px solid black;
-	margin: 3px 5px 20px 5px;
-	padding: 5px;
-	width: 100%;
-	height: 90px;
-	font-size: 12pt;
-	resize: none;
-	outline: none;
-	overflow: auto;
-	overflow-sytyle:  none;
-}
-
-#qna_box_ans::-webkit-scrollbar {
-	display: none;
-}
-
-.qna_back_btn{
-	margin: 5px 50px 0px 400px;
+.faq_back_btn{
+	margin: 5px 50px 0px 100px;
 	padding: 10px 40px;
 	border: 1px solid lightgreen;
 	cursor: pointer;
+	background: transparent;
+}
+.faq_back_btn:hover{
+	border: 1px solid #3cb371;
 }
 
-.qna_back_btn:hover{
+.faq_insert_btn{
+	margin: 5px 20px 0px 60px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
+}
+
+.faq_insert_btn:hover{
 	border: 1px solid #3cb371;
 }
 
@@ -583,3 +584,18 @@ a:hover{
 	color: #3cb371;
 }
 
+input:focus::-webkit-input-placeholder { 
+	color: transparent; 
+}
+
+input:focus::-moz-placeholder { 
+	color: transparent; 
+} 
+
+input:focus:-ms-input-placeholder { 
+	color: transparent; 
+} 
+
+input:focus::-ms-input-placeholder { 
+	color: transparent; 
+}

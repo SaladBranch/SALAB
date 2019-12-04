@@ -42,4 +42,13 @@
 	<select id="getUncheckedMember" parameterType="string" resultType="string">
 		SELECT USERAUTHKEY FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'N'
 	</select>
+	<select id="getCheckedMember" parameterType="string" resultType="string">
+		SELECT USERAUTHKEY FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'Y'
+	</select>
+	<select id="getMemberForPwd" parameterType="Member" resultType="Member">
+		SELECT * FROM MEMBER WHERE USEREMAIL = #{useremail} AND USERAUTHKEY = #{userauthkey}
+	</select>
+	<update id="initchangePwd" parameterType="Member">
+		UPDATE MEMBER SET USERPWD = #{userpwd} WHERE USEREMAIL = #{useremail} AND USERAUTHKEY = #{userauthkey}
+	</update>
 </mapper>

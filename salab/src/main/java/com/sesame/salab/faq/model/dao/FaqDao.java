@@ -18,4 +18,8 @@ public class FaqDao {
 		return sqlSession.selectList("faqMapper.selectList");
 	}
 
+	public List<Faq> adminFaqList() {
+		return sqlSession.selectList("faqMapper.selectList");
+	}
+
 }

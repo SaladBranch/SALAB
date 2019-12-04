@@ -51,4 +51,12 @@
 	<update id="initchangePwd" parameterType="Member">
 		UPDATE MEMBER SET USERPWD = #{userpwd} WHERE USEREMAIL = #{useremail} AND USERAUTHKEY = #{userauthkey}
 	</update>
+	<select id="chkGoogleUser" parameterType="Member" resultType="Member">
+		SELECT * FROM MEMBER WHERE USEREMAIL = #{useremail} AND USEREMAILCHECKED = 'Y' 
+	</select>
+	<insert id="enrollGoogleUser" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+		SEQ_USERNO.NEXTVAL, #{useremail} , #{userpwd} , #{username} , NULL, NULL, NULL, DEFAULT, DEFAULT, #{userauthkey}, 'Y' , null, null
+		)
+	</insert>
 </mapper>

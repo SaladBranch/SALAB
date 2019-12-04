@@ -63,4 +63,40 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 		return pfDao.pfRename(pfile);
 	}
 
+	@Override
+	public PrivateFile selectFile(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.selectFile(pfile);
+	}
+
+	@Override
+	public int fileCopy(PrivateFile file) {
+		// TODO Auto-generated method stub
+		return pfDao.fileCopy(file);
+	}
+
+	@Override
+	public int fileDelete(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.fileDelete(pfile);
+	}
+
+	@Override
+	public List<FileList> trashCanAll(int userno) {
+		// TODO Auto-generated method stub
+		return pfDao.trashCanAll(userno);
+	}
+
+	@Override
+	public int fileDeleteUndo(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.fileDeleteUndo(pfile);
+	}
+
+	@Override
+	public int filePremanentDelete(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.filePermanentDelete(pfile);
+	}
+
 }

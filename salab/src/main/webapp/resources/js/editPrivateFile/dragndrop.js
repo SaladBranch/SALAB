@@ -311,9 +311,6 @@ $(function(){
         },
         stop: function(){
             addControl();
-            setTimeout(function(){
-        		Thumbnail();
-        	}, 1000);
         }
     });
 
@@ -387,6 +384,7 @@ $(function(){
             appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
+        
     });
     
     //마우스 움직일 때 드래그 영역 설정 함수
@@ -420,13 +418,18 @@ $(function(){
                 change: function(hex, opacity){
                     $('#droppable').css('background-color', hex);
                     $('#droppable').attr('data-background', hex);
+                    
                 }
             });
+            setTimeout(function(){
+        		Thumbnail();
+        	}, 1000);
         }else{
             $('.minicolors').remove();
             $('#droppable').css('background-color', '#fff');
             $('#droppable').attr('data-background', '#ffffff');
         }
+        
     });
     
     $('#canvas-sizing').on('click', function(){

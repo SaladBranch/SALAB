@@ -70,17 +70,18 @@ function leftMouseListner(){
                 $(this).appendTo($('#droppable')); 
             });
         }
-        
-		$(this).addClass("text-editing");
-		$(this).children(".textarea").attr("contenteditable", "true");
-		if ($(this).is(".ui-draggable")) {
-			$(this).draggable("destroy");
-		}
-        $(this).children().remove('.ui-resizable-handle');
-        $(this).children('.ui-rotatable-handle').hide();
-		
+
 		if ($("#droppable").is(".ui-selectable"))
 			$("#droppable").selectable("destroy");
+		if ($(this).is(".ui-draggable"))
+			$(this).draggable("destroy");
+		
+		$(this).addClass("text-editing");
+		$(this).addClass("ui-selected");
+		
+		$(this).children(".textarea").attr("contenteditable", "true");
+        $(this).children().remove('.ui-resizable-handle');
+        $(this).children('.ui-rotatable-handle').hide();
 		$(this).children(".textarea").selectText();
 		
         $('.right-side-bar .canvas-menu').hide();
@@ -500,7 +501,7 @@ $(function(){
 
 $('#droppable').bind('DOMSubtreeModified', function(e){
 	
-    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0 && $(".text-reselect").length == 0){
+    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0 && $(".text-reselect").length == 0 && $(".text-editing").length == 0){
         $('.right-side-bar .canvas-menu').show();
         $('.right-side-bar .tab-menu').hide();
         $('.right-side-bar .tab-content').hide();

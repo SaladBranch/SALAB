@@ -74,7 +74,7 @@
                     <li><a href="javascript:">페이지 이름 변경</a></li>
                     <li><a href="javascript:" onclick="pageSave();">저장</a></li>
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
-                    <li><a href="javascript:" onclick="Thumnail();">내보내기</a></li>
+                    <li><a href="javascript:" onclick="Thumbnail();">내보내기</a></li>
                     <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
                 </ul>
             </li>
@@ -445,6 +445,51 @@
     	var list = new Array();
     	
     	
+    	
+    	async function Thumbnail(){
+    		console.log('start');
+    		var image;
+        		var node = document.getElementById('droppable');
+            	
+            	var canvas = document.createElement('canvas');
+            	canvas.width = node.scrollWidth;
+            	canvas.height = node.scrollHeight;
+            	
+            		await domtoimage.toPng(node).then(function (pngDataUrl) {
+            		console.log('domtoimage in');
+            	    var img = new Image();
+            	    img.onload = function () {
+            	        var context = canvas.getContext('2d');
+
+            	        context.translate(canvas.width, 0);
+            	        context.scale(-1, 1);
+            	        context.drawImage(img, 0, 0);
+
+            	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
+            	        console.log('domtoimage end');
+            	    };
+            		img.src = pngDataUrl;
+            		$('.ui-selected .page-thumbnail').html('');
+        	        $('.ui-selected .page-thumbnail').append(img);
+            })
+            .catch(function (error) {
+            	console.error('oops, something went wrong!', error);
+            });
+        	console.log('end');
+    	    /* await html2canvas($('#droppable')[0], {
+    	    	width: $('#droppable').width(),
+    	    	height: $('#droppable').height()
+    	    }).then(function (canvas) { 
+    	    	var image = new Image();
+    	    	console.log(canvas);
+    	        image.src = canvas.toDataURL('image/png');
+    	        
+    	        $('.ui-selected .page-thumbnail').html('');
+    	        $('.ui-selected .page-thumbnail').append(image);
+    	        
+    	      }); */
+        	
+    }	
     $(function(){
     	
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음

@@ -43,6 +43,7 @@ function includeElement(X, Y, temp) {
     $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	$("#droppable").append(comp);
     initSelect();
+    Thumbnail();
 }
 function leftMouseListner(){
     $(document).on('click', function(event){
@@ -165,6 +166,9 @@ function addControl(){
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
+                setTimeout(function(){
+            		Thumbnail();
+            	}, 1000);
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
@@ -174,6 +178,9 @@ function addControl(){
             },
             stop: function() {
             	formatChange();
+            	setTimeout(function(){
+            		Thumbnail();
+            	}, 1000);
             },
             wheelRotate: false
         });
@@ -196,6 +203,9 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
+                    setTimeout(function(){
+                		Thumbnail();
+                	}, 1000);
                 }
             });
         }else{
@@ -217,6 +227,9 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
+                    setTimeout(function(){
+                		Thumbnail();
+                	}, 1000);
                 }
             });
         }
@@ -287,6 +300,9 @@ $(function(){
         },
         stop: function(){
             addControl();
+            setTimeout(function(){
+        		Thumbnail();
+        	}, 1000);
         }
     });
 

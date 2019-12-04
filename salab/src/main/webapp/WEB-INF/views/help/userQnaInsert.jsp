@@ -87,12 +87,12 @@
     	
         <div class="qna_bottom">
 			<div class="qna_box">
+				<p class="qna_toAdmin">To. SALAB</p>
+				<p class="qna_info">현재 1:1 문의 답변에 평균 7 ~ 14일 정도 소요될 수 있으며, 최대 20일 이상 지연될 수 있습니다.</p>
+				<p class="qna_info">신속하게 답변드릴 수 있도록 최선을 다하겠습니다.</p>
+				<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
+				<p class="qna_info_faq"><u><a href="faqlist.do">FAQ바로가기</a></u></p>
 				<form action="qnaInsert.do" id="qnainsert" method="post" enctype="multipart/form-data">
-					<p class="qna_toAdmin">To. SALAB</p>
-					<p class="qna_info">현재 1:1 문의 답변에 평균 7 ~ 14일 정도 소요될 수 있으며, 최대 20일 이상 지연될 수 있습니다.</p>
-					<p class="qna_info">신속하게 답변드릴 수 있도록 최선을 다하겠습니다.</p>
-					<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
-					<p class="qna_info_faq"><u><a href="faqlist.do">FAQ바로가기</a></u></p>
 					<ul>
 						<li>
 							<p class="qna_title">제목</p>
@@ -112,6 +112,9 @@
         </div>
         
     </div>
+    
+    
+    <script type="text/javascript" src="/salab/resources/js/help/help.js"></script>
     
 </body>
 

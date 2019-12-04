@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="/salab/resources/css/admin/adminLogin.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/admin/adminMain.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
@@ -28,9 +28,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="main.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="main.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -41,44 +41,9 @@
                         <span></span>
                     </div>
                 </div>
-                <!-- <div class="add-btn"></div> -->
-                <!-- <div class="user-profile">
-                    <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
-                    </div>
-                    <div class="profile-name">
-                        <p>#<i class="fas fa-chevron-down"></i></p>
-                        <div class="profile-dropmenu">
-                            <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
-                                <li><a href="#">로그아웃</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </nav>
     </header>
-    <!-- <div class="left-side-bar">
-        <div class="left-top-side-bar">
-            <div class="menu-title">
-                <span>도움말</span>
-            </div>
-            <div class="ad-member">
-                <a href="#">회원정보</a>
-            </div>
-            <div class="ad-notice">
-                <a href="#">공지사항</a>
-            </div>
-            <div class="ad-faq">
-                <a href="#">자주 찾는 질문</a>
-            </div>
-            <div class="ad-qna">
-                <a href="#">1:1문의</a>
-            </div>
-        </div>
-    </div> -->
 
     <div class="right-main-side">
     	<div class="login_box">
@@ -91,8 +56,8 @@
     		</div>
     		<div class="box-middle">
     			<form action="adminLogin.do" id="adminLogin" method="post" enctype="multipart/form-data">
-    				<input type="text" id="in-id" placeholder="아이디">
-    				<input type="password" id="in-pass" placeholder="비밀번호">
+    				<input type="text" id="in-id" name="adminid" placeholder="아이디">
+    				<input type="password" id="in-pass" name="adminpwd" placeholder="비밀번호">
     			</form>
     		</div>
     		<div class="box-bottom">
@@ -125,17 +90,6 @@ $(function(){
 		}
 	});
 });
-
-if(qna_title == ""){
-	alert("제목을 입력해 주세요.");
-	$("#qna_box_title").focus();
-} else if(qna_content == ""){
-	alert("내용을 입력해 주세요.");
-	$("#qna_box_content").focus();
-} else{
-	alert("hi");
-	$("#qnainsert").submit();
-}
 </script>
 
 

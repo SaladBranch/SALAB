@@ -55,4 +55,34 @@ public class PrivateFileDao {
 		return sqlSession.update("privatefileMapper.pfRename", pfile);
 	}
 
+	public PrivateFile selectFile(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("privatefileMapper.selectFile", pfile);
+	}
+
+	public int fileCopy(PrivateFile file) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("privatefileMapper.fileCopy", file);
+	}
+
+	public int fileDelete(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("privatefileMapper.fileDelete", pfile);
+	}
+
+	public List<FileList> trashCanAll(int userno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("privatefileMapper.trashCanAll", userno);
+	}
+
+	public int fileDeleteUndo(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("privatefileMapper.fileDeleteUndo", pfile);
+	}
+
+	public int filePermanentDelete(PrivateFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("privatefileMapper.filePermanentDelete", pfile);
+	}
+
 }

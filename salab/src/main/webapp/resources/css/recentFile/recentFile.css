@@ -507,7 +507,7 @@ body{
     z-index: 1;
 }
 
-#newFile input[type="text"] {
+#newFile input[type="text"], #renameFile input[type="text"] {
     margin: 15px auto;
     padding: 2px 15px;
     font-size: 14px;

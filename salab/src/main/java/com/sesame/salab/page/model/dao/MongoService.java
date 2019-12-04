@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.MongoClient;
 import com.sesame.salab.page.model.vo.Page;
+import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 public class MongoService {
 	
@@ -103,8 +104,8 @@ public class MongoService {
 	}
 	
 	//remove data in collection
-	public void removeData(String deleteCollection, Fruit condition) {
-		Query query = new Query(new Criteria("_id").is(condition.get_id()));
+	public void removeData(String deleteCollection, PrivateFile pfile) {
+		Query query = new Query(new Criteria("fileno").is(pfile.getPfileno()));
 		mongoOps.remove(query, deleteCollection);
 	}
 

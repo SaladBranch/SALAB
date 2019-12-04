@@ -1,3 +1,5 @@
+var fileno, filetitle;
+
 $(document).ready(function(){
     
     if($(window).width()>=768){
@@ -116,6 +118,7 @@ $('.file-container').on('click', function(){
         $(window).on('contextmenu', function(){
             event.preventDefault();
         });
+
         $('.file-container').on('contextmenu', function(e){
             event.preventDefault();
             
@@ -255,7 +258,13 @@ $(function(){
 });
 
 function showModal(findKey) {
-	$("#modal-name").show();
+	if(findKey === "newFile"){
+		$("#modal-name").show();
+	}else if(findKey == "renameFile"){
+		$("#modal-rename").show();
+		$('#fileRename').val(filetitle);
+	}
+	
 }
 
 $(function(){
@@ -295,4 +304,121 @@ function newFile(){
     form.append(insert2);
 
     form.submit();
+}
+
+function renameFile(){
+	$.ajax({
+		url: 'pfRename.do',
+		type: 'post',
+		data: {
+			pfiletitle: $("#fileRename").val(),
+			userno: $("#userNo2").val(),
+			pfileno: fileno
+		},
+		dataType: 'text',
+		success: function(data){
+			if(data == "success"){
+				location.reload();
+			}
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	});
+}
+
+$(document).on('mouseenter', '.file-grid', function(e){
+	fileno = $(this).find('.fileno').val();
+	filetitle = $.trim($(this).find('.file-name').html());
+});
+
+function fileCopy(){
+	$.ajax({
+		url: 'fileCopy.do',
+		type: 'post',
+		data: {
+			pfileno: fileno,
+			userno: $('#userNo').val()
+		},
+		dataType: 'json',
+		success: function(data){
+			location.reload();
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	});
+}
+
+function fileDelete(){
+	confirm('파일을 삭제하시겠습니까?');
+	if(confirm){
+		$.ajax({
+			url: 'fileDelete.do',
+			type: 'post',
+			data: {
+				pfileno: fileno,
+				userno: $('#userNo').val()
+			},
+			dataType: 'text',
+			success: function(data){
+				if(data = "success"){
+					location.reload();
+				}
+			},
+			error : function( jqXHR, textStatus, errorThrown ) {
+				console.log( jqXHR.status );
+				console.log( jqXHR.statusText );
+				console.log( jqXHR.responseText );
+				console.log( jqXHR.readyState );
+				}
+		});
+	}
+}
+
+
+//trashCan
+function filePermanentDelete(){
+	$.ajax({
+		url: 'filePermanentDelete.do',
+		type: 'post',
+		data: {
+			pfileno: fileno,
+			userno: $('#userNo').val()
+		},
+		dataType: 'text',
+		success: function(data){
+			if(data = "success"){
+				location.reload();
+			}
+		},
+		error : function( jqXHR, textStatus, errorThrown ) {
+			console.log( jqXHR.status );
+			console.log( jqXHR.statusText );
+			console.log( jqXHR.responseText );
+			console.log( jqXHR.readyState );
+			}
+	});
+}
+
+function fileDeleteUndo(){
+	$.ajax({
+		url: 'fileDeleteUndo.do',
+		type: 'post',
+		data: {
+			pfileno: fileno,
+		},
+		dataType: 'text',
+		success: function(data){
+			if(data = "success"){
+				location.reload();
+			}
+		},
+		error : function( jqXHR, textStatus, errorThrown ) {
+			console.log( jqXHR.status );
+			console.log( jqXHR.statusText );
+			console.log( jqXHR.responseText );
+			console.log( jqXHR.readyState );
+			}
+	});
 }

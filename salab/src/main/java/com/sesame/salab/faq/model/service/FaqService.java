@@ -9,4 +9,6 @@ public interface FaqService {
 
 	List<Faq> adminFaqList();
 
+	int adminFaqInsert(Faq faq);
+
 }

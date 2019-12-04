@@ -36,4 +36,19 @@ public class QnaServiceImpl implements QnaService{
 		return qnaDao.qnaInsert(qna);
 	}
 
+	@Override
+	public int adminListCount() {
+		return qnaDao.adminListCount();
+	}
+
+	@Override
+	public List<Qna> adminQnaList(HashMap<String, Object> map) {
+		return qnaDao.adminQnaList(map);
+	}
+
+	@Override
+	public int qnaUpdate(Qna qna) {
+		return qnaDao.qnaUpdate(qna);
+	}
+
 }

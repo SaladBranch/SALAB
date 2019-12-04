@@ -48,6 +48,7 @@ function deleteObject(){
         selectedObj[i].remove();
     }
     selectedObj = new Array();   
+    Thumbnail();
 }
 
 function copyObject(){
@@ -67,6 +68,7 @@ function cutObject(){
         $(this).remove();
     });
     cutted = 1;
+    Thumbnail();
 }
 function pasteObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
@@ -108,8 +110,8 @@ function pasteObject(){
             selectedObj.push($newObj);
         }
         addControl();
-
     }
+    Thumbnail();
     if(cutted == 1){
         copiedObj = new Array();
         cutted = 0;
@@ -123,6 +125,7 @@ function cloneObject(){
 	
     copyObject();
     pasteObject();
+    Thumbnail();
 }
 //그룹화
 function groupObject(){
@@ -257,6 +260,7 @@ function undoPage(){
     });
     
     addControl();
+    Thumbnail();
 }
 
 //다시실행(redo)
@@ -312,6 +316,7 @@ function redoPage(){
     });
     
     addControl();
+    Thumbnail();
 }
 
 

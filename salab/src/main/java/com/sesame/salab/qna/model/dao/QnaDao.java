@@ -32,4 +32,16 @@ public class QnaDao {
 		return sqlSession.insert("qnaMapper.qnaInsert", qna);
 	}
 
+	public int adminListCount() {
+		return sqlSession.selectOne("qnaMapper.adminListCount");
+	}
+
+	public List<Qna> adminQnaList(HashMap<String, Object> map) {
+		return sqlSession.selectList("qnaMapper.adminselectList", map);
+	}
+
+	public int qnaUpdate(Qna qna) {
+		return sqlSession.update("qnaMapper.qnaUpdate", qna);
+	}
+
 }

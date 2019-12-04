@@ -73,7 +73,7 @@
                 <a href="adminFaqList.do">자주 찾는 질문</a>
             </div>
             <div class="ad-qna">
-                <a href="adminQna.do">1:1문의</a>
+                <a href="adminQnaList.do">1:1문의</a>
             </div>
         </div>
     </div>

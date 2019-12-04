@@ -99,7 +99,9 @@ var textSelection = "";
 
     	var type = $(this).parents().attr("id");
     	var value = $(this).val();
+    	console.log(value);
     	var eventType = event.handleObj.type;
+    	console.log(eventType);
 
     	var applyType = "";
     	
@@ -107,7 +109,12 @@ var textSelection = "";
 	    	if (eventType == "change" || eventType == "focusout") {
 	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
 	    			var pastHeight = $(".figure-shape-comps .figure-item[id=height] input").val();
-	    			$(".figure-shape-comps .figure-item[id=height] input").val(Math.round(filterNumber(value) / $(".ui-selected").css("width").split("px")[0] * pastHeight));
+	    			console.log("함");
+	    			console.log(value);
+	    	    	console.log(Math.round(filterValue("number", value)));
+	    	    	console.log($("div.ui-selected").css("width").split("px")[0]);
+	    	    	console.log(pastHeight);
+	    			$(".figure-shape-comps .figure-item[id=height] input").val(Math.round(filterValue("number", value) / $("div.ui-selected").css("width").split("px")[0] * pastHeight));
 	    		}
 	    	}
 			$(this).val(filterValue("number", value));
@@ -118,7 +125,7 @@ var textSelection = "";
 	    	if (eventType == "change" || eventType == "focusout") {
 	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
     		    	var pastWidth = $(".figure-shape-comps .figure-item[id=width] input").val();
-    		    	$(".figure-shape-comps .figure-item[id=width] input").val(Math.round(filterNumber(value) / $(".ui-selected").css("height").split("px")[0] * pastWidth));
+    		    	$(".figure-shape-comps .figure-item[id=width] input").val(Math.round(filterValue("number", value) / $("div.ui-selected").css("height").split("px")[0] * pastWidth));
     			}
 	    	}
 			$(this).val(filterValue("number", value));
@@ -603,6 +610,11 @@ var textSelection = "";
     	
     	var object = $("div.ui-selected");
 		var target = $("div.ui-selected .obj-comp");
+		
+		if (object.length < 1) {
+	    	object = $("div.text-editing");
+			target = $("div.text-editing .obj-comp");
+		}
 		
     	if (object.length > 0) {
 

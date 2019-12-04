@@ -139,34 +139,22 @@ public class ProjectController {
 	@RequestMapping(value="gotoProject.do")
 	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
 	logger.info("gotoTeamProject.do 진입");
-	if(project != null) {
-		System.out.println(project.toString());
-	}
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
-	System.out.println(project.toString());
 	
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
-	System.out.println(paging.toString());
 	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	map.put("paging", paging);
 	map.put("projectno", project.getProjectno());
 	List<Projectnotice> pnoticelist = pnService.testList(map);
-	System.out.println(pnoticelist.size());
 	
 	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
-	System.out.println("멤버결과:"+memberList.toString());
 
 	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
-	if(teamProjectList == null) {
-		System.out.println("nullllllllllll");
-	}else {
-		System.out.println("dddd"+teamProjectList);
-	}
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
 	session.removeAttribute("myProjectList");
 	session.setAttribute("myProjectList", projectList);

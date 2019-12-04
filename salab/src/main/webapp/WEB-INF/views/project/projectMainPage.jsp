@@ -33,7 +33,7 @@
                 <div class="top-bar-logoimg">
                     <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -70,48 +70,46 @@
                 <i class="fas fa-search" id="search-icon"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
-            <div class="recent-file active-menu">
+            <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
-                <a href="recentFile.do">최근 파일</a>
+                <a href="recentFile.do?sort=recent">최근 파일</a>
             </div>
             <div class="private-file">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>
-                <a href="privateFile.do">개인 파일</a>
+                <a href="privateFile.do?sort=recent">개인 파일</a>
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
                 <a href="trashCan.do">휴지통</a>
             </div>
         </div>
-        <div class="left-middle-side-bar scroll">
-            <div class="myTeam scroll-y scrollbar">
-                <!--현재 팀 프로젝트 표시-->
-                <c:forEach var="projectList" items="${sessionScope.myProjectList}">
-                    <c:if test="${project.projectno==projectList.projectno}">
-                        <div class="clear Team-grid active">
-                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
-                            <div class="inline">
-                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
-                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
-                            </div>
-                        </div>
-                    </c:if>
-                    <c:if test="${project.projectno!=projectList.projectno}">
-                        <div class="clear Team-grid">
-                            <div class="icon-wrapper teamIcon inline"><i class="fas fa-sitemap"></i></div>
-                            <div class="inline">
-                                <div class="teamTitle"><a href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a></div>
-                                <div class="teamFileList"><a href="gotoProjectFile.do?projectno=${projectList.projectno }"> - FileList</a></div>
-                            </div>
-                        </div>
-                    </c:if>
-                </c:forEach>
-            </div>
-            <div class="new-team">
-                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="newTeam.do">새로운 팀 </a>
-            </div>
-
+        <div class="left-middle-side-bar">
+        	<c:if test="${!empty sessionScope.myProjectList }">
+        		<div class="myTeam">
+					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
+						<div class="each-team">
+							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
+							<c:if test="${project.projectno eq projectList.projectno }">
+								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<c:if test="${project.projectno ne projectList.projectno }">
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }">프로젝트 파일</a>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="new-team" style="border-top: 1px solid #e2e2e2;">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
+        	<c:if test="${empty sessionScope.myProjectList }">
+        		<div class="new-team">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
         </div>
     </div>
     <div id="right-click-menu" class="right-click-menu">
@@ -295,5 +293,6 @@
 </body>
 <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/salab/resources/js/project/projectMain.js"></script>
+<script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
 
 </html>

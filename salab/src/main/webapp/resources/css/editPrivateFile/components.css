@@ -20,6 +20,7 @@
     height: 100%;
     background: transparent;
     padding-top : 2px;
+    word-break : break-all;
 /*    overflow: hidden;*/
 }
 .obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{

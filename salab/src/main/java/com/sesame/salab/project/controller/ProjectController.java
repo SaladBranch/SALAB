@@ -139,25 +139,19 @@ public class ProjectController {
 	@RequestMapping(value="gotoProject.do")
 	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
 	logger.info("gotoTeamProject.do 진입");
-	if(project != null) {
-		System.out.println(project.toString());
-	}
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
-	System.out.println(project.toString());
 	
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
-	System.out.println(paging.toString());
 	
 	//프로젝트 내에 공지사항 확인
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	map.put("paging", paging);
 	map.put("projectno", project.getProjectno());
 	List<Projectnotice> pnoticelist = pnService.testList(map);
-	System.out.println(pnoticelist.size());
 	
 	//멤버 리스트 확인
 	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
@@ -165,11 +159,7 @@ public class ProjectController {
 	
 	//페이지메인에 표시될 프로젝트 확인 (최대4개)
 	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
-	if(teamProjectList == null) {
-		System.out.println("nullllllllllll");
-	}else {
-		System.out.println("dddd"+teamProjectList);
-	}
+
 	//현재 유저의 유저권한 확인
 	HashMap<String, Object> mapForAuth = new HashMap<String, Object>();
 	mapForAuth.put("userno", member.getUserno());

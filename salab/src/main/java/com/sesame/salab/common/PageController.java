@@ -196,6 +196,11 @@ public class PageController {
 		return "admin/adminFaq";
 	}
 	
+	@RequestMapping(value="adminFaqInsert.do")
+	public String toAdminFaqInsertMethod() {
+		return "admin/adminFaqInsert";
+	}
+	
 	@RequestMapping(value="adminQna.do")
 	public String toAdminQnaMethod() {
 		return "admin/adminQna";

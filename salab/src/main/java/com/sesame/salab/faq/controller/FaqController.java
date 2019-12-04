@@ -36,5 +36,22 @@ public class FaqController {
 		
 		return mv;
 	}
+	
+	
+	//admin Faq 목록 조회
+	@RequestMapping(value="adminFaqList.do")
+	public ModelAndView adminFaqListMethod(ModelAndView mv, Faq faq) throws Exception{
+		List<Faq> adminFaqList = faqService.adminFaqList();
+		
+		if(adminFaqList != null) {
+			mv.addObject("adminFaqList", adminFaqList);
+			mv.setViewName("admin/adminFaq");
+		}else {
+			mv.addObject("message", "faq 조회 실패");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
+	}
 
 }

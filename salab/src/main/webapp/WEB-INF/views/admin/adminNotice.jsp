@@ -46,7 +46,7 @@
                         <img src="/salab/resources/img/default_profile.png" alt="">
                     </div>
                     <div class="profile-name">
-                        <p>#<i class="fas fa-chevron-down"></i></p>
+                        <p>${loginAdmin.adminid }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
                                 <li><a href="adminLogout.do">로그아웃</a></li>
@@ -69,7 +69,7 @@
                 <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq">
-                <a href="adminFaq.do">자주 찾는 질문</a>
+                <a href="adminFaqList.do">자주 찾는 질문</a>
             </div>
             <div class="ad-qna">
                 <a href="adminQna.do">1:1문의</a>
@@ -193,6 +193,9 @@
         </div>
         <!-- 페이징 처리 -->
     </div>
+    
+    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
     
 </body>
 </html>

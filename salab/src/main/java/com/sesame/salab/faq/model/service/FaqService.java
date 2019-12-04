@@ -7,4 +7,6 @@ import com.sesame.salab.faq.model.vo.Faq;
 public interface FaqService {
 	List<Faq> faqList();
 
+	List<Faq> adminFaqList();
+
 }

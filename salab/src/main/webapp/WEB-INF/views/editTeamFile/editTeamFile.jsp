@@ -17,13 +17,13 @@
     <link rel="stylesheet" href="/salab/vendors/css/jquery.minicolors.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
-    <title>파일명 | Salab</title>
+    <title>${pfile.prfiletitle } | Salab</title>
 </head>
 <body>
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
+            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.prfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">
@@ -468,8 +468,7 @@
             		img.src = pngDataUrl;
             		$('.ui-selected .page-thumbnail').html('');
         	        $('.ui-selected .page-thumbnail').append(img);
-            })
-            .catch(function (error) {
+            }).catch(function(error) {
             	console.error('oops, something went wrong!', error);
             });
     	    /* await html2canvas($('#droppable')[0], {

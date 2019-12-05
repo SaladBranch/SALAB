@@ -381,7 +381,6 @@ function fileCopy(){
 }
 
 function fileDelete(){
-	confirm('파일을 삭제하시겠습니까?');
 	if(confirm){
 		$.ajax({
 			url: 'fileDelete.do',

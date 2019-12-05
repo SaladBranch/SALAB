@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/salab/vendors/css/jquery.minicolors.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
-    <title>파일명 | Salab</title>
+    <title>${pfile.pfiletitle } | Salab</title>
 </head>
 <body>
     <header>

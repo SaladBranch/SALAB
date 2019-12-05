@@ -15,10 +15,10 @@
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <script type="text/javascript">
-    function epFile(no){
+    function etFile(no){
     	var fileno = no;
-    	var userno = ${loginMember.userno};
-    	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
+    	var projectno = ${project.projectno};
+    	location.href="etFile.do?projectno="+ projectno + "&fileno=" +fileno;
     }
     </script>
     <title>${project.projectname } | Salab</title>
@@ -147,7 +147,7 @@
         <div class="row recent-files">
         	<c:if test="${!empty fileList }">
         		<c:forEach var="tfile" items="${fileList }">
-        		<div class="file-grid" onclick="epFile(${tfile.prfileno});">
+        		<div class="file-grid" onclick="etFile(${tfile.prfileno});">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
 	                        ${tfile.prfilethumbnail }

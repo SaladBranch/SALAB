@@ -1037,8 +1037,9 @@ ol.page-tab-content li{
     margin-right: 10px;
     line-height: 100%;
 }
-.orderObj:hover .orderObj-sub{display: block;}
-.orderObj-sub{
+.orderObj:hover .orderObj-sub, .sendObj:hover .sendObj-sub{display: block;}
+.orderObj-sub,
+.sendObj-sub{
     display: none;
     cursor: pointer;
     position: absolute;

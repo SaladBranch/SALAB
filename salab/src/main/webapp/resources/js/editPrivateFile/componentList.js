@@ -183,7 +183,14 @@ var contextmenu = {
         </li>
         </ul>   
         <div class="boundary"></div>
-        <a href="">보내기</a>
+        <ul>
+        	<li class="sendObj">보내기<span><i class="fas fa-caret-right"></i></span>
+        	<ul class="sendObj-sub">
+        		<li><a href="">이미지 파일</a></li>
+        		<li><a href="javascript:savetoLibrary();">개인 라이브러리</a></li>
+        	</ul>
+        </li>
+        </ul>
         `
     },
     multi: function(){

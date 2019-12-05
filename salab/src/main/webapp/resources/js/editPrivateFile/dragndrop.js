@@ -529,5 +529,8 @@ $('#droppable').bind('DOMSubtreeModified', function(e){
         $('.right-side-bar .tab-menu').show();
         $('.right-side-bar .tab-content').show();
     }
-    
 });
+
+function savetoLibrary(){
+	console.log(selectedObj[0]);
+}

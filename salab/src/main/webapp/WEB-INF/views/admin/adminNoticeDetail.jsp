@@ -63,16 +63,16 @@
                 <span>도움말</span>
             </div>
             <div class="ad-member">
-                <a href="adminMember.do">회원정보</a>
+                <a href="adminMemberList.do">회원정보</a>
             </div>
             <div class="ad-notice active-menu">
                 <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq">
-                <a href="adminFaq.do">자주 찾는 질문</a>
+                <a href="adminFaqList.do">자주 찾는 질문</a>
             </div>
             <div class="ad-qna">
-                <a href="adminQna.do">1:1문의</a>
+                <a href="adminQnaList.do">1:1문의</a>
             </div>
         </div>
     </div>

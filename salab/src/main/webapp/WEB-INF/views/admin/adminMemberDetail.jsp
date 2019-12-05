@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="/salab/resources/css/admin/adminQnaDetail.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/admin/adminMember.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
+    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <title>USER | SALAB</title>
 </head>
 
@@ -62,7 +63,7 @@
             <div class="menu-title">
                 <span>도움말</span>
             </div>
-            <div class="ad-member">
+            <div class="ad-member active-menu">
                 <a href="adminMemberList.do">회원정보</a>
             </div>
             <div class="ad-notice">
@@ -71,48 +72,48 @@
             <div class="ad-faq">
                 <a href="adminFaqList.do">자주 찾는 질문</a>
             </div>
-            <div class="ad-qna active-menu">
+            <div class="ad-qna">
                 <a href="adminQnaList.do">1:1문의</a>
             </div>
         </div>
     </div>
 
     <div class="right-main-side">
-    	<div class="qna_top">
-    		<p>1:1문의</p>
+    	<div class="member_top">
+    		<p>회원 정보</p>
     	</div>
     	
-        <div class="qna_bottom">
-			<div class="qna_box">
-				<form action="adminQnaUpdate.do?qnano=${requestScope.qna.qnano }" id="adminQnaUpdate" method="post" enctype="multipart/form-data">
-					<p class="qna_fromMember">From. Member</p>
+    	<div class="member_bottom">
+			<div class="member_box">
+				<form action="adminMemberUpdate.do?userno=${requestScope.member.userno }" id="adminMemberUpdate" method="post" enctype="multipart/form-data">
+					<p class="member_fromMember">From. Member</p>
 					<ul>
 						<li>
-							<p class="qna_title">제목</p>
-							<input type="text" id="qna_box_title" name="qnatitle" value="${requestScope.qna.qnatitle }" readonly >
+							<p class="member_title">제목</p>
+							<input type="text" id="member_box_title" name="qnatitle" value="${requestScope.member.qnatitle }" readonly >
 						</li>
 						<li>
-							<p class="qna_content">내용</p>
-							<textarea id="qna_box_content" name="qnacontent" readonly="readonly" >${requestScope.qna.qnacontent }</textarea>
+							<p class="member_content">내용</p>
+							<textarea id="member_box_content" name="qnacontent" readonly="readonly" >${requestScope.member.qnacontent }</textarea>
 						</li>
-						<c:if test="${!empty requestScope.qna.qnareplycontent }">
+						<c:if test="${!empty requestScope.member.qnareplycontent }">
 							<li>
-								<p class="qna_ans">답변</p>
-								<textarea id="qna_box_ans" name="qnareplycontent" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
+								<p class="member_ans">답변</p>
+								<textarea id="member_box_ans" name="qnareplycontent" readonly="readonly" >${requestScope.member.qnareplycontent }</textarea>
 							</li>
 							<li>
-								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
-								<input type="button" class="qna_update_btn" value="글 수정" onclick="finished_update();">
+								<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
+								<input type="button" class="member_update_btn" value="글 수정" onclick="finished_update();">
 							</li>
 						</c:if>
-						<c:if test="${empty requestScope.qna.qnareplycontent }">
+						<c:if test="${empty requestScope.member.qnareplycontent }">
 							<li>
-								<p class="qna_ans">답변</p>
-								<textarea id="qna_box_ans" name="qnareplycontent" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
+								<p class="member_ans">답변</p>
+								<textarea id="member_box_ans" name="qnareplycontent" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
 							</li>
 							<li>
-								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
-								<input type="button" class="qna_update_btn" value="글 수정" onclick="update_qna();">
+								<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
+								<input type="button" class="member_update_btn" value="글 수정" onclick="update_member();">
 							</li>
 						</c:if>
 					</ul>
@@ -120,47 +121,10 @@
 			</div>
         </div>
         
+        
     </div>
     
-    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
     
+    <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
 </body>
-
-<!-- 목록으로 버튼 click -->
-<script type="text/javascript">
-function back_qna(){
-	var result = confirm("취소 하시겠습니까?");
-	
-	if(result){
-		history.go(-1);
-	}
-}
-</script>
-<!-- 목록으로 버튼 click -->
-
-<!-- 글 수정 버튼 click -->
-<script type="text/javascript">
-function update_qna(){
-	var qreply = $("#qna_box_ans").val();
-	
-	if(qreply == ""){
-		alert("답변을 입력해 주세요.");
-		$("#qna_box_ans").focus();
-	} else{
-		alert("hi");
-		$("#adminQnaUpdate").submit();
-	}
-}
-</script>
-<!-- 글 수정 버튼 click -->
-
-<!-- 수정 후 click -->
-<script type="text/javascript">
-function finished_update(){
-	alert("이미 수정한 문의입니다.");
-}
-</script>
-<!-- 수정 후 click -->
-
 </html>

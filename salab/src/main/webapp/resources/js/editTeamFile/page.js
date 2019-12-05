@@ -1,3 +1,4 @@
+//editTeamFile/page.js
 
 //페이지 셀렉트
     $('.page-item').on('click', function(){
@@ -45,9 +46,6 @@
         	//var size = uploadFiles.push(file); //업로드 목록에 추가
         	preview(file, size - 1); //미리보기 만들기
         	}
-        	setTimeout(function(){
-        		Thumbnail();
-        	}, 1000);
         });
         
     });
@@ -62,8 +60,6 @@
         cancel: '.newpage',
         start: function(event, ui){
             beforepindex = ui.item.index();
-            console.log("출발점: " + beforepindex);
-            console.log("출발점의 pno :: " + list[beforepindex].pageno);
             /*pageMoveTempStorage.pageno = list[beforepindex].pageno;*/
             pageMoveTempStorage = {
             		content: list[beforepindex].content,
@@ -104,11 +100,6 @@
                     }
             	}
             	
-            	
-                for(var i = 0; i < list.length; i++){
-                	console.log(JSON.stringify(list[i]));
-                }
-                
                 $.ajax({
                 	url: 'pageMove.do',
                 	type: 'post',
@@ -272,6 +263,7 @@
     		},
     		error: function(){
     			console.log("error");
+    			pageTab();
     		}
     	});
     }
@@ -287,7 +279,6 @@
     			fileno: list[0].fileno
     		},
     		dataType: 'json',
-    		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
     		success: function(data){
     			$('.page-tab-content').html('');
     			for(var i =0; i < data.page.length; i++){
@@ -470,17 +461,14 @@
         	console.log('over');
         }).on('drop', function(e){
         	console.log('drop');
+        	e.preventDefault();
+        	/*$(this).removeClass('drag-over');*/
+        	
         	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
         	for(var i = 0; i < files.length; i++) {
         	var file = files[i];
         	preview(file, size - 1); //미리보기 만들기
         	}
-        	e.preventDefault();
-        	console.log('real start');
-        	setTimeout(function(){
-        		Thumbnail();
-        	}, 1000);
-        	
         });
     
     function preview(file, idx){
@@ -496,6 +484,35 @@
     	reader.readAsDataURL(file);
     }
     
+    function Thumnail(){
+    	var node = document.getElementById('droppable');
+    	
+    	var canvas = document.createElement('canvas');
+    	canvas.width = node.scrollWidth;
+    	canvas.height = node.scrollHeight;
+    	
+    		domtoimage.toPng(node).then(function (pngDataUrl) {
+        	    var img = new Image();
+        	    img.onload = function () {
+        	        var context = canvas.getContext('2d');
+
+        	        context.translate(canvas.width, 0);
+        	        context.scale(-1, 1);
+        	        context.drawImage(img, 0, 0);
+
+        	        $('.ui-selected .page-thumbnail').html('');
+        	        $('.ui-selected .page-thumbnail').append(img);
+        	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
+        	    };
+        	    
+        	    img.src = pngDataUrl;
+        	})
+        	.catch(function (error) {
+        	      console.error('oops, something went wrong!', error);
+        	});
+    		
+    }
+    
     function exportAllPdf(){
     	pdf = new jsPDF('landscape', 'mm', 'a4', true);
     	
@@ -504,76 +521,10 @@
         	image.src= $(list[i].thumbnail).attr('src');
     		
     			console.log('start');
-        		pdf.addImage(image.src, 'PNG', 0, 0, (image.width * 0.186), (image.height * 0.179));
+        		pdf.addImage(image.src, 'PNG', -10, -10, (image.width * 0.186), (image.height * 0.179));
         		pdf.addPage();
         		console.log('end');
     	}
     	
     	pdf.save('test.pdf');
     }
-    
-    $(document).on('dblclick','.page-title', function(e){
-    	$(this).focus();
-    	$(this).select();
-    	e.preventDefault();
-    });
-    
-    $(document).on('blur', '.page-title', function(e){
-    	var retitle = $(this).val();
-    	var index = $('.page-title').index(this)
-
-    	if(retitle == list[index].pagename){
-    		return false
-    	}else{
-    		$.ajax({
-        		url: 'pageRename.do',
-        		type: 'post',
-        		data: {
-        			pagename: retitle,
-        			userno: list[0].userno,
-        			fileno: list[0].fileno,
-        			pageno: list[index].pageno
-        		},
-        		dataType: 'text',
-        		success: function(data){
-        			if(data == "success"){
-        				pageTab();
-        			}
-        		},
-        		error:function(request,status,error){
-        	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        	    }
-        	});
-    	}
-    	
-    	e.preventDefault();
-    });
-    
-    $(document).on('click', '#file-title', function(e){
-    	$(this).focus();
-    	$(this).select();
-    });
-    
-    $(document).on('blur', '#file-title', function(e){
-    	var retitle = $(this).val();
-    	
-    	$.ajax({
-    		url: 'pfRename.do',
-    		type: 'post',
-    		data: {
-    			pfiletitle: retitle,
-    			userno: list[0].userno,
-    			pfileno: list[0].fileno,
-    		},
-    		dataType: 'text',
-    		success: function(data){
-    			if(data == "success"){
-    				pageTab();
-    			}
-    		},
-    		error:function(request,status,error){
-    	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    	    }
-    	});
-    	e.preventDefault();
-    });

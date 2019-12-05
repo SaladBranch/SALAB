@@ -32,6 +32,5 @@ public interface ProjectService {
 
 	List<ProjectFile> selectMainFileList(int projectno);
 
-	List<ProjectFile> selectListAll(int projectno);
-
+	int projectImgInsert(Project project);
 }

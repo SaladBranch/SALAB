@@ -1,18 +1,24 @@
 package com.sesame.salab.project.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -142,7 +148,7 @@ public class ProjectController {
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
-	
+	System.out.println(project.toString());
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
@@ -166,7 +172,6 @@ public class ProjectController {
 	mapForAuth.put("projectno", project.getProjectno());
 	String userAuth = mpService.selectUserAuth(mapForAuth);
 	session.setAttribute("userauth", userAuth);
-	System.out.println(userAuth);
 	
 	//화면 좌측, 유저의 프로젝트 리스트 재 확인
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
@@ -238,71 +243,28 @@ public class ProjectController {
 	return job.toJSONString();
 	
 	}
-	
-	@RequestMapping(value="gotoProjectFile.do")
-	public ModelAndView gotoProjectFileMethod(String sort,ModelAndView mv, Project project,HttpServletRequest request,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("gotoProjectFile.do 진입");
-	MongoService mgService = new MongoService();
-	if(project != null) {
+	//프로젝트 이미지 삽입
+	@RequestMapping(value="projectImgInsert.do", method=RequestMethod.POST)
+	public String userImgInsertMethod(HttpServletRequest request,@RequestParam(name="upfiles", required=false) String upfiles, @RequestParam(name="ofilename",required=false) String ofilename,Project project, HttpSession session) throws IOException {
 		System.out.println(project.toString());
-	}
-	Member member = (Member) session.getAttribute("loginMember");
-	//프로젝트 데이터조회
-	project = pService.selectProject(project);
-	System.out.println(project.toString());
-	
-	
-	List<ProjectFile> fileList = pService.selectListAll(project.getProjectno());
-	
-	if(fileList == null) {
-		System.out.println("nullllllllllll");
-	}else {
-		System.out.println("dddd"+fileList);
-	}
-	if(sort !=null) {
-		if(sort.equals("recent")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f2.getPrfilelastmodified().compareTo(f1.getPrfilelastmodified());
-				}
-			});
-			logger.info("최근 수정 순으로 정렬완료!");
-		}else if(sort.equals("name")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfiletitle().compareTo(f2.getPrfiletitle());
-				}
-			});
-			logger.info("이름 순으로 정렬완료!");
-		}else if(sort.equals("date")) {
-			Collections.sort(fileList, new Comparator<ProjectFile>() {
-				@Override
-				public int compare(ProjectFile f1, ProjectFile f2) {
-					return f1.getPrfilecreatedate().compareTo(f2.getPrfilecreatedate());
-				}
-			});
-			logger.info("생성날짜 순으로 정렬완료!");
-		}
-		request.setAttribute("sort", sort);
-	}
-	
-/*	if(fileList != null) {
-		for(ProjectFile pf : fileList) {
-			Page p = new Page();
-			p.setFileno(pf.getPrfileno());
-			p.setUserno(pf.getProjectno());
-			p.setPageno(1);
-			Page page = mgService.findOne("page", p);
-			pf.setPfilethumbnail(page.getThumbnail());
-		}*/
-	request.removeAttribute("privateFile");
-	request.setAttribute("privateFile", fileList);
+		if (upfiles != null) {
+			String path = request.getSession().getServletContext().getRealPath("resources/projectUpfiles");
 
+			String base64img = upfiles;
+			String imgdata = base64img.split(",")[1];
+			byte[] imageBytes = DatatypeConverter.parseBase64Binary(imgdata);
 	
-	mv.addObject("project", project);
-  	mv.setViewName("project/projectFile");
-	return mv;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String renameFileName =project.getProjectno()+"p"+ sdf.format(new java.sql.Date(System.currentTimeMillis()))+ "." + ofilename.substring(ofilename.lastIndexOf('.') + 1);
+				
+			BufferedImage bufImg  = ImageIO.read(new ByteArrayInputStream(imageBytes));
+			ImageIO.write(bufImg, "jpg", new File(path + "/" + renameFileName));
+			project.setProjectimage_o(renameFileName);
+			int result=pService.projectImgInsert(project);
+			if(result >0 ) {
+				logger.info("img upload successed..  stored path  : "+path);
+			}
+		}
+		return "redirect:gotoProject.do?projectno="+project.getProjectno();
 	}
 }

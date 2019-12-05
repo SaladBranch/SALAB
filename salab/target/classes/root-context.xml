@@ -30,9 +30,6 @@
 		</property>
 	</bean>
 	
-	<!-- Mail 인증 관련 bean 추가 -->
-	
-	
 	<!-- Spring과  MyBatis 연동 설정 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
@@ -83,5 +80,27 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- Google 소셜 로그인 연결 설정 -->
+    <bean id="googleOAuth2Template"
+        class="org.springframework.social.google.connect.GoogleOAuth2Template">
+        <constructor-arg
+            value="721728507133-r736mqp133fh9346j6ojc8mpoqcptlqh.apps.googleusercontent.com" />
+        <constructor-arg value="YkTmpQSS0btPtauE_UdGQQjK" />
+    </bean>
+ 
+    <bean id="googleOAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope" value="https://www.googleapis.com/auth/userinfo.email"></property>
+        <!-- <property name="scope" value="https://www.googleapis.com/auth/drive.file"></property> -->
+        <property name="redirectUri" value="http://localhost:8888/salab/googleLogin.do" />
+    </bean>
+ 
+    <bean id="authInfo" class="com.sesame.salab.common.AuthInfo">
+        <constructor-arg
+            value="721728507133-r736mqp133fh9346j6ojc8mpoqcptlqh.apps.googleusercontent.com" />
+        <constructor-arg value="YkTmpQSS0btPtauE_UdGQQjK" />
+ 
+    </bean>
 	
 </beans>

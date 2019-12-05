@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.MongoClient;
 import com.sesame.salab.page.model.vo.Page;
+import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
 public class MongoService {
 	
@@ -74,6 +75,15 @@ public class MongoService {
 		
 		return mongoOps.findOne(query, Page.class, findCollection);
 	}
+	public Page findTeamOne(String findCollection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("projectno").is(page.getProjectno()),
+				Criteria.where("fileno").is(page.getFileno()),
+				Criteria.where("pageno").is(page.getPageno())
+		));
+		
+		return mongoOps.findOne(query, Page.class, findCollection);
+	}
 	
 	public Page findId(String findCollection, Page page) {
 		Query query = new Query(new Criteria().andOperator(
@@ -103,8 +113,8 @@ public class MongoService {
 	}
 	
 	//remove data in collection
-	public void removeData(String deleteCollection, Fruit condition) {
-		Query query = new Query(new Criteria("_id").is(condition.get_id()));
+	public void removeData(String deleteCollection, PrivateFile pfile) {
+		Query query = new Query(new Criteria("fileno").is(pfile.getPfileno()));
 		mongoOps.remove(query, deleteCollection);
 	}
 
@@ -117,6 +127,14 @@ public class MongoService {
 	public List<Page> findPage(String collection, Page page) {
 		Query query = new Query(new Criteria().andOperator(
 				Criteria.where("userno").is(page.getUserno()),
+				Criteria.where("fileno").is(page.getFileno())
+				)).with(new Sort(Sort.Direction.ASC, "pageno"));
+		return mongoOps.find(query, Page.class, collection);
+	}
+	
+	public List<Page> findTeamPage(String collection, Page page) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("projectno").is(page.getProjectno()),
 				Criteria.where("fileno").is(page.getFileno())
 				)).with(new Sort(Sort.Direction.ASC, "pageno"));
 		return mongoOps.find(query, Page.class, collection);

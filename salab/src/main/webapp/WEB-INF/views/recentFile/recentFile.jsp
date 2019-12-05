@@ -20,6 +20,9 @@
     	var userno = ${loginMember.userno};
     	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
     }
+    function etFile(fileno, projectno){
+    	location.href="etFile.do?projectno="+ projectno + "&fileno=" +fileno;
+    }
     </script>
     <title>최근 파일 | Salab</title>
 </head>
@@ -63,7 +66,6 @@
             </div>
         </nav>
     </header>
-    
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="search-bar">
@@ -80,7 +82,7 @@
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
-                <a href="trashCan.do">휴지통</a>
+                <a href="trashCan.do?sort=recent">휴지통</a>
             </div>
         </div>
         <div class="left-middle-side-bar">
@@ -90,7 +92,7 @@
 						<div class="each-team">
 							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
 							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
-							<a href="gotoProjectFile.do?projectno=${projectList.projectno }">프로젝트 파일</a>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -109,11 +111,11 @@
     </div>
     <div id="right-click-menu" class="right-click-menu">
         <ul>
-            <li><a href="#">파일열기</a></li>
-            <li><a href="#">파일 정보 설정</a></li>
-            <li><a href="#">사본만들기</a></li>
-            <li><a href="#">웹테스트</a></li>
-            <li><a href="#">삭제</a></li>
+            <li><a href="javascript:">파일열기</a></li>
+            <li><a href="javascript:" onclick="showModal('renameFile');">파일 정보 설정</a></li>
+            <li><a href="javascript:" onclick="fileCopy();">사본만들기</a></li>
+            <li><a href="javascript:">웹테스트</a></li>
+            <li><a href="javascript:" onclick="fileDelete();">삭제</a></li>
         </ul>
     </div>
     <div id="multi-right-click-menu" class="multi-right-click-menu">
@@ -140,9 +142,15 @@
         </div>
         
         <div class="row recent-files">
-        	<c:if test="${!empty privateFile }">
-        		<c:forEach var="pfile" items="${privateFile }">
-        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+        	<c:if test="${!empty fileList}">
+        		<c:forEach var="pfile" items="${fileList }">
+        		<c:if test="${pfile.pt eq 'private'}">
+        			<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+        		</c:if>
+        		<c:if test="${pfile.pt eq 'team' }">
+        			<div class="file-grid" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
+        		</c:if>
+        		<input class="fileno" type="hidden" value="${pfile.pfileno }">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
 	                        ${pfile.pfilethumbnail }
@@ -153,18 +161,20 @@
 	                                <c:out value="${pfile.pfiletitle }"/>
 	                            </div>
 	                            <div class="file-edited">
-	                                <span>${pfile.pfilelastmodified }</span> in 개인파일
+	                                <span>${pfile.pfilelastmodified }</span>
+	                                <c:if test="${pfile.pt eq 'private'}"> in 개인파일</c:if>
+	                                <c:if test="${pfile.pt eq 'team'}"> in ${pfile.pfiletitle}</c:if>
 	                            </div>
 	                        </div>
 	                        <div class="file-options">
 	                            <div class="file-options-btn">&#8942;</div>
 	                            <div class="file-options-menu">
 	                                <ul>
-	                                    <li><a href="#">파일열기</a></li>
-	                                    <li><a href="#">파일 정보 설정</a></li>
-	                                    <li><a href="#">사본만들기</a></li>
-	                                    <li><a href="#">웹테스트</a></li>
-	                                    <li><a href="#">삭제</a></li>
+	                                    <li><a href="javascript:">파일열기</a></li>
+	                                    <li><a href="javascript:" onclick="showModal('renameFile');;">파일 정보 설정</a></li>
+	                                    <li><a href="javascript:" onclick="fileCopy();">사본만들기</a></li>
+	                                    <li><a href="javascript:">웹테스트</a></li>
+	                                    <li><a href="javascript:">삭제</a></li>
 	                                </ul>
 	                            </div>
 	                        </div>
@@ -173,10 +183,8 @@
            		</div>
         	</c:forEach>
         	</c:if>
-        	
-            
             <div class="file-grid">
-                <div class="new-file" onclick="showModal();">
+                <div class="new-file" onclick="showModal('newFile');">
                     &#43; 새 파일
                 </div>
             </div>
@@ -189,6 +197,15 @@
            	<input id="userNo" type="hidden" value="${loginMember.userno}">
             <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
             <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+    	</div>
+	</div>
+	
+	<div id="modal-rename" class="modalOutline disable ">
+    	<div id="renameFile" class="modalContent z-index1">
+        	<div class="titleConfigure">File Rename</div>
+           	<input id="userNo2" type="hidden" value="${loginMember.userno}">
+            <input id="fileRename" class="text-box block littleGap" type="text" value=" " maxlength="20" onkeydown="activeEnter('atName')">
+            <input class="" type="button"  value="renameFile" onclick="renameFile();">
     	</div>
 	</div>
     

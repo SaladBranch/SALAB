@@ -20,7 +20,6 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public int createProject(Project project) {
-		// TODO Auto-generated method stub
 		return pDao.createProject(project);
 	}
 
@@ -44,7 +43,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project selectProject(Project project) {
-		// TODO Auto-generated method stub
 		return pDao.selectProject(project);
 	}
 
@@ -82,8 +80,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectFile> selectListAll(int projectno) {
-		return pDao.selectListAll(projectno);
+	public int projectImgInsert(Project project) {
+		return pDao.projectImgInsert(project);
 	}
-
 }

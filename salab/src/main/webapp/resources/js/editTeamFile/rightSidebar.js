@@ -1,6 +1,5 @@
 
 var textSelection = "";
-var lastChanged = "";
 
 // ** 메뉴 구성 hover, click 이벤트 모음
 
@@ -100,7 +99,9 @@ var lastChanged = "";
 
     	var type = $(this).parents().attr("id");
     	var value = $(this).val();
+    	console.log(value);
     	var eventType = event.handleObj.type;
+    	console.log(eventType);
 
     	var applyType = "";
     	
@@ -108,6 +109,11 @@ var lastChanged = "";
 	    	if (eventType == "change" || eventType == "focusout") {
 	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
 	    			var pastHeight = $(".figure-shape-comps .figure-item[id=height] input").val();
+	    			console.log("함");
+	    			console.log(value);
+	    	    	console.log(Math.round(filterValue("number", value)));
+	    	    	console.log($("div.ui-selected").css("width").split("px")[0]);
+	    	    	console.log(pastHeight);
 	    			$(".figure-shape-comps .figure-item[id=height] input").val(Math.round(filterValue("number", value) / $("div.ui-selected").css("width").split("px")[0] * pastHeight));
 	    		}
 	    	}
@@ -601,14 +607,6 @@ var lastChanged = "";
 
 	// input 변화
     function applyChange(type) {
-
-    	console.log(type == "");
-    	console.log("type : " + type);
-    	console.log("lastChanged : " + lastChanged);
-    	
-    	if (type != "" ? type != lastChanged : false) {
-    		$(".last-changed").removeAttr("class");
-    	}
     	
     	var object = $("div.ui-selected");
 		var target = $("div.ui-selected .obj-comp");
@@ -694,18 +692,15 @@ var lastChanged = "";
         		
             	// TEXT
         		
-        		// 수정중
-        		
         		// font
         		if (type == "font") {
-        			if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
+        		    if (window.getSelection().rangeCount > 0) {
         		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
+        		    	clearChanged("font-family");
         		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
+        		    	$(this).css("font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
+        		    	clearAll("font-family");
         		    }
-        		    clearChanged("font-family");
         		}
 
         		// fontSize
@@ -713,15 +708,12 @@ var lastChanged = "";
                 	var textSelected = $(".textarea span.text-selected");
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='font-size : " + $(".text-font-comps .text-item[id=size] input").val() + "px'>" + textSelected.html() + "</span>");
+        		    	clearChanged("font-size");
             			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
         		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
+        		    	$(this).css("font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
+        		    	clearAll("font-size");
         		    }
-        		    clearChanged("font-size");
         		}
 
             	// text 색
@@ -731,48 +723,43 @@ var lastChanged = "";
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
 
-                	console.log(window.getSelection());
-                	
                 	var textSelected = $(".textarea span.text-selected");
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='color : rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")'>" + textSelected.html() + "</span>");
+        		    	clearChanged("color");
             			$(".textarea .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    } else {
-        		    	wrapSpanToText($(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
+        		    	$(this).css("color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
+            		    clearAll("color");
         		    }
-        		    clearChanged("color");
+        		    $('.colorView').minicolors("hide");
         		    clearEnterable();
         		}
 
         		if (type == "text-effect-bold") {
-        		    if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
+        		    if (window.getSelection().rangeCount > 0) {
         		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
+            		    clearChanged("font-weight");
         		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-weight", $(".text-effect[id=bold]").is(".clicked") ? "bold" : "");
+                		$(this).css("font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
+            		    clearChanged("font-weight");
         		    }
-        		    clearChanged("font-weight");
                 }
         		
         		if (type == "text-effect-italic") {
-        		    if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
-            		   	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-style", ($(".text-effect[id=italic]").is(".clicked") ? "italic" : ""));
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
+        		    if (window.getSelection().rangeCount > 0) {
+        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-style", ($(".text-effect[id=italic]").is(".clicked") ? "italic" : ""));
+            		    clearChanged("font-style");
         		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
+                		$(this).css("font-style", ($(".text-effect[id=italic]").is(".clicked") ? "italic" : ""));
+            		    clearChanged("font-style");
         		    }
-        		    clearChanged("font-style");
         		}
             	
         		if (type == "text-effect-underline") {
         		    if (window.getSelection().rangeCount > 0) {
         		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=underline]").is(".clicked") ? "underline" : ""));
+            		    clearChanged("textDecoration-underline");
         		    } else {
                     	var textDecoration = "";
                     	if ($(".text-effect[id=underline]").is(".clicked")){
@@ -783,14 +770,18 @@ var lastChanged = "";
                     				textDecoration += " ";
                 			textDecoration += "line-through";
                     	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
+                    	if (textDecoration == "")
+                    		$(this).css("text-decoration", "none");
+                    	else 
+                    		$(this).css("text-decoration", textDecoration);
+            		    clearAll("textDecoration-underline");
         		    }
-    		    	clearChanged("textDecoration-underline");
         		}
         		
         		if (type == "text-effect-strikethrough") {
         		    if (window.getSelection().rangeCount > 0) {
         		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=strikethrough]").is(".clicked") ? "line-through" : ""));
+            		    clearChanged("textDecoration-strikethrough");
         		    } else {
                     	var textDecoration = "";
                     	if ($(".text-effect[id=underline]").is(".clicked")){
@@ -801,9 +792,12 @@ var lastChanged = "";
                     				textDecoration += " ";
                 			textDecoration += "line-through";
                     	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
+                    	if (textDecoration == "")
+                    		$(this).css("text-decoration", "none");
+                    	else 
+                    		$(this).css("text-decoration", textDecoration);
+            		    clearAll("textDecoration-strikethrough");
         		    }
-        		    clearChanged("textDecoration-strikethrough");
         		}
 
             	// text 강조 색
@@ -817,14 +811,11 @@ var lastChanged = "";
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + textSelected.html() + "</span>");
             			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
         		    } else {
-        		    	wrapSpanToText($(this), "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
+        		    	$(this).html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + $(this).html() + "</span>");
         		    }
         		    clearChanged("background");
+        		    $('.colorView').minicolors("hide");
         		    clearEnterable();
         		}
 
@@ -842,10 +833,7 @@ var lastChanged = "";
     		});
     		
     	}
-
-    	if (type != "")
-    		lastChanged = type;
-	    
+    	
     }
 
 // canvas div에 값 적용시키기
@@ -881,16 +869,6 @@ var lastChanged = "";
     	    node.appendChild(contents);
     	    target.deleteContents();
     	    target.insertNode(node);
-    	}
-    	else {
-    		console.log("wrapTag 에러 발생 !!");
-    	}
-    }
-
-    function wrapSpanToText(target, className, cssType, cssProperty) {
-    	if (target.length > 0) {
-    		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
-    		console.log(target.html());
     	}
     	else {
     		console.log("wrapTag 에러 발생 !!");
@@ -1023,65 +1001,51 @@ var lastChanged = "";
 	}
 	
 	function clearChanged(type) {
-		
-	    $(".ui-selected .changed span").each(function() {
-			if (type.startsWith("textDecoration")) {
-				var spanText = $(this).wrap("<div>").parent().html();
-				$(this).unwrap();
-				if (type.endsWith("underline"))
-					$(this).css("text-decoration", (spanText.includes("line-through") ? "line-through" : ""));
-				if (type.endsWith("strikethrough")) 
-					$(this).css("text-decoration", (spanText.includes("underline") ? "underline" : ""));
-			}
-			else {
+
+	    $(".ui-selected .obj-comp .changed span").each(function() {
+			if (type.startsWith("textDecoration"))
+				$(this).css("text-decoration", "");
+			else
 				$(this).css(type, "");
-				var spanText = $(this).wrap("<div>").parent().html();
-				$(this).unwrap();
-				if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">")) {
-					$(this).contents().unwrap();
-				}
+			var spanText = $(this).wrap("<div>").parent().html();
+			$(this).unwrap();
+			if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">") || (type == "textDecoration-underline" ? spanText.startsWith("<span style=\"text-decoration: underline") : false) || (type == "textDecoration-strikethrough" ? spanText.startsWith("<span style=\"text-decoration: line-through") : false)) {
+				$(this).contents().unwrap();
 			}
 	    });
 	    
-	    $(".ui-selected .changed span").each(function() {
+	    $(".ui-selected .obj-comp .changed span").each(function() {
 			if ($(this).html() == "")
 				$(this).remove();
 		});
 
-		$(".ui-selected .changed").addClass("last-changed");
-		$(".ui-selected .last-changed").removeClass("changed");
-		
-	    /*
-	    if ($(".text-editing").length > 0) {
-		    $(".text-editing .changed span").each(function() {
-				if (type.startsWith("textDecoration")) {
-					var spanText = $(this).wrap("<div>").parent().html();
-					$(this).unwrap();
-					if (type.endsWith("underline"))
-						$(this).css("text-decoration", (spanText.includes("line-through") ? "line-through" : ""));
-					if (type.endsWith("strikethrough")) 
-						$(this).css("text-decoration", (spanText.includes("underline") ? "underline" : ""));
-				}
-				else {
-					$(this).css(type, "");
-					var spanText = $(this).wrap("<div>").parent().html();
-					$(this).unwrap();
-					if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">")) {
-						$(this).contents().unwrap();
-					}
-				}
-		    });
-		    
-		    $(".text-editing .changed span").each(function() {
-				if ($(this).html() == "")
-					$(this).remove();
-			});
-
-			$(".text-editing .changed").removeAttr("class");
-	    }
-	    */
+		$(".ui-selected .obj-comp .changed").removeAttr("class");
+	    
 	}
 	
+	function clearAll(type) {
+
+	    $(".ui-selected .obj-comp span").each(function() {
+			if (type.startsWith("textDecoration"))
+				$(this).css("text-decoration", "");
+			else
+				$(this).css(type, "");
+			var spanText = $(this).wrap("<div>").parent().html();
+			$(this).unwrap();
+			if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">") || (type == "textDecoration-underline" ? spanText.startsWith("<span style=\"text-decoration: underline") : false) || (type == "textDecoration-strikethrough" ? spanText.startsWith("<span style=\"text-decoration: line-through") : false)) {
+				$(this).contents().unwrap();
+			}
+	    });
+	    
+	    $(".ui-selected .obj-comp .changed span").each(function() {
+			if ($(this).html() == "")
+				$(this).remove();
+		});
+
+		$(".ui-selected .obj-comp .changed").removeAttr("class");
+	    
+	}
+
 	$(document).on("mousemove", ".text-editing", function() {
 		if ($("#droppable").is(".ui-selectable"))
 			$("#droppable").selectable("destroy");

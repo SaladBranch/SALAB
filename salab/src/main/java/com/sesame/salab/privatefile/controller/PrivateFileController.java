@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.sesame.salab.common.FileList;
+import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
@@ -214,9 +215,7 @@ public class PrivateFileController {
 	    
 	     try {
 	    	 BufferedReader inFiles = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "UTF8"));
-	    
 	         String line = "";
-	 
 	            while((line = inFiles.readLine()) != null) {
 	                if(line.trim().length() > 0) {
 	                    a += line;
@@ -256,5 +255,86 @@ public class PrivateFileController {
 		mgService.pageRename(page, collection);
 		
 		return success;
+	}
+	
+	@RequestMapping(value="fileCopy.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView fileCopy(ModelAndView mv, PrivateFile pfile) {
+		MongoService mgService = new MongoService();
+		mv.setViewName( "jsonView" );
+		//뷰에서 넘겨준 파일넘버와 유저넘버로 파일의 모든 정보 검색
+		PrivateFile file = pfService.selectFile(pfile);
+		file.setPfiletitle("Copy of "+ file.getPfiletitle());
+		logger.info(file.toString());
+		//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
+		int result = pfService.fileCopy(file);
+		
+		//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
+		Page p = new Page();
+		p.setUserno(file.getUserno());
+		p.setFileno(file.getPfileno());
+		List<Page> list = mgService.findPage(collection, p);
+		
+		//페이지만들기위해 방금생성한 파일 넘버조회
+		PrivateFile file2 = pfService.createPage(file.getUserno());
+		logger.info(file2.toString());
+		
+		//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
+		for(Page page : list) {
+			page.set_id(null);
+			page.setFileno(file2.getPfileno());
+			mgService.insertNewPage(page, collection);
+		}
+		
+		//뷰에 보여줄 파일검색
+		List<FileList> pfileList = pfService.selectListAll(pfile.getUserno());
+		
+		if(pfileList != null) {
+			mv.addObject("pfileList", pfileList);
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value="fileDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String fileDelete(PrivateFile pfile) {
+		String result = "success";
+		
+		int res = pfService.fileDelete(pfile);
+		if(res < 0) {
+			result="failed";
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="fileDeleteUndo.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String fileDeleteUndo(PrivateFile pfile) {
+		String result  = "success";
+		
+		int res = pfService.fileDeleteUndo(pfile);
+		if(res < 0) {
+			result = "failed";
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value="filePermanentDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String filePermanentDelete(PrivateFile pfile, HttpSession session) {
+		String result = "success";
+		MongoService mgService = new MongoService();
+		Member member = (Member)session.getAttribute("loginMember");
+		
+		int res = pfService.filePremanentDelete(pfile);
+		if(res > 0) {
+			mgService.removeData(collection, pfile);
+			mgService.close();
+		}else {
+			result = "error/error";
+		}
+		
+		return result;
 	}
 }

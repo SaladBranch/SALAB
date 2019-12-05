@@ -40,11 +40,9 @@ public class PrivateFileController {
 	@RequestMapping(value="insert_newprivateFile.do", method=RequestMethod.POST)
 	public ModelAndView insertNewPage(PrivateFile pfile, ModelAndView mv, HttpServletRequest request) {
 		MongoService mgService = new MongoService();
-		logger.info("pfile :: "+pfile.toString());
 		int result = pfService.insertNewPrivateFile(pfile);
 		//새파일 생성후 페이지생성위한 파일넘버 가져옴
 		PrivateFile pfile2 = pfService.createPage(pfile.getUserno());
-		logger.info("pfile2 :: "+pfile2.toString());
 		//mongodb에 저장할 객체생성
 		Page page = new Page();
 		page.setUserno(pfile.getUserno());
@@ -103,7 +101,6 @@ public class PrivateFileController {
 				"</div>");
 		page.setPagename("Untitled");
 		page.setPageno(result + 1);
-		logger.info(sbase64);
 		page.setThumbnail("<img src='"+sbase64+"'/>");
 		
 		mgService.insertNewPage(page, collection);
@@ -120,11 +117,9 @@ public class PrivateFileController {
 	public void pageDelete(@RequestBody Page page) {
 		MongoService mgService = new MongoService();
 		mgService.pageDelete(collection, page);
-		logger.info("deletePage :: " + page.toString());
 		
 		List<Page> list = mgService.selectUpdatePageNo(collection, page);
 		for(Page p : list) {
-			logger.info(p.toString());
 			mgService.updatePageNo(collection, p, "delete");
 		}
 		
@@ -177,8 +172,6 @@ public class PrivateFileController {
 	public void pageSave(@RequestBody Page page) {
 		MongoService mgService = new MongoService();
 		
-		logger.info(page.toString());
-		
 		mgService.saveDoc(collection, page);
 		mgService.close();
 		
@@ -190,7 +183,6 @@ public class PrivateFileController {
 	@ResponseBody
 	public void pageAllSave(@RequestBody List<Page> list) {
 		MongoService mgService = new MongoService();
-		logger.info(list.get(0).toString());
 		for(Page p : list) {
 			mgService.saveDoc(collection, p);
 		}
@@ -231,15 +223,23 @@ public class PrivateFileController {
 	
 	@RequestMapping(value="pfRename.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String pfRename(PrivateFile pfile) {
-		logger.info("pfRename :: " + pfile.toString());
+	public String pfRename(FileList pfile) {
 		String success = "success";
 		
-		int result = pfService.pfRename(pfile);
-		if(result > 0) {
-			changeLastModified(pfile.getUserno(), pfile.getPfileno());
+		if(pfile.getPt().equals("private")) {
+			int result = pfService.pfRename(pfile);
+			if(result > 0) {
+				changeLastModified(pfile.getUserno(), pfile.getPfileno());
+			}else {
+				success = "fail";
+			}
 		}else {
-			success = "fail";
+			int result = pfService.prRename(pfile);
+			if(result > 0) {
+				changeLastModified(pfile.getUserno(), pfile.getPfileno());
+			}else {
+				success = "fail";
+			}
 		}
 		
 		return success;
@@ -248,7 +248,6 @@ public class PrivateFileController {
 	@RequestMapping(value="pageRename.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String pageRename(Page page) {
-		logger.info("pageRename :: " + page.toString());
 		String success = "success";
 		MongoService mgService = new MongoService();
 		
@@ -265,7 +264,6 @@ public class PrivateFileController {
 		//뷰에서 넘겨준 파일넘버와 유저넘버로 파일의 모든 정보 검색
 		PrivateFile file = pfService.selectFile(pfile);
 		file.setPfiletitle("Copy of "+ file.getPfiletitle());
-		logger.info(file.toString());
 		//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
 		int result = pfService.fileCopy(file);
 		
@@ -277,7 +275,6 @@ public class PrivateFileController {
 		
 		//페이지만들기위해 방금생성한 파일 넘버조회
 		PrivateFile file2 = pfService.createPage(file.getUserno());
-		logger.info(file2.toString());
 		
 		//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
 		for(Page page : list) {
@@ -297,24 +294,39 @@ public class PrivateFileController {
 	
 	@RequestMapping(value="fileDelete.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String fileDelete(PrivateFile pfile) {
+	public String fileDelete(FileList pfile) {
 		String result = "success";
 		
-		int res = pfService.fileDelete(pfile);
-		if(res < 0) {
-			result="failed";
+		if(pfile.getPt().equals("private")) {
+			int res = pfService.fileDelete(pfile);
+			if(res < 0) {
+				result="failed";
+			}
+		}else {
+			int res = pfService.teamfileDelete(pfile);
+			if(res < 0) {
+				result="failed";
+			}
 		}
+		
 		return result;
 	}
 	
 	@RequestMapping(value="fileDeleteUndo.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String fileDeleteUndo(PrivateFile pfile) {
+	public String fileDeleteUndo(FileList pfile) {
 		String result  = "success";
 		
-		int res = pfService.fileDeleteUndo(pfile);
-		if(res < 0) {
-			result = "failed";
+		if(pfile.getPt().equals("private")) {
+			int res = pfService.fileDeleteUndo(pfile);
+			if(res < 0) {
+				result = "failed";
+			}
+		}else {
+			int res = pfService.teamFileDeleteUndo(pfile);
+			if(res < 0) {
+				result = "failed";
+			}
 		}
 		
 		return result;
@@ -322,18 +334,29 @@ public class PrivateFileController {
 	
 	@RequestMapping(value="filePermanentDelete.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String filePermanentDelete(PrivateFile pfile, HttpSession session) {
+	public String filePermanentDelete(FileList pfile) {
 		String result = "success";
-		MongoService mgService = new MongoService();
-		Member member = (Member)session.getAttribute("loginMember");
 		
-		int res = pfService.filePremanentDelete(pfile);
-		if(res > 0) {
-			mgService.removeData(collection, pfile);
-			mgService.close();
+		MongoService mgService = new MongoService();
+		
+		if(pfile.getPt().equals("private")) {
+			int res = pfService.filePermanentDelete(pfile);
+			if(res > 0) {
+				mgService.removeData(collection, pfile);
+				mgService.close();
+			}else {
+				result = "error/error";
+			}
 		}else {
-			result = "error/error";
+			int res = pfService.teamFilePermanentDelete(pfile);
+			if(res > 0) {
+				mgService.removeTeamData(collection, pfile);
+				mgService.close();
+			}else {
+				result = "error/error";
+			}
 		}
+		
 		
 		return result;
 	}

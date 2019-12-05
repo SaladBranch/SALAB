@@ -58,12 +58,6 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	}
 
 	@Override
-	public int pfRename(PrivateFile pfile) {
-		// TODO Auto-generated method stub
-		return pfDao.pfRename(pfile);
-	}
-
-	@Override
 	public PrivateFile selectFile(PrivateFile pfile) {
 		// TODO Auto-generated method stub
 		return pfDao.selectFile(pfile);
@@ -76,27 +70,57 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 	}
 
 	@Override
-	public int fileDelete(PrivateFile pfile) {
-		// TODO Auto-generated method stub
-		return pfDao.fileDelete(pfile);
-	}
-
-	@Override
 	public List<FileList> trashCanAll(int userno) {
 		// TODO Auto-generated method stub
 		return pfDao.trashCanAll(userno);
 	}
 
 	@Override
-	public int fileDeleteUndo(PrivateFile pfile) {
+	public int pfRename(FileList pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.pfRename(pfile);
+	}
+
+	@Override
+	public int prRename(FileList pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.prRename(pfile);
+	}
+
+	@Override
+	public int fileDelete(FileList pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.fileDelete(pfile);
+	}
+
+	@Override
+	public int teamfileDelete(FileList pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.teamfileDelete(pfile);
+	}
+
+	@Override
+	public int fileDeleteUndo(FileList pfile) {
 		// TODO Auto-generated method stub
 		return pfDao.fileDeleteUndo(pfile);
 	}
 
 	@Override
-	public int filePremanentDelete(PrivateFile pfile) {
+	public int teamFileDeleteUndo(FileList pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.teamFileDeleteUndo(pfile);
+	}
+
+	@Override
+	public int filePermanentDelete(FileList pfile) {
 		// TODO Auto-generated method stub
 		return pfDao.filePermanentDelete(pfile);
+	}
+
+	@Override
+	public int teamFilePermanentDelete(FileList pfile) {
+		// TODO Auto-generated method stub
+		return pfDao.teamFilePermanentDelete(pfile);
 	}
 
 }

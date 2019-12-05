@@ -63,7 +63,7 @@
                 <span>도움말</span>
             </div>
             <div class="ad-member">
-                <a href="adminMember.do">회원정보</a>
+                <a href="adminMemberList.do">회원정보</a>
             </div>
             <div class="ad-notice">
                 <a href="adminNoticeList.do">공지사항</a>

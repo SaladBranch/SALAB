@@ -1,5 +1,8 @@
 package com.sesame.salab.member.model.service;
 
+import java.util.List;
+
+import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
 
 public interface MemberService {
@@ -14,4 +17,6 @@ public interface MemberService {
 	int initChangePwd(Member member);
 	Member chkGoogleUser(Member tempMember);
 	void enrollGoogleUser(Member m);
+	int mlistCount();
+	List<Member> memberList(Paging paging);
 }

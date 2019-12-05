@@ -17,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.sesame.salab.common.paging.model.vo.Paging;
+import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.member_project.model.service.Member_ProjectService;
+import com.sesame.salab.notice.model.vo.Notice;
 import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
@@ -34,6 +38,8 @@ public class PageController {
 	private PrivateFileService pfService;
 	@Autowired
 	private Member_ProjectService mpService;
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value="recentFile.do")
 	public String toRecentFileMethod(HttpSession session, HttpServletRequest request, String sort) {
@@ -129,9 +135,7 @@ public class PageController {
 				p.setFileno(pf.getPfileno());
 				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				logger.info(p.toString());
 				Page page = mgService.findOne("page", p);
-				logger.info("thumbnail :: " + page.getThumbnail());
 				pf.setPfilethumbnail(page.getThumbnail());
 			}
 			mgService.close();
@@ -188,9 +192,35 @@ public class PageController {
 		return "admin/adminMain";
 	}
 	
-	@RequestMapping(value="adminMember.do")
-	public String toAdminMemberMethod() {
-		return "admin/adminMember";
+	@RequestMapping(value="adminMemberList.do")
+	public ModelAndView toAdminMemberMethod(ModelAndView mv, Member member,@RequestParam(value="page", required=false) String currentPage) throws Exception  {
+		
+		int curPage;
+		
+		if(currentPage != null) {
+			curPage = Integer.parseInt(currentPage);
+		} else {
+			curPage = 1;
+		}
+		
+		int listCount = memberService.mlistCount(); //DB에서 현재 총 Row수 가져옴 
+		Paging paging = new Paging(); //현재 페이지 
+		paging.setLimit(10);
+		paging.makePage(listCount, curPage);  //페이징 처리함 
+		
+		List<Member> memberList = memberService.memberList(paging);
+		
+		if(memberList != null) {
+			mv.addObject("memberList", memberList);
+			mv.addObject("paging", paging);
+			mv.setViewName("admin/adminMember");
+		}else {
+			mv.addObject("message", "공지사항 조회 실패");
+			mv.setViewName("common/error");
+		}
+		
+		
+		return mv;
 	}
 	
 	@RequestMapping(value="adminNoticeInsert.do")
@@ -251,10 +281,17 @@ public class PageController {
 			for(FileList pf : fileList) {
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
-				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());
+				if(pf.getPt().equals("private")) {
+					p.setUserno(pf.getUserno());
+					Page page = mgService.findOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}else {
+					p.setProjectno(pf.getUserno());
+					Page page = mgService.findTeamOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}
+				
 			}
 			mgService.close();
 		
@@ -338,6 +375,24 @@ public class PageController {
    		request.setAttribute("userno", userno);
    		request.setAttribute("projectno", projectno);
    		return "project/inviteProject";
+   	}
+   	
+   	@RequestMapping(value="webTest.do")
+   	public String webTest(FileList pfile, HttpServletRequest req) {
+   		MongoService mgService = new MongoService();
+   		Page page = new Page();
+   		List<Page> pageList = null;
+   		page.setFileno(pfile.getPfileno());
+   		if(pfile.getPt().equals("private")) {
+   			page.setUserno(pfile.getUserno());
+   			pageList = mgService.findPage("page", page);
+   		}else {
+   			page.setProjectno(pfile.getUserno());
+   			pageList = mgService.findTeamPage("page", page);
+   		}
+   		req.setAttribute("pageList", pageList);
+   		
+   		return "recentFile/webTest";
    	}
    	
 

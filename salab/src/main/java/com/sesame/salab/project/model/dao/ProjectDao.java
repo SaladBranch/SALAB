@@ -92,13 +92,9 @@ public class ProjectDao {
 	public List<ProjectFile> selectListAll(int projectno) {
 		return sqlSession.selectList("ProjectfileMapper.selectListAll", projectno);
 	}
-
+	//프로젝트 이미지 삽입
 	public int projectImgInsert(Project project) {
-		System.out.println("텔텔레레렐");
-		int result = sqlSession.update("projectMapper.projectImgInsert", project);
-		System.out.println(result);
-		return result;
-		
+		return sqlSession.update("projectMapper.projectImgInsert", project);	
 	}
 
 }

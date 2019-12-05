@@ -135,6 +135,8 @@
         		<c:forEach var="file" items="${fileList }">
         		<div class="file-grid" onclick="epFile(${file.pfileno});">
         		<input class="fileno" type="hidden" value="${file.pfileno }">
+        		<input class="userno" type="hidden" value="${file.userno }">
+        		<input class="pt" type="hidden" value="${file.pt }">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
 	                        ${file.pfilethumbnail }

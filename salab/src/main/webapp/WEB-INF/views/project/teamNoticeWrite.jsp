@@ -97,6 +97,7 @@
         <sector>
             <div class="notice-grid">
                 <div class="notice-header">공지사항</div>
+                <input type="hidden" id="projectno" value="${requestScope.projectno}">
                 <div class="notice-body">
                     <div>
                         <div class="notice-title">
@@ -131,8 +132,7 @@
         function noticeRegist() {
             var title = $('#noticeTitie').val();
             var content = $('#noticeContent').val();
-            var projectno = ($('#projectno').val());
-            alert("content: " + content);
+            var projectno =$('#projectno').val();
             location.href = 'projectNotiRegist.do?pnoticetitle=' + title + '&pnoticecontent=' + content+"&projectno="+projectno ;
         }
         function goBack(){

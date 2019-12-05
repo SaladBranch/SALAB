@@ -95,6 +95,7 @@ function gotoNoticeDetail(no){
 
 //팀원 권한 메뉴창 toggle
 function openMenu() {
+    $('.setting-menu').addClass('hide');
     $(event.target.nextElementSibling).toggleClass('hide');
 }
 //모달끄기 버튼_

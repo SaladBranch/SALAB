@@ -114,7 +114,7 @@
             <li><a href="javascript:">파일열기</a></li>
             <li><a href="javascript:" onclick="showModal('renameFile');">파일 정보 설정</a></li>
             <li><a href="javascript:" onclick="fileCopy();">사본만들기</a></li>
-            <li><a href="javascript:">웹테스트</a></li>
+            <li><a href="javascript:" onclick="popup();">웹테스트</a></li>
             <li><a href="javascript:" onclick="fileDelete();">삭제</a></li>
         </ul>
     </div>
@@ -151,6 +151,7 @@
         			<div class="file-grid" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
         		</c:if>
         		<input class="fileno" type="hidden" value="${pfile.pfileno }">
+        		<input class="pt" type="hidden" value="${pfile.pt }">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">
 	                        ${pfile.pfilethumbnail }
@@ -208,7 +209,7 @@
             <input class="" type="button"  value="renameFile" onclick="renameFile();">
     	</div>
 	</div>
-    
+	
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
 </body>

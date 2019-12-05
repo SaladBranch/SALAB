@@ -91,10 +91,17 @@
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper">
-								<c:if test="${project.projectimage_o eq null }"><i class="fas fa-sitemap"></i></c:if>
-                    			<c:if test="${project.projectimage_o ne null }"><img src="/salab/resources/img/${project.projectimage_o} " alt=""></c:if>                 	
-							</div>
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
+						
 							<c:if test="${project.projectno eq projectList.projectno }">
 								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							</c:if>
@@ -143,12 +150,11 @@
 
                     <div class="teamLogo-box">
                     	<c:if test="${project.projectimage_o eq null }"><img src="/salab/resources/img/default-project.png" alt=""></c:if>
-                    	<c:if test="${project.projectimage_o ne null }"><img src="/salab/resources/img/${project.projectimage_o} " alt=""></c:if>
+                    	<c:if test="${project.projectimage_o ne null }"><img src="/salab/resources/projectUpfiles/${project.projectimage_o} " alt=""></c:if>
                     	<c:if test="${userauth eq 'LEADER' }">
-                    		<img src="/salab/resources/img/default-project.png" alt="">
                     		<input type="file" id="teamLogo" accept="image/*">
                     		<input type="hidden" name="base64img" id="base64img">
-                    	 </c:if>
+                    	 </c:if> 	
                     </div>
                     </label>
                     <div class="name-box"> ${project.projectname}
@@ -156,7 +162,7 @@
                 </div>
                 <section class="file-section">
                     <!--최근파일-->
-                    <div class="left">최근 생성 파일</div>
+                    <div class="left">PROJECT FILES</div>
                     <div class="recentFile-grid part-grid clear">
 
                         
@@ -413,7 +419,7 @@
                             var insert2 = document.createElement("input");
                             insert2.setAttribute("type", "hidden");
                             insert2.setAttribute("name", "ofilename");
-                            insert2.setAttribute("value", $("#userimg").val());
+                            insert2.setAttribute("value", $("#teamLogo").val());
                             form.append(insert2);
       
                             var insert3 = document.createElement("input");

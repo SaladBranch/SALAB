@@ -233,7 +233,7 @@ body{
     height: calc(100vh - 285px);
     overflow-y: auto;
 }
-.each-team .icon-wrapper{
+.each-team .icon-wrapper, .img-wrapper {
     position: relative;
     z-index: 99;
 }
@@ -245,6 +245,7 @@ body{
     font-size: 14px;
     line-height: 40px;
 }
+
 .each-team a:first-of-type{
     display: inline-block;
     color: #2c2c2c;
@@ -261,6 +262,23 @@ body{
     font-size: 13px;
     padding-left: 58px;
     line-height: 30px;
+}
+/*프로젝트이미지가 있을경우의 <img>*/
+.img-wrapper{
+    display: inline-block;
+    width: 30px;
+    margin-left: 4%;
+    font-size: 14px;
+    line-height: 40px;
+    width: 30px;
+    height: 40px;
+}
+.img-wrapper img{
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    z-index: 99;
+    border-radius: 100%;
 }
 /*----------------------------*/
 /*Right Main Side*/

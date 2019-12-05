@@ -243,15 +243,13 @@ public class ProjectController {
 	return job.toJSONString();
 	
 	}
-	
+	//프로젝트 이미지 삽입
 	@RequestMapping(value="projectImgInsert.do", method=RequestMethod.POST)
 	public String userImgInsertMethod(HttpServletRequest request,@RequestParam(name="upfiles", required=false) String upfiles, @RequestParam(name="ofilename",required=false) String ofilename,Project project, HttpSession session) throws IOException {
 		System.out.println(project.toString());
 		if (upfiles != null) {
-			System.out.println("if 진입");
 			String path = request.getSession().getServletContext().getRealPath("resources/projectUpfiles");
-			System.out.println("path  : "+path);
-			
+
 			String base64img = upfiles;
 			String imgdata = base64img.split(",")[1];
 			byte[] imageBytes = DatatypeConverter.parseBase64Binary(imgdata);
@@ -262,12 +260,10 @@ public class ProjectController {
 			BufferedImage bufImg  = ImageIO.read(new ByteArrayInputStream(imageBytes));
 			ImageIO.write(bufImg, "jpg", new File(path + "/" + renameFileName));
 			project.setProjectimage_o(renameFileName);
-			System.out.println("테스트:"+project.toString());
 			int result=pService.projectImgInsert(project);
 			if(result >0 ) {
-				System.out.println("이미지업로드 성공.");
+				logger.info("img upload successed..  stored path  : "+path);
 			}
-
 		}
 		return "redirect:gotoProject.do?projectno="+project.getProjectno();
 	}

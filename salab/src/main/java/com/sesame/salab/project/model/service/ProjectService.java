@@ -31,4 +31,6 @@ public interface ProjectService {
 	int selectProjectnoAfterCreated(int userno);
 
 	List<ProjectFile> selectMainFileList(int projectno);
+
+	int projectImgInsert(Project project);
 }

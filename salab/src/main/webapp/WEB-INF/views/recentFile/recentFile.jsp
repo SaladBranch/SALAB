@@ -21,6 +21,7 @@
     	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
     }
     function etFile(fileno, projectno){
+    	console.log("왜안될까?");
     	location.href="etFile.do?projectno="+ projectno + "&fileno=" +fileno;
     }
     </script>

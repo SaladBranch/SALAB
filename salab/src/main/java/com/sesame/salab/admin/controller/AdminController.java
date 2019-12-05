@@ -35,7 +35,7 @@ public class AdminController {
 		
 		if(loginAdmin != null) {
 			session.setAttribute("loginAdmin", loginAdmin);
-			mv.setViewName("admin/adminMember");
+			mv.setViewName("redirect:adminMemberList.do");
 		} else {
 			mv.setViewName("common/error");
 		}

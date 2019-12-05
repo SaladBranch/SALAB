@@ -460,7 +460,6 @@ body{
     padding-left: 10px;
 }
 
-/**/
 
 .member_top{
 	float: left;
@@ -479,93 +478,115 @@ body{
 	margin-left: 70px;
 }
 
-
-input[type="radio"]{
-    position: relative;
-    opacity: 1;
-    width: 15px;
-    height: 15px;
+.member_box{
+	border: 1px solid black;
+	width: 65%;
+	padding: 20px 40px;
+	margin: 10px 30px 10px 150px;
 }
 
-.member_btn_box{
-	display: block;
-	margin: 5px 10px;
-	padding: 10px 15px 40px 15px;
+.member_fromMember{
+	margin: 0px 0px 15px 5px;
+	padding-bottom: 15px;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #3cb371;
+	border-bottom: 1px solid gray;
 }
 
-.member_check{
-	margin: 5px;
-	font-size: 18pt;
-	font-weight: 600;
+.member_info{
+	padding:2px;
+	font-weight: bold;
+	font-size: 13px;
 }
 
-.member_btn{
-	float: right;
-	font-size: 18pt;
-	font-weight: 600;
-	padding: 3px 30px 3px 30px;
+.member_info_faq{
+	padding: 10px 15px 10px 15px;
+	margin-bottom: 15px;
+	font-size: 12px;
+	border-bottom: 1px solid gray;
+}
+
+.member_title{
+	margin: 5px 5px 5px 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#member_box_title{
+	border: 1px solid black;
+	margin: 3px 5px 7px 5px;
+	width: 100%;
+}
+
+.member_content{
+	margin: 5px 5px 5px 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#member_box_content{
+	border: 1px solid black;
+	margin: 3px 5px 7px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 90px;
+	font-size: 12pt;
+	resize: none;
+	outline: none;
+	overflow: auto;
+	overflow-sytyle:  none;
+}
+
+#member_box_content::-webkit-scrollbar {
+	display: none;
+}
+
+.member_ans{
+	margin: 5px 5px 5px 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#member_box_ans{
+	border: 1px solid black;
+	margin: 3px 5px 20px 5px;
+	padding: 5px;
+	width: 100%;
+	height: 90px;
+	font-size: 12pt;
+	resize: none;
+	outline: none;
+	overflow: auto;
+	overflow-sytyle:  none;
+}
+
+#member_box_ans::-webkit-scrollbar {
+	display: none;
+}
+
+.member_back_btn{
+	margin: 5px 50px 0px 100px;
+	padding: 10px 40px;
 	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
 }
 
-.member_btn:hover{
+.member_back_btn:hover{
 	border: 1px solid #3cb371;
 }
 
-.member_head{
-	font-size: 16pt;
-	font-weight: bold;
-	text-align: center;
-	width: 100%;
-	height: 40px;
-	border-bottom: 1px solid black;
-	border-top: 1px solid black;
+.member_update_btn{
+	margin: 5px 20px 0px 60px;
+	padding: 10px 40px;
+	border: 1px solid lightgreen;
+	cursor: pointer;
+	background: transparent;
 }
 
-.member_list{
-	text-align: center;
-	height: 38px;
-	border-bottom: 1px solid lightgray;
-}
-
-.member_head_no{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 400;
-	width: 15%;
-}
-
-.member_head_email{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 400;
-	width: 50%;
-}
-
-.member_head_date{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 400;
-	width: 20%;
-}
-
-.member_head_level{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 400;
-	width: 15%;
-}
-
-.member_head_null{
-	float: left;
-	text-align: center;
-	line-height: 35px ;
-	width:100%;
-	color: gray;
-	font-weight: 350;
+.member_update_btn:hover{
+	border: 1px solid #3cb371;
 }
 
 a { 
@@ -577,59 +598,34 @@ a:hover{
 	color: #3cb371;
 }
 
-
-/* 페이징 css */
-.box_footer{
-	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
-	display: block;
-	margin-left: 70px;
+input:focus::-webkit-input-placeholder { 
+	color: transparent; 
 }
 
-.paging_list{
-	text-align: center;
-	width: 80%;
-	height: 40px;
-	margin-top: 10px;
-	padding-left: 330px;
+input:focus::-moz-placeholder { 
+	color: transparent; 
+} 
+
+input:focus:-ms-input-placeholder { 
+	color: transparent; 
+} 
+
+input:focus::-ms-input-placeholder { 
+	color: transparent; 
 }
 
-.paging_btn{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	color: gray;
-	width: 11%;
-}
-.paging_btn > a{
-	color: black;
+textarea:focus::-webkit-input-placeholder { 
+	color: transparent; 
 }
 
-.paging_btn > a:hover{
-	color: #3cb371;
-}
+textarea:focus::-moz-placeholder { 
+	color: transparent; 
+} 
 
-.paging_no{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	width: 6%;
-	color: black;
-}
+textarea:focus:-ms-input-placeholder { 
+	color: transparent; 
+} 
 
-.paging_no:hover{
-	background: lightgreen;
+textarea:focus::-ms-input-placeholder { 
+	color: transparent; 
 }
-
-.paging_no_this{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	width: 6%;
-	color: #3cb371;
-}
-

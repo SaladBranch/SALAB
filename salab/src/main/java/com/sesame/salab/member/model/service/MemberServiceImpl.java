@@ -1,8 +1,11 @@
 package com.sesame.salab.member.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.dao.MemberDao;
 import com.sesame.salab.member.model.vo.Member;
 
@@ -65,6 +68,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void enrollGoogleUser(Member m) {
 		memberDao.enrollGoogleUser(m);
+	}
+
+	@Override
+	public int mlistCount() {
+		return memberDao.mlistCount();
+	}
+
+	@Override
+	public List<Member> memberList(Paging paging) {
+		return memberDao.memberList(paging);
 	}
 
 }

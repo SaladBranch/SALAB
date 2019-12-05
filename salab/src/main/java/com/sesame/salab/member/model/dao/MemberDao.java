@@ -1,9 +1,12 @@
 package com.sesame.salab.member.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
 
 @Repository("memberDao")
@@ -54,6 +57,14 @@ public class MemberDao {
 
 	public void enrollGoogleUser(Member member) {
 		sqlSession.insert("memberMapper.enrollGoogleUser", member);
+	}
+
+	public int mlistCount() {
+		return sqlSession.selectOne("memberMapper.mlistCount");
+	}
+
+	public List<Member> memberList(Paging paging) {
+		return sqlSession.selectList("memberMapper.memberList", paging);
 	}
 	
 }

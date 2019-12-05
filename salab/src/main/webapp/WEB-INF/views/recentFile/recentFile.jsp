@@ -66,7 +66,6 @@
             </div>
         </nav>
     </header>
-    <div></div>
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="search-bar">

@@ -1,3 +1,4 @@
+//editTeamFile/page.js
 
 //페이지 셀렉트
     $('.page-item').on('click', function(){
@@ -59,8 +60,6 @@
         cancel: '.newpage',
         start: function(event, ui){
             beforepindex = ui.item.index();
-            console.log("출발점: " + beforepindex);
-            console.log("출발점의 pno :: " + list[beforepindex].pageno);
             /*pageMoveTempStorage.pageno = list[beforepindex].pageno;*/
             pageMoveTempStorage = {
             		content: list[beforepindex].content,
@@ -101,11 +100,6 @@
                     }
             	}
             	
-            	
-                for(var i = 0; i < list.length; i++){
-                	console.log(JSON.stringify(list[i]));
-                }
-                
                 $.ajax({
                 	url: 'pageMove.do',
                 	type: 'post',

@@ -20,6 +20,9 @@
     	var userno = ${loginMember.userno};
     	location.href="epFile.do?userno="+ userno + "&fileno=" +fileno;
     }
+    function etFile(fileno, projectno){
+    	location.href="etFile.do?projectno="+ projectno + "&fileno=" +fileno;
+    }
     </script>
     <title>최근 파일 | Salab</title>
 </head>
@@ -142,7 +145,12 @@
         <div class="row recent-files">
         	<c:if test="${!empty fileList}">
         		<c:forEach var="pfile" items="${fileList }">
-        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+        		<c:if test="${pfile.pt eq 'private'}">
+        			<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+        		</c:if>
+        		<c:if test="${pfile.pt eq 'team' }">
+        			<div class="file-grid" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
+        		</c:if>
         		<input class="fileno" type="hidden" value="${pfile.pfileno }">
 	                <div class="file-container">
 	                    <div class="file-thumbnail">

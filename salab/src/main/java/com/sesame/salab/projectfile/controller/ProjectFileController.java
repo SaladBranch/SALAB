@@ -147,7 +147,9 @@ public class ProjectFileController {
 		for (String font : fonts) {
 			fontList.add(font);
 		}
-
+		for(Page p : pageList) {
+			System.out.println(p.toString());
+		}
 		req.setAttribute("pfile", prfile);
 		req.setAttribute("pageList", pageList);
 		req.setAttribute("projectno", page.getProjectno());

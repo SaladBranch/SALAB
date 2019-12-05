@@ -62,15 +62,4 @@ public class MongoController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "removeData", method = RequestMethod.POST)
-	public ModelAndView removeData() {
-		ModelAndView mav = new ModelAndView("jsonView");
-		
-		MongoService mongoService = new MongoService();
-		Fruit condition = new Fruit();
-		condition.set_id("5cb31f0285980309d27af0a8");
-		mongoService.removeData("testData", condition);
-		mongoService.close();
-		return mav;
-	}
 }

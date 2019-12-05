@@ -23,5 +23,17 @@ public interface PrivateFileService {
 	PrivateFile selectOne(Page page);
 
 	int pfRename(PrivateFile pfile);
+
+	PrivateFile selectFile(PrivateFile pfile);
+
+	int fileCopy(PrivateFile file);
+
+	int fileDelete(PrivateFile pfile);
+
+	List<FileList> trashCanAll(int userno);
+
+	int fileDeleteUndo(PrivateFile pfile);
+
+	int filePremanentDelete(PrivateFile pfile);
 	
 }

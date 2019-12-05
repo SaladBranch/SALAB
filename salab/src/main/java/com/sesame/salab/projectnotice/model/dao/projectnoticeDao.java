@@ -3,6 +3,7 @@ package com.sesame.salab.projectnotice.model.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class projectnoticeDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSession sqlSession;
 
 	public List<Projectnotice> searchNoticeList(Projectnotice projectnotice) {
 		return  sqlSession.selectList("projectnoticeMapper.getNoticeList",projectnotice);

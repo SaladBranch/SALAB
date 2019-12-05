@@ -218,8 +218,56 @@ public class PageController {
 
 	
 	@RequestMapping(value="trashCan.do")
-	public String toTrashCanMethod() {
-		return "trashCan/trashCan";
+	public String toTrashCanMethod(HttpSession session, HttpServletRequest request, String sort) {
+		String viewFileName = "trashCan/trashCan";
+		MongoService mgService = new MongoService();
+		Member member = (Member) session.getAttribute("loginMember");
+		List<FileList> fileList = pfService.trashCanAll(member.getUserno());
+
+		if(sort.equals("recent")) {
+			Collections.sort(fileList, new Comparator<FileList>() {
+				@Override
+				public int compare(FileList f1, FileList f2) {
+					return f2.getPfilelastmodified().compareTo(f1.getPfilelastmodified());
+				}
+			});
+		}else if(sort.equals("name")) {
+			Collections.sort(fileList, new Comparator<FileList>() {
+				@Override
+				public int compare(FileList f1, FileList f2) {
+					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
+				}
+			});
+		}else if(sort.equals("date")) {
+			Collections.sort(fileList, new Comparator<FileList>() {
+				@Override
+				public int compare(FileList f1, FileList f2) {
+					return f1.getPfilecreatedate().compareTo(f2.getPfilecreatedate());
+				}
+			});
+		}
+		
+		if(fileList != null) {
+			for(FileList pf : fileList) {
+				Page p = new Page();
+				p.setFileno(pf.getPfileno());
+				p.setUserno(pf.getUserno());
+				p.setPageno(1);
+				Page page = mgService.findOne("page", p);
+				pf.setPfilethumbnail(page.getThumbnail());
+			}
+			mgService.close();
+		
+			request.setAttribute("fileList", fileList);
+			request.setAttribute("sort", sort);
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		List<Project> projectList = mpService.selectProjectList(member.getUserno());
+		session.setAttribute("myProjectList", projectList);
+		
+		return viewFileName;
 	}
   
 	@RequestMapping(value="epFile.do")

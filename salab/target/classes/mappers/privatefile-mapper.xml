@@ -42,8 +42,12 @@
 		select * from privatefile where userno = #{userno} and pfileno = #{fileno}
 	</select>
 	
-	<update id="pfRename" parameterType="PrivateFile">
-		update privatefile set pfiletitle = #{pfiletitle} where userno = #{userno} and pfileno = #{pfileno}
+	<update id="pfRename" parameterType="FileList">
+		UPDATE PRIVATEFILE SET PFILETITLE = #{pfiletitle} WHERE USERNO = #{userno} AND PFILENO = #{pfileno}
+	</update>
+	
+	<update id="prRename" parameterType="FileList">
+		UPDATE PROJECTFILE SET PRFILETITLE = #{pfiletitle} WHERE PROJECTNO = #{userno} AND PRFILENO = #{pfileno}
 	</update>
 	
 	<select id="selectFile" parameterType="PrivateFile" resultType="PrivateFile">
@@ -54,12 +58,20 @@
 		INSERT INTO PRIVATEFILE VALUES(SEQ_PFILENO.NEXTVAL, #{userno}, #{pfilethumbnail}, #{pfiletitle}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
-	<update id="fileDelete" parameterType="PrivateFile">
+	<update id="fileDelete" parameterType="FileList">
 		UPDATE PRIVATEFILE SET TRASHCAN = 'Y', PFILELASTMODIFIED = DEFAULT WHERE PFILENO = #{pfileno}
 	</update>
 	
-	<update id="fileDeleteUndo" parameterType="PrivateFile">
+	<update id="teamfileDelete" parameterType="FileList">
+		UPDATE PROJECTFILE SET TRASHCAN = 'Y', PRFILELASTMODIFIED = DEFAULT WHERE PRFILENO = #{pfileno}
+	</update>
+	
+	<update id="fileDeleteUndo" parameterType="FileList">
 		UPDATE PRIVATEFILE SET TRASHCAN = 'N', PFILELASTMODIFIED = DEFAULT WHERE PFILENO = #{pfileno}
+	</update>
+	
+	<update id="teamFileDeleteUndo" parameterType="FileList">
+		UPDATE PROJECTFILE SET TRASHCAN = 'N', PRFILELASTMODIFIED = DEFAULT WHERE PRFILENO = #{pfileno}
 	</update>
 	
 	<select id="trashCanAll" parameterType="int" resultType="FileList">
@@ -76,8 +88,12 @@
 		ORDER BY 5 DESC
 	</select>
 	
-	<delete id="filePermanentDelete" parameterType="PrivateFile">
+	<delete id="filePermanentDelete" parameterType="FileList">
 		DELETE PRIVATEFILE WHERE PFILENO = #{pfileno}
+	</delete>
+	
+	<delete id="teamFilePermanentDelete" parameterType="FileList">
+		DELETE PROJECTFILE WHERE PRFILENO = #{pfileno}
 	</delete>
 		
 </mapper>

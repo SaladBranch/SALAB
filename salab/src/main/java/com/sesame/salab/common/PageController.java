@@ -135,9 +135,7 @@ public class PageController {
 				p.setFileno(pf.getPfileno());
 				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				logger.info(p.toString());
 				Page page = mgService.findOne("page", p);
-				logger.info("thumbnail :: " + page.getThumbnail());
 				pf.setPfilethumbnail(page.getThumbnail());
 			}
 			mgService.close();
@@ -283,10 +281,17 @@ public class PageController {
 			for(FileList pf : fileList) {
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
-				p.setUserno(pf.getUserno());
 				p.setPageno(1);
-				Page page = mgService.findOne("page", p);
-				pf.setPfilethumbnail(page.getThumbnail());
+				if(pf.getPt().equals("private")) {
+					p.setUserno(pf.getUserno());
+					Page page = mgService.findOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}else {
+					p.setProjectno(pf.getUserno());
+					Page page = mgService.findTeamOne("page", p);
+					pf.setPfilethumbnail(page.getThumbnail());
+				}
+				
 			}
 			mgService.close();
 		
@@ -370,6 +375,24 @@ public class PageController {
    		request.setAttribute("userno", userno);
    		request.setAttribute("projectno", projectno);
    		return "project/inviteProject";
+   	}
+   	
+   	@RequestMapping(value="webTest.do")
+   	public String webTest(FileList pfile, HttpServletRequest req) {
+   		MongoService mgService = new MongoService();
+   		Page page = new Page();
+   		List<Page> pageList = null;
+   		page.setFileno(pfile.getPfileno());
+   		if(pfile.getPt().equals("private")) {
+   			page.setUserno(pfile.getUserno());
+   			pageList = mgService.findPage("page", page);
+   		}else {
+   			page.setProjectno(pfile.getUserno());
+   			pageList = mgService.findTeamPage("page", page);
+   		}
+   		req.setAttribute("pageList", pageList);
+   		
+   		return "recentFile/webTest";
    	}
    	
 

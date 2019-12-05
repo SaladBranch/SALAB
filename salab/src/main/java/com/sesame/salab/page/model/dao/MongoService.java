@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.MongoClient;
+import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -113,8 +114,19 @@ public class MongoService {
 	}
 	
 	//remove data in collection
-	public void removeData(String deleteCollection, PrivateFile pfile) {
-		Query query = new Query(new Criteria("fileno").is(pfile.getPfileno()));
+	public void removeData(String deleteCollection, FileList pfile) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("fileno").is(pfile.getPfileno()),
+				Criteria.where("userno").is(pfile.getUserno())
+				));
+		mongoOps.remove(query, deleteCollection);
+	}
+	
+	public void removeTeamData(String deleteCollection, FileList pfile) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("fileno").is(pfile.getPfileno()),
+				Criteria.where("projectno").is(pfile.getUserno())
+				));
 		mongoOps.remove(query, deleteCollection);
 	}
 

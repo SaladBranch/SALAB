@@ -50,7 +50,7 @@ public class PrivateFileDao {
 		return sqlSession.selectOne("privatefileMapper.selectOne", page);
 	}
 
-	public int pfRename(PrivateFile pfile) {
+	public int pfRename(FileList pfile) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("privatefileMapper.pfRename", pfile);
 	}
@@ -65,7 +65,7 @@ public class PrivateFileDao {
 		return sqlSession.insert("privatefileMapper.fileCopy", file);
 	}
 
-	public int fileDelete(PrivateFile pfile) {
+	public int fileDelete(FileList pfile) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("privatefileMapper.fileDelete", pfile);
 	}
@@ -75,14 +75,34 @@ public class PrivateFileDao {
 		return sqlSession.selectList("privatefileMapper.trashCanAll", userno);
 	}
 
-	public int fileDeleteUndo(PrivateFile pfile) {
+	public int fileDeleteUndo(FileList pfile) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("privatefileMapper.fileDeleteUndo", pfile);
 	}
 
-	public int filePermanentDelete(PrivateFile pfile) {
+	public int filePermanentDelete(FileList pfile) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("privatefileMapper.filePermanentDelete", pfile);
+	}
+
+	public int prRename(FileList pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("privatefileMapper.prRename", pfile);
+	}
+
+	public int teamfileDelete(FileList pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("privatefileMapper.teamfileDelete", pfile);
+	}
+
+	public int teamFileDeleteUndo(FileList pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("privatefileMapper.teamFileDeleteUndo", pfile);
+	}
+
+	public int teamFilePermanentDelete(FileList pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("privatefileMapper.teamFilePermanentDelete", pfile);
 	}
 
 }

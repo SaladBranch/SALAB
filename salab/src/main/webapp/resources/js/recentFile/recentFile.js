@@ -1,4 +1,4 @@
-var fileno, filetitle;
+var fileno, filetitle, teamAndPrivate, uno;
 
 $(document).ready(function(){
     
@@ -202,6 +202,7 @@ $(function(){
 		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
 		$('.sort-standards ul li').eq(2).addClass('sort-active');
 	}
+	
 });
 
 $('.file-options-btn').click(function(){
@@ -293,6 +294,13 @@ $(function(){
     });
 });
 
+$(document).on('mouseenter', '.file-grid', function(e){
+	fileno = $(this).find('.fileno').val();
+	filetitle = $.trim($(this).find('.file-name').html());
+	teamAndPrivate = $.trim($(this).find('.pt').val());
+	uno = $(this).find('.userno').val();
+});
+
 function newFile(){
 	var form = document.createElement("form");
     form.setAttribute("method", "post");
@@ -343,7 +351,8 @@ function renameFile(){
 		data: {
 			pfiletitle: $("#fileRename").val(),
 			userno: $("#userNo2").val(),
-			pfileno: fileno
+			pfileno: fileno,
+			pt: teamAndPrivate
 		},
 		dataType: 'text',
 		success: function(data){
@@ -357,18 +366,14 @@ function renameFile(){
 	});
 }
 
-$(document).on('mouseenter', '.file-grid', function(e){
-	fileno = $(this).find('.fileno').val();
-	filetitle = $.trim($(this).find('.file-name').html());
-});
-
 function fileCopy(){
 	$.ajax({
 		url: 'fileCopy.do',
 		type: 'post',
 		data: {
 			pfileno: fileno,
-			userno: $('#userNo').val()
+			userno: $('#userNo').val(),
+			pt: teamAndPrivate
 		},
 		dataType: 'json',
 		success: function(data){
@@ -387,7 +392,8 @@ function fileDelete(){
 			type: 'post',
 			data: {
 				pfileno: fileno,
-				userno: $('#userNo').val()
+				userno: $('#userNo').val(),
+				pt: teamAndPrivate
 			},
 			dataType: 'text',
 			success: function(data){
@@ -413,7 +419,8 @@ function filePermanentDelete(){
 		type: 'post',
 		data: {
 			pfileno: fileno,
-			userno: $('#userNo').val()
+			userno: uno,
+			pt: teamAndPrivate
 		},
 		dataType: 'text',
 		success: function(data){
@@ -436,6 +443,7 @@ function fileDeleteUndo(){
 		type: 'post',
 		data: {
 			pfileno: fileno,
+			pt: teamAndPrivate
 		},
 		dataType: 'text',
 		success: function(data){
@@ -450,4 +458,12 @@ function fileDeleteUndo(){
 			console.log( jqXHR.readyState );
 			}
 	});
+}
+
+function popup(){
+	
+	var win_width = 1120;
+	var height = 600+30;
+	var userno = $('#userNo').val();
+	window.open('webTest.do?pfileno='+fileno+'&userno='+userno+'&pt='+teamAndPrivate, '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');
 }

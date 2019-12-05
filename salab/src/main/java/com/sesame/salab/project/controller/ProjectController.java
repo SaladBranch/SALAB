@@ -1,18 +1,24 @@
 package com.sesame.salab.project.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -142,7 +148,7 @@ public class ProjectController {
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
-	
+	System.out.println(project.toString());
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
@@ -238,5 +244,31 @@ public class ProjectController {
 	
 	}
 	
+	@RequestMapping(value="projectImgInsert.do", method=RequestMethod.POST)
+	public String userImgInsertMethod(HttpServletRequest request,@RequestParam(name="upfiles", required=false) String upfiles, @RequestParam(name="ofilename",required=false) String ofilename,Project project, HttpSession session) throws IOException {
+		System.out.println(project.toString());
+		if (upfiles != null) {
+			System.out.println("if 진입");
+			String path = request.getSession().getServletContext().getRealPath("resources/projectUpfiles");
+			System.out.println("path  : "+path);
+			
+			String base64img = upfiles;
+			String imgdata = base64img.split(",")[1];
+			byte[] imageBytes = DatatypeConverter.parseBase64Binary(imgdata);
+	
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String renameFileName =project.getProjectno()+"p"+ sdf.format(new java.sql.Date(System.currentTimeMillis()))+ "." + ofilename.substring(ofilename.lastIndexOf('.') + 1);
+				
+			BufferedImage bufImg  = ImageIO.read(new ByteArrayInputStream(imageBytes));
+			ImageIO.write(bufImg, "jpg", new File(path + "/" + renameFileName));
+			project.setProjectimage_o(renameFileName);
+			System.out.println("테스트:"+project.toString());
+			int result=pService.projectImgInsert(project);
+			if(result >0 ) {
+				System.out.println("이미지업로드 성공.");
+			}
 
+		}
+		return "redirect:gotoProject.do?projectno="+project.getProjectno();
+	}
 }

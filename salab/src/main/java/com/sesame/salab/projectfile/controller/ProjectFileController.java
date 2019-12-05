@@ -76,15 +76,22 @@ public class ProjectFileController {
 		if(fileList != null) {
 			for(ProjectFile pf : fileList) {
 				Page p = new Page();
-				
+				p.setFileno(pf.getPrfileno());
+				p.setPageno(1);
+				p.setProjectno(pf.getProjectno());
+				Page page = mgService.findTeamOne("page", p);
+				pf.setPrfilethumbnail(page.getThumbnail());
 			}
 			mgService.close();
 			mv.addObject("fileList", fileList);
 			mv.addObject("sort", sort);
+			mv.setViewName("project/projectFile");
+		}else {
+			mv.setViewName("common/error");
 		}
 		
 		mv.addObject("project", project);
-	  	mv.setViewName("project/projectFile");
+	  	
 		return mv;
 	}
 	

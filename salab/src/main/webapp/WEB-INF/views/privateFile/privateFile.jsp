@@ -81,7 +81,7 @@
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
-                <a href="trashCan.do">휴지통</a>
+                <a href="trashCan.do?sort=recent">휴지통</a>
             </div>
         </div>
         <div class="left-middle-side-bar">

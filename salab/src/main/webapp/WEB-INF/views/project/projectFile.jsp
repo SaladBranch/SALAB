@@ -80,7 +80,7 @@
             </div>
             <div class="trashcan">
                 <div class="icon-wrapper"><i class="far fa-trash-alt"></i></div>
-                <a href="trashCan.do">휴지통</a>
+                <a href="trashCan.do?sort=recent">휴지통</a>
             </div>
         </div>
         <div class="left-middle-side-bar">
@@ -158,7 +158,7 @@
 	                                <c:out value="${tfile.prfiletitle }"/>
 	                            </div>
 	                            <div class="file-edited">
-	                                <span>${tfile.prfilelastmodified }</span> in 개인파일
+	                                <span>${tfile.prfilelastmodified }</span> in ${project.projectname}
 	                            </div>
 	                        </div>
 	                        <div class="file-options">
@@ -181,7 +181,7 @@
         	
             
             <div class="file-grid">
-                <div class="new-file" onclick="showModal();">
+                <div class="new-file" onclick="showModal('newFile');">
                     &#43; 새 파일
                 </div>
             </div>

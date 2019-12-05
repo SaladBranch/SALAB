@@ -36,6 +36,8 @@
 	<select id="joinedMemberCheck" parameterType="HashMap" resultType="int">
 		select count(*) from member_project where userno=#{userno} and projectno =#{projectno}
 	</select>
-
+	<update id="projectImgInsert" parameterType="Project">
+		UPDATE PROJECT SET PROJECTIMAGE_O = #{projectimage_o} WHERE PROJECTNO =#{projectno}
+	</update>
 	
-</mapper>
+</mapper> 

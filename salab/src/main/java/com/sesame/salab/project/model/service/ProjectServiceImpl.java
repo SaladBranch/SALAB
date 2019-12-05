@@ -78,4 +78,9 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<ProjectFile> selectMainFileList(int projectno) {
 		return pDao.selectMainFileList(projectno);
 	}
+
+	@Override
+	public int projectImgInsert(Project project) {
+		return pDao.projectImgInsert(project);
+	}
 }

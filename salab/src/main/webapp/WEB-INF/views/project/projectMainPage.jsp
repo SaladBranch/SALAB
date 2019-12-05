@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="/salab/resources/css/project/projectMainPage.css" type="text/css">
 
+
 	 <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
     <title>${project.projectname } | Salab</title>
@@ -90,7 +91,10 @@
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
+							<div class="icon-wrapper">
+								<c:if test="${project.projectimage_o eq null }"><i class="fas fa-sitemap"></i></c:if>
+                    			<c:if test="${project.projectimage_o ne null }"><img src="/salab/resources/img/${project.projectimage_o} " alt=""></c:if>                 	
+							</div>
 							<c:if test="${project.projectno eq projectList.projectno }">
 								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							</c:if>
@@ -136,10 +140,15 @@
                 <!-- grid안 왼쪽 -->
                 <div class="Blank">
                 	<label for="teamLogo">
+
                     <div class="teamLogo-box">
-                    	<img src="/salab/resources/img/default-project.png" alt="">
-                    	<input type="file" id="teamLogo" accept="image/*">
-                    	<input type="hidden" name="base64img" id="base64img">
+                    	<c:if test="${project.projectimage_o eq null }"><img src="/salab/resources/img/default-project.png" alt=""></c:if>
+                    	<c:if test="${project.projectimage_o ne null }"><img src="/salab/resources/img/${project.projectimage_o} " alt=""></c:if>
+                    	<c:if test="${userauth eq 'LEADER' }">
+                    		<img src="/salab/resources/img/default-project.png" alt="">
+                    		<input type="file" id="teamLogo" accept="image/*">
+                    		<input type="hidden" name="base64img" id="base64img">
+                    	 </c:if>
                     </div>
                     </label>
                     <div class="name-box"> ${project.projectname}
@@ -392,7 +401,7 @@
   {
                             var form = document.createElement("form");
                             form.setAttribute("method", "post");
-                            form.setAttribute("action", "#");
+                            form.setAttribute("action", "projectImgInsert.do");
                             document.body.appendChild(form);
 
                             var insert = document.createElement("input");
@@ -407,6 +416,12 @@
                             insert2.setAttribute("value", $("#userimg").val());
                             form.append(insert2);
       
+                            var insert3 = document.createElement("input");
+                            insert3.setAttribute("type", "hidden");
+                            insert3.setAttribute("name", "projectno");
+                            insert3.setAttribute("value", $("#projectno").val());
+                            form.append(insert3);
+                            
                             form.submit();
                         }
                         /*페이지 이동.*/

@@ -83,7 +83,7 @@ function leftMouseListner(){
 		$(this).children(".textarea").attr("contenteditable", "true");
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
-		$(this).children(".textarea").selectText();
+    	$(this).children(".textarea").selectText();
 		
         $('.right-side-bar .canvas-menu').hide();
         $('.right-side-bar .tab-menu').show();

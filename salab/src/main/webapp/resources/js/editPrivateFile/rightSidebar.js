@@ -543,6 +543,7 @@ var lastChanged = "";
 
     	// font 강조 색상
 		var textgroundColor = checkAttr("textgroundColor", target);
+		console.log(textgroundColor);
 		$(".text-font-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
 		$(".text-font-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "" : textgroundColor);
 		
@@ -602,10 +603,6 @@ var lastChanged = "";
 	// input 변화
     function applyChange(type) {
 
-    	console.log(type == "");
-    	console.log("type : " + type);
-    	console.log("lastChanged : " + lastChanged);
-    	
     	if (type != "" ? type != lastChanged : false) {
     		$(".last-changed").removeAttr("class");
     	}
@@ -698,7 +695,7 @@ var lastChanged = "";
         		
         		// font
         		if (type == "font") {
-        			if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
+        			if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
         		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
         		    } else if ($(".last-changed").length > 0) {
         		    	$(".last-changed").css("font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
@@ -714,7 +711,7 @@ var lastChanged = "";
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='font-size : " + $(".text-font-comps .text-item[id=size] input").val() + "px'>" + textSelected.html() + "</span>");
             			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
+        		    } else if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
         		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
         		    } else if ($(".last-changed").length > 0) {
         		    	$(".last-changed").css("font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
@@ -731,14 +728,12 @@ var lastChanged = "";
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
 
-                	console.log(window.getSelection());
-                	
                 	var textSelected = $(".textarea span.text-selected");
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='color : rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")'>" + textSelected.html() + "</span>");
             			$(".textarea .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
+        		    } else if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
+            				wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    } else if ($(".last-changed").length > 0) {
         		    	$(".last-changed").css("color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    } else {
@@ -749,8 +744,8 @@ var lastChanged = "";
         		}
 
         		if (type == "text-effect-bold") {
-        		    if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
+        			if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
+            		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
         		    } else if ($(".last-changed").length > 0) {
         		    	$(".last-changed").css("font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
         		    } else {
@@ -760,8 +755,8 @@ var lastChanged = "";
                 }
         		
         		if (type == "text-effect-italic") {
-        		    if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor") : false) {
-            		   	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-style", ($(".text-effect[id=italic]").is(".clicked") ? "italic" : ""));
+        			if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
+            		       	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-style", ($(".text-effect[id=italic]").is(".clicked") ? "italic" : ""));
         		    } else if ($(".last-changed").length > 0) {
         		    	$(".last-changed").css("font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
         		    } else {
@@ -817,8 +812,8 @@ var lastChanged = "";
         		    if (textSelected.length > 0) {
         		    	textSelected.html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + textSelected.html() + "</span>");
             			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
+        		    } else if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
+            		    wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
         		    } else if ($(".last-changed").length > 0) {
         		    	$(".last-changed").css("background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
         		    } else {
@@ -890,7 +885,6 @@ var lastChanged = "";
     function wrapSpanToText(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
     		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
-    		console.log(target.html());
     	}
     	else {
     		console.log("wrapTag 에러 발생 !!");
@@ -900,27 +894,103 @@ var lastChanged = "";
 	function checkAttr(type, object) {
 
     	var result = "start";
-
-		if (type == "textgroundColor") {
-			var value;
-    		$("div.ui-selected .obj-comp span").each(function() {
-    			if (result != "diffrent") {
-        			value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
-        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+		var value;
+		
+		if (type == "fontType") {
+			$("div.ui-selected .obj-comp").each(function() {
+				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
+    				value = $(this).css("fontFamily").split(", ")[0];
             		if (result == "start")
             			result = value;
-            		else if (result != "diffrent" ? result != value : false)
+            		else if (result != value)
+            			result = "diffrent";
+				}
+			});
+    		$("div.ui-selected span").each(function() {
+    			if (result != "diffrent") {
+    				value = $(this).css("fontFamily").split(", ")[0];
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
             			result = "diffrent";
     			}
         	});
     		return result;
 		}
 
+		if (type == "fontSize") {
+			$("div.ui-selected .obj-comp").each(function() {
+				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
+    				value = $(this).css("font-size").split("px")[0] * 1;
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+				}
+			});
+    		$("div.ui-selected span").each(function() {
+    			if (result != "diffrent") {
+    				value = $(this).css("font-size").split("px")[0] * 1;
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+    			}
+        	});
+    		return result;
+		}
+		
+		if (type == "textgroundColor") {
+			$("div.ui-selected .obj-comp").each(function() {
+				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
+        			value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
+        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+				}
+			});
+    		$("div.ui-selected span").each(function() {
+    			if (result != "diffrent") {
+    				value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
+    				value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+    			}
+        	});
+    		return result;
+		}
+
+		if (type == "fontColor") {
+			$("div.ui-selected .obj-comp").each(function() {
+				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
+        			value = $(this).css("color").split("(")[1].split(")")[0].split(", ");
+        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+				}
+			});
+    		$("div.ui-selected span").each(function() {
+    			if (result != "diffrent") {
+    				value = $(this).css("color").split("(")[1].split(")")[0].split(", ");
+    				value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+    			}
+        	});
+    		return result;
+		}
+		
 		object.each(function() {
 			if (result != "diffrent") {
 				
-    			var value;
-    			
         		if (type == "rotate") {
         			value = $(this).css("transform");
         			value = value.split("(")[1].split(")")[0].split(", ");
@@ -961,44 +1031,6 @@ var lastChanged = "";
     			if (type == "lineRadius_br") 
     				value = $(this).css("border-bottom-right-radius").split("px")[0] * 1;
     			
-    			if (type == "fontType") {
-    				value = $(this).css("fontFamily").split(", ")[0];
-    		    	if (value != "diffrent") {
-    		    		$("div.ui-selected .obj-comp span").each(function() {
-    		    			var spanValue = $(this).css("fontFamily");
-    		        		if (value != "diffrent" ? value != spanValue : false) {
-    		        			value = "diffrent";
-    		        		}
-    		        	});
-    		    	}
-    			}
-
-    			if (type == "fontSize") {
-    				value = $(this).css("font-size").split("px")[0] * 1;
-    		    	if (value != "diffrent") {
-    		    		$("div.ui-selected .obj-comp span").each(function() {
-    		    			var spanValue = $(this).css("font-size").split("px")[0] * 1;
-    		        		if (value != "diffrent" ? value != spanValue : false) {
-    		        			value = "diffrent";
-    		        		}
-    		        	});
-    		    	}
-    			}
-
-    			if (type == "fontColor") {
-        			value = $(this).css("color").split("(")[1].split(")")[0].split(", ");
-        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-    		    	if (value != "diffrent") {
-    		    		$("div.ui-selected .obj-comp span").each(function() {
-    	        			var spanValue = $(this).css("color").split("(")[1].split(")")[0].split(", ");
-    	        			spanValue = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-    		        		if (value != "diffrent" ? value != spanValue : false) {
-    		        			value = "diffrent";
-    		        		}
-    		        	});
-    		    	}
-    			}
-
     			if (type == "bold") 
     				value = $(this).css("font-weight").includes("700") ? "true" : "false";
     			if (type == "italic") 
@@ -1023,7 +1055,15 @@ var lastChanged = "";
 	}
 	
 	function clearChanged(type) {
-		
+
+	    $(".last-changed").each(function() {
+	    	$(this).removeAttr("class");
+	    });
+	    
+	    if (!$(".ui-selected .changed").parent().is(".textarea") && $(".ui-selected .changed").parent().text() == $(".ui-selected .changed").text()) {
+	    	$(".ui-selected .changed").parent().css(type, "");
+	    }
+	    
 	    $(".ui-selected .changed span").each(function() {
 			if (type.startsWith("textDecoration")) {
 				var spanText = $(this).wrap("<div>").parent().html();
@@ -1033,53 +1073,22 @@ var lastChanged = "";
 				if (type.endsWith("strikethrough")) 
 					$(this).css("text-decoration", (spanText.includes("underline") ? "underline" : ""));
 			}
-			else {
+			else 
 				$(this).css(type, "");
-				var spanText = $(this).wrap("<div>").parent().html();
-				$(this).unwrap();
-				if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">")) {
-					$(this).contents().unwrap();
-				}
-			}
 	    });
 	    
-	    $(".ui-selected .changed span").each(function() {
+	    $(".ui-selected span").each(function() {
+			var spanText = $(this).wrap("<div>").parent().html();
+			$(this).unwrap();
+			if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">") || spanText.startsWith("<span style>")) 
+				$(this).contents().unwrap();
 			if ($(this).html() == "")
 				$(this).remove();
-		});
-
+	    });
+	    
 		$(".ui-selected .changed").addClass("last-changed");
 		$(".ui-selected .last-changed").removeClass("changed");
 		
-	    /*
-	    if ($(".text-editing").length > 0) {
-		    $(".text-editing .changed span").each(function() {
-				if (type.startsWith("textDecoration")) {
-					var spanText = $(this).wrap("<div>").parent().html();
-					$(this).unwrap();
-					if (type.endsWith("underline"))
-						$(this).css("text-decoration", (spanText.includes("line-through") ? "line-through" : ""));
-					if (type.endsWith("strikethrough")) 
-						$(this).css("text-decoration", (spanText.includes("underline") ? "underline" : ""));
-				}
-				else {
-					$(this).css(type, "");
-					var spanText = $(this).wrap("<div>").parent().html();
-					$(this).unwrap();
-					if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">")) {
-						$(this).contents().unwrap();
-					}
-				}
-		    });
-		    
-		    $(".text-editing .changed span").each(function() {
-				if ($(this).html() == "")
-					$(this).remove();
-			});
-
-			$(".text-editing .changed").removeAttr("class");
-	    }
-	    */
 	}
 	
 	$(document).on("mousemove", ".text-editing", function() {

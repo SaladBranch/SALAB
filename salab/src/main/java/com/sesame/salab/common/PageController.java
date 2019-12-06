@@ -223,6 +223,23 @@ public class PageController {
 		return mv;
 	}
 	
+	@RequestMapping(value="adminMemberDetail.do")
+	public ModelAndView toAdminMemberDetailMethod(ModelAndView mv,  @RequestParam(value="userno") int userno , @RequestParam(value="page", required=false) String currentPage) throws Exception{
+		
+		Member member = memberService.memberDetail(userno);
+		
+		if(member != null) {
+			mv.addObject("member", member);
+			mv.addObject("page", currentPage);
+			mv.setViewName("admin/adminMemberDetail");
+		}else {
+			mv.addObject("message", "회원 조회 실패");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="adminNoticeInsert.do")
 	public String toAdminNoticeInsertMethod() {
 		return "admin/adminNoticeInsert";

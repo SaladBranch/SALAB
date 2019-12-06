@@ -59,4 +59,13 @@
 		SEQ_USERNO.NEXTVAL, #{useremail} , #{userpwd} , #{username} , NULL, NULL, NULL, DEFAULT, DEFAULT, #{userauthkey}, 'Y' , null, null
 		)
 	</insert>
+	<select id="mlistCount" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+	<select id="memberList" parameterType="Paging" resultMap="resultMember">
+		SELECT * FROM (SELECT ROWNUM RNUM, USERNO, USEREMAIL, USERNAME, USERPHONE, USERPROFILE_O, USERPROFILE_R, USERLEVEL, USERENROLLDATE, USERAUTHKEY, USEREMAILCHECKED, BILLINGKEY, PAYMENTDATE  FROM (SELECT * FROM MEMBER ORDER BY USERNO DESC))WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	<select id="memberDetail" parameterType="int" resultMap="resultMember">
+		SELECT * FROM MEMBER WHERE USERNO = #{userno}
+	</select>
 </mapper>

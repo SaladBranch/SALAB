@@ -83,10 +83,42 @@
             </div>
         </div>
         <div class="left-middle-side-bar">
-            <div class="new-team">
-                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="newTeam.do">새로운 팀 </a>
-            </div>
+        	<c:if test="${!empty sessionScope.myProjectList }">
+        		<div class="myTeam">
+					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
+						<div class="each-team">
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
+						
+							<c:if test="${project.projectno eq projectList.projectno }">
+								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<c:if test="${project.projectno ne projectList.projectno }">
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="new-team" style="border-top: 1px solid #e2e2e2;">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
+        	<c:if test="${empty sessionScope.myProjectList }">
+        		<div class="new-team">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
         </div>
     </div>
     <div class="right-main-side">

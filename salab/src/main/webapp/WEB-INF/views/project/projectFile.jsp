@@ -88,14 +88,26 @@
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
-							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
+						
 							<c:if test="${project.projectno eq projectList.projectno }">
-								<a class="active-menu" href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 							</c:if>
 							<c:if test="${project.projectno ne projectList.projectno }">
-								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>	
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+								<a class="active-menu" href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 							</c:if>
+							
 						</div>
 					</c:forEach>
 				</div>

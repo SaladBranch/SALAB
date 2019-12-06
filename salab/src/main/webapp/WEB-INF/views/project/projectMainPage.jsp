@@ -217,7 +217,7 @@
                     <!--teamNotice-grid-->
                     <div>
                         <div class="noticePreview-title left">공지사항</div>
-                        <div class="moreNotice right" onclick="gotoPNotice()">더보기</div>
+                        <div class="moreNotice right" onclick="gotoPNotice()">More</div>
                     </div>
                     <div class="notice-grid part-grid clear">
                         <!-- NoticeList -->
@@ -241,7 +241,7 @@
                     <div>
                         <div class="left">팀 원</div>
                         <c:if test="${sessionScope.userauth == 'LEADER'}">
-                            <div class="right" onclick="inviteModalToggle()"> 팀원 초대하기</div>
+                            <div class="right" onclick="inviteModalToggle()"><i class="fas fa-plus"></i> invite Members</div>
                         </c:if>
                     </div>
                     <div class="member-grid part-grid clear scrollbar">
@@ -394,15 +394,7 @@
                             height: 100
                         }
                     }).then(function(resp) {
-                        /* const blobUrl = window.URL.createObjectURL(resp);
-		                $('#editImg').attr("src", blobUrl); */
-                        alert("변환된 data : " + resp);
-                        /*$('#base64img').val(resp);*/
-
                         $('#editImg').attr("src", resp);
-/* 페이지새로고침이라 필요없음                       $('.modal-crop').removeClass('is-open');
-                        $('.modal-crop').removeClass('is-visible');*/
-                        
                         /*rest를 <hidden>에 넣어서  imgInsert.do로 연결*/
   {
                             var form = document.createElement("form");

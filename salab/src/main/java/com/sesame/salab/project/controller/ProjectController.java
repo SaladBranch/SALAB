@@ -189,14 +189,24 @@ public class ProjectController {
 
 	@RequestMapping(value="changeAuth.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String changeAuthMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("changeAuth.do 진입 : "+member_project.toString());
-	
+	public String changeAuthMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
 	response.setContentType("application/json; charset=UTF-8");
 	JSONObject job = new JSONObject();
 	int result = pService.changeAuth(member_project);
-
-	if(result==1) {job.put("result", "success");}
+	if(result==1) {
+		job.put("result", "success");
+		if(member_project.getUserauth().equals("LEADER")) {
+			Member_Project leaderToEditor = new Member_Project();
+			Member member = (Member) session.getAttribute("loginMember");
+			leaderToEditor.setUserno(member.getUserno());
+			leaderToEditor.setProjectno(member_project.getProjectno());
+			leaderToEditor.setUserauth("CAN_EDIT");
+			int changeLeader = pService.changeAuth(leaderToEditor);
+			if(changeLeader>0) {
+				logger.info("Leader 변경 process 정상완료.");
+			}
+		}
+	}
 	
 	
 	return job.toJSONString();

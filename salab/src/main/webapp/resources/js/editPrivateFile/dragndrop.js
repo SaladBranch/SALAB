@@ -640,6 +640,9 @@ function deleteFromLib(index){
 function resizeLibImg(){
 	setTimeout(function(){
 		$('.plib-item-thumb img').each(function(){
+			var index = $('.plib-item-thumb img').index($(this));
+			var code = privateLibrary[index].code.split("rotate(")[1].split(")")[0];
+			
 			var w = $(this).width();
 			var h = $(this).height();
 			if(w >= h){
@@ -662,6 +665,15 @@ function resizeLibImg(){
 						'margin-left': ($('.plib-item-thumb').width()-$(this).width())/2 + "px"
 					});
 				}
+			}
+			var degree = code.replace(code.substr(-3),'');
+			if(degree != 0){
+				if(code.substr(-3) === 'rad'){
+					degree = Number(degree)*(180/Math.PI);
+				}
+				$(this).css({
+					transform: 'rotate(' + degree + 'deg)'
+				})
 			}
 		});	
 	}, 50);

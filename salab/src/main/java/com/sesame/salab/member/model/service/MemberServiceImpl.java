@@ -85,4 +85,9 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.memberDetail(userno);
 	}
 
+	@Override
+	public int changePhoneNum(Member member) {
+		return memberDao.changePhoneNum(member);
+	}
+
 }

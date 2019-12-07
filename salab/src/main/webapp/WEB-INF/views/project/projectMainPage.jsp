@@ -369,14 +369,11 @@
     });
 
     function readFile(input) {
-        console.log("변경시작");
 
         if (input.files && input.files[0]) { //파일있다면 
-            console.log("파일있다");
             var reader = new FileReader();
 
             reader.onload = function(e) {
-                console.log("창띄울게");
                 $('.modal-crop').addClass('is-visible');
                 setTimeout(function() {
                     $('.modal-crop').addClass('is-open');

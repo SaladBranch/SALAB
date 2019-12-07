@@ -68,4 +68,7 @@
 	<select id="memberDetail" parameterType="int" resultMap="resultMember">
 		SELECT * FROM MEMBER WHERE USERNO = #{userno}
 	</select>
+	<update id="changePhoneNum" parameterType="Member">
+		UPDATE MEMBER SET USERPHONE=#{userphone} where userno=#{userno}
+	</update>
 </mapper>

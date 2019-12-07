@@ -30,7 +30,7 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div id="top-bar">계정 설정</div>
+                <div id="top-bar"><a href="userMain.do" class="z99">계정 설정</a></div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
@@ -115,17 +115,17 @@
                                 <div class="titleConfigure">
                                     <span>Account Grade</span>
                                 </div>
-                                <div class="show-grade grade-title clickable">
+                                <div class="show-grade grade-title">
                                     PREMIUM GRADE
                                 </div>
                             </div>
-                            <div id="first-payment-date">
+                            <!--<div id="first-payment-date">
                                 <div class="titleConfigure"><span>First-payment.</span></div>
                                 <div class="contentConfigure"><span>2019년 12월 22일</span></div>
-                            </div>
+                            </div>-->
                             <div id="next-payment-date">
                                 <div class="titleConfigure "><span>Next-payment.</span></div>
-                                <div class="contentConfigure"><span>2019년 12월 22일</span></div>
+                                <div><span class="contentConfigure">${sessionScope.loginMember.paymentdate} 결제 예정</span></div>
                             </div>
                         </div>
                     </c:if>
@@ -173,7 +173,7 @@
 
                     <div class="outline-box">
                         <div id="nameTitle" class="titleConfigure">Name</div>
-                        <div id="userId" class="contentConfigure blank">${loginMember.username }
+                        <div id="userId" class=" blank"><span class="contentConfigure">${loginMember.username }</span>
                             <span id="Modal-Name" class="blank clickable" onclick="showModal('name')">change name !</span>
                         </div>
                     </div>
@@ -181,19 +181,21 @@
                         <div id="pwdTitle" class="titleConfigure outline">
                             Password
                         </div>
-                        <div id="userpwd" class="contentConfigure blank">
+                        <div id="userpwd" class=" blank">
                             <span value="vv" id="Modal-Password" class="blank clickable" onclick="showModal('pwd')">change password !</span>
                         </div>
                     </div>
                     <div class="outline-box">
                         <div id="userPhoneTitle" class="titleConfigure">Phone</div>
-                        <div id="userPhone" class="contentConfigure blank">
-                            <c:if test="${loginMember.userphone eq null}">
-                                Please Change Phone Number.
-                            </c:if>
-                            <c:if test="${loginMember.userphone ne null}">
-                                ${loginMember.userphone }
-                            </c:if>
+                        <div id="userPhone" class="blank">
+                            <span class="contentConfigure">
+                                <c:if test="${loginMember.userphone eq null}">
+                                    Please Change Phone Number.
+                                </c:if>
+                                <c:if test="${loginMember.userphone ne null}">
+                                    ${loginMember.userphone }
+                                </c:if>
+                            </span>
                             <span id="Modal-userPhone" class="blank clickable" onclick="showModal('phone')">change Phone Number !</span>
                         </div>
                     </div>
@@ -229,18 +231,18 @@
                     </div>
                     <input id="password1" type="password" class="input-grid" placeholder="New Password" maxlength="20" onkeyup="validCheckPwd()">
 
-                    <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')"  onkeyup="validCheckPwd()">
-                <span id="validcheck-password" class="chekc-span"> </span>
+                    <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')" onkeyup="validCheckPwd()">
+                    <span id="validcheck-password" class="chekc-span"> </span>
                     <input type="button" value="Password Change" onclick="passwordCheck(password.value , password1.value, password2.value)">
                 </div>
             </div>
         </div>
         <div id="modal-phone" class="modalOutline disable ">
             <div id="changePhone" class="modalContent z-index1">
-                <div class="titleConfigure"> 
+                <div class="titleConfigure">
                     Change Phone Number
                 </div>
-                    <input id="input-userPhone" type="text" class="input-phone" value="${loginMember.userphone }" placeholder="'-' 를 제외한 휴대전화번호를 입력해주세요" onkeyup="validCheckPhone()" maxlength="11">
+                <input id="input-userPhone" type="text" class="input-phone" value="${loginMember.userphone }" placeholder="'-' 를 제외한 휴대전화번호를 입력해주세요" onkeyup="validCheckPhone()" maxlength="11">
                 <span id="validcheck-phone" class="chekc-span"> </span>
                 <input type="button" id="phone-change-btn" value="Change !" onclick="phoneChangedo()" disabled='ture'>
             </div>
@@ -258,7 +260,7 @@
                 </div>
                 <div id="deleteConfirm" class="">
                     <input id="deletePwd" type="password" class="text-box block littleGap" placeholder="PASSWORD" maxlength="20" onkeydown="activeEnter('atDelete')">
-                  <span id="validcheck-delete" class="chekc-span"> </span>
+                    <span id="validcheck-delete" class="chekc-span"> </span>
                     <input id="delete-btn" type="button" value="Agree & Delete" onclick="accountDelete(deletePwd.value)">
                 </div>
             </div>
@@ -324,14 +326,9 @@
                             height: 100
                         }
                     }).then(function(resp) {
-                        /* const blobUrl = window.URL.createObjectURL(resp);
-		                $('#editImg').attr("src", blobUrl); */
-                        alert("변환된 data : " + resp);
-                        /*$('#base64img').val(resp);*/
 
                         $('#editImg').attr("src", resp);
-                        /* 페이지새로고침이라 필요없음                       $('.modal-crop').removeClass('is-open');
-                                                $('.modal-crop').removeClass('is-visible');*/
+                        $('.modal-crop').removeClass('is-visible');
 
                         /*rest를 <hidden>에 넣어서  imgInsert.do로 연결*/
                         {
@@ -354,7 +351,6 @@
 
                             form.submit();
                         }
-                        /*페이지 이동.*/
                     });
                 });
 

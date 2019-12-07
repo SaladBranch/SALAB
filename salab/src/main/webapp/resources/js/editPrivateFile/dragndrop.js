@@ -670,6 +670,7 @@ function resizeLibImg(){
 			if(degree != 0){
 				if(code.substr(-3) === 'rad'){
 					degree = Number(degree)*(180/Math.PI);
+					console.log(degree);
 				}
 				$(this).css({
 					transform: 'rotate(' + degree + 'deg)'

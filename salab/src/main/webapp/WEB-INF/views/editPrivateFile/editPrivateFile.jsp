@@ -229,13 +229,8 @@
         </div>
         
         <div class="tab-content lib-tab-content">
-            
         </div>
     </div>
-    <!--<div class="component">
-        <div class="draggable rectangle ui-widget-content"></div>
-    </div>-->
-    
     
     <div class="canvas-container">
         ${pageList[0].content }
@@ -443,11 +438,10 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-    	
+    	var privateLibrary = new Array();
     	
     	
     	async function Thumbnail(){
-    		console.log('start');
     		var image;
         		var node = document.getElementById('droppable');
             	
@@ -456,7 +450,6 @@
             	canvas.height = node.scrollHeight;
             	
             		await domtoimage.toPng(node).then(function (pngDataUrl) {
-            		console.log('domtoimage in');
             	    var img = new Image();
             	    img.onload = function () {
             	        var context = canvas.getContext('2d');
@@ -466,16 +459,13 @@
             	        context.drawImage(img, 0, 0);
 
             	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
-            	        console.log('domtoimage end');
             	    };
             		img.src = pngDataUrl;
             		$('.ui-selected .page-thumbnail').html('');
         	        $('.ui-selected .page-thumbnail').append(img);
             })
             .catch(function (error) {
-            	console.error('oops, something went wrong!', error);
             });
-        	console.log('end');
     	    /* await html2canvas($('#droppable')[0], {
     	    	width: $('#droppable').width(),
     	    	height: $('#droppable').height()
@@ -566,7 +556,34 @@
        
     });
     $('.lib-tab').click(function(){
-    	
+    	var plib = {
+    			fileno: list[0].fileno,
+    			userno: list[0].userno
+    	}
+    	$.ajax({
+    		url: 'getPlibList.do',
+    		type: 'post',
+    		data: JSON.stringify(plib),
+    		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
+    		success: function(data){
+    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
+    			privateLibrary = new Array();
+    			for(var i = 0; i<data.plib.length; i++){
+					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
+							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
+					$('.lib-tab-content').append($libItem);
+					var pl = {
+	    				code: data.plib[i].code	
+	    			}
+					privateLibrary.push(pl);
+				}
+    			
+    		},
+    		error: function(){
+    			console.log("plib list 가져오기 실패");
+    		}
+    	});
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });

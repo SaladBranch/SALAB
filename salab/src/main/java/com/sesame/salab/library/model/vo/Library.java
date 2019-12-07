@@ -3,14 +3,16 @@ package com.sesame.salab.library.model.vo;
 public class Library {
 	private String _id;
 	private int fileno;
+	private String code;
 	private String content;
 	
 	public Library() {}
 
-	public Library(String _id, int fileno, String content) {
+	public Library(String _id, int fileno, String code, String content) {
 		super();
 		this._id = _id;
 		this.fileno = fileno;
+		this.code = code;
 		this.content = content;
 	}
 
@@ -30,6 +32,14 @@ public class Library {
 		this.fileno = fileno;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -40,7 +50,8 @@ public class Library {
 
 	@Override
 	public String toString() {
-		return "Library [_id=" + _id + ", fileno=" + fileno + ", content=" + content + "]";
+		return "Library [_id=" + _id + ", fileno=" + fileno + ", code=" + code + ", content=" + content + "]";
 	}
+	
 	
 }

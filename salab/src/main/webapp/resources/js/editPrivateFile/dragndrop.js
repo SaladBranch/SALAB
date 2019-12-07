@@ -397,19 +397,27 @@ $(function(){
     //라이브러리 obj 삽입
     $('.lib-tab-content').on('mousedown', '.plib-item',function(e){
     	event.preventDefault();
-    	clicks++;
-    	setTimeout(function(){
-    		clicks = 0;
-    	}, 400);
-    	var index = $('.lib-tab-content .plib-item').index($(this));
-    	if(clicks == 2){
-    		$(target).append(privateLibrary[index].code);
-    		initSelect();
-    		clicks = 0;
+    	if(e.button == 2){
+    	    $('.context-menu').html(contextmenu.library($(this).attr('data-order')));
+    	    toggleContext(1);
+    	    menuActivation();
+    	    showContext(e.clientX, e.clientY);
     	}else{
-            appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
-            moveDragging();
+    		clicks++;
+        	setTimeout(function(){
+        		clicks = 0;
+        	}, 400);
+        	var index = $('.lib-tab-content .plib-item').index($(this));
+        	if(clicks == 2){
+        		$(target).append(privateLibrary[index].code);
+        		initSelect();
+        		clicks = 0;
+        	}else{
+                appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
+                moveDragging();
+        	}
     	}
+    	
     });
     
     //마우스 움직일 때 드래그 영역 설정 함수
@@ -592,12 +600,11 @@ function savetoLibrary(){
 							+ plib.content + "'></div><div class='plib-item-name'>untitled</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
-						code: plib.code
-					}
-					for(var i = 0; i<privateLibrary.length; i++){
-						console.log(privateLibrary[i].toString())
+						code: data.plib.code,
+						_id: data.plib._id
 					}
 					privateLibrary.push(pl);
+					resizeLibImg();
 				},
 				error: function(){
 					console.log("lib 추가 실패");
@@ -608,4 +615,58 @@ function savetoLibrary(){
 	
 	selectedObj[0].css('transform', 'rotate(' + rotateDegree + 'deg)').addClass('ui-selected');
 	selectedObj[0].children('.ui-resizable-handle').show();
+}
+
+
+//라이브러리에서 지우기
+function deleteFromLib(index){
+	//privateLibrary에 현재 lib 코드들이 들어잇음
+	var chk = confirm("정말로 삭제하시겠습니까?\n삭제 후에는 복구되지 않습니다.");
+	if(chk){
+		$.ajax({
+			url: "deletePlib.do",
+			data: JSON.stringify(privateLibrary[index]),
+			type: 'post',
+			cache: false,
+			contentType: "application/json; charset=UTF-8",
+			error: function(){
+				console.log("lib 삭제 실패");
+			}
+		});
+		$('.lib-tab-content .plib-item').eq(index).remove();
+		privateLibrary.splice(index, 1);
+	}
+}
+function resizeLibImg(){
+	setTimeout(function(){
+		$('.plib-item-thumb img').each(function(){
+			var w = $(this).width();
+			var h = $(this).height();
+			if(w >= h){
+				$(this).css({
+					width: "70px",
+					'margin-left': ($('.plib-item-thumb').width() - 70)/2 + 'px'
+				});
+				if($(this).height() < 70){
+					$(this).css({
+						'margin-top': (70-$(this).height())/2 + "px"
+					});
+				}
+			}else{
+				$(this).css({
+					height: "70px",
+					'margin-top': ($('.plib-item-thumb').height() - 70)/2 + 'px'
+				});
+				if($(this).width() < 70){
+					$(this).css({
+						'margin-left': ($('.plib-item-thumb').width()-$(this).width())/2 + "px"
+					});
+				}
+			}
+		});	
+	}, 50);
+}
+//라이브러리 이미지로 내보내기
+function saveLibAsImg(target){
+	
 }

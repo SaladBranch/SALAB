@@ -457,14 +457,15 @@ ol.page-tab-content li{
     padding: 5px;
 }
 .plib-item-thumb{
-    width: 80px;
+    width: 90%;
     height: 80px;
     padding: 5px;
+    margin: 0 5%;
 }
 .plib-item-thumb img{
-    width: 70px;
+    /* width: 70px;
     height: 70px;
-    margin: 0 10px;
+    margin: 0 10px; */
 }
 .plib-item-name{
     font-size: 13px;

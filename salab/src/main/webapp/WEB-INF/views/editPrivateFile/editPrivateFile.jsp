@@ -574,11 +574,12 @@
 							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
+						_id: data.plib[i]._id,
 	    				code: data.plib[i].code	
 	    			}
 					privateLibrary.push(pl);
 				}
-    			
+    			resizeLibImg();
     		},
     		error: function(){
     			console.log("plib list 가져오기 실패");

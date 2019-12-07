@@ -19,4 +19,5 @@ public interface MemberService {
 	void enrollGoogleUser(Member m);
 	int mlistCount();
 	List<Member> memberList(Paging paging);
+	Member memberDetail(int userno);
 }

@@ -366,12 +366,12 @@ public class PrivateFileController {
 		String collectionName = "privateLibrary";
 		
 		mgService.addToPrivateFileLib(collectionName, plib);
-		List<PrivateLibrary> plibItems = (List<PrivateLibrary>)mgService.getPlibItems(collectionName, plib);
+		PrivateLibrary plibItem = (PrivateLibrary)mgService.getPlibId(collectionName, plib);
 		
 		mv.setViewName("jsonView");
 		Gson gson = new Gson();
-		String result = gson.toJson(plibItems);
-		mv.addObject("plib", plibItems);
+		String result = gson.toJson(plibItem);
+		mv.addObject("plib", plibItem);
 		mgService.close();
 		
 		return mv;
@@ -388,5 +388,14 @@ public class PrivateFileController {
 		mv.addObject("plib", plibItems);
 		mgService.close();
 		return mv;
+	}
+	
+	@RequestMapping(value="deletePlib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteFromPrivateLibrary(@RequestBody PrivateLibrary plib) {
+		MongoService mgService = new MongoService();
+		String collectionName = "privateLibrary";
+		mgService.deleteFromPrivateLibrary(collectionName, plib);
+		mgService.close();
 	}
 }

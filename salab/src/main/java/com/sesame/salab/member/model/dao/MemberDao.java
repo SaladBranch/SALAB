@@ -70,5 +70,9 @@ public class MemberDao {
 	public Member memberDetail(int userno) {
 		return sqlSession.selectOne("memberMapper.memberDetail", userno);
 	}
+
+	public int changePhoneNum(Member member) {
+		return sqlSession.update("memberMapper.changePhoneNum", member);
+	}
 	
 }

@@ -43,30 +43,23 @@ function HideOnBush() {
     $(".modalOutline").hide();
 }
 
-
-/*  스페이스 입력시,
-document.body.onkeyup = function (e) {
-    if (e.keyCode == 32) {
-        alert("key up SPACE")
-    }
-}
-*/
 //엔터키 입력 시 , button이랑 연동.
-function activeEnter(findKey) {
-
-    if (window.event.keyCode == 13) {
-        alert("엔터키감지");
-
-        if (findKey == "atName") {
-
-        } else if (findKey == "atPassword") {
-
-        } else if (findKey == "atDelete") {
-
-        }
-    }
-}
-
+/*
+	function activeEnter(findKey) {
+		
+		if (window.event.keyCode == 13) {
+			alert("엔터키감지");
+			
+			if (findKey == "atName") {
+				
+			} else if (findKey == "atPassword") {
+				
+			} else if (findKey == "atDelete") {
+				
+			}
+		}
+	}
+*/
 //이름변경 , 페이지 이동
 function nameChangedo() {
     var form = document.createElement("form");
@@ -94,7 +87,6 @@ function nameChangedo() {
 function validCheckPwd() {
     var pwd1 = document.getElementById('password1').value;
     var pwd2 = document.getElementById('password2').value;
-    console.log(pwd1+","+pwd2);
     if (pwd1.length < 6 || pwd2.length < 6) {
         document.getElementById('validcheck-password').innerHTML = '<i class="fas fa-times"></i> 6글자 이상 입력하세요.';
     }else{
@@ -109,7 +101,6 @@ function validCheckPwd() {
 
 //비밀번호 변경.
 function passwordCheck(pwd, cpwd, cpwd2) {
-    console.log(pwd + "," + cpwd + "," + cpwd2);
     if (cpwd == cpwd2) {
         $.ajax({
             url: "changePwd.do",
@@ -146,7 +137,6 @@ function accountDelete(pwd) {
         },
         type: "post",
         success: function (data) {
-            console.log("json data : " + data);
             if (data == 'fail') {
                 document.getElementById('validcheck-delete').innerHTML = '<i class="fas fa-times"></i> 비밀번호가 일치하지 않습니다.';
             } else if (data = 'success') {
@@ -163,10 +153,8 @@ function accountDelete(pwd) {
 //전화번호 번경
 function validCheckPhone() {
     var number = document.getElementById('input-userPhone').value;
-    console.log(number);
     var regExp = /^01\d{8,9}$/;
     if (regExp.test(number)) {
-        console.log("tr");
         document.getElementById('validcheck-phone').innerHTML = "";
         document.getElementById('phone-change-btn').disabled = false;
 
@@ -179,5 +167,22 @@ function validCheckPhone() {
 }
 
 function phoneChangedo() {
-    console.log("버튼");
+       var number = document.getElementById('input-userPhone').value;
+ 
+    $.ajax({
+        url: "changePhoneNum.do",
+        data: {
+            userphone: number
+        },
+        type: "post",
+        success: function (data) {
+            if(data=='success'){
+                location.href= "userMain.do";
+            }
+            console.log("json data : " + data);
+        },
+        error: function () {
+            alert("에러");
+        }
+    });
 }

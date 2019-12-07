@@ -207,6 +207,11 @@
 </body>
 <script>
     function firstPay() {
+        var phone = "${loginMember.userphone}";
+        if(phone.length<1){
+            alert("전화번호 저장 후 재 시도 해주세요.");
+            location.href="userMain.do";
+        }
         var d = new Date;
         var orderno='${loginMember.userno}'+'u'+d.getTime();
         

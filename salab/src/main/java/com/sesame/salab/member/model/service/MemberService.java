@@ -21,4 +21,5 @@ public interface MemberService {
 	List<Member> memberList(Paging paging);
 	Member memberDetail(int userno);
 	int changePhoneNum(Member member);
+
 }

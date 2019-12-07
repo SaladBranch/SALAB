@@ -102,6 +102,7 @@ function openMenu() {
         $(event.target.nextElementSibling).addClass('hide');
     }
     
+
 }
 //모달끄기 버튼_
 $(".modalOutline").click(function () {

@@ -229,13 +229,11 @@
         </div>
         
         <div class="tab-content lib-tab-content">
-            
+            <div class="searchbox">
+                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+            </div>
         </div>
     </div>
-    <!--<div class="component">
-        <div class="draggable rectangle ui-widget-content"></div>
-    </div>-->
-    
     
     <div class="canvas-container">
         ${pageList[0].content }
@@ -561,6 +559,29 @@
        
     });
     $('.lib-tab').click(function(){
+    	var plib = {
+    			fileno: list[0].fileno,
+    			userno: list[0].userno
+    	}
+    	$.ajax({
+    		url: 'getPlibList.do',
+    		type: 'post',
+    		data: JSON.stringify(plib),
+    		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
+    		success: function(data){
+    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
+    			for(var i = 0; i<data.plib.length; i++){
+					$libItem = $("<div class='plib-item'><div class='plib-item-thumb'><img src='" 
+							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
+					$('.lib-tab-content').append($libItem);
+				}
+    			
+    		},
+    		error: function(){
+    			console.log("plib list 가져오기 실패");
+    		}
+    	});
     	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 

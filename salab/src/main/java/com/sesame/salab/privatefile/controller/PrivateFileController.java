@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.sesame.salab.common.FileList;
-import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.library.model.vo.PrivateLibrary;
 import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
@@ -357,7 +356,37 @@ public class PrivateFileController {
 			}
 		}
 		
-		
 		return result;
+	}
+	
+	@RequestMapping(value="toPrivateLib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView addToPrivateFileLib(@RequestBody PrivateLibrary plib, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		String collectionName = "privateLibrary";
+		
+		mgService.addToPrivateFileLib(collectionName, plib);
+		List<PrivateLibrary> plibItems = (List<PrivateLibrary>)mgService.getPlibItems(collectionName, plib);
+		
+		mv.setViewName("jsonView");
+		Gson gson = new Gson();
+		String result = gson.toJson(plibItems);
+		mv.addObject("plib", plibItems);
+		mgService.close();
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="getPlibList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getPrivateLibList(@RequestBody PrivateLibrary plib, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		String collectionName = "privateLibrary";
+		
+		List<PrivateLibrary> plibItems = (List<PrivateLibrary>)mgService.getPlibItems(collectionName, plib);
+		mv.setViewName("jsonView");
+		mv.addObject("plib", plibItems);
+		mgService.close();
+		return mv;
 	}
 }

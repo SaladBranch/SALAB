@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,28 +17,25 @@ import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 @Repository
 public class ProjectDao {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private SqlSession sqlSession;
 	
 	public int createProject(Project project) {
-		// TODO Auto-generated method stub
 		return sqlSession.insert("projectMapper.createProject", project);
 	}
 
 	public List<Member> autocomp(String text) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("projectMapper.autocomp", text);
 	}
 
 	public String projectInvest(String uno) {
-		// TODO Auto-generated method stub
 		Member m =sqlSession.selectOne("projectMapper.projectInvest", uno);
 		return m.getUseremail();
 	}
 
 	public int seletProjectNo(Project project) {
-		// TODO Auto-generated method stub
 		Project p = sqlSession.selectOne("projectMapper.selectProjectNo", project);
 		return p.getProjectno();
 	}
@@ -53,18 +52,17 @@ public class ProjectDao {
 		int result=0;
 		Integer membercheck= sqlSession.selectOne("projectMapper.enrolledEmailCheck", useremail);
 		 if(membercheck ==null) {
-			 System.out.println("등록되지않은 멤버");
+			 logger.info("DB에 등록되지않은 멤버");
 		 }else {
 			 HashMap<String,Object> map = new HashMap<String,Object>();
 			 map.put("projectno", projectno);
 			 map.put("userno",membercheck);
-			 System.out.println("등록된 멤버");
 			 int joinedCheck= sqlSession.selectOne("projectMapper.joinedMemberCheck", map);
 			 if(joinedCheck ==0) {
-				 System.out.println("초대가능멤버");
+				 logger.info("초대가능멤버");
 				 result=membercheck;
 			 }else {
-				 System.out.println("이미초대된멤버");
+				 logger.info("해당 프로젝트에 이미초대된멤버");
 				 result=-1;
 			 }
 		 }
@@ -81,7 +79,6 @@ public class ProjectDao {
 	}
 
 	public int selectProjectnoAfterCreated(int userno) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("projectMapper.selectProjectnoAfterCreated", userno);
 	}
 

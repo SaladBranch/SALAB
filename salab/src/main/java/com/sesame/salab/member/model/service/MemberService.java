@@ -20,4 +20,6 @@ public interface MemberService {
 	int mlistCount();
 	List<Member> memberList(Paging paging);
 	Member memberDetail(int userno);
+	int changePhoneNum(Member member);
+
 }

@@ -35,13 +35,11 @@ public class projectnoticeController {
 
 		if (currentPage != null && Integer.parseInt(currentPage) != 0) {
 			curPage = Integer.parseInt(currentPage);
-			logger.info(curPage + "번 페이지 진입.");
 		} else {
 			curPage = 1;
 		}
 
 		int listCount = pnService.listCount(projectno); // DB에서 현재 총 Row수 가져옴
-		System.out.println(listCount + "개수 의 리스트");
 		Paging paging = new Paging(); // 현재 페이지
 		paging.setLimit(10); // 한페이지에 10개의 리스트
 		paging.makePage(listCount, curPage); // 페이징 처리함
@@ -82,10 +80,8 @@ public class projectnoticeController {
    	@RequestMapping(value="teamNoticeDetail.do")
    	public ModelAndView teamNoticeDetailMethod(ModelAndView mv,Projectnotice projectnotice ) {
    		if(projectnotice != null) {
-   			System.out.println(projectnotice.toString());
    			projectnotice = pnService.selectTeamNotice(projectnotice);
    			mv.addObject("projectnotice", projectnotice);
-   			System.out.println(projectnotice.toString());
    	   		mv.setViewName("project/teamNoticeDetail");
    		}else{
 			mv.addObject("message", "프로젝트 공지사항 조회 실패");
@@ -96,9 +92,7 @@ public class projectnoticeController {
 	@RequestMapping(value="modifiedNotice.do")
    	public ModelAndView modifiedNoticeMethod(ModelAndView mv,Projectnotice projectnotice ) {
    		if(projectnotice != null) {
-   			System.out.println(projectnotice.toString());
    			int result= pnService.modifiedNotice(projectnotice);
-   			System.out.println("결과 : "+result);
    	   		mv.setViewName("forward:/projectNoticelist.do?"+projectnotice.getProjectno());
    		}else{
 			mv.addObject("message", "프로젝트 공지사항 조회 실패");
@@ -111,9 +105,7 @@ public class projectnoticeController {
 	@RequestMapping(value="deleteNotice.do")
    	public ModelAndView deleteNoticeMethod(ModelAndView mv,Projectnotice projectnotice ) {
    		if(projectnotice != null) {
-   			System.out.println(projectnotice.toString());
    			int result= pnService.deleteNotice(projectnotice);
-   			System.out.println("결과 : "+result);
    	   		mv.setViewName("forward:/projectNoticelist.do?"+projectnotice.getProjectno());
    		}else{
 			mv.addObject("message", "프로젝트 공지사항 삭제 실패");

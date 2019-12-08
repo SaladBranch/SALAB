@@ -186,3 +186,12 @@ function phoneChangedo() {
         }
     });
 }
+// 유저메뉴
+$('.user-profile').click(function(){
+    var drop = $('.profile-dropmenu');
+    if(drop.css('display') == 'block'){
+        drop.hide();
+    }else{
+        drop.show();
+    }
+});

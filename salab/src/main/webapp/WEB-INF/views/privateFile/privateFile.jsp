@@ -72,7 +72,7 @@
             </div>
             <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
-                <a href="recentFile.do?sort=recent>">최근 파일</a>
+                <a href="recentFile.do?sort=recent">최근 파일</a>
             </div>
             <div class="private-file active-menu">
                 <div class="icon-wrapper"><i class="far fa-file"></i></div>

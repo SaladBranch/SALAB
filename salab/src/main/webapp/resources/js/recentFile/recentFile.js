@@ -103,10 +103,13 @@ function rangeSelect(selector, x1, y1, x2, y2, cb) {
 })();
 /* 우클릭 메뉴 커스터마이징 */
 $('.file-container').on('click', function(){
-    $('.file-container').each(function(){
-        $(this).removeClass("highlight");
-    });
-    $(this).addClass('highlight');
+	var index = $('.file-container').index($(this));
+    for(var i = 0; i<$('.file-container').length; i++){
+    	if(i == index)
+    		$(this).addClass('highlight');
+    	else
+    		$(this).removeClass('highlight');
+    }
 });
 (function(){
     var menu = document.getElementById("right-click-menu");

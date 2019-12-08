@@ -101,11 +101,11 @@
 						
 							<c:if test="${project.projectno eq projectList.projectno }">
 								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
-								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
+								<a class="active-menu" href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 							</c:if>
 							<c:if test="${project.projectno ne projectList.projectno }">
 								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
-								<a class="active-menu" href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
+								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 							</c:if>
 							
 						</div>

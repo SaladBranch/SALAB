@@ -161,7 +161,7 @@ var contextmenu = {
         <a href="#" class="changeCanvas-size">화면 사이즈 변경</a>
         <a href="#" class="changeCanvas-color">페이지 배경색</a>
         <a href="#" class="changeCanvas-color-all">모든 페이지에 이 배경색 적용</a>
-        <a href="#" class="webtest">웹테스트</a>    
+        <a href="javascript:popup();" class="webtest">웹테스트</a>    
     `
     },
     single: function(){

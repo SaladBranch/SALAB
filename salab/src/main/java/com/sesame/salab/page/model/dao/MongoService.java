@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.MongoClient;
 import com.sesame.salab.common.FileList;
+import com.sesame.salab.page.model.vo.Memo;
 import com.sesame.salab.library.model.vo.PrivateLibrary;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;

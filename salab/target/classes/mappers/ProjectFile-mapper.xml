@@ -6,7 +6,7 @@
 
 	<select id="selectMainFileList" parameterType="ProjectFile" resultType="ProjectFile">
 		<![CDATA[
-		select * from projectfile where projectno = #{projectno} and rownum<5
+		SELECT * FROM (SELECT * FROM PROJECTFILE WHERE PROJECTNO = #{projectno} ORDER BY PRFILELASTMODIFIED DESC ) WHERE ROWNUM<5
 		]]>
 	</select>
 	
@@ -24,7 +24,7 @@
 		SELECT * FROM 
 		(SELECT PRFILENO FROM PROJECTFILE WHERE PROJECTNO = #{projectno} ORDER BY PRFILELASTMODIFIED DESC)
 		WHERE ROWNUM = 1
-	</select>
+	</select>	
 	
 	<select id="selectOne" parameterType="Page" resultType="ProjectFile">
 		SELECT * FROM PROJECTFILE WHERE PROJECTNO = #{projectno} AND PRFILENO = #{fileno}

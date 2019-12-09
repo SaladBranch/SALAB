@@ -397,5 +397,21 @@ public class PrivateFileController {
 		String collectionName = "privateLibrary";
 		mgService.deleteFromPrivateLibrary(collectionName, plib);
 		mgService.close();
+
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

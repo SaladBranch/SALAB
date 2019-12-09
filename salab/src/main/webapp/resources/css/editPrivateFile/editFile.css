@@ -1008,6 +1008,7 @@ ol.page-tab-content li{
     width: 1440px;
     height: 1024px;
     background: #fff;
+    margin: 0;
 }
 
 /*우클릭 메뉴*/

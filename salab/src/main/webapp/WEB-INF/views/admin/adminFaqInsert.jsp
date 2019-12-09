@@ -142,7 +142,6 @@ function insert_faq(){
 		alert("내용을 입력해 주세요.");
 		$("#faq_box_content").focus();
 	} else{
-		alert("hi");
 		$("#faqinsert").submit();
 	}
 }

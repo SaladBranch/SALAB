@@ -22,5 +22,6 @@ public interface MemberService {
 	List<Member> memberList(HashMap<String, Object> map);
 	Member memberDetail(int userno);
 	int changePhoneNum(Member member);
+	int memberUpdate(Member member);
 
 }

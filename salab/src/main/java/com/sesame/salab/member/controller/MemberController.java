@@ -32,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sesame.salab.admin.model.vo.Admin;
 import com.sesame.salab.common.AuthInfo;
 import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.Tempkey;
@@ -264,5 +265,22 @@ public class MemberController {
 		}
 		out.flush();
 		out.close();
+	}
+	
+	
+	@RequestMapping(value="adminMemberUpdate.do", method=RequestMethod.POST)
+	public ModelAndView updateMemberMethod(ModelAndView mv, Member member, @RequestParam("userno") int userno) throws Exception{
+		
+		member.setUserno(userno);
+		
+		int result = memberService.memberUpdate(member);
+		
+		if(result <= 0) {
+	    	mv.setViewName("common/error");
+	    } else {
+	    	mv.setViewName("redirect:adminMemberList.do");
+	    }
+		
+		return mv;
 	}
 }

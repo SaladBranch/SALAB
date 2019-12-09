@@ -72,5 +72,9 @@
 	<update id="changePhoneNum" parameterType="Member">
 		UPDATE MEMBER SET USERPHONE=#{userphone} where userno=#{userno}
 	</update>
+	
+	<update id="memberUpdate" parameterType="Member">
+		UPDATE MEMBER SET USERLEVEL = #{userlevel} WHERE USERNO = #{userno}
+	</update>
 
 </mapper>

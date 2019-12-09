@@ -100,16 +100,25 @@
 							<p class="member_info">${requestScope.member.useremail }</p>
 						</li>
 						<li class="member_line">
-							<input type="text" class="member_input" value="${requestScope.member.username }">
+							<p class="member_info">${requestScope.member.username }</p>
 						</li>
 						<li class="member_line">
-							<input type="text" class="member_input" value="${requestScope.member.userphone }">
+							<p class="member_info">${requestScope.member.userphone }</p>
 						</li>
 						<li class="member_line">
 							<p class="member_info">${requestScope.member.userenrolldate }</p>
 						</li>
 						<li class="member_line">
-							<input type="text" class="member_input" value="${requestScope.member.userlevel }">
+							<select name="userlevel" id="userlevel">
+								<c:if test="${requestScope.member.userlevel eq 'STANDARD'  }">
+									<option value="STANDARD" selected>STANDARD</option>
+									<option value="PREMIUM">PREMIUM</option>
+								</c:if>
+								<c:if test="${requestScope.member.userlevel ne 'STANDARD'  }">
+									<option value="STANDARD">STANDARD</option>
+									<option value="PREMIUM" selected>PREMIUM</option>
+								</c:if>
+							</select>
 						</li>
 						<li class="member_line">
 							<p class="member_info">
@@ -123,7 +132,7 @@
 						</li>
 						<li>
 							<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
-							<input type="button" class="member_update_btn" value="정보 수정" onclick="finished_update();">
+							<input type="button" class="member_update_btn" value="정보 수정" >
 						</li>
 					</ul>
 				</form>
@@ -145,9 +154,29 @@ function back_member(){
 </script>
 <!-- 목록으로 버튼 click -->
 
+<!-- 정보수정 버튼 click -->
 <script type="text/javascript">
-
+$(function(){
+	var changeVal = false;
+	
+	$("#userlevel").change(function(){
+		changeVal = true;
+	});
+	
+	$(".member_update_btn").click(function(){
+		if(changeVal){
+			var check = confirm("수정 하시겠습니까?");			
+			if(check){
+				$("#adminMemberUpdate").submit();
+			}
+		}else{
+			alert("변경사항이 없습니다.");
+		}
+	});
+	
+});
 </script>
+<!-- 정보수정 버튼 click -->
 
 
 </html>

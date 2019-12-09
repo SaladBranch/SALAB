@@ -102,7 +102,7 @@ function openMenu() {
         $(event.target.nextElementSibling).addClass('hide');
     }
     
-    
+
 }
 //모달끄기 버튼_
 $(".modalOutline").click(function () {
@@ -153,14 +153,3 @@ $(".inviteBtn").click(function () {
 
     })
 });
-//게시판 이동
-
-//게시글 이동
-
-//사진변경
-
-//프로젝트이름변경
-
-//프로젝트 불러오기
-
-//프로젝트 이동하기

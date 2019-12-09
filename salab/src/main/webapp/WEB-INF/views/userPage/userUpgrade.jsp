@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
     <link rel="stylesheet" href="/salab/resources/css/userPage/userUpgrade.css">
 
-   <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
+    <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.2.min.js" type="application/javascript"></script>
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <title>USER | SALAB</title>
@@ -27,13 +27,13 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div id="top-bar"><a href="userMain.do" class="z99">계정 설정</a></div>
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -53,8 +53,8 @@
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
+                                <li><a href="userMain.do">계정 설정하기</a></li>
+                                <li><a href="noticelist.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
                         </div>
@@ -62,8 +62,7 @@
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="left-side-bar">
+    </header>    <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div id="menu-title">
                 <span>Settings</span>
@@ -207,9 +206,14 @@
 </body>
 <script>
     function firstPay() {
+        var phone = "${loginMember.userphone}";
+        if (phone.length < 1) {
+            alert("전화번호 저장 후 재 시도 해주세요.");
+            location.href = "userMain.do";
+        }
         var d = new Date;
-        var orderno='${loginMember.userno}'+'u'+d.getTime();
-        
+        var orderno = '${loginMember.userno}' + 'u' + d.getTime();
+
         console.log('${loginMember.useremail}');
 
         BootPay.request({
@@ -224,8 +228,8 @@
                 email: '${loginMember.useremail}',
                 phone: '${loginMember.userphone}'
             },
-            
-            order_id: orderno , //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+
+            order_id: orderno, //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
             params: {
                 callback1: '그대로 콜백받을 변수 1',
                 callback2: '그대로 콜백받을 변수 2',
@@ -258,10 +262,20 @@
             });
         });
     }
-    
-    function uptest(){
-    alert("dd");
-}
+
+    function uptest() {
+        alert("dd");
+    }
+
+    // 유저메뉴
+    $('.user-profile').click(function() {
+        var drop = $('.profile-dropmenu');
+        if (drop.css('display') == 'block') {
+            drop.hide();
+        } else {
+            drop.show();
+        }
+    });
 </script>
 
 </html>

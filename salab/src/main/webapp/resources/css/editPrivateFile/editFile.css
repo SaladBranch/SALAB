@@ -372,17 +372,21 @@ ol.page-tab-content li{
     margin: 15px auto;
 }
 .page-thumbnail{
-    height: 90px;
+    height: 91px;
     width: 150px;
     border: 1.5px solid transparent;
+    text-align: center;
+    margin-bottom: 5px;
 }
 .ui-selected .page-thumbnail{
     border: 1.5px solid #00a8ff;
 }
 .page-thumbnail img{
     display: inline-block;
-    width: 100%;
-    height: 100%;
+    max-width: 150px;
+    max-height: 90px;
+    width: auto;
+    height: auto;
     border: 1px solid #c6c6c6;
 }
 .page-name{
@@ -448,10 +452,29 @@ ol.page-tab-content li{
     border: 1px solid #000;
 }*/
 
-
 /* Library Tab CSS */
-
-
+.plib-item{
+    position: relative;
+    width: 50%;
+    height: 100px;
+    float: left;
+    padding: 5px;
+}
+.plib-item-thumb{
+    width: 90%;
+    height: 80px;
+    padding: 5px;
+    margin: 0 5%;
+}
+.plib-item-thumb img{
+    /* width: 70px;
+    height: 70px;
+    margin: 0 10px; */
+}
+.plib-item-name{
+    font-size: 13px;
+    text-align: center;
+}
 /*-------------------------*/
 /*Right Side Bar*/
 /*-------------------------*/
@@ -975,24 +998,17 @@ ol.page-tab-content li{
     background: #cecece;
     overflow-y: auto;
     overflow-x: auto;
+    padding: 5%;
+    text-align: center;
 }
 
 #droppable{
 	position: relative;
+	display: inline-block;
     width: 1440px;
     height: 1024px;
     background: #fff;
-    margin: 5% 5%;
-}
-#droppable:after{
-	content: "";
-	width: calc(1440px * 0.05);
-	height: 100vh;
-	display: block;
-	position: absolute;
-	right: calc(1440px * -0.05);
-	background: #cecece;
-	z-index: -1;
+    margin: 0;
 }
 
 /*우클릭 메뉴*/
@@ -1037,8 +1053,9 @@ ol.page-tab-content li{
     margin-right: 10px;
     line-height: 100%;
 }
-.orderObj:hover .orderObj-sub{display: block;}
-.orderObj-sub{
+.orderObj:hover .orderObj-sub, .sendObj:hover .sendObj-sub{display: block;}
+.orderObj-sub,
+.sendObj-sub{
     display: none;
     cursor: pointer;
     position: absolute;
@@ -1066,3 +1083,47 @@ ol.page-tab-content li{
     z-index: 100;
     pointer-events: auto;
 }
+
+.memo-content{
+	width: 300px;
+	height: 125px;
+	border: 1.5px solid #00a8ff;
+	border-radius: 3px;
+	background: white;
+	padding: 16px;
+	margin-left: 20px;
+}
+
+.memo {
+	display: flex;
+}
+
+.memo-icon{
+	cursor: pointer;
+}
+
+.memo-info{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+.user{
+	justify-content: flex-start;
+	
+}
+.button{
+	display: flex;
+	justify-content: flex-end;
+	max-width: 150px;
+}
+
+.memo-cnt{
+	width: 100%;
+}
+
+.memo-cnt.active{
+	border: none;
+}
+
+
+

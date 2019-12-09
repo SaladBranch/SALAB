@@ -21,4 +21,6 @@ public interface MemberService {
 	int mlistCount(String keyword);
 	List<Member> memberList(HashMap<String, Object> map);
 	Member memberDetail(int userno);
+	int changePhoneNum(Member member);
+
 }

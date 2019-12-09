@@ -86,6 +86,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int mlistCount(String keyword) {
 		return memberDao.mlistCount(keyword);
+  }
+  
+	public int changePhoneNum(Member member) {
+		return memberDao.changePhoneNum(member);
 	}
 
 }

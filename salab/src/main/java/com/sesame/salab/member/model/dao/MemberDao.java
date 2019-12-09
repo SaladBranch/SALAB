@@ -59,8 +59,8 @@ public class MemberDao {
 	public void enrollGoogleUser(Member member) {
 		sqlSession.insert("memberMapper.enrollGoogleUser", member);
 	}
-	
-	public int mlistCount(String keyword) {
+  
+  public int mlistCount(String keyword) {
 		return sqlSession.selectOne("memberMapper.mlistCount", keyword);
 	}
 	
@@ -70,6 +70,10 @@ public class MemberDao {
 
 	public Member memberDetail(int userno) {
 		return sqlSession.selectOne("memberMapper.memberDetail", userno);
+	}
+
+	public int changePhoneNum(Member member) {
+		return sqlSession.update("memberMapper.changePhoneNum", member);
 	}
 
 	

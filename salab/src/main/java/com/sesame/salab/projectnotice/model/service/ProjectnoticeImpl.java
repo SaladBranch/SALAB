@@ -25,19 +25,16 @@ public class ProjectnoticeImpl implements ProjectnoticeService{
 
 	@Override
 	public int listCount(int projectno) {
-		// TODO Auto-generated method stub
 		return pnDao.listCount(projectno);
 	}
 
 	@Override
 	public List<Projectnotice> noticeList(Paging paging) {
-		// TODO Auto-generated method stub
 		return  pnDao.noticeList(paging);
 	}
 
 	@Override
 	public List<Projectnotice> testList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return pnDao.testList(map);
 	}
 

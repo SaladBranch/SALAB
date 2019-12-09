@@ -59,7 +59,7 @@
 		SEQ_USERNO.NEXTVAL, #{useremail} , #{userpwd} , #{username} , NULL, NULL, NULL, DEFAULT, DEFAULT, #{userauthkey}, 'Y' , null, null
 		)
 	</insert>
-	<select id="mlistCount" parameterType="String" resultType="int">
+  <select id="mlistCount" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM MEMBER WHERE USEREMAIL LIKE '%' || #{keyword} || '%'
 	</select>
 	<select id="memberList" parameterType="HashMap" resultMap="resultMember">
@@ -68,4 +68,9 @@
 	<select id="memberDetail" parameterType="int" resultMap="resultMember">
 		SELECT * FROM MEMBER WHERE USERNO = #{userno}
 	</select>
+
+	<update id="changePhoneNum" parameterType="Member">
+		UPDATE MEMBER SET USERPHONE=#{userphone} where userno=#{userno}
+	</update>
+
 </mapper>

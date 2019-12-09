@@ -159,16 +159,16 @@
         <div class="row recent-files">
         	<c:if test="${!empty fileList}">
         		<c:forEach var="pfile" items="${fileList }">
-        		<c:if test="${pfile.pt eq 'private'}">
-        			<div class="file-grid" onclick="epFile(${pfile.pfileno});">
-        		</c:if>
-        		<c:if test="${pfile.pt eq 'team' }">
-        			<div class="file-grid" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
-        		</c:if>
+       			<div class="file-grid">
         		<input class="fileno" type="hidden" value="${pfile.pfileno }">
         		<input class="pt" type="hidden" value="${pfile.pt }">
 	                <div class="file-container">
-	                    <div class="file-thumbnail">
+	                	<c:if test="${pfile.pt eq 'private'}">
+	                    <div class="file-thumbnail" onclick="epFile(${pfile.pfileno});">
+	                    </c:if>
+	                    <c:if test="${pfile.pt eq 'team' }">
+	                    <div class="file-thumbnail" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
+	                    </c:if>
 	                        ${pfile.pfilethumbnail }
 	                    </div>
 	                    <div class="file-info">
@@ -179,7 +179,13 @@
 	                            <div class="file-edited">
 	                                <span>${pfile.pfilelastmodified }</span>
 	                                <c:if test="${pfile.pt eq 'private'}"> in 개인파일</c:if>
-	                                <c:if test="${pfile.pt eq 'team'}"> in ${pfile.pfiletitle}</c:if>
+	                                <c:if test="${pfile.pt eq 'team'}">
+		                                <c:forEach var="projectList" items="${myProjectList }">
+		                                	<c:if test="${pfile.userno eq projectList.projectno }">
+		                                		in ${projectList.projectname }
+		                                	</c:if>
+		                                </c:forEach>
+	                                </c:if>
 	                            </div>
 	                        </div>
 	                        <div class="file-options">

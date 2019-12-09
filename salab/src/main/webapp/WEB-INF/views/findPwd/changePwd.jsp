@@ -62,6 +62,11 @@
     			return true;
     		}
     	}
+		$(function(){
+    		$('.google-login').on('click', function(){
+    			location.href = "${google_url}";
+    		});
+    	});
     </script>
 </body>
 </html>

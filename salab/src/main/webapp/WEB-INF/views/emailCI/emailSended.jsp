@@ -35,5 +35,12 @@
 	
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/main.js"></script>
+    <script type="text/javascript">
+		$(function(){
+    		$('.google-login').on('click', function(){
+    			location.href = "${google_url}";
+    		});
+    	});
+    </script>
 </body>
 </html>

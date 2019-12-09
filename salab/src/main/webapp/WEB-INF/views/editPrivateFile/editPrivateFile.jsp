@@ -697,12 +697,6 @@
         	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
     		
         	var changedWidth = $('#droppable').width() * scale/100;
-            if(changedWidth > $('.canvas-container').width())
-            	$('#droppable').css('margin', '5% 5%');
-            else{
-            	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
-            }
-            	
     	}
     }
     

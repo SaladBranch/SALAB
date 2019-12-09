@@ -59,7 +59,7 @@ public class PageController {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
 				public int compare(FileList f1, FileList f2) {
-					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
+					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {
@@ -118,7 +118,7 @@ public class PageController {
 			Collections.sort(privateFile, new Comparator<PrivateFile>() {
 				@Override
 				public int compare(PrivateFile p1, PrivateFile p2) {
-					return p2.getPfiletitle().compareTo(p1.getPfiletitle());
+					return p1.getPfiletitle().compareTo(p2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {
@@ -282,7 +282,7 @@ public class PageController {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
 				public int compare(FileList f1, FileList f2) {
-					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
+					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {

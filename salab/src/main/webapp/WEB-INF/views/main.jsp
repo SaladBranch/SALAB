@@ -212,7 +212,7 @@
     <script type="text/javascript" src="/salab/vendors/js/toast.js"></script>
     <script type="text/javascript" src="/salab/resources/js/main.js"></script>
     <script type="text/javascript">
-    	$(function(){
+		$(function(){
     		$('.google-login').on('click', function(){
     			location.href = "${google_url}";
     		});

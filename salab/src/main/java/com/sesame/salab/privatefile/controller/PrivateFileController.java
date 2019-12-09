@@ -22,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.sesame.salab.common.FileList;
+import com.sesame.salab.library.model.vo.PrivateLibrary;
 import com.sesame.salab.page.model.dao.MongoService;
-import com.sesame.salab.page.model.vo.Memo;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
@@ -356,20 +356,48 @@ public class PrivateFileController {
 			}
 		}
 		
-		
 		return result;
 	}
 	
-	
-	@RequestMapping(value="memo.do", method=RequestMethod.POST)
+	@RequestMapping(value="toPrivateLib.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String memoInsert(Memo memo) {
-		String res = "success";
+	public ModelAndView addToPrivateFileLib(@RequestBody PrivateLibrary plib, ModelAndView mv) {
 		MongoService mgService = new MongoService();
+		String collectionName = "privateLibrary";
 		
-		mgService.insertMemo(memo, "memo");
+		mgService.addToPrivateFileLib(collectionName, plib);
+		PrivateLibrary plibItem = (PrivateLibrary)mgService.getPlibId(collectionName, plib);
 		
-		return res;
+		mv.setViewName("jsonView");
+		Gson gson = new Gson();
+		String result = gson.toJson(plibItem);
+		mv.addObject("plib", plibItem);
+		mgService.close();
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="getPlibList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getPrivateLibList(@RequestBody PrivateLibrary plib, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		String collectionName = "privateLibrary";
+		
+		List<PrivateLibrary> plibItems = (List<PrivateLibrary>)mgService.getPlibItems(collectionName, plib);
+		mv.setViewName("jsonView");
+		mv.addObject("plib", plibItems);
+		mgService.close();
+		return mv;
+	}
+	
+	@RequestMapping(value="deletePlib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteFromPrivateLibrary(@RequestBody PrivateLibrary plib) {
+		MongoService mgService = new MongoService();
+		String collectionName = "privateLibrary";
+		mgService.deleteFromPrivateLibrary(collectionName, plib);
+		mgService.close();
+
 	}
 }
 

@@ -452,10 +452,29 @@ ol.page-tab-content li{
     border: 1px solid #000;
 }*/
 
-
 /* Library Tab CSS */
-
-
+.plib-item{
+    position: relative;
+    width: 50%;
+    height: 100px;
+    float: left;
+    padding: 5px;
+}
+.plib-item-thumb{
+    width: 90%;
+    height: 80px;
+    padding: 5px;
+    margin: 0 5%;
+}
+.plib-item-thumb img{
+    /* width: 70px;
+    height: 70px;
+    margin: 0 10px; */
+}
+.plib-item-name{
+    font-size: 13px;
+    text-align: center;
+}
 /*-------------------------*/
 /*Right Side Bar*/
 /*-------------------------*/
@@ -979,24 +998,16 @@ ol.page-tab-content li{
     background: #cecece;
     overflow-y: auto;
     overflow-x: auto;
+    padding: 5%;
+    text-align: center;
 }
 
 #droppable{
 	position: relative;
+	display: inline-block;
     width: 1440px;
     height: 1024px;
     background: #fff;
-    margin: 5% 5%;
-}
-#droppable:after{
-	content: "";
-	width: calc(1440px * 0.05);
-	height: 100vh;
-	display: block;
-	position: absolute;
-	right: calc(1440px * -0.05);
-	background: #cecece;
-	z-index: -1;
 }
 
 /*우클릭 메뉴*/
@@ -1041,8 +1052,9 @@ ol.page-tab-content li{
     margin-right: 10px;
     line-height: 100%;
 }
-.orderObj:hover .orderObj-sub{display: block;}
-.orderObj-sub{
+.orderObj:hover .orderObj-sub, .sendObj:hover .sendObj-sub{display: block;}
+.orderObj-sub,
+.sendObj-sub{
     display: none;
     cursor: pointer;
     position: absolute;

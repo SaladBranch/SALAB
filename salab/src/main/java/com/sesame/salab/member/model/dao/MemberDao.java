@@ -62,9 +62,18 @@ public class MemberDao {
 	public int mlistCount() {
 		return sqlSession.selectOne("memberMapper.mlistCount");
 	}
-
+	
 	public List<Member> memberList(Paging paging) {
 		return sqlSession.selectList("memberMapper.memberList", paging);
 	}
+
+	public Member memberDetail(int userno) {
+		return sqlSession.selectOne("memberMapper.memberDetail", userno);
+	}
+
+	public int changePhoneNum(Member member) {
+		return sqlSession.update("memberMapper.changePhoneNum", member);
+	}
+
 	
 }

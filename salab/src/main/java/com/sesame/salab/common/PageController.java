@@ -59,7 +59,7 @@ public class PageController {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
 				public int compare(FileList f1, FileList f2) {
-					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
+					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {
@@ -118,7 +118,7 @@ public class PageController {
 			Collections.sort(privateFile, new Comparator<PrivateFile>() {
 				@Override
 				public int compare(PrivateFile p1, PrivateFile p2) {
-					return p2.getPfiletitle().compareTo(p1.getPfiletitle());
+					return p1.getPfiletitle().compareTo(p2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {
@@ -223,6 +223,23 @@ public class PageController {
 		return mv;
 	}
 	
+	@RequestMapping(value="adminMemberDetail.do")
+	public ModelAndView toAdminMemberDetailMethod(ModelAndView mv,  @RequestParam(value="userno") int userno , @RequestParam(value="page", required=false) String currentPage) throws Exception{
+		
+		Member member = memberService.memberDetail(userno);
+		
+		if(member != null) {
+			mv.addObject("member", member);
+			mv.addObject("page", currentPage);
+			mv.setViewName("admin/adminMemberDetail");
+		}else {
+			mv.addObject("message", "회원 조회 실패");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="adminNoticeInsert.do")
 	public String toAdminNoticeInsertMethod() {
 		return "admin/adminNoticeInsert";
@@ -265,7 +282,7 @@ public class PageController {
 			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
 				public int compare(FileList f1, FileList f2) {
-					return f2.getPfiletitle().compareTo(f1.getPfiletitle());
+					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {

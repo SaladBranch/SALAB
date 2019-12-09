@@ -49,7 +49,7 @@ public class HomeController {
 		if(session.getAttribute("loginMember") != null)
 			mv.setViewName("redirect:recentFile.do?sort=recent");
 		else {
-			mv.addObject("google_url", url);
+			session.setAttribute("google_url", url);
 			mv.setViewName("main");
 		}
 		return mv;

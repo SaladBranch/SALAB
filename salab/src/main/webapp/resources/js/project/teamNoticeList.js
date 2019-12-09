@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    alert("페이지진입");
     $('.clickNotice').click(function () {
         var projectno = $(this).children().val();
         readNotice(projectno);

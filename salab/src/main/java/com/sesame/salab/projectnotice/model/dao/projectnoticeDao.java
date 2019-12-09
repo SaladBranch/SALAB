@@ -33,25 +33,19 @@ public class projectnoticeDao {
 	}
 
 	public List<Projectnotice> noticeList(Paging paging) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("projectnoticeMapper.selectList", paging);
 	}
 
 	public List<Projectnotice> testList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		System.out.println(map.get("paging").toString());
-		System.out.println(sqlSession.selectList("projectnoticeMapper.testList", map));
+		sqlSession.selectList("projectnoticeMapper.testList", map);
 		return sqlSession.selectList("projectnoticeMapper.testList", map);
 	}
 
 	public void noticeRegist(Projectnotice projectnotice) {
 		sqlSession.insert("projectnoticeMapper.insertNotice", projectnotice);
-		System.out.println("컹쓰");
-		
 	}
 
 	public Projectnotice selectTeamNotice(Projectnotice projectnotice) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("projectnoticeMapper.selectTeamNotice", projectnotice);
 	}
 

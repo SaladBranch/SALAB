@@ -78,12 +78,27 @@
             </div>
         </div>
         <div class="left-middle-side-bar">
-            <c:if test="${!empty sessionScope.myProjectList }">
+        	<c:if test="${!empty sessionScope.myProjectList }">
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
-							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
+						
+							<c:if test="${project.projectno eq projectList.projectno }">
+								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<c:if test="${project.projectno ne projectList.projectno }">
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
 							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
 					</c:forEach>
@@ -118,12 +133,12 @@
         <div class="sort-standard">
             <div class="sort-by">
                 <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">파일 삭제 일자</span>
+                <i class="fas fa-chevron-down"></i><span id="span-content">${sort }</span>
                 </div>
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="trashCan.do?sort=recent" class="sort-active">파일 삭제 일자</a></li>
+                    <li><a href="trashCan.do?sort=recent">파일 삭제 일자</a></li>
                     <li><a href="trashCan.do?sort=name">파일 명</a></li>
                     <li><a href="trashCan.do?sort=date">파일 생성 일자</a></li>
                 </ul>

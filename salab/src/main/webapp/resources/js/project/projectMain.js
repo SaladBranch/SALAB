@@ -95,8 +95,14 @@ function gotoNoticeDetail(no){
 
 //팀원 권한 메뉴창 toggle
 function openMenu() {
-    $('.setting-menu').addClass('hide');
-    $(event.target.nextElementSibling).toggleClass('hide');
+    
+    if($(event.target.nextElementSibling).hasClass('hide')){
+         $(event.target.nextElementSibling).removeClass('hide');
+    }else{
+        $(event.target.nextElementSibling).addClass('hide');
+    }
+    
+
 }
 //모달끄기 버튼_
 $(".modalOutline").click(function () {
@@ -147,14 +153,3 @@ $(".inviteBtn").click(function () {
 
     })
 });
-//게시판 이동
-
-//게시글 이동
-
-//사진변경
-
-//프로젝트이름변경
-
-//프로젝트 불러오기
-
-//프로젝트 이동하기

@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import com.mongodb.MongoClient;
 import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Memo;
+import com.sesame.salab.library.model.vo.PrivateLibrary;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -235,11 +236,37 @@ public class MongoService {
 		mongoOps.updateFirst(query, update, collection);
 	}
 
+	//개인라이브러리에 파일 추가
+	public void addToPrivateFileLib(String collection, PrivateLibrary plib) {
+		mongoOps.insert(plib, collection);
+	}
 
-	public void insertMemo(Memo memo, String collection) {
-		// TODO Auto-generated method stub
-		mongoOps.insert(memo, collection);
+
+	public List<PrivateLibrary> getPlibItems(String collectionName, PrivateLibrary plib) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(plib.getUserno()),
+				Criteria.where("fileno").is(plib.getFileno())
+				));
+		return mongoOps.find(query, PrivateLibrary.class, collectionName);
+	}
+
+
+	public PrivateLibrary getPlibId(String collectionName, PrivateLibrary plib) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("userno").is(plib.getUserno()),
+				Criteria.where("fileno").is(plib.getFileno()),
+				Criteria.where("content").is(plib.getContent())
+		));
 		
+		return mongoOps.findOne(query, PrivateLibrary.class, collectionName);
+	}
+
+	public void deleteFromPrivateLibrary(String collectionName, PrivateLibrary plib) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("_id").is(plib.get_id())
+		));
+		
+		mongoOps.remove(query, collectionName);
 	}
 	
 }

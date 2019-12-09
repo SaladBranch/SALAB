@@ -80,4 +80,14 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.memberList(paging);
 	}
 
+	@Override
+	public Member memberDetail(int userno) {
+		return memberDao.memberDetail(userno);
+	}
+
+	@Override
+	public int changePhoneNum(Member member) {
+		return memberDao.changePhoneNum(member);
+	}
+
 }

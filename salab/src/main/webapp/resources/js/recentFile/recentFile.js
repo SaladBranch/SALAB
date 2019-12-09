@@ -182,7 +182,7 @@ $('.file-container').on('click', function(){
     	if(type == 'single'){
     		menu.style.top = y + "px";
             menu.style.left = x + "px";
-    	}else if(type == 'multi'){
+    	}else if(type == 'multi'){showModal
     		multimenu.style.top = y + "px";
             multimenu.style.left = x + "px";
     	}

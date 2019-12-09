@@ -28,7 +28,7 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${project.projectname}</a></div>
+                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${sessionScope.project.projectname}</a></div>
                 <input id="projectno" type="hidden" value="${project.projectno}">
             </div>
             <div class="top-bar-logo">
@@ -46,10 +46,15 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div class=""></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
@@ -168,18 +173,16 @@
                         
 						<c:if test="${empty projectList }"> 
 							<div class="file-grid">
-				                <div class="new-file" onclick="showModal();">
+				                <div class="new-file" onclick="showModal('newFile');">
 				                    &#43; 새 파일
 				                </div>
 				            </div>
 						</c:if>
 						<c:if test="${!empty projectList }"> 
 	                        <c:forEach var="pfile" items="${projectList}">
-	                            <div class="file-grid" onclick="location.href='epFile.do'">
+	                            <div class="file-grid">
 	                                <div class="file-container">
-	                                    <div class="file-thumbnail">
-	
-	                                    </div>
+	                                    <div class="file-thumbnail"  onclick="location.href='etFile.do?projectno=${project.projectno}&fileno=${pfile.prfileno}'" ></div>
 	                                    <div class="file-info">
 	                                        <div class="about-file">
 	                                            <div class="file-name">
@@ -325,7 +328,15 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- 새 파일 생성 모달 -->
+                    <div id="modal-name" class="modalOutline disable ">
+                        <div id="newFile" class="modalContent z-index1">
+                            <div class="titleConfigure">Create PrivateFile</div>
+                            <input id="userNo" type="hidden" value="${loginMember.userno}">
+                            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
+                            <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -387,8 +398,8 @@
                         type: 'base64',
                         format: 'jpeg',
                         size: {
-                            width: 100,
-                            height: 100
+                            width: 500,
+                            height: 500
                         }
                     }).then(function(resp) {
                         $('#editImg').attr("src", resp);

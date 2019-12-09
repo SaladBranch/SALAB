@@ -47,10 +47,15 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn"></div>
+                <div class=""></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+		                  <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                            </c:if>
+                            <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                            </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
@@ -166,7 +171,7 @@
                         </div>
                     </c:if>
                 </div>
-                <div id="goto-FAQ" class="escapeSentence"><a href="#">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
+                <div id="goto-FAQ" class="escapeSentence"><a href="noticelist.do">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
             </div>
             <div class="division section-grid">
                 <div id="id-Info" class="content-box">
@@ -322,8 +327,8 @@
                         type: 'base64',
                         format: 'jpeg',
                         size: {
-                            width: 100,
-                            height: 100
+                            width: 500,
+                            height: 500
                         }
                     }).then(function(resp) {
 

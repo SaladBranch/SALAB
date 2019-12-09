@@ -473,7 +473,7 @@ $(function(){
             $options.hide();
         }
     });
-    
+    /* canvas margin */
     $('#canvas-sizing-opt li').on('click', function(){
         if($(this).text() != 'custom'){
             $('#canvas-sizing').html($(this).html());
@@ -485,14 +485,12 @@ $(function(){
             if(width < Number($('.canvas-container').css('width').replace('px', ''))){
             	$('#droppable').css({
                     width: width + 'px',
-                    height: height + 'px',
-                    margin: '5% auto'
+                    height: height + 'px'
                 });
             }else{
             	$('#droppable').css({
                     width: width + 'px',
-                    height: height + 'px',
-                    margin: '5% 5%'
+                    height: height + 'px'
                 });
             }
             
@@ -535,8 +533,6 @@ $(function(){
     
     $('#custom-width input').on('focusout', function(){
     	$('#droppable').css('width', $(this).val()+'px');
-    	if(Number($(this).val()) < Number($('.canvas-container').css('width').replace('px', '')))
-    		$('#droppable').css('margin', '5% auto');
     });
     $('#custom-height input').on('focusout', function(){
     	$('#droppable').css('height', $(this).val()+'px');

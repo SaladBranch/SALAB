@@ -200,14 +200,10 @@
         	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
         }
         
+        /* canvas sizing */
         //page 오른쪽 여백
         var dwidth = Number($('#droppable').css('width').replace('px', ''));
         var cwidth = Number($('.canvas-container').css('width').replace('px', ''));
-        if(dwidth > cwidth){
-        	$('#droppable').css('margin', '5% 5%');
-        }else{
-        	$('#droppable').css('margin', '5% auto');
-        }
         
         //page zoom 맞춰주기
         var scaleValues = $('#droppable').css('transform');

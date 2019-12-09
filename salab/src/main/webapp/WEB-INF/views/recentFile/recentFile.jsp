@@ -179,7 +179,13 @@
 	                            <div class="file-edited">
 	                                <span>${pfile.pfilelastmodified }</span>
 	                                <c:if test="${pfile.pt eq 'private'}"> in 개인파일</c:if>
-	                                <c:if test="${pfile.pt eq 'team'}"> in ${pfile.pfiletitle}</c:if>
+	                                <c:if test="${pfile.pt eq 'team'}">
+		                                <c:forEach var="projectList" items="${myProjectList }">
+		                                	<c:if test="${pfile.userno eq projectList.projectno }">
+		                                		in ${projectList.projectname }
+		                                	</c:if>
+		                                </c:forEach>
+	                                </c:if>
 	                            </div>
 	                        </div>
 	                        <div class="file-options">

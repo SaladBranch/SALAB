@@ -487,29 +487,47 @@ input[type="radio"]{
     height: 15px;
 }
 
-.member_btn_box{
+.member_search_box{
 	display: block;
 	margin: 5px 10px;
 	padding: 10px 15px 40px 15px;
+	vertical-align: middle;
+	position: relative;
 }
 
-.member_check{
-	margin: 5px;
-	font-size: 18pt;
-	font-weight: 600;
-}
-
-.member_btn{
+.member_search{
 	float: right;
-	font-size: 18pt;
-	font-weight: 600;
-	padding: 3px 30px 3px 30px;
-	border: 1px solid lightgreen;
+	padding: 1px;
+	position: relative;
 }
 
-.member_btn:hover{
-	border: 1px solid #3cb371;
+#keyword{
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid black;
+	font-size: 12pt;
 }
+
+/* #search::-webkit-input-placeholder {
+   color: #65737e;
+}
+ 
+#search:-moz-placeholder { Firefox 18-
+   color: #65737e;  
+}
+ 
+#search::-moz-placeholder {  Firefox 19+
+   color: #65737e;  
+} */
+ 
+#search:-ms-input-placeholder {  
+   color: #65737e;  
+}
+
+/* .member_search:hover{
+	border: 1px solid #3cb371;
+} */
 
 .member_head{
 	font-size: 16pt;

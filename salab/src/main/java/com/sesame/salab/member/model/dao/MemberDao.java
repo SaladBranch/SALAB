@@ -1,5 +1,6 @@
 package com.sesame.salab.member.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -58,17 +59,18 @@ public class MemberDao {
 	public void enrollGoogleUser(Member member) {
 		sqlSession.insert("memberMapper.enrollGoogleUser", member);
 	}
-
-	public int mlistCount() {
-		return sqlSession.selectOne("memberMapper.mlistCount");
+	
+	public int mlistCount(String keyword) {
+		return sqlSession.selectOne("memberMapper.mlistCount", keyword);
 	}
 	
-	public List<Member> memberList(Paging paging) {
-		return sqlSession.selectList("memberMapper.memberList", paging);
+	public List<Member> memberList(HashMap<String, Object> map) {
+		return sqlSession.selectList("memberMapper.memberList", map);
 	}
 
 	public Member memberDetail(int userno) {
 		return sqlSession.selectOne("memberMapper.memberDetail", userno);
 	}
+
 	
 }

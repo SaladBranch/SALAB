@@ -82,16 +82,6 @@
     		<p>1:1문의</p>
     	</div>
         <div class="qna_bottom">
-			<div class="qna_btn_box">
-				<!-- <input type="radio" value="y" class="qna_check"><span class="qna_check">Y</span>
-				<input type="radio" value="n" class="qna_check"><span class="qna_check">N</span> -->
-				<a href="userQnaInsert.do">
-					<div class="qna_btn">
-						<span>문의하기</span>
-					</div>
-				</a>
-			</div>
-   				
         	<ul>
         		<!-- 목록 상단 -->
         		<li class="qna_head">

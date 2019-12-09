@@ -89,7 +89,12 @@
 				<form action="adminMemberUpdate.do?userno=${requestScope.member.userno }" id="adminMemberUpdate" method="post" enctype="multipart/form-data">
 					<ul>
 						<li class="member_line">
-							<img src="/salab/resources/img/logo.png" class="member_profile">
+							<c:if test="${!empty requestScope.member.userprofile_r }">
+								<img src="/salab/resources/userUpfiles/${requestScope.member.userprofile_r }" class="member_profile">
+							</c:if>
+							<c:if test="${empty requestScope.member.userprofile_r }">
+								<img src="/salab/resources/img/default_profile.png" class="member_profile">
+							</c:if>
 						</li>
 						<li class="member_line">
 							<p class="member_info">${requestScope.member.useremail }</p>

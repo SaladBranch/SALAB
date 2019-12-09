@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,6 @@ import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.member_project.model.service.Member_ProjectService;
-import com.sesame.salab.notice.model.vo.Notice;
 import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
@@ -193,7 +193,7 @@ public class PageController {
 	}
 	
 	@RequestMapping(value="adminMemberList.do")
-	public ModelAndView toAdminMemberMethod(ModelAndView mv, Member member,@RequestParam(value="page", required=false) String currentPage) throws Exception  {
+	public ModelAndView toAdminMemberMethod(ModelAndView mv, Member member,@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value="page", required=false) String currentPage) throws Exception  {
 		
 		int curPage;
 		
@@ -203,16 +203,31 @@ public class PageController {
 			curPage = 1;
 		}
 		
-		int listCount = memberService.mlistCount(); //DB에서 현재 총 Row수 가져옴 
+		if (keyword == null)
+			keyword = "";
+		
+		int listCount = memberService.mlistCount(keyword); //DB에서 현재 총 Row수 가져옴 
+		
+		/*String lcount = String.valueOf(listCount);
+		logger.info(lcount);
+		logger.info(keyword);*/
+		
 		Paging paging = new Paging(); //현재 페이지 
 		paging.setLimit(10);
+		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		
-		List<Member> memberList = memberService.memberList(paging);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("paging", paging);
+		map.put("keyword", keyword);
+		
+		List<Member> memberList = memberService.memberList(map);
+		/*logger.info(paging.toString());*/
 		
 		if(memberList != null) {
 			mv.addObject("memberList", memberList);
 			mv.addObject("paging", paging);
+			mv.addObject("keyword", keyword);
 			mv.setViewName("admin/adminMember");
 		}else {
 			mv.addObject("message", "공지사항 조회 실패");

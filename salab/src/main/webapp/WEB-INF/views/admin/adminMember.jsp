@@ -83,10 +83,12 @@
     		<p>회원 정보</p>
     	</div>
         <div class="member_bottom">
-			<div class="member_btn_box">
-					<div class="member_btn">
-						<span>문의하기</span>
-					</div>
+			<div class="member_search_box">
+				<div class="member_search">
+					<form action="adminMemberList.do" method="post" enctype="multipart/form-data">
+						<input type="search" id="keyword" name="keyword" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button>
+					</form>
+				</div>
 			</div>
    				
         	<ul>
@@ -103,7 +105,6 @@
         		
         		<!-- 목록 -->
         		<c:if test="${!empty requestScope.memberList }">
-        			<%-- <c:set var="lcount" value="${requestScope.paging.listCount - ((requestScope.paging.currentPage-1) * requestScope.paging.limit)}"/> --%>
         			<c:forEach var="member" items="${requestScope.memberList }" varStatus="i" >
         				<c:url var="adminMemberDetail" value="adminMemberDetail.do">
 							<c:param name="userno" value="${member.userno }" />
@@ -112,14 +113,13 @@
 		        		<li class="member_list">
 		        			<ul>
 		        				<a href="${adminMemberDetail }">
-			        				<li class="member_head_no"><span>${member.userno}<%-- <c:out value="${lcount }" /> --%></span></li>
+			        				<li class="member_head_no"><span>${member.userno}</span></li>
 			        				<li class="member_head_email"><span>${member.useremail }</span></li>
 			        				<li class="member_head_date"><span>${member.userenrolldate }</span></li>
 			        				<li class="member_head_level"><span>${member.userlevel }</span></li>
 		        				</a>
 		        			</ul>
 		        		</li>
-		        		<%-- <c:set var="lcount" value="${lcount - 1 }" /> --%>
 	        		</c:forEach>
         		</c:if>
         		<!-- 목록 -->
@@ -146,7 +146,7 @@
 							<li class="paging_btn">[처음]</li>
 						</c:if>
 						<c:if test="${paging.currentPage ne 1 }">
-							<li class="paging_btn"><a href="adminMemberList.do?page=1">[처음]</a></li>
+							<li class="paging_btn"><a href="adminMemberList.do?page=1&&keyword=${keyword} ">[처음]</a></li>
 						</c:if>
 						<!-- 처음 -->
 						
@@ -155,7 +155,7 @@
 							<li class="paging_btn">[이전]</li>
 						</c:if>
 						<c:if test="${paging.startPage ne 1 }">
-							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.startPage - 1 }">[이전]</a></li>
+							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.startPage - 1 }&&keyword=${keyword} ">[이전]</a></li>
 						</c:if>
 						<!-- 이전-->
 						
@@ -165,7 +165,7 @@
 								<li class="paging_no_this">[${ pageno }]</li>
 							</c:if>
 							<c:if test="${pageno ne paging.currentPage }">
-								<a href="adminMemberList.do?page=${ pageno }"><li class="paging_no">${ pageno }</li></a>
+								<a href="adminMemberList.do?page=${ pageno }&&keyword=${keyword} "><li class="paging_no">${ pageno }</li></a>
 							</c:if>
 						</c:forEach>
 						<!-- 현재 Page 숫자 목록 -->
@@ -175,7 +175,7 @@
 							<li class="paging_btn">[다음]</li>
 						</c:if>
 						<c:if test="${paging.endPage ne paging.maxPage}">
-							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.endPage + 1 }">[다음]</a></li>
+							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.endPage + 1 }&&keyword=${keyword} ">[다음]</a></li>
 						</c:if>
 						<!-- 다음-->
 						
@@ -184,7 +184,7 @@
 							<li class="paging_btn">[끝]</li>
 						</c:if>
 						<c:if test="${paging.currentPage lt paging.maxPage }">
-							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.maxPage }">[끝]</a></li>
+							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.maxPage }&&keyword=${keyword} ">[끝]</a></li>
 						</c:if>
 						<!-- 끝 -->
 					</ul>
@@ -192,6 +192,7 @@
        		</ul>
         </div>
         <!-- paging -->
+        
     </div>
     
     

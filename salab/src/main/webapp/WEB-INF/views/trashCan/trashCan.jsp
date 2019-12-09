@@ -133,12 +133,12 @@
         <div class="sort-standard">
             <div class="sort-by">
                 <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">파일 삭제 일자</span>
+                <i class="fas fa-chevron-down"></i><span id="span-content">${sort }</span>
                 </div>
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="trashCan.do?sort=recent" class="sort-active">파일 삭제 일자</a></li>
+                    <li><a href="trashCan.do?sort=recent">파일 삭제 일자</a></li>
                     <li><a href="trashCan.do?sort=name">파일 명</a></li>
                     <li><a href="trashCan.do?sort=date">파일 생성 일자</a></li>
                 </ul>

@@ -220,8 +220,13 @@ $('.sort-by-mention').click(function(){
 });
 $(function(){
 	var sort = $('#span-content');
+	var type = $('.top-bar-titleText').text();
 	if(sort.text() === 'recent'){
-		sort.text("최근 본 파일");
+		if(type === '휴지통'){
+			sort.text("파일 삭제 일자");
+		}else{
+			sort.text("최근 본 파일");
+		}
 		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
 		$('.sort-standards ul li').eq(0).addClass('sort-active');
 	}else if(sort.text() === 'name'){

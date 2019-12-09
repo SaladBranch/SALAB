@@ -53,11 +53,13 @@ var startY = 0;
 var left, top, width, height;
 var $focus = $(".focus");
 $(document).on("mousedown", function(e) {
-    mode = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    width = height = 0;
-    $focus.show();
+	if(e.which != 3){
+		mode = true;
+	    startX = e.clientX;
+	    startY = e.clientY;
+	    width = height = 0;
+	    $focus.show();
+	}
 }).on('mouseup', function(e) {
     mode = false;
     $focus.hide();
@@ -105,10 +107,10 @@ function rangeSelect(selector, x1, y1, x2, y2, cb) {
 $('.file-container').on('click', function(){
 	var index = $('.file-container').index($(this));
     for(var i = 0; i<$('.file-container').length; i++){
-    	if(i == index)
-    		$(this).addClass('highlight');
+    	if(i === index)
+    		$('.file-container').eq(i).addClass('highlight');
     	else
-    		$(this).removeClass('highlight');
+    		$('.file-container').eq(i).removeClass('highlight');
     }
 });
 (function(){
@@ -123,21 +125,38 @@ $('.file-container').on('click', function(){
     
     function leftMouseListener(){
         document.addEventListener("click", function(e){
-            toggleOnOff(0);
+            toggleOnOff(0, 'single');
+            toggleOnOff(0, 'multi');
         });
     }
     function rightMouseListener(){
+    	var $focus = $(".focus");
+    	$focus.hide();
         $(window).on('contextmenu', function(){
             event.preventDefault();
         });
-
+        
         $('.file-container').on('contextmenu', function(e){
-            event.preventDefault();
-            
-            
-            
-            toggleOnOff(1);
-            showMenu(e.clientX, e.clientY);
+        	var cnt = $('.file-container.highlight').length;
+        	if(cnt >= 2 && !$(this).hasClass('highlight')){
+        		toggleOnOff(0, 'multi');
+        		$('.file-container.highlight').removeClass('highlight');
+        	}if(cnt < 2 && !$(this).hasClass('highlight')){
+        		toggleOnOff(0, 'single');
+        		$('.file-container.highlight').removeClass('highlight');
+        	}
+        	
+        	$(this).addClass('highlight');
+        	cnt = $('.file-container.highlight').length;
+        	
+            if(cnt < 2){
+            	toggleOnOff(1, 'single');
+            	showMenu(e.clientX, e.clientY, 'single');
+            }else{
+            	toggleOnOff(1, 'multi');
+            	$('#multi-right-click-menu span').text(cnt);
+            	showMenu(e.clientX, e.clientY, 'multi');
+            }
         });
     }
     function rangeSelect(selector, x1, y1, cb){
@@ -152,13 +171,22 @@ $('.file-container').on('click', function(){
         });
     }
     
-    function toggleOnOff(num){
-        num === 1 ? menu.classList.add("active") : menu.classList.remove("active");
+    function toggleOnOff(num, type){
+    	if(type == 'single')
+    		num === 1 ? menu.classList.add("active") : menu.classList.remove("active");
+		else if(type == 'multi')
+			num === 1 ? multimenu.classList.add("active") : multimenu.classList.remove("active");
     }
     
-    function showMenu(x, y){
-        menu.style.top = y + "px";
-        menu.style.left = x + "px";
+    function showMenu(x, y, type){
+    	if(type == 'single'){
+    		menu.style.top = y + "px";
+            menu.style.left = x + "px";
+    	}else if(type == 'multi'){
+    		multimenu.style.top = y + "px";
+            multimenu.style.left = x + "px";
+    	}
+        
     }
     
     init();

@@ -163,7 +163,6 @@ public class QnaController {
 		qna.setAdminid(((Admin)session.getAttribute("loginAdmin")).getAdminid());
 		
 		int result = qnaService.qnaUpdate(qna);
-		System.out.println(qna.toString());
 		
 		if(result <= 0) {
 	    	mv.setViewName("common/error");

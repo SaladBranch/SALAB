@@ -61,7 +61,7 @@
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="menu-title">
-                <span>도움말</span>
+                <span><a href="noticelist.do">도움말</a></span>
             </div>
             <div class="recent-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->

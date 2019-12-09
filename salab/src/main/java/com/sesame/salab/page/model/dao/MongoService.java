@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.MongoClient;
 import com.sesame.salab.common.FileList;
+import com.sesame.salab.page.model.vo.Memo;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -232,6 +233,13 @@ public class MongoService {
 		
 		Update update = new Update().set("pagename", page.getPagename());
 		mongoOps.updateFirst(query, update, collection);
+	}
+
+
+	public void insertMemo(Memo memo, String collection) {
+		// TODO Auto-generated method stub
+		mongoOps.insert(memo, collection);
+		
 	}
 	
 }

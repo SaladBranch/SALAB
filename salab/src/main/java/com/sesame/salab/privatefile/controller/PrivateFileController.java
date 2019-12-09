@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.sesame.salab.common.FileList;
-import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.page.model.dao.MongoService;
+import com.sesame.salab.page.model.vo.Memo;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
@@ -360,4 +359,31 @@ public class PrivateFileController {
 		
 		return result;
 	}
+	
+	
+	@RequestMapping(value="memo.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String memoInsert(Memo memo) {
+		String res = "success";
+		MongoService mgService = new MongoService();
+		
+		mgService.insertMemo(memo, "memo");
+		
+		return res;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

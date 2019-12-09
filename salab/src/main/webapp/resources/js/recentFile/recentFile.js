@@ -414,27 +414,30 @@ function fileDelete(){
 
 //trashCan
 function filePermanentDelete(){
-	$.ajax({
-		url: 'filePermanentDelete.do',
-		type: 'post',
-		data: {
-			pfileno: fileno,
-			userno: uno,
-			pt: teamAndPrivate
-		},
-		dataType: 'text',
-		success: function(data){
-			if(data = "success"){
-				location.reload();
-			}
-		},
-		error : function( jqXHR, textStatus, errorThrown ) {
-			console.log( jqXHR.status );
-			console.log( jqXHR.statusText );
-			console.log( jqXHR.responseText );
-			console.log( jqXHR.readyState );
-			}
-	});
+	var conf = confirm('파일을 삭제하면 복구되지않습니다.');
+	if(conf == true){
+		$.ajax({
+			url: 'filePermanentDelete.do',
+			type: 'post',
+			data: {
+				pfileno: fileno,
+				userno: uno,
+				pt: teamAndPrivate
+			},
+			dataType: 'text',
+			success: function(data){
+				if(data = "success"){
+					location.reload();
+				}
+			},
+			error : function( jqXHR, textStatus, errorThrown ) {
+				console.log( jqXHR.status );
+				console.log( jqXHR.statusText );
+				console.log( jqXHR.responseText );
+				console.log( jqXHR.readyState );
+				}
+		});
+	}
 }
 
 function fileDeleteUndo(){
@@ -462,7 +465,7 @@ function fileDeleteUndo(){
 
 function popup(){
 	
-	var win_width = 1120;
+	var win_width = 1040;
 	var height = 600+30;
 	var userno = $('#userNo').val();
 	window.open('webTest.do?pfileno='+fileno+'&userno='+userno+'&pt='+teamAndPrivate, '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');

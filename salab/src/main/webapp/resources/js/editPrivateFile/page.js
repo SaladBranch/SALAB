@@ -26,30 +26,24 @@
         
         $('#droppable').on('dragenter', function(e){
         	$(this).addClass('drag-over');
-        	console.log('enter');
         }).on('dragleave', function(e){
         	$(this).removeClass('drag-over');
-        	console.log('leave');
         }).on('dragover', function(e){
         	e.stopPropagation();
         	e.preventDefault();
-        	console.log('over');
         }).on('drop', function(e){
-        	console.log('drop');
         	e.preventDefault();
-        	/*$(this).removeClass('drag-over');*/
         	
         	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
         	for(var i = 0; i < files.length; i++) {
         	var file = files[i];
-        	//var size = uploadFiles.push(file); //업로드 목록에 추가
         	preview(file, size - 1); //미리보기 만들기
         	}
+        	
         	setTimeout(function(){
-        		Thumbnail();
-        	}, 1000);
+            	Thumbnail();
+            }, 100);
         });
-        
     });
     
     var pindex;
@@ -62,9 +56,7 @@
         cancel: '.newpage',
         start: function(event, ui){
             beforepindex = ui.item.index();
-            console.log("출발점: " + beforepindex);
-            console.log("출발점의 pno :: " + list[beforepindex].pageno);
-            /*pageMoveTempStorage.pageno = list[beforepindex].pageno;*/
+            
             pageMoveTempStorage = {
             		content: list[beforepindex].content,
             		userno: list[beforepindex].userno,
@@ -104,11 +96,6 @@
                     }
             	}
             	
-            	
-                for(var i = 0; i < list.length; i++){
-                	console.log(JSON.stringify(list[i]));
-                }
-                
                 $.ajax({
                 	url: 'pageMove.do',
                 	type: 'post',
@@ -353,8 +340,6 @@
     		    	//현재 새로 셀렉트된 페이지 인덱스
     		        var index = $('.page-item').index($(this));
     		        
-    		        console.log('beforeIn :: ' +beforeIndex);
-    		        console.log('index :: ' + index);
     		        //현재 캔버스위에 태글들을 임시저장
     		        tempStorage(beforeIndex);
     		        
@@ -373,7 +358,6 @@
     }
     
     function newPage(){
-    	console.log('check');
     	$.ajax({
     		url: 'newPage.do',
     		type: 'post',
@@ -439,7 +423,6 @@
     	
     	list[index].content = $('.canvas-container').html();
     	list[index].thumbnail = $('.page-thumbnail:eq('+index+')').html();
-    	console.log(JSON.stringify(list[index]));
     	
     	$.ajax({
     		url: 'pageAllSave.do',
@@ -460,34 +443,87 @@
 
     	$('#droppable').on('dragenter', function(e){
         	$(this).addClass('drag-over');
-        	console.log('enter');
         }).on('dragleave', function(e){
         	$(this).removeClass('drag-over');
-        	console.log('leave');
         }).on('dragover', function(e){
         	e.stopPropagation();
         	e.preventDefault();
-        	console.log('over');
         }).on('drop', function(e){
-        	console.log('drop');
         	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
+        	var x = e.offsetX - 10;
+        	var y = e.offsetY - 30;
+        	
         	for(var i = 0; i < files.length; i++) {
         	var file = files[i];
-        	preview(file, size - 1); //미리보기 만들기
+        	preview(file, size - 1, x, y); //미리보기 만들기
         	}
         	e.preventDefault();
-        	console.log('real start');
+        		
         	setTimeout(function(){
         		Thumbnail();
-        	}, 1000);
+        	}, 100);
         	
         });
-    
-    function preview(file, idx){
+    	
+    	function memo(){
+    		$('#droppable').addClass('memo-container');
+    	}
+    	
+    	$(document).on('mouseenter', '.memo-container', function(e){
+        }).on('mouseleave', '.memo-container', function(e){
+        }).on('mouseover', '.memo-container', function(e){
+        	e.stopPropagation();
+        	e.preventDefault();
+        }).on('mouseup', '.memo-container', function(e){
+        	var x = e.offsetX - 10;
+        	var y = e.offsetY - 30;
+        	
+        	var div = '<div class="memo" style="position: absolute; left: '+x+'px; top: '+y+'px" display: flex">' + 
+        		'<img src="/salab/resources/img/coordinates.png" class="memo-icon" style="width: 20px; height: 30px;" >' +
+        		'<div class="memo-content">'+
+        		'<div class="memo-userThumb">'+
+                '<div class="memo-info">'+
+                '<div class="user">'+
+                '<span style="width: 40px; height: 40px;"></span>'+
+                '<span> 오세준</span>'+
+                '</div>'+
+                '<div class="button">'+
+                '<button class="btn-ghost cancel">cancel</button>'+
+                '<button class="btn-ghost done">done</button>'+
+                '</div>'+
+                '</div>'+
+                '<input type="text" class="memo-cnt" value="test">'+
+		        '</div>'+
+		        '</div>'+
+        		'</div>'+
+        		'</div>';
+        	
+        	$('#droppable').append(div);
+        	$('#droppable').removeClass('memo-container');
+        	
+        });
+    	
+    	$(document).on('mouseup', '.memo-icon', function(){
+    		$('.memo-content').toggle();
+    	});
+    	
+    	$(document).on('click', '.btn-ghost.cancel', function(){
+    		$('.memo').remove();
+    	});
+    	
+    	$(document).on('click', '.btn-ghost.done', function(){
+    		var $memo = $(this).closest('.memo-info').siblings('.memo-cnt');
+    		var $button = $(this).closest('.button');
+    		
+    		$($memo).attr('readOnly', true);
+    		
+    	});
+    	
+    function preview(file, idx, x, y){
     	var reader = new FileReader();
     	reader.onload = (function(f, idx){
     		return function(e){
-    			var div = '<div class="obj">' +
+    			var div = '<div class="obj" style="position: absolute; left: '+x+'px; top: '+y+'px">' +
     			'<img src="' + e.target.result + '" title="' + escape(f.name) + '" class="obj-comp"/>' +
     			'</div>';
     			$('#droppable').append(div);
@@ -503,10 +539,8 @@
     		var image = new Image();
         	image.src= $(list[i].thumbnail).attr('src');
     		
-    			console.log('start');
         		pdf.addImage(image.src, 'PNG', 0, 0, (image.width * 0.186), (image.height * 0.179));
         		pdf.addPage();
-        		console.log('end');
     	}
     	
     	pdf.save('test.pdf');
@@ -520,7 +554,7 @@
     
     $(document).on('blur', '.page-title', function(e){
     	var retitle = $(this).val();
-    	var index = $('.page-title').index(this)
+    	var index = $('.page-title').index(this);
 
     	if(retitle == list[index].pagename){
     		return false
@@ -536,9 +570,7 @@
         		},
         		dataType: 'text',
         		success: function(data){
-        			if(data == "success"){
-        				pageTab();
-        			}
+        			console.log(data);
         		},
         		error:function(request,status,error){
         	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -577,3 +609,32 @@
     	});
     	e.preventDefault();
     });
+    
+    function popup(){
+    	
+    	var win_width = 1050;
+    	var height = 600+30;
+    	window.open('webTest.do?pfileno='+list[0].fileno +'&userno='+list[0].userno+'&pt=private', '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');
+    }
+    
+    function upImage(){
+    	var file = document.getElementById('imagePreview');
+    	file.click();
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            	var div = '<div class="obj">' +
+    			'<img src="' + e.target.result + '" class="obj-comp"/>' +
+    			'</div>';
+            	$('#droppable').append(div);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    function filter (node) {
+        return (node.className !== 'memo' && node.className !== 'grid-canvas');
+    }

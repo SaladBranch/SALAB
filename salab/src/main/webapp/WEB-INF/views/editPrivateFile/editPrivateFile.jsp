@@ -687,7 +687,11 @@
             	
     	}
     }
-    
+
+	$(document).on("mouseup", ".minicolors-grid", function() {
+       Thumbnail();
+	});
+	
     </script>
     
 </body>

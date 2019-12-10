@@ -59,9 +59,8 @@ function includeElement(X, Y, temp) {
 function leftMouseListner(){
     $(document).on('click', function(event){
         toggleContext(0);
-    	if(!$(event.target).is("#droppable .obj *") && !$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *")) {
-	        window.getSelection().removeAllRanges();
-			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+        if(!$(event.target).is("#droppable .obj *") && !$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *")) {
+			$(".ui-selected .obj-comp .text-dragged").contents().unwrap();
     	}
     });
     $('#droppable').on('click', function(){
@@ -223,6 +222,11 @@ function addControl(){
                     'nw': '.ui-resizable-nw',  
                 },
                 resize : function() {
+                	if ($("#droppable .ui-selected").is(".size-ratiofixed")) {
+                		$(".figure-item.checkbox[id=size-ratioFix]").removeClass("checked");
+                		$(".figure-item.checkbox[id=size-ratioFix]").children("div.checkbox").css("border", "1px solid lightgray");
+                		$(".figure-item.checkbox[id=size-ratioFix]").children("div.checkbox").children("img").css("display", "none");
+                	}
                     formatChange();
                 },
                 alsoResize: $obj.children('.obj'),
@@ -248,6 +252,11 @@ function addControl(){
                     'nw': '.ui-resizable-nw',  
                 },
                 resize : function() {
+                	if ($("#droppable .ui-selected").is(".size-ratiofixed")) {
+                		$(".figure-item.checkbox[id=size-ratioFix]").removeClass("checked");
+                		$(".figure-item.checkbox[id=size-ratioFix]").children("div.checkbox").css("border", "1px solid lightgray");
+                		$(".figure-item.checkbox[id=size-ratioFix]").children("div.checkbox").children("img").css("display", "none");
+                	}
                     formatChange();
                 },
                 alsoResize: "this .obj-comp",
@@ -301,6 +310,7 @@ function getRotateDegree($obj){
         var b = values[1];
         var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
     } else { var angle = 0; }
+    console.log("계산 결과 : " + ((angle < 0) ? angle + 360 : angle));
     return (angle < 0) ? angle + 360 : angle;
 }
 
@@ -348,9 +358,21 @@ $(function(){
             $focus.show();
         }
     	if(!$(e.target).is("#droppable .obj *") && !$(e.target).is(".tab-menu *") && !$(e.target).is(".text-item *") && !$(e.target).is(".figure-item *") && !$(e.target).is(".minicolors-panel *") && !$(e.target).is(".component")) {
-    		$("#droppable .obj-comp[contenteditable=true]").each(function() {
-    	        $(this).attr("contenteditable", "false");
-    		})
+    		var isTextarea = "false";
+    		var $checkTarget = $(e.target).parent();
+    		while(true) {
+    			if (!$checkTarget.is("span")) {
+    				if ($checkTarget.is(".textarea"))
+    					isTextarea = "true";
+    				break;
+    			}
+    			$checkTarget = $checkTarget.parent();
+    		}
+    		if (isTextarea != "true") {
+        		$("#droppable .obj-comp[contenteditable=true]").each(function() {
+        	        $(this).attr("contenteditable", "false");
+        		})
+    		}
     	}
     }).on('mousemove', function(e){
         if(appendElement != ""){
@@ -361,7 +383,8 @@ $(function(){
             setDragLocation(e);
         }
     }).on('mouseup', function(e){
-        mode = false;
+    	// 수정중
+/*    	mode = false;
         $focus.hide();
         $focus.css({width: 0, height: 0});
         
@@ -377,7 +400,7 @@ $(function(){
             appendElement = "";
         }else{
             appendElement = "";
-        }
+        }*/
     });
 
     //obj 삽입
@@ -400,7 +423,14 @@ $(function(){
             initSelect();
             clicks = 0;
         }else{
-            appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
+        	
+        	//수정중
+        	var $copyElement = $(this).clone().children("svg").css({
+        		width : "76px",
+        		height : "76px"
+        	})
+        	console.log($copyElement);
+            appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $copyElement.wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
     });

@@ -146,6 +146,24 @@ function menuActivation(){
     
     selectedObj.length === 1 ? $('.groupObj').addClass('disabled') : $('.groupObj').removeClass('disabled');
 }
+function computeGuidesForElement(elem, pos, w, h) {
+	  if (elem != null) {
+	    var $t = $(elem);
+	    pos = $t.offset();
+	    w = $t.outerWidth() - 1;
+	    h = $t.outerHeight() - 1;
+	  }
+
+	  return [
+	        { type: "h", left: pos.left, top: pos.top }, 
+	        { type: "h", left: pos.left, top: pos.top + h }, 
+	        { type: "v", left: pos.left, top: pos.top }, 
+	        { type: "v", left: pos.left + w, top: pos.top },
+	        // you can add _any_ other guides here as well (e.g. a guide 10 pixels to the left of an element)
+	        { type: "h", left: pos.left, top: pos.top + h/2 },
+	        { type: "v", left: pos.left + w/2, top: pos.top } 
+      ];
+	}
 function addControl(){
     if($all.html() != ""){
         $all.children().each(function(){
@@ -166,6 +184,10 @@ function addControl(){
         var __scale=0.5;
         var __recoupLeft, __recoupTop;
         
+        var MIN_DISTANCE = 10;
+        var guides = [];
+        var innerOffsetX, innerOffsetY;
+        var lgap, tgap;
         $obj.draggable({ //select 된놈은 드래그 가능
             cancel: '.ui-resizable-handle',
             drag: function (event, ui) {
@@ -175,7 +197,55 @@ function addControl(){
                 ui.position.top = ui.originalPosition.top + (__dy);
                 ui.position.left += __recoupLeft;
                 ui.position.top += __recoupTop;
-                sortGuideLine(ui);
+                
+                //guides
+                var guideV, guideH, distV = MIN_DISTANCE + 1, distH = MIN_DISTANCE + 1, offsetV, offsetH;
+                var chosenGuides = {
+                    top: {dist: MIN_DISTANCE + 1},
+                    left: {dist: MIN_DISTANCE + 1}
+                };
+                var $t = $(this);
+                var pos = {
+                    top: event.originalEvent.pageY - innerOffsetY, 
+                    left: event.originalEvent.pageX - innerOffsetX
+                    /*top: ui.position.top, 
+                    left: ui.position.left*/
+                };
+                
+                var w = $t.width() - 1;
+                var h = $t.height() - 1;
+                var elemGuides = computeGuidesForElement(null, pos, w, h);
+                $.each(guides, function(i, guide){
+                    $.each(elemGuides, function(i, elemGuide){
+                        if(guide.type == elemGuide.type){
+                            var prop = guide.type == "h"? "top":"left";
+                            var d = Math.abs(elemGuide[prop] - guide[prop]);
+                            if(d < chosenGuides[prop].dist){
+                                chosenGuides[prop].dist = d;
+                                chosenGuides[prop].offset = elemGuide[prop] - pos[prop];
+                                chosenGuides[prop].guide = guide;
+                            }
+                        }
+                    });
+                });
+                
+                var templeft = $('#droppable').offset().left - 230;
+                var temptop = $('#droppable').offset().top - 40;
+                if(chosenGuides.top.dist <= MIN_DISTANCE){
+                    $('#guide-h').css("top", chosenGuides.top.guide.top - 40).show();
+                    ui.position.top = chosenGuides.top.guide.top - chosenGuides.top.offset - 40 - temptop;
+                }else{
+                    $('#guide-h').hide();
+                    ui.position.top = pos.top - 40 - temptop;
+                }
+                
+                if(chosenGuides.left.dist <= MIN_DISTANCE){
+                    $('#guide-v').css("left", chosenGuides.left.guide.left - 230).show();
+                    ui.position.left = chosenGuides.left.guide.left - chosenGuides.left.offset - 230 - templeft;
+                }else{
+                    $('#guide-v').hide();
+                    ui.position.left = pos.left - 230 - templeft;
+                }
             },
             start: function (event, ui) {
             	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
@@ -187,6 +257,13 @@ function addControl(){
                 top = isNaN(top) ? 0 : top;
                 __recoupLeft = left - ui.position.left;
                 __recoupTop = top - ui.position.top;
+                
+                //guides
+                lgap = event.pageX - $(this).offset().left;
+                tgap = event.pageY - $(this).offset().top;
+                guides = $.map($('#droppable .obj, #droppable').not(this), computeGuidesForElement);
+                innerOffsetX = __recoupLeft;
+                innerOffsetY = __recoupTop;
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
@@ -195,7 +272,10 @@ function addControl(){
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
-                clearGuideLine();
+                
+                //guides
+                /*clearGuideLine();*/
+                $("#guide-v, #guide-h" ).hide();
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
@@ -849,7 +929,6 @@ function objectVerticalGuideLine(left, top, right, bottom, hmid, vmid, ui){
 		}, 10)
 	}
 	//다른 obj와 오른쪽 맞춤
-	console.log("고마워요");
 	if(vrightLine){
 		$verticalObjectLine = $('<div class="v-obj-guide" style="position: absolute; width: 1px; border-right: 1px dashed red;"></div>');
 		$verticalObjectLine.css({

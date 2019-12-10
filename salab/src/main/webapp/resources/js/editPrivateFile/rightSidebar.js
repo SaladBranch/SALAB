@@ -74,11 +74,11 @@ var lastChanged = "";
         } else {
             $(this).addClass("checked");
             if ($(this).attr("id") == "size-ratioFix")
-                $(".ui-selected").addClass(".size-ratiofixed");
+                $(".ui-selected").addClass("size-ratiofixed");
             if ($(this).attr("id") == "weight-ratioFix")
-                $(".ui-selected").addClass(".weight-ratiofixed");
+                $(".ui-selected").addClass("weight-ratiofixed");
             if ($(this).attr("id") == "radius-ratioFix")
-            	$(".ui-selected").addClass(".radius-ratiofixed");
+            	$(".ui-selected").addClass("radius-ratiofixed");
         	$(this).children("div.checkbox").css({ border : "1px solid gray" });
         	$(this).children("div.checkbox").children("img").css({ display : "block" });
         }
@@ -332,10 +332,27 @@ var lastChanged = "";
 	
 	$(document).on("mouseup", function() {
 		if ($(".text-dragged").length == 0 && window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
-			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
-			clearDragged();
-			formatChange();
-			$(".text-dragged").selectText();
+    		var isTextarea = "false";
+    		var $checkTarget = $(window.getSelection().anchorNode).parent();
+    		while(true) {
+    			if (!$checkTarget.is("span")) {
+    				if ($checkTarget.is(".textarea"))
+    					isTextarea = "true";
+    				break;
+    			}
+    			$checkTarget = $checkTarget.parent();
+    		}
+    		if (isTextarea == "true") {
+    			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
+    			clearDragged();
+    			formatChange();
+    			$(".text-dragged").selectText();
+    		} else {
+    			if ($(".text-dragged").text() != "")
+    				$(".text-dragged").content().unwrap();
+    			else
+    				$(".text-dragged").remove();
+    		}
 		}
 	});
 	
@@ -716,10 +733,12 @@ var lastChanged = "";
         		if (type == "rotation") {
                 	var radius = $(this).parents("div.ui-selected").css("transform").split("(")[1].split(")")[0].split(", ");
                 	radius = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
+                	console.log($(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180);
                 	if (radius != $(".figure-shape-comps .figure-item[id=rotation] input").val()) {
                 		$(this).parents("div.ui-selected").css({
-                			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() + "deg)"
+                			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180 + "rad)"
                 		});
+                		console.log("rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180 + "rad)");
                 	}
         		}
 
@@ -791,7 +810,6 @@ var lastChanged = "";
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
 
         			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
-                	var textSelected = $(".textarea span.text-selected");
         		    clearChanged("color");
         		}
 

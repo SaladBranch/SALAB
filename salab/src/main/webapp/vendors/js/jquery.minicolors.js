@@ -308,6 +308,7 @@
         if (settings.hide) settings.hide.call(input.get(0));
         minicolors.removeClass('minicolors-focus');
       }
+      Thumbnail(); // 승진 추가
     });
   }
 

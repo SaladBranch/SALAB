@@ -18,6 +18,10 @@
         //현재 캔버스위에 태글들을 임시저장
         tempStorage(beforeIndex);
         
+        setTimeout(function(){
+    		Thumbnail();
+    	}, 0);
+        
         $('.page-item').each(function(){
             $(this).removeClass('ui-selected');
         });
@@ -39,7 +43,6 @@
         	var file = files[i];
         	preview(file, size - 1); //미리보기 만들기
         	}
-        	
         	setTimeout(function(){
             	Thumbnail();
             }, 100);
@@ -155,7 +158,7 @@
                 }
             });
         }else{
-        	$('.minicolors').remove();
+        	$('#canvas-background .minicolors').remove();
         	$('.back-chk input').prop('checked', false);
         }
         
@@ -210,6 +213,7 @@
                 $('.right-side-bar .tab-content').hide();
             }
         });
+        
     }
 
     //페이지 삭제용 함수

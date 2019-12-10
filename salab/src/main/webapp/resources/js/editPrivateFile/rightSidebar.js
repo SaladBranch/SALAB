@@ -1,10 +1,9 @@
 
-var textSelection = "";
 var lastChanged = "";
 
 // ** 메뉴 구성 hover, click 이벤트 모음
 
-	// component
+	// 메뉴 enterable enter, leave, click
     $('.enterable').mouseenter(function() {
     	if (!$(this).is(".clickedItem"))
         	$(this).css({ border : "1px solid lightgray" });
@@ -39,7 +38,7 @@ var lastChanged = "";
         $(this).children().children("input").css("border", "1px solid skyblue");
     });
 
-	// component 안의 ratiofix
+	// 메뉴 checkbox enter, leave, click
     $('.figure-item.checkbox').mouseenter(function() {
     	// 마우스 진입 시 테두리 회색, 배경 밝은 회색
     	$(this).children("div.checkbox").css({ border : "1px solid gray", background : "lightgray" });
@@ -85,17 +84,47 @@ var lastChanged = "";
         }
     });
 
-	// component 안의 tab
+	// 메뉴 button enter, leave
     $('.togglable').mouseenter(function() {
     	$(this).children("p").css({ color : "gray" });
     }).mouseleave(function() {
     	$(this).children("p").css({ color : "black" });
     });
 
-// component 선택
+    $(".component").on("mouseenter", function() {
+    	$(".component").each(function() { $(this).css("background", "white"); });
+    	$(this).css("background", "lightgray");
+    });
 
-// input change
-    
+	$(".text-effect").on("mouseenter", function() {
+		if (!$(this).is(".clicked")) {
+			$(this).css("border", "1px solid gray");
+		}
+		$(this).css("background", "lightgray");
+     }).on("mouseleave", function() {
+		if (!$(this).is(".clicked")) {
+			$(this).css("border", "1px solid white");
+		}
+		$(this).css("background", "white");
+     }).on("click", function() {
+    	 if ($(this).is(".clicked")) {
+    		 $(this).removeClass("clicked");
+    		 $(this).css("border", "1px solid white");
+    		 $(this).css("background", "white");
+    	 } else {
+    		 $(this).addClass("clicked");
+    		 $(this).css("border", "1px solid black");
+    		 $(this).css("background", "white");
+    	 }
+    	 applyChange("text-effect-" + $(this).attr("id"));
+     });
+     
+    // textarea edit 종료 시 thumbnail 변경
+    $(document).on("focusout", ".textarea", function() {
+    	Thumbnail();
+    });
+
+    // 메뉴 input 값 변경 시 정렬 후 applyChange(type) 실행
 	$(".right-side-bar input").on("change keyup paste focusout", function(event) {
 
     	var type = $(this).parents().attr("id");
@@ -103,9 +132,9 @@ var lastChanged = "";
     	var eventType = event.handleObj.type;
 
     	var applyType = "";
-    	
+
     	if (type == "width") {
-	    	if (eventType == "change" || eventType == "focusout") {
+	    	if (eventType == "focusout") {
 	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
 	    			var pastHeight = $(".figure-shape-comps .figure-item[id=height] input").val();
 	    			$(".figure-shape-comps .figure-item[id=height] input").val(Math.round(filterValue("number", value) / $("div.ui-selected").css("width").split("px")[0] * pastHeight));
@@ -114,9 +143,9 @@ var lastChanged = "";
 			$(this).val(filterValue("number", value));
 			applyType = "width";
     	}
-    	
+
     	if (type == "height") {
-	    	if (eventType == "change" || eventType == "focusout") {
+	    	if (eventType == "focusout") {
 	    		if ($(".figure-shape-comps #size-ratioFix").is(".checked")) {
     		    	var pastWidth = $(".figure-shape-comps .figure-item[id=width] input").val();
     		    	$(".figure-shape-comps .figure-item[id=width] input").val(Math.round(filterValue("number", value) / $("div.ui-selected").css("height").split("px")[0] * pastWidth));
@@ -245,165 +274,13 @@ var lastChanged = "";
     	if (eventType == "change" || eventType == "paste") {
     		if ($(this).focus)
     			$(this).blur();
-    	}
-    	else if (eventType == "focusout") {
+    	} else if (eventType == "focusout") {
             clearEnterable();
     		applyChange(applyType);
     	}
 		
     });
 
-    function filterValue(type, value) {
-    	
-    	var returnValue = "none";
-    	
-    	if (type == "number")
-    		returnValue = value.replace(/[^(0-9)]/g, "");
-    	else if (type == "color") {
-        	var filterValue = value.replace(/[^(0-9)^(a-f)^(A-F)]/g, "");
-        	if (filterValue.length > 7) {
-        		filterValue = filterValue.substring(0, 6);
-        	}
-        	returnValue = "#" + filterValue.toUpperCase();
-    	}
-    	
-    	return returnValue;
-    	
-    }
-
-    function changeColor(type) {
-    	
-    	var target = "";
-    	
-    	if (type == "background")
-    		target = $(".figure-item#backgroundColor");
-    	else if (type == "line")
-    		target = $(".figure-item#lineColor");
-    	else if (type == "text")
-    		target = $(".text-item#textColor");
-    	
-    	if (target != "") {
-        	var str = pad(target.children("input[type=text]").val().replace(/[#]/g, ""), 6);
-        	if (str.length > 0 && str.length <= 6) {
-            	var str1 = parseInt(str.substring(0, 2), 16).toString();
-            	var str2 = parseInt(str.substring(2, 4), 16).toString();
-            	var str3 = parseInt(str.substring(4, 6), 16).toString();
-            	target.children(".colorView").css({
-            		background : "rgba(" + str1 + ", " + str2 + ", " + str3 + ")"
-            	});
-        	}
-    	}
-    }
-    
-    function changeValue(type, value) {
-    	
-    	if (type == "weight"){
-        	$(".figure-line-comps .figure-item[id=weight-top] input").val(value);
-        	$(".figure-line-comps .figure-item[id=weight-left] input").val(value);
-        	$(".figure-line-comps .figure-item[id=weight-right] input").val(value);
-        	$(".figure-line-comps .figure-item[id=weight-bottom] input").val(value);
-    	} else if (type == "radius") {
-	    	$(".figure-line-comps .figure-item[id=radius-top-left] input").val(value);
-	    	$(".figure-line-comps .figure-item[id=radius-top-right] input").val(value);
-	    	$(".figure-line-comps .figure-item[id=radius-bottom-left] input").val(value);
-	    	$(".figure-line-comps .figure-item[id=radius-bottom-right] input").val(value);
-    	}
-    }
-
-// input change
-     
-// line style 선택
-
-    $(".text-font-droplist .component").on("mouseenter", function() {
-    	$(".text-font-droplist .component").each(function() {
-    		$(this).css("background", "white");
-    	})
-    	$(this).css("background", "lightgray");
-    });
-    
-    // line 클릭 시 dropdownList 출력
-    function figurelineClicked() {
-    	if ($(".figure-line-droplist").css("display") == "none") {
-        	$(".figure-line-droplist").css({
-        		top : $(".figure-item .line").position().top + 31,
-        		left : $(".figure-item .line").position().left + 11
-        	});
-        	$(".figure-line-droplist").slideDown(100);
-    	} else {
-        	$(".figure-line-droplist").slideUp(100);
-    	}
-    }
-
-    // line 클릭 시 dropdownList component 클릭 시 변경
-    function figurelineChange(style){
-    	$(".figure-line-droplist").slideUp(100);
-    	$(".figure-item .line").children("hr").css({
-    		border : style + " 3px gray"
-    	});
-		applyChange("kinds");
-		clearEnterable();
-    }
-
-// line style 선택
-
-// text style 선택
-
- 	// font dropdownList 마우스 enter 시 색상 변화
-    $(".text-font-droplist .component").on("mouseenter", function() {
-     	$(".text-font-droplist .component").each(function() {
-     		$(this).css("background", "white");
-     	});
-     	$(this).css("background", "lightgray");
-    });
-     
-    // font 클릭 시 dropdownList 출력
-    function textfontClicked() {
-    	if ($(".text-font-droplist").css("display") == "none") {
-         	$(".text-font-droplist").css({
-         		top : $(".text-item .fontType").position().top + 31,
-         		left : $(".text-item .fontType").position().left - 35
-         	});
-         	$(".text-font-droplist").slideDown(100);
-    	} else {
-         	$(".text-font-droplist").slideUp(100);
-    	}
-    }
-
-    // font 클릭 시 dropdownList component 클릭 시 변경
-    function textFontChange(style){
-     	$(".text-font-droplist").slideUp(100);
-     	$(".text-item[id=font] .fontType").html(style);
- 		applyChange("font");
-		clearEnterable();
-    }
-
-// text style 선택
-     
-// text effect 선택
-
-	$(".text-effect").on("mouseenter", function() {
-		if (!$(this).is(".clicked")) {
-			$(this).css("border", "1px solid gray");
-		}
-		$(this).css("background", "lightgray");
-     }).on("mouseleave", function() {
-		if (!$(this).is(".clicked")) {
-			$(this).css("border", "1px solid white");
-		}
-		$(this).css("background", "white");
-     }).on("click", function() {
-    	 if ($(this).is(".clicked")) {
-    		 $(this).removeClass("clicked");
-    		 $(this).css("border", "1px solid white");
-    		 $(this).css("background", "white");
-    	 } else {
-    		 $(this).addClass("clicked");
-    		 $(this).css("border", "1px solid black");
-    		 $(this).css("background", "white");
-    	 }
-    	 applyChange("text-effect-" + $(this).attr("id"));
-     });
-     
 // text effect 선택
 
 // text sort 선택
@@ -440,16 +317,34 @@ var lastChanged = "";
 		}
     	applyChange("text-sort");
 	});
-     
-// text sort 선택
 
-// canvas div 값 가져오기
-
+	document.addEventListener("mousedown", function(event) {
+    	if(!$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *") && !$(event.target).is(".component")) {
+    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)" : false) {
+				$(".text-dragged").css("background", "");
+				$(".text-dragged").selectText();
+    		} else {
+        		$(".text-dragged").contents().unwrap();
+            	window.getSelection().removeAllRanges();
+    		}
+    	}
+	}, true);
+	
+	$(document).on("mouseup", function() {
+		if ($(".text-dragged").length == 0 && window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
+			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
+			clearDragged();
+			formatChange();
+			$(".text-dragged").selectText();
+		}
+	});
+	
 	// canvas div 클릭 시 서식 값 변화
     function formatChange() {
+
+    	var targetMode;
     	var object = $("div.ui-selected");
 		var target = $("div.ui-selected .obj-comp");
-    	var targetMode;
     	
     	if (object.length == 1 && !object.is(".group-obj")) {
     		$(".figure-shape-comps .figure-item[id=width]").fadeIn(100);
@@ -521,31 +416,30 @@ var lastChanged = "";
     	
     	// TEXT
 		var fontType = checkAttr("fontType", target);
-    	$(".text-font-comps .text-item[id=font] .fontType").html(fontType == "diffrent" ? "" : fontType.replace(/"/g, ""));
+    	$(".text-font-comps .text-item[id=font] .fontType").html(fontType == "diffrent" ? "mixed" : fontType.replace(/"/g, ""));
     	
     	var fontSize = checkAttr("fontSize", target);
-    	$(".text-font-comps .text-item[id=size] input").val(fontSize == "diffrent" ? "" : fontSize);
+    	$(".text-font-comps .text-item[id=size] input").val(fontSize == "diffrent" ? "mixed" : fontSize);
     	
     	// font 색상
 		var fontColor = checkAttr("fontColor", target);
 		$(".text-font-comps .text-item[id=textColor] .minicolors-swatch-color").css("background", (fontColor == "diffrent" ? "white" : fontColor));
-		$(".text-font-comps .text-item[id=textColor] input").val(fontColor == "diffrent" ? "" : fontColor);
+		$(".text-font-comps .text-item[id=textColor] input").val(fontColor == "diffrent" ? "mixed" : fontColor);
 		
     	// text effect
     	var bold = checkAttr("bold", target);
     	var italic = checkAttr("italic", target);
     	var underline = checkAttr("underline", target);
     	var strikethrough = checkAttr("strikethrough", target);
-    	clickOption("bold", (bold != "diffrent" ? bold : "false"));
-    	clickOption("italic", (italic != "diffrent" ? italic : "false"));
-    	clickOption("underline", (underline != "diffrent" ? underline : "false"));
-    	clickOption("strikethrough", (strikethrough != "diffrent" ? strikethrough : "false"));
+    	clickOption("bold", (bold == "700" ? "true" : "false"));
+    	clickOption("italic", (italic == "italic" ? "true" : "false"));
+    	clickOption("underline", (underline == "underline" ? "true" : "false"));
+    	clickOption("strikethrough", (strikethrough == "line-through" ? "true" : "false"));
 
     	// font 강조 색상
 		var textgroundColor = checkAttr("textgroundColor", target);
-		console.log(textgroundColor);
-		$(".text-font-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
-		$(".text-font-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "" : textgroundColor);
+		$(".text-shape-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
+		$(".text-shape-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "mixed" : textgroundColor);
 		
     	// text sort
     	var sort = checkAttr("sort", target);
@@ -568,45 +462,231 @@ var lastChanged = "";
     	
     }
 
-    function changeCheckbox(type, object) {
-    	
-    	var target = $(".figure-item.checkbox[id=" + type + "-ratioFix]");
+	function checkAttr(type, object) {
 
-    	if (object.attr("class").split(" ").includes("." + type + "-ratiofixed")) {
-    		target.addClass("checked");
-    		target.children("div.checkbox").css("border", "1px solid gray");
-    		target.children("div.checkbox").children("img").css("display", "block");
-    	} else {
-    		target.removeClass("checked");
-    		target.children("div.checkbox").css("border", "1px solid lightgray");
-    		target.children("div.checkbox").children("img").css("display", "none");
-    	}
-    }
-    
-    function clickOption(type, boolean) {
-    	
-    	if (boolean == "true") {
-     		$(".text-font-comps .text-effect[id=" + type + "]").addClass("clicked");
-     		$(".text-font-comps .text-effect[id=" + type + "]").css("border", "1px solid black");
-     		$(".text-font-comps .text-effect[id=" + type + "]").css("background", "white");
-     	} else if (boolean == "false") {
-     		$(".text-font-comps .text-effect[id=" + type + "]").removeClass("clicked");
-     		$(".text-font-comps .text-effect[id=" + type + "]").css("border", "1px solid white");
-     		$(".text-font-comps .text-effect[id=" + type + "]").css("background", "white");
-     	}
-    }
-    
-// canvas div 값 가져오기
-    
-// canvas div에 값 적용시키기
+    	var result = "start";
+		var value;
+		
+		if (type == "fontType" || type == "fontSize" || type == "fontColor" || type == "bold" || type == "italic" || type == "textgroundColor") {
+			if ($(".text-dragged").length > 0) {
+				if (result != "diffrent" && ($(".text-dragged").text() != $(".text-dragged").children().text() ? true : $(".text-dragged").text() == "")) {
+					switch(type) {
+						case "fontType" : value = $(".text-dragged").css("fontFamily").split(", ")[0]; break;
+						case "fontSize" : value = $(".text-dragged").css("font-size").split("px")[0] * 1; break;
+						case "fontColor" : value = $(".text-dragged").css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+						case "bold" : value = $(".text-dragged").css("font-weight"); break;
+						case "italic" : value = $(".text-dragged").css("font-style"); break;
+						case "textgroundColor" : value = $(".text-dragged").css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+					}
+            		if (result == "start")
+            			result = value;
+            		else if (result != value)
+            			result = "diffrent";
+				}
+	    		$(".text-dragged span").each(function() {
+	    			if (result != "diffrent") {
+						switch(type) {
+							case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+							case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+							case "bold" : value = $(this).css("font-weight"); break;
+							case "italic" : value = $(this).css("font-style"); break;
+							case "textgroundColor" : value = $(this).css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+						}
+	            		if (result == "start")
+	            			result = value;
+	            		else if (result != value)
+	            			result = "diffrent";
+	    			}
+	        	});
+			} else {
+				$("div.ui-selected .obj-comp").each(function() {
+					if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
+						switch(type) {
+							case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+							case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+							case "bold" : value = $(this).css("font-weight"); break;
+							case "italic" : value = $(this).css("font-style"); break;
+							case "textgroundColor" : value = $(this).css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+						}
+	            		if (result == "start")
+	            			result = value;
+	            		else if (result != value)
+	            			result = "diffrent";
+					}
+				});
+	    		$("div.ui-selected span").each(function() {
+	    			if (result != "diffrent") {
+						switch(type) {
+							case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+							case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+							case "bold" : value = $(this).css("font-weight"); break;
+							case "italic" : value = $(this).css("font-style"); break;
+							case "textgroundColor" : value = $(this).css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+						}
+	            		if (result == "start")
+	            			result = value;
+	            		else if (result != value)
+	            			result = "diffrent";
+	    			}
+	        	});
+			}
+    		return result;
+		}
 
+		if (type == "underline" || type == "strikethrough") {
+			var str;
+			switch(type) {
+				case "underline": str = "underline"; break;
+				case "strikethrough" : str = "line-through"; break;
+			}
+			if ($(".text-dragged").length > 0) {
+				value = "";
+				var $checkParent = $(".text-dragged").parent();
+				while(true) {
+					if ($checkParent.is(".textarea"))
+						break;
+					else if ($checkParent.css("text-decoration").includes(str)) {
+						value = str;
+						break;
+					}
+					$checkParent = $checkParent.parent();
+				}
+				if (value == "") {
+					var textDecoration = "";
+					var text = "";
+					$(".text-dragged span").each(function() {
+						if ($(this).children().length == 0) {
+							text = text + $(this).text();
+							if (textDecoration != "diffrent") {
+								var check = "none";
+								var $check = $(this);
+								while (true) {
+									if (!$check.is(".textarea")) {
+										if ($check.css("text-decoration").includes(str)) {
+											check = str;
+											break;
+										}
+										$check = $check.parent();
+									} else 
+										break;
+								}
+								if (textDecoration == "")
+									textDecoration = check == str ? str : "none";
+								else {
+									if (textDecoration != check) {
+										textDecoration = "diffrent";
+									}
+								}
+							}
+						}
+					});
+					if (text != $(".text-dragged").text())
+						value = "none";
+					else
+						value = textDecoration == str ? textDecoration : "none";
+				}
+				result = value;
+			} else {
+				var textDecoration = "";
+				var text = "";
+				$(".ui-selected .textarea span").each(function() {
+					if ($(this).children().length == 0) {
+						text = text + $(this).text();
+						if (textDecoration != "diffrent") {
+							var check = "none";
+							var $check = $(this);
+							while (true) {
+								if (!$check.is(".textarea")) {
+									if ($check.css("text-decoration").includes(str)) {
+										check = str;
+										break;
+									}
+									$check = $check.parent();
+								} else 
+									break;
+							}
+							if (textDecoration == "")
+								textDecoration = check == str ? str : "none";
+							else {
+								if (textDecoration != check) {
+									textDecoration = "diffrent";
+								}
+							}
+						}
+					}
+				});
+				if (text != $(".ui-selected .textarea").text())
+					value = "none";
+				else
+					value = textDecoration == str ? textDecoration : "none";
+				result = value;
+			}
+			return result;
+		}
+		
+		object.each(function() {
+			if (result != "diffrent") {
+				
+        		if (type == "rotate") {
+        			value = $(this).css("transform");
+        			value = value.split("(")[1].split(")")[0].split(", ");
+        			value = Math.round(Math.atan2(value[1], value[0]) * (180/Math.PI));
+                	if (value < 0)
+                		value = 360 - (value * -1); 
+        		}
+        		
+        		if (type == "backgroundColor") {
+        			value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
+        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+        		}
+
+    			if (type == "kinds") {
+    				value = $(this).css("border-top-style");
+    			}
+    			
+    			if (type == "lineColor") {
+    				value = $(this).css("border-color").split("(")[1].split(")")[0].split(", ");
+    				value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+    			}
+
+    			if (type == "lineWeight_t") 
+    				value = $(this).css("border-top-width").split("px")[0] * 1;
+    			if (type == "lineWeight_l") 
+    				value = $(this).css("border-left-width").split("px")[0] * 1;
+    			if (type == "lineWeight_r") 
+    				value = $(this).css("border-right-width").split("px")[0] * 1;
+    			if (type == "lineWeight_b") 
+    				value = $(this).css("border-bottom-width").split("px")[0] * 1;
+
+    			if (type == "lineRadius_tl") 
+    				value = $(this).css("border-top-left-radius").split("px")[0] * 1;
+    			if (type == "lineRadius_tr") 
+    				value = $(this).css("border-top-right-radius").split("px")[0] * 1;
+    			if (type == "lineRadius_bl") 
+    				value = $(this).css("border-bottom-left-radius").split("px")[0] * 1;
+    			if (type == "lineRadius_br") 
+    				value = $(this).css("border-bottom-right-radius").split("px")[0] * 1;
+
+    			if (type == "sort") {
+    				value = $(this).css("text-align");
+    			}
+    			
+    			if (result == "start")
+    				result = value;
+    			else if (result != value)
+    				result = "diffrent";
+    			
+			}
+		});
+		return result;
+	}
+	
 	// input 변화
     function applyChange(type) {
 
-    	if (type != "" ? type != lastChanged : false) {
-    		$(".last-changed").removeAttr("class");
-    	}
-    	
     	var object = $("div.ui-selected");
 		var target = $("div.ui-selected .obj-comp");
 		
@@ -691,33 +771,15 @@ var lastChanged = "";
         		
             	// TEXT
         		
-        		// 수정중
-        		
         		// font
         		if (type == "font") {
-        			if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
-        		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-family", $(".text-font-comps .text-item[id=font] .fontType").html());
         		    clearChanged("font-family");
         		}
 
         		// fontSize
         		if (type == "fontSize") {
-                	var textSelected = $(".textarea span.text-selected");
-        		    if (textSelected.length > 0) {
-        		    	textSelected.html("<span class='changed' style='font-size : " + $(".text-font-comps .text-item[id=size] input").val() + "px'>" + textSelected.html() + "</span>");
-            			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
-        		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-size", $(".text-font-comps .text-item[id=size] input").val() + "px");
         		    clearChanged("font-size");
         		}
 
@@ -728,40 +790,18 @@ var lastChanged = "";
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
 
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
                 	var textSelected = $(".textarea span.text-selected");
-        		    if (textSelected.length > 0) {
-        		    	textSelected.html("<span class='changed' style='color : rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")'>" + textSelected.html() + "</span>");
-            			$(".textarea .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
-            				wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
-        		    } else {
-        		    	wrapSpanToText($(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
-        		    }
         		    clearChanged("color");
-        		    clearEnterable();
         		}
 
         		if (type == "text-effect-bold") {
-        			if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
-            		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-weight", ($(".text-effect[id=bold]").is(".clicked") ? "bold" : ""));
-        		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-weight", $(".text-effect[id=bold]").is(".clicked") ? "bold" : "");
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", $(".text-effect[id=bold]").is(".clicked") ? "bold" : "");
         		    clearChanged("font-weight");
                 }
         		
         		if (type == "text-effect-italic") {
-        			if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
-            		       	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "font-style", ($(".text-effect[id=italic]").is(".clicked") ? "italic" : ""));
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
-        		    } else {
-        		    	wrapSpanToText($(this), "changed", "font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
         		    clearChanged("font-style");
         		}
             	
@@ -808,19 +848,8 @@ var lastChanged = "";
                 	var textgroundColor2 = parseInt(textgroundColor.substring(2, 4), 16);
                 	var textgroundColor3 = parseInt(textgroundColor.substring(4, 6), 16);
 
-                	var textSelected = $(".textarea span.text-selected");
-        		    if (textSelected.length > 0) {
-        		    	textSelected.html("<span class='changed' style='background : rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")'>" + textSelected.html() + "</span>");
-            			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
-        		    } else if (window.getSelection().rangeCount > 0 ? (window.getSelection().anchorNode.className == null ? true : !window.getSelection().anchorNode.className.startsWith("text-item") && !window.getSelection().anchorNode.className.startsWith("figure-item") && !window.getSelection().anchorNode.className.startsWith("minicolor")) : false) {
-            		    wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
-        		    } else if ($(".last-changed").length > 0) {
-        		    	$(".last-changed").css("background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
-        		    } else {
-        		    	wrapSpanToText($(this), "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "background", "rgb(" + textgroundColor1 + ", " + textgroundColor2 + ", " + textgroundColor3 + ")");
         		    clearChanged("background");
-        		    clearEnterable();
         		}
 
         		if (type == "text-sort") {
@@ -838,13 +867,39 @@ var lastChanged = "";
     		
     	}
 
-    	if (type != "")
+    	if (type != "") {
+    		if (!type.endsWith("Color"))
+    			Thumbnail();
     		lastChanged = type;
+    	}
 	    
     }
-
-// canvas div에 값 적용시키기
-
+    
+    function changeCheckbox(type, object) {
+    	var target = $(".figure-item.checkbox[id=" + type + "-ratioFix]");
+    	if (object.attr("class").split(" ").includes("." + type + "-ratiofixed")) {
+    		target.addClass("checked");
+    		target.children("div.checkbox").css("border", "1px solid gray");
+    		target.children("div.checkbox").children("img").css("display", "block");
+    	} else {
+    		target.removeClass("checked");
+    		target.children("div.checkbox").css("border", "1px solid lightgray");
+    		target.children("div.checkbox").children("img").css("display", "none");
+    	}
+    }
+    
+    function clickOption(type, boolean) {
+    	if (boolean == "true") {
+     		$(".text-font-comps .text-effect[id=" + type + "]").addClass("clicked");
+     		$(".text-font-comps .text-effect[id=" + type + "]").css("border", "1px solid black");
+     		$(".text-font-comps .text-effect[id=" + type + "]").css("background", "white");
+     	} else if (boolean == "false") {
+     		$(".text-font-comps .text-effect[id=" + type + "]").removeClass("clicked");
+     		$(".text-font-comps .text-effect[id=" + type + "]").css("border", "1px solid white");
+     		$(".text-font-comps .text-effect[id=" + type + "]").css("background", "white");
+     	}
+    }
+    
     // 유효성 검사 중 공백 0으로 채우기
 	function pad(n, width) {
 		n = n + '';
@@ -882,7 +937,7 @@ var lastChanged = "";
     	}
     }
 
-    function wrapSpanToText(target, className, cssType, cssProperty) {
+    function wrapSpan(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
     		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
     	}
@@ -891,175 +946,8 @@ var lastChanged = "";
     	}
     }
 
-	function checkAttr(type, object) {
-
-    	var result = "start";
-		var value;
-		
-		if (type == "fontType") {
-			$("div.ui-selected .obj-comp").each(function() {
-				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
-    				value = $(this).css("fontFamily").split(", ")[0];
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-				}
-			});
-    		$("div.ui-selected span").each(function() {
-    			if (result != "diffrent") {
-    				value = $(this).css("fontFamily").split(", ")[0];
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-    			}
-        	});
-    		return result;
-		}
-
-		if (type == "fontSize") {
-			$("div.ui-selected .obj-comp").each(function() {
-				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
-    				value = $(this).css("font-size").split("px")[0] * 1;
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-				}
-			});
-    		$("div.ui-selected span").each(function() {
-    			if (result != "diffrent") {
-    				value = $(this).css("font-size").split("px")[0] * 1;
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-    			}
-        	});
-    		return result;
-		}
-		
-		if (type == "textgroundColor") {
-			$("div.ui-selected .obj-comp").each(function() {
-				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
-        			value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
-        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-				}
-			});
-    		$("div.ui-selected span").each(function() {
-    			if (result != "diffrent") {
-    				value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
-    				value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-    			}
-        	});
-    		return result;
-		}
-
-		if (type == "fontColor") {
-			$("div.ui-selected .obj-comp").each(function() {
-				if (result != "diffrent" && ($(this).text() != $(this).children().text() ? true : $(this).text() == "")) {
-        			value = $(this).css("color").split("(")[1].split(")")[0].split(", ");
-        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-				}
-			});
-    		$("div.ui-selected span").each(function() {
-    			if (result != "diffrent") {
-    				value = $(this).css("color").split("(")[1].split(")")[0].split(", ");
-    				value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-            		if (result == "start")
-            			result = value;
-            		else if (result != value)
-            			result = "diffrent";
-    			}
-        	});
-    		return result;
-		}
-		
-		object.each(function() {
-			if (result != "diffrent") {
-				
-        		if (type == "rotate") {
-        			value = $(this).css("transform");
-        			value = value.split("(")[1].split(")")[0].split(", ");
-        			value = Math.round(Math.atan2(value[1], value[0]) * (180/Math.PI));
-                	if (value < 0)
-                		value = 360 - (value * -1); 
-        		}
-        		
-        		if (type == "backgroundColor") {
-        			value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
-        			value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-        		}
-
-    			if (type == "kinds") {
-    				value = $(this).css("border-top-style");
-    			}
-    			
-    			if (type == "lineColor") {
-    				value = $(this).css("border-color").split("(")[1].split(")")[0].split(", ");
-    				value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
-    			}
-
-    			if (type == "lineWeight_t") 
-    				value = $(this).css("border-top-width").split("px")[0] * 1;
-    			if (type == "lineWeight_l") 
-    				value = $(this).css("border-left-width").split("px")[0] * 1;
-    			if (type == "lineWeight_r") 
-    				value = $(this).css("border-right-width").split("px")[0] * 1;
-    			if (type == "lineWeight_b") 
-    				value = $(this).css("border-bottom-width").split("px")[0] * 1;
-
-    			if (type == "lineRadius_tl") 
-    				value = $(this).css("border-top-left-radius").split("px")[0] * 1;
-    			if (type == "lineRadius_tr") 
-    				value = $(this).css("border-top-right-radius").split("px")[0] * 1;
-    			if (type == "lineRadius_bl") 
-    				value = $(this).css("border-bottom-left-radius").split("px")[0] * 1;
-    			if (type == "lineRadius_br") 
-    				value = $(this).css("border-bottom-right-radius").split("px")[0] * 1;
-    			
-    			if (type == "bold") 
-    				value = $(this).css("font-weight").includes("700") ? "true" : "false";
-    			if (type == "italic") 
-    				value = $(this).css("font-style").includes("italic") ? "true" : "false";
-    			if (type == "underline") 
-    				value = $(this).css("text-decoration").includes("underline") ? "true" : "false";
-    			if (type == "strikethrough") 
-    				value = $(this).css("text-decoration").includes("line-through") ? "true" : "false";
-
-    			if (type == "sort") {
-    				value = $(this).css("text-align");
-    			}
-    			
-    			if (result == "start")
-    				result = value;
-    			else if (result != value)
-    				result = "diffrent";
-    			
-			}
-		});
-		return result;
-	}
-	
 	function clearChanged(type) {
 
-	    $(".last-changed").each(function() {
-	    	$(this).removeAttr("class");
-	    });
-	    
 	    if (!$(".ui-selected .changed").parent().is(".textarea") && $(".ui-selected .changed").parent().text() == $(".ui-selected .changed").text()) {
 	    	$(".ui-selected .changed").parent().css(type, "");
 	    }
@@ -1086,9 +974,16 @@ var lastChanged = "";
 				$(this).remove();
 	    });
 	    
-		$(".ui-selected .changed").addClass("last-changed");
-		$(".ui-selected .last-changed").removeClass("changed");
+		$(".ui-selected .changed").removeAttr("class");
 		
+	}
+
+	function clearDragged() {
+		$(".ui-selected span").each(function() {
+			if ($(this).html() == "") {
+				$(this).contents().unwrap();
+			}
+		});
 	}
 	
 	$(document).on("mousemove", ".text-editing", function() {
@@ -1118,33 +1013,127 @@ var lastChanged = "";
 		        },
 		        stop: function(){
 		            addControl();
+			    	if ($("#droppable .ui-selected").length == 0) {
+			    		$('.right-side-bar .canvas-menu').show();
+			    		$('.right-side-bar .tab-menu').hide();
+			    		$('.right-side-bar .tab-content').hide();
+			    	}
 		        }
 		    });
 		}
 	});
 	
 	$(document).on("click", ".text-editing", function() {
-		if ($(".text-selected").length > 0) {
-			restoreSelection(textSelection);
-			$(".text-selected").addClass("text-reselect");
-			$(".text-selected").removeClass("text-selected");
-			$(".text-reselect").css("background", "none");
-		} else if ($(".text-reselect").length > 0)
-			$(".text-reselect").contents().unwrap();
+		if ($(".text-dragged").length > 0) {
+			if ($(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)")
+				$(".text-dragged").css("background", "");
+			$(".text-dragged").selectText();
+		}
 	});
 	
 	$("input").on("focusin", function() {
-		var focused = window.getSelection();
-		if (focused.rangeCount > 0) {
-			var target = focused.getRangeAt(0).commonAncestorContainer.parentElement.className + " ";
-			// cursor 드래그 된 것이 있을 경우
-			if (focused.focusNode != null) {
-	    		textSelection = saveSelection();
-				wrapTag(focused.getRangeAt(0), "span", "text-selected", "background", "lightgray");
-		        window.getSelection().removeAllRanges();    
-			}
+		if ($(".text-dragged").length > 0) {
+			$(".text-dragged").css("background", "pink");
+	        window.getSelection().removeAllRanges();
 		}
 	});
+
+    function filterValue(type, value) {
+    	var returnValue = "none";
+    	if (type == "number")
+    		returnValue = value.replace(/[^(0-9)]/g, "");
+    	else if (type == "color") {
+        	var filterValue = value.replace(/[^(0-9)^(a-f)^(A-F)]/g, "");
+        	if (filterValue.length > 7) {
+        		filterValue = filterValue.substring(0, 6);
+        	}
+        	returnValue = "#" + filterValue.toUpperCase();
+    	}
+    	return returnValue;
+    }
+
+    function changeColor(type) {
+    	
+    	var target = "";
+    	
+    	if (type == "background")
+    		target = $(".figure-item#backgroundColor");
+    	else if (type == "line")
+    		target = $(".figure-item#lineColor");
+    	else if (type == "text")
+    		target = $(".text-item#textColor");
+    	
+    	if (target != "") {
+        	var str = pad(target.children("input[type=text]").val().replace(/[#]/g, ""), 6);
+        	if (str.length > 0 && str.length <= 6) {
+            	var str1 = parseInt(str.substring(0, 2), 16).toString();
+            	var str2 = parseInt(str.substring(2, 4), 16).toString();
+            	var str3 = parseInt(str.substring(4, 6), 16).toString();
+            	target.children(".colorView").css({
+            		background : "rgba(" + str1 + ", " + str2 + ", " + str3 + ")"
+            	});
+        	}
+    	}
+    }
+    
+    function changeValue(type, value) {
+    	
+    	if (type == "weight"){
+        	$(".figure-line-comps .figure-item[id=weight-top] input").val(value);
+        	$(".figure-line-comps .figure-item[id=weight-left] input").val(value);
+        	$(".figure-line-comps .figure-item[id=weight-right] input").val(value);
+        	$(".figure-line-comps .figure-item[id=weight-bottom] input").val(value);
+    	} else if (type == "radius") {
+	    	$(".figure-line-comps .figure-item[id=radius-top-left] input").val(value);
+	    	$(".figure-line-comps .figure-item[id=radius-top-right] input").val(value);
+	    	$(".figure-line-comps .figure-item[id=radius-bottom-left] input").val(value);
+	    	$(".figure-line-comps .figure-item[id=radius-bottom-right] input").val(value);
+    	}
+    }
+
+    // line 클릭 시 dropdownList 출력
+    function figurelineClicked() {
+    	if ($(".figure-line-droplist").css("display") == "none") {
+        	$(".figure-line-droplist").css({
+        		top : $(".figure-item .line").position().top + 31,
+        		left : $(".figure-item .line").position().left + 11
+        	});
+        	$(".figure-line-droplist").slideDown(100);
+    	} else {
+        	$(".figure-line-droplist").slideUp(100);
+    	}
+    }
+
+    // line 클릭 시 dropdownList component 클릭 시 변경
+    function figurelineChange(style){
+    	$(".figure-line-droplist").slideUp(100);
+    	$(".figure-item .line").children("hr").css({
+    		border : style + " 3px gray"
+    	});
+		applyChange("kinds");
+		clearEnterable();
+    }
+
+    // font 클릭 시 dropdownList component 클릭 시 변경
+    function textFontChange(style){
+     	$(".text-font-droplist").slideUp(100);
+     	$(".text-item[id=font] .fontType").html(style);
+ 		applyChange("font");
+		clearEnterable();
+    }
+
+    // font 클릭 시 dropdownList 출력
+    function textfontClicked() {
+    	if ($(".text-font-droplist").css("display") == "none") {
+         	$(".text-font-droplist").css({
+         		top : $(".text-item .fontType").position().top + 31,
+         		left : $(".text-item .fontType").position().left - 35
+         	});
+         	$(".text-font-droplist").slideDown(100);
+    	} else {
+         	$(".text-font-droplist").slideUp(100);
+    	}
+    }
 
 	//editablecontent select all text
 	jQuery.fn.selectText = function() {
@@ -1162,28 +1151,3 @@ var lastChanged = "";
     		selection.addRange(range);
     	}
 	};
-
-	function saveSelection() {
-	    if (window.getSelection) {
-	        var sel = window.getSelection();
-	        if (sel.getRangeAt && sel.rangeCount) {
-	            return sel.getRangeAt(0);
-	        }
-	    } else if (document.selection && document.selection.createRange) {
-	        return document.selection.createRange();
-	    }
-	    return null;
-	}
-
-	function restoreSelection(range) {
-	    if (range) {
-	        if (window.getSelection) {
-	            var sel = window.getSelection();
-	            sel.removeAllRanges();
-	            sel.addRange(range);
-	        } else if (document.selection && range.select) {
-	            range.select();
-	        }
-	    }
-	}
-	

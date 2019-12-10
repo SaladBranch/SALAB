@@ -1,5 +1,6 @@
 package com.sesame.salab.member.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.sesame.salab.common.paging.model.vo.Paging;
@@ -17,9 +18,10 @@ public interface MemberService {
 	int initChangePwd(Member member);
 	Member chkGoogleUser(Member tempMember);
 	void enrollGoogleUser(Member m);
-	int mlistCount();
-	List<Member> memberList(Paging paging);
+	int mlistCount(String keyword);
+	List<Member> memberList(HashMap<String, Object> map);
 	Member memberDetail(int userno);
 	int changePhoneNum(Member member);
+	int memberUpdate(Member member);
 
 }

@@ -593,10 +593,6 @@ a {
 	color: black;
 }
 
-a:hover{
-	color: #3cb371;
-}
-
 input:focus::-webkit-input-placeholder { 
 	color: transparent; 
 }

@@ -112,7 +112,7 @@
 							</li>
 							<li>
 								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
-								<input type="button" class="qna_update_btn" value="글 수정" onclick="update_qna();">
+								<input type="button" class="qna_update_btn" value="답변하기" onclick="update_qna();">
 							</li>
 						</c:if>
 					</ul>
@@ -148,7 +148,6 @@ function update_qna(){
 		alert("답변을 입력해 주세요.");
 		$("#qna_box_ans").focus();
 	} else{
-		alert("hi");
 		$("#adminQnaUpdate").submit();
 	}
 }

@@ -159,9 +159,9 @@
         <div class="row recent-files">
         	<c:if test="${!empty fileList }">
         		<c:forEach var="tfile" items="${fileList }">
-        		<div class="file-grid" onclick="etFile(${tfile.prfileno});">
+        		<div class="file-grid" >
 	                <div class="file-container">
-	                    <div class="file-thumbnail">
+	                    <div class="file-thumbnail" onclick="etFile(${tfile.prfileno});">
 	                        ${tfile.prfilethumbnail }
 	                    </div>
 	                    <div class="file-info">

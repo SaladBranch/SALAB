@@ -62,7 +62,7 @@
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="menu-title">
-                <span>도움말</span>
+                <span><a href="noticelist.do">도움말</a></span>
             </div>
             <div class="recent-file">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
@@ -91,7 +91,7 @@
 				<p class="qna_info">현재 1:1 문의 답변에 평균 7 ~ 14일 정도 소요될 수 있으며, 최대 20일 이상 지연될 수 있습니다.</p>
 				<p class="qna_info">신속하게 답변드릴 수 있도록 최선을 다하겠습니다.</p>
 				<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
-				<p class="qna_info_faq"><u><a href="faqlist.do">FAQ바로가기</a></u></p>
+				<p class="qna_info_faq"><a href="faqlist.do"><span class="go_faq"><u>FAQ바로가기</u></span></a></p>
 				<form action="qnaInsert.do" id="qnainsert" method="post" enctype="multipart/form-data">
 					<ul>
 						<li>
@@ -140,7 +140,6 @@ function qna_insert(){
 		alert("내용을 입력해 주세요.");
 		$("#qna_box_content").focus();
 	} else{
-		alert("hi");
 		$("#qnainsert").submit();
 	}
 }

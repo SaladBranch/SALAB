@@ -175,12 +175,11 @@ public class ProjectController {
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
 	session.removeAttribute("myProjectList");
 	session.setAttribute("myProjectList", projectList);
-
+	session.setAttribute("project", project);
 	mv.addObject("projectList",teamProjectList);
 	mv.addObject("memberList", memberList);
 	mv.addObject("noticelist", pnoticelist);
 	mv.addObject("paging", paging);
-	mv.addObject("project", project);
   	mv.setViewName("project/projectMainPage");
 	return mv;
 	}

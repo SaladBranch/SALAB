@@ -18,20 +18,21 @@
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
-    <title>최근 파일 | Salab</title>
+    <title>${project.projectname } | Salab</title>
 </head>
 
 <body>
-    <header>
+     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">최근 파일</div>
+                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${project.projectname}</a></div>
+                <input id="projectno" type="hidden" value="${requestScope.projectno}">
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -42,17 +43,22 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div class=""></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
                                 <li><a href="userMain.do">계정 설정하기</a></li>
-                                <li><a href="userNotice.do">도움말</a></li>
+                                <li><a href="noticelist.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
                         </div>
@@ -68,7 +74,7 @@
                 <i class="fas fa-search" id="search-icon"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
-            <div class="recent-file active-menu">
+            <div class="recent-file">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
                 <a href="recentFile.do">최근 파일</a>
             </div>
@@ -97,10 +103,10 @@
 			          			</div>
 			          		</c:if>       
 						
-							<c:if test="${project.projectno eq projectList.projectno }">
+							<c:if test="${projectno eq projectList.projectno }">
 								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							</c:if>
-							<c:if test="${project.projectno ne projectList.projectno }">
+							<c:if test="${projectno ne projectList.projectno }">
 								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							</c:if>
 							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
@@ -140,8 +146,7 @@
                         </tr>
 
                         <c:forEach var="notice" items="${requestScope.noticelist}">
-                            <tr class="clickNotice" value="${notice.pnoticeno}">
-                                <input type="hidden" value="${notice.pnoticeno}">
+                            <tr class="clickNotice" value="${notice.pnoticeno}" onclick="readNotice(${requestScope.projectno},${notice.pnoticeno})">
                                 <td>${notice.pnoticedate}</td>
                                 <td>${notice.pnoticetitle}</td>
                                 <td>${notice.pnoticewriter}</td>
@@ -157,24 +162,23 @@
                     <input id="nowPage" type="hidden" value="${paging.currentPage}">
                     <c:if test="${paging.maxPage >= 5}">
                         <c:if test="${paging.startPage eq 1}">
-                            <span class="donTouch">
-                                <</span> 
-                        </c:if> <c:if test="${paging.startPage != 1}">
-                                    <span id="firstPage" onclick="moveListPage(${paging.startPage-1})">
-                                        <</span>
-                                        </c:if> </c:if> <c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
-                                            <span onclick="moveListPage(${ pageno })">${ pageno }</span>
-                                            </c:forEach>
-
-                                            <c:if test="${paging.maxPage gt 5}">
-                                                <c:if test="${paging.endPage eq paging.maxPage}">
-                                                    <span class="donTouch">> </span>
-                                                </c:if>
-                                                <c:if test="${paging.endPage != paging.maxPage}">
-                                                    <span id="lastPage" onclick="moveListPage(${paging.endPage+1})">></span>
-                                                </c:if>
-                                            </c:if>
-
+                            <span class="donTouch"><</span> 
+                        </c:if> 
+                        <c:if test="${paging.startPage != 1}">
+                              <span id="firstPage" onclick="moveListPage(${paging.startPage-1})"><</span>
+                        </c:if>
+                     </c:if>
+                     <c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+                               <span onclick="moveListPage(${ pageno })">${ pageno }</span>
+                               </c:forEach>
+                                    <c:if test="${paging.maxPage gt 5}">
+                                         <c:if test="${paging.endPage eq paging.maxPage}">
+                                             <span class="donTouch">> </span>
+                                         </c:if>
+                                    <c:if test="${paging.endPage != paging.maxPage}">
+                                         <span id="lastPage" onclick="moveListPage(${paging.endPage+1})">></span>
+                                    </c:if>
+                               </c:if>
                 </div>
             </div>
 

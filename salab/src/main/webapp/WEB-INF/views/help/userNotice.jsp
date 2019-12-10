@@ -62,7 +62,7 @@
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="menu-title">
-                <span>도움말</span>
+                <span><a href="noticelist.do">도움말</a></span>
             </div>
             <div class="recent-file active-menu">
                 <!-- <div class="icon-wrapper"><i class="far fa-clock"></i></div>  -->
@@ -97,6 +97,7 @@
 				
               	<!-- 목록 -->
 				<c:if test="${!empty requestScope.noticelist }">
+					<c:set var="lcount" value="${requestScope.paging.listCount - ((requestScope.paging.currentPage-1) * requestScope.paging.limit)}"/>
 					<c:forEach var="notice" items="${requestScope.noticelist }">
 						<c:url var="noticeDetail" value="noticeDetail.do">
 							<c:param name="noticeno" value="${notice.noticeno }" />
@@ -105,12 +106,13 @@
 						<li class="notice_list">
 							<ul>
 								<a href="${noticeDetail }">
-									<li class="notice_head_no"><span>${notice.noticeno }</span></li>
+									<li class="notice_head_no"><span><c:out value="${lcount }" /></span></li>
 									<li class="notice_head_title"><span>${notice.noticetitle }</span></li>
 									<li class="notice_head_date"><span>${notice.noticedate }</span></li>
 								</a>
 							</ul>
 						</li>
+						<c:set var="lcount" value="${lcount - 1 }" />
 					</c:forEach>
 				</c:if>
               	<!-- 목록 -->

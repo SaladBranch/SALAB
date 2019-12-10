@@ -197,7 +197,7 @@
                         <input type="button" value="STANDARD로  변경하기">
                     </div>
                 </div>
-                <div id="goto-FAQ" class="escapeSentence">등급에 관련하여 궁금하신 사항이 있으신가요?</div>
+                <div id="goto-FAQ" class="escapeSentence"><a href="noticelist.do">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
             </div>
 
             <div id="horizon-line"></div>

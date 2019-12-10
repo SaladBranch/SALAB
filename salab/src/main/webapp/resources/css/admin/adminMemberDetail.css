@@ -500,22 +500,21 @@ body{
 }
 
 .member_profile{
-	margin: 10px;
+	margin: 5px;
 	font-size: 13pt;
 	font-weight: bold;
-	width: 20px;
-	height: 20px;
-	width:50px;
-	height: 50px;
+	width: 80px;
+	height: 80px;
 }
 
 .member_info{
-	margin: 20px 10px;
+	margin: 5px;
 	font-size: 13pt;
 	font-weight: bold;
 }
 
 .member_input{
+	margin: 5px;
 	text-align: center;
 	font-size: 13pt;
 	font-weight: bold;
@@ -557,7 +556,7 @@ body{
 }
 
 .member_back_btn{
-	margin: 5px 50px 0px 100px;
+	margin: 10px 50px 0px 100px;
 	padding: 10px 40px;
 	border: 1px solid lightgreen;
 	cursor: pointer;
@@ -569,7 +568,7 @@ body{
 }
 
 .member_update_btn{
-	margin: 5px 20px 0px 60px;
+	margin: 10px 20px 0px 60px;
 	padding: 10px 40px;
 	border: 1px solid lightgreen;
 	cursor: pointer;
@@ -583,10 +582,6 @@ body{
 a { 
 	text-decoration: none; 
 	color: black;
-}
-
-a:hover{
-	color: #3cb371;
 }
 
 input:focus::-webkit-input-placeholder { 

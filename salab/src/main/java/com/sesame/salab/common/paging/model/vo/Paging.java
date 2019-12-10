@@ -19,9 +19,9 @@ public class Paging implements Serializable {
 
    private int currentPage; // 현재 페이지
 
-   private int limit = 6; // 현재 페이지에 출력할 글 갯수
+   private int limit; // 현재 페이지에 출력할 글 갯수
    
-   private double add = 1-(1.0/limit); 
+   private double add;
 
    private int listCount; // DB에서의 모든 행의 합 
 
@@ -35,7 +35,7 @@ public class Paging implements Serializable {
    
    private int endRow;  //쿼리에서 검색할 끝 행 수 
    
-   private int underlimit = 5; // 프론트 하단 페이지 개수 
+   private int underlimit; // 프론트 하단 페이지 개수 
    
    public Paging() {
       // TODO Auto-generated constructor stub
@@ -45,6 +45,8 @@ public class Paging implements Serializable {
    
    //페이징 메소드 
    public void makePage(int listCount, int curPage) {
+	   
+	   this.setAdd(add = 1-(1.0/limit));
       
       this.setCurrentPage(curPage); //현재 페이지
       this.setListCount(listCount); //총 페이지 개수

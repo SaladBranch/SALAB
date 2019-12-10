@@ -38,6 +38,18 @@ $(document).on('keydown', function(e){
         else
         	$(".obj-comp[contenteditable=true]").selectText();
     }
+    if(e.keyCode == 38){
+    	moveUp();
+    }
+    if(e.keyCode == 37){
+    	moveLeft();
+    }
+    if(e.keyCode == 39){
+    	moveRight();
+    }
+    if(e.keyCode == 40){
+    	moveDown();
+    }
 });
 function deleteObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
@@ -52,10 +64,12 @@ function deleteObject(){
 }
 
 function copyObject(){
-    copiedObj = new Array();
-    $('#droppable .ui-selected').each(function(){
-         copiedObj.push($(this));
-    });
+	if(selectedObj.length > 0){
+	    copiedObj = new Array();
+	    $('#droppable .ui-selected').each(function(){
+	         copiedObj.push($(this));
+	    });
+	}
 }
 function cutObject(){
 	var index = $('.page-item').index($('.page-item.ui-selected'));
@@ -129,50 +143,52 @@ function cloneObject(){
 }
 //그룹화
 function groupObject(){
-	var index = $('.page-item').index($('.page-item.ui-selected'));
-	list[index].undo.push($('.canvas-container').html());
-	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-	
-    var $group = $('<div class="group-obj obj ui-selected"></div>')
-    var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
-    for(i = 0; i<selectedObj.length; i++){
-        $obj = selectedObj[i];
-        
-        var oleft = Number($obj.css('left').replace('px', ''));
-        var otop = Number($obj.css('top').replace('px', ''));
-        var oright = oleft + Number($obj.css('width').replace('px', ''));
-        var obottom = otop + Number($obj.css('height').replace('px', ''));
-        
-        if(oleft < left) left = oleft;
-        if(otop < top) top = otop;
-        if(oright > right) right = oright;
-        if(obottom > bottom) bottom = obottom;
-        
-        $obj.children().remove('.ui-resizable-handle');
-        $obj.children('.ui-rotatable-handle').hide();
-        if($obj.hasClass('ui-draggable'))
-            $obj.draggable('destroy');
-        $obj.removeClass('ui-selected');
-        $group.append($obj);
-    }
-    $group.css({
-        top: top,
-        left: left,
-        width: right - left,
-        height: bottom - top
-    });
-    $group.children('.obj').each(function(){
-        $(this).css({
-            left: Number($(this).css('left').replace('px', '')) - left,
-            top: Number($(this).css('top').replace('px', '')) - top
-        });
-    });
-    
-    $group.appendTo('#droppable');
-    selectedObj = new Array();
-    selectedObj.push($group);
-    
-    addControl();
+	if(selectedObj.length > 1){
+		var index = $('.page-item').index($('.page-item.ui-selected'));
+		list[index].undo.push($('.canvas-container').html());
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+		
+	    var $group = $('<div class="group-obj obj ui-selected"></div>')
+	    var left = 1500, right = 0, bottom = 0, width = 0, height = 0, top = 1500;
+	    for(i = 0; i<selectedObj.length; i++){
+	        $obj = selectedObj[i];
+	        
+	        var oleft = Number($obj.css('left').replace('px', ''));
+	        var otop = Number($obj.css('top').replace('px', ''));
+	        var oright = oleft + Number($obj.css('width').replace('px', ''));
+	        var obottom = otop + Number($obj.css('height').replace('px', ''));
+	        
+	        if(oleft < left) left = oleft;
+	        if(otop < top) top = otop;
+	        if(oright > right) right = oright;
+	        if(obottom > bottom) bottom = obottom;
+	        
+	        $obj.children().remove('.ui-resizable-handle');
+	        $obj.children('.ui-rotatable-handle').hide();
+	        if($obj.hasClass('ui-draggable'))
+	            $obj.draggable('destroy');
+	        $obj.removeClass('ui-selected');
+	        $group.append($obj);
+	    }
+	    $group.css({
+	        top: top,
+	        left: left,
+	        width: right - left,
+	        height: bottom - top
+	    });
+	    $group.children('.obj').each(function(){
+	        $(this).css({
+	            left: Number($(this).css('left').replace('px', '')) - left,
+	            top: Number($(this).css('top').replace('px', '')) - top
+	        });
+	    });
+	    
+	    $group.appendTo('#droppable');
+	    selectedObj = new Array();
+	    selectedObj.push($group);
+	    
+	    addControl();
+	}
 }
 //그룹해제
 function ungroupObject(){
@@ -323,63 +339,107 @@ function redoPage(){
 //맨앞으로
 var zIndex = 0;
 function send_forward(){
-	var index = $('.page-item').index($('.page-item.ui-selected'));
-	list[index].undo.push($('.canvas-container').html());
-	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-	
-    var max = 0;
-    $('#droppable .obj').each(function(){
-        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
-        if(num > max){
-            max = num;
-        }
-    });
-    for(i = 0; i<selectedObj.length; i++){
-        selectedObj[i].css('z-index', Number(max) + 1);
-    }
+	if(selectedObj.length > 0){
+		var index = $('.page-item').index($('.page-item.ui-selected'));
+		list[index].undo.push($('.canvas-container').html());
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+		
+	    var max = 0;
+	    $('#droppable .obj').each(function(){
+	        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+	        if(num > max){
+	            max = num;
+	        }
+	    });
+	    for(i = 0; i<selectedObj.length; i++){
+	        selectedObj[i].css('z-index', Number(max) + 1);
+	    }	
+	}
 }
 //앞으로
 function send_front(){
-	var index = $('.page-item').index($('.page-item.ui-selected'));
-	list[index].undo.push($('.canvas-container').html());
-	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-	
-    for(i = 0; i<selectedObj.length; i++){
-        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
-        selectedObj[i].css('z-index', Number(num) + 1);
-    }
+	if(selectedObj.length > 0){
+		var index = $('.page-item').index($('.page-item.ui-selected'));
+		list[index].undo.push($('.canvas-container').html());
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+		
+	    for(i = 0; i<selectedObj.length; i++){
+	        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
+	        selectedObj[i].css('z-index', Number(num) + 1);
+	    }
+	}
 }
 //뒤로
 function send_back(){
-	var index = $('.page-item').index($('.page-item.ui-selected'));
-	list[index].undo.push($('.canvas-container').html());
-	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-	
-    for(i = 0; i<selectedObj.length; i++){
-        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
-        if(num != 0)
-            selectedObj[i].css('z-index', Number(num) - 1);
-        else{
-            $('#droppable .obj').each(function(){
-                var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
-                $(this).css('z-index', Number(num) + 1);
-            });
-        }
-    }
+	if(selectedObj.length > 0){
+		var index = $('.page-item').index($('.page-item.ui-selected'));
+		list[index].undo.push($('.canvas-container').html());
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+		
+	    for(i = 0; i<selectedObj.length; i++){
+	        var num = selectedObj[i].css('z-index') == 'auto' ? 0 : selectedObj[i].css('z-index');
+	        if(num != 0)
+	            selectedObj[i].css('z-index', Number(num) - 1);
+	        else{
+	            $('#droppable .obj').each(function(){
+	                var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+	                $(this).css('z-index', Number(num) + 1);
+	            });
+	        }
+	    }
+	}
 }
 //맨뒤로
 function send_backward(){
-	var index = $('.page-item').index($('.page-item.ui-selected'));
-	list[index].undo.push($('.canvas-container').html());
-	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-	
-    $('#droppable .obj').each(function(){
-        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
-        $(this).css('z-index', Number(num) + 1);
-    });
-    for(i = 0; i<selectedObj.length; i++){
-        selectedObj[i].css('z-index', 0);
-    }
+	if(selectedObj.length > 0){
+		var index = $('.page-item').index($('.page-item.ui-selected'));
+		list[index].undo.push($('.canvas-container').html());
+		$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+		
+	    $('#droppable .obj').each(function(){
+	        var num = $(this).css('z-index') == 'auto' ? 0 : $(this).css('z-index');
+	        $(this).css('z-index', Number(num) + 1);
+	    });
+	    for(i = 0; i<selectedObj.length; i++){
+	        selectedObj[i].css('z-index', 0);
+	    }
+	}
+}
+function moveUp(){
+	if(selectedObj.length > 0){
+		event.preventDefault();
+		for(var i = 0; i<selectedObj.length; i++){
+			var top = Number(selectedObj[i].css('top').replace('px', ''));
+			selectedObj[i].css('top', top - 1 + 'px');
+		}
+	}
+}
+function moveLeft(){
+	if(selectedObj.length > 0){
+		event.preventDefault();
+		for(var i = 0; i<selectedObj.length; i++){
+			var left = Number(selectedObj[i].css('left').replace('px', ''));
+			selectedObj[i].css('left', left - 1 + 'px');
+		}
+	}
+}
+function moveDown(){
+	if(selectedObj.length > 0){
+		event.preventDefault();
+		for(var i = 0; i<selectedObj.length; i++){
+			var top = Number(selectedObj[i].css('top').replace('px', ''));
+			selectedObj[i].css('top', top + 1 + 'px');
+		}
+	}
+}
+function moveRight(){
+	if(selectedObj.length > 0){
+		event.preventDefault();
+		for(var i = 0; i<selectedObj.length; i++){
+			var left = Number(selectedObj[i].css('left').replace('px', ''));
+			selectedObj[i].css('left', left + 1 + 'px');
+		}
+	}
 }
 //Zoom
 $(document).ready(function(){
@@ -435,12 +495,6 @@ function ScrollZoom(container, max_scale, factor){
         target.css('transform', 'scale(' + (scale) + ', ' + (scale) + ')');
         $('.canvas-size p span').text(Math.floor(scale*100) + "%");
         var changedWidth = $('#droppable').width() * Math.floor(scale*100)/100;
-        
-        if(changedWidth > container.width())
-        	$('#droppable').css('margin', '5% 5%');
-        else{
-        	$('#droppable').css('margin-left', (container.width() - changedWidth)/2);
-        }
         	
         $('.canvas-container').scrollTop(-pos.y);
         $('.canvas-container').scrollLeft(-pos.x);

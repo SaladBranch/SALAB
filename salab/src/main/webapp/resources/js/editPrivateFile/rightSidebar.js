@@ -438,9 +438,8 @@ var lastChanged = "";
 
     	// font 강조 색상
 		var textgroundColor = checkAttr("textgroundColor", target);
-		console.log(textgroundColor);
-		$(".text-font-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
-		$(".text-font-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "mixed" : textgroundColor);
+		$(".text-shape-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
+		$(".text-shape-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "mixed" : textgroundColor);
 		
     	// text sort
     	var sort = checkAttr("sort", target);

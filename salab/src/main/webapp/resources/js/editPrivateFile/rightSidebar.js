@@ -733,12 +733,11 @@ var lastChanged = "";
         		if (type == "rotation") {
                 	var radius = $(this).parents("div.ui-selected").css("transform").split("(")[1].split(")")[0].split(", ");
                 	radius = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
-                	console.log($(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180);
                 	if (radius != $(".figure-shape-comps .figure-item[id=rotation] input").val()) {
                 		$(this).parents("div.ui-selected").css({
                 			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180 + "rad)"
                 		});
-                		console.log("rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180 + "rad)");
+                		elementCurrentAngle = $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180;
                 	}
         		}
 

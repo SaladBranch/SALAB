@@ -27,9 +27,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="logoutMain.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="logoutMain.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -95,24 +95,28 @@
 							<p class="qna_content">내용</p>
 							<textarea id="qna_box_content" name="qnacontent" readonly="readonly" >${requestScope.qna.qnacontent }</textarea>
 						</li>
-						<c:if test="${!empty requestScope.qna.qnareplycontent }">
-							<li>
-								<p class="qna_ans">답변</p>
-								<textarea id="qna_box_ans" name="qnareplycontent" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
-							</li>
-							<li>
-								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
-								<input type="button" class="qna_update_btn" value="글 수정" onclick="finished_update();">
-							</li>
-						</c:if>
 						<c:if test="${empty requestScope.qna.qnareplycontent }">
 							<li>
 								<p class="qna_ans">답변</p>
 								<textarea id="qna_box_ans" name="qnareplycontent" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
 							</li>
+							<li class="back_btn">
+								<button type="button" class="qna_back_btn btn btn-full" onclick="back_qna();">목록으로</button>
+							</li>
+							<li class="update_btn">
+								<button type="button" class="qna_update_btn btn btn-full" onclick="update_qna();">답변 등록</button>
+							</li>
+						</c:if>
+						<c:if test="${!empty requestScope.qna.qnareplycontent }">
 							<li>
-								<input type="button" class="qna_back_btn" value="목록으로" onclick="back_qna();">
-								<input type="button" class="qna_update_btn" value="답변하기" onclick="update_qna();">
+								<p class="qna_ans">답변</p>
+								<textarea id="qna_box_ans" name="qnareplycontent" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
+							</li>
+							<li class="back_btn">
+								<button type="button" class="qna_back_btn btn btn-full" onclick="back_qna();">목록으로</button>
+							</li>
+							<li class="update_btn">
+								<button type="button" class="qna_update_btn btn btn-full" onclick="finished_update();">답변 등록</button>
 							</li>
 						</c:if>
 					</ul>

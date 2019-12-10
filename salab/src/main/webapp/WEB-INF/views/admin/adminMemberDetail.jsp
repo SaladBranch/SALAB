@@ -28,9 +28,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="logoutMain.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="logoutMain.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -130,12 +130,16 @@
 								</c:if>
 							</p>
 						</li>
-						<li>
-							<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
-							<input type="button" class="member_update_btn" value="정보 수정" >
-						</li>
 					</ul>
 				</form>
+					<ul>
+						<li class="back_btn">
+							<button class="member_back_btn btn btn-full" onclick="back_member();">목록으로</button>
+						</li>
+						<li class="update_btn">
+							<button class="member_update_btn btn btn-full">정보 수정</button>
+						</li>
+					</ul>
 			</div>
         </div>
         

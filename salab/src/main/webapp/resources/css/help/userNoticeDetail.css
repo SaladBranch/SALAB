@@ -218,10 +218,10 @@ body{
 .trashcan a,
 .new-team a{
     display: inline-block;
-    color: #2c2c2c;
-    font-size: 15px;
-    margin-left: 8px;
-    line-height: 40px;
+	color: #2c2c2c;
+	font-size: 15px;
+	margin-left: 20px;
+	line-height: 40px;
 }
 
 .active-menu{
@@ -456,31 +456,34 @@ body{
 
 .menu-title{
 	margin-top: 40px;
-	height: 35px;
-	padding: 10px 3px;
+	height: 80px;
+	padding: 15px 12px;
+	line-height: 60px;
+	font-size: 1.2em;
+	font-weight: 400;
+	vertical-align: bottom;
 }
 
 .notice_top{
 	float: left;
-	font-size: 30pt;
-	padding: 40px 30px 25px 30px;
-	width:87%;
-	margin-left: 70px;
-	border-bottom: 2px solid black;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+    width: 80%;
+	margin-left: 100px;
 }
 
 .notice_bottom{
 	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
+	width: 80%;
 	display: block;
-	margin-left: 70px;
+	margin-left: 100px;
+	border-top: 2px solid black;
 }
 
 .notice_box{
 	border: 1px solid black;
 	width: 65%;
-	padding: 30px 40px;
+	padding: 30px 40px 55px 40px;
 	margin: 10px 30px 10px 150px;
 }
 
@@ -530,22 +533,23 @@ body{
 	margin: 5px 5px 25px 5px;
 	padding: 5px;
 	width: 100%;
-	height: 230px;
+	height: 200px;
 	resize: none;
 	outline: none;
 	display: block;
 }
 
+.back_btn{
+	float: right;
+}
+
 .notice_back_btn{
-	margin: 5px 50px 0px 400px;
-	padding: 10px 40px;
-	border: 1px solid lightgreen;
 	cursor: pointer;
 }
 
-.notice_back_btn:hover{
+/* .notice_back_btn:hover{
 	border: 1px solid #3cb371;
-}
+} */
 
 a { 
 	text-decoration: none; 

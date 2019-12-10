@@ -465,25 +465,24 @@ body{
 
 .faq_top{
 	float: left;
-	font-size: 30pt;
-	padding: 40px 30px 25px 30px;
-	width:87%;
-	margin-left: 70px;
-	border-bottom: 2px solid black;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+    width: 80%;
+	margin-left: 100px;
 }
 
 .faq_bottom{
 	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
+	width: 80%;
 	display: block;
-	margin-left: 70px;
+	margin-left: 100px;
+	border-top: 2px solid black;
 }
 
 .faq_box{
 	border: 1px solid black;
 	width: 65%;
-	padding: 30px 40px;
+	padding: 30px 40px 60px 40px;
 	margin: 10px 30px 10px 150px;
 }
 
@@ -518,7 +517,7 @@ body{
 #faq_box_category{
 	border: 1px solid black;
 	margin: 5px 5px 10px 5px;
-	width: 100%;
+	width: 99%;
 	display: block;
 }
 
@@ -531,7 +530,7 @@ body{
 #faq_box_title{
 	border: 1px solid black;
 	margin: 5px 5px 10px 5px;
-	width: 100%;
+	width: 99%;
 	display: block;
 }
 
@@ -545,43 +544,24 @@ body{
 	border: 1px solid black;
 	margin: 5px 5px 25px 5px;
 	padding: 5px;
-	width: 100%;
+	width: 99%;
 	height: 120px;
 	resize: none;
 	outline: none;
 	display: block;
 }
 
-.faq_back_btn{
-	margin: 5px 50px 0px 100px;
-	padding: 10px 40px;
-	border: 1px solid lightgreen;
-	cursor: pointer;
-	background: transparent;
-}
-.faq_back_btn:hover{
-	border: 1px solid #3cb371;
+.back_btn{
+	float: left;
+	margin-left: 5px;
 }
 
-.faq_insert_btn{
-	margin: 5px 20px 0px 60px;
-	padding: 10px 40px;
-	border: 1px solid lightgreen;
-	cursor: pointer;
-	background: transparent;
+.insert_btn{
+	float: right;
 }
-
-.faq_insert_btn:hover{
-	border: 1px solid #3cb371;
-}
-
 a { 
 	text-decoration: none; 
 	color: black;
-}
-
-a:hover{
-	color: #3cb371;
 }
 
 input:focus::-webkit-input-placeholder { 

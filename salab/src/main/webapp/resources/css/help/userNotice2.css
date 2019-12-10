@@ -220,7 +220,7 @@ body{
     display: inline-block;
     color: #2c2c2c;
     font-size: 15px;
-    margin-left: 8px;
+    margin-left: 20px;
     line-height: 40px;
 }
 
@@ -455,30 +455,32 @@ body{
 }
 
 .menu-title{
-   margin-top: 40px;
-   height: 35px;
-   padding: 10px 3px;
+	margin-top: 40px;
+	height: 80px;
+	padding: 15px 12px;
+	line-height: 60px;
+	font-size: 1.2em;
+	font-weight: 400;
+	vertical-align: bottom;
 }
 
 .notice_top{
-   float: left;
-   font-size: 30pt;
-   padding: 40px 30px 25px 30px;
-   width:87%;
-   margin-left: 70px;
-   border-bottom: 2px solid black;
+	float: left;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+	width:80%;
+	margin-left: 100px;
 }
 
 .notice_bottom{
-   font-size: 13pt;
-   width: 87%;
-   padding: 0px 30px;
+   font-size: 12pt;
+   width: 80%;
    display: block;
-   margin-left: 70px;
+   margin-left: 100px;
+   border-top: 2px solid black;
 }
 
 .notice_head{
-   font-size: 16pt;
    text-align: center;
    width: 100%;
    height: 50px;
@@ -487,38 +489,38 @@ body{
 }
 
 .notice_list{
-	height: 60px;
+	height: 50px;
 	border-bottom: 1px solid lightgray;
 }
 
 .notice_head_no{
    float: left;
    text-align: center;
-   line-height: 58px;
-   font-weight: 500;
+   line-height: 50px;
+   font-weight: 400;
    width: 15%;
 }
 
 .notice_head_title{
    float: left;
    text-align: center;
-   line-height: 58px;
-   font-weight: 500;
+   line-height: 50px;
+   font-weight: 400;
    width: 70%;
 }
 
 .notice_head_date{
    float: left;
    text-align: center;
-   line-height: 58px;
-   font-weight: 500;
+   line-height: 50px;
+   font-weight: 400;
    width: 15%;
 }
 
 .notice_head_null{
    float: left;
    text-align: center;
-   line-height: 58px;
+   line-height: 50px;
    width: 100%;
    color: gray;
    font-weight: 400;
@@ -548,7 +550,7 @@ a {
 	width: 80%;
 	height: 40px;
 	margin-top: 20px;
-	padding-left: 330px;
+	padding-left: 380px;
 }
 
 .paging_btn{

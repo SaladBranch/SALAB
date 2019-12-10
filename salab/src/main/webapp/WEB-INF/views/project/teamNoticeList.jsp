@@ -138,22 +138,19 @@
                 <div class="notice-header">공지사항</div>
                 <input type="hidden" value="${requestScope.projectno}" id="projectno">
                 <div class="notice-body">
-                    <table cellspacing="3 0px">
-                        <tr>
-                            <th>작성일자</th>
-                            <th>게시글</th>
-                            <th>작성자</th>
-                        </tr>
-
-                        <c:forEach var="notice" items="${requestScope.noticelist}">
-                            <tr class="clickNotice" value="${notice.pnoticeno}" onclick="readNotice(${requestScope.projectno},${notice.pnoticeno})">
-                                <td>${notice.pnoticedate}</td>
-                                <td>${notice.pnoticetitle}</td>
-                                <td>${notice.pnoticewriter}</td>
-                            </tr>
-                        </c:forEach>
-
-                    </table>
+                        
+                     <c:forEach var="notice" items="${requestScope.noticelist}">
+                      <div class="notice-body-box" value="${notice.pnoticeno}" onclick="readNotice(${requestScope.projectno},${notice.pnoticeno})">
+                          <div class="notice-body-title">${notice.pnoticetitle}</div>
+                          <div>
+                              <div class="notice-body-info">
+                                  <span>${notice.pnoticewriter} edited   </span>
+                                  <span> ${notice.pnoticedate}</span>
+                              </div>
+                          </div>
+                          <div class="notice-body-content">${notice.pnoticecontent}</div>
+                      </div>
+                      </c:forEach>
                 </div>
                 <c:if test="${sessionScope.userauth =='LEADER' }">
                 	<div id="notice-writing" class="notice-writing button" onclick="writeNotice(${requestScope.projectno})"><span>게시글 작성</span></div>

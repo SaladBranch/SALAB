@@ -134,41 +134,22 @@
                 <i class="fas fa-chevron-left" onclick="goBack()"></i>
             </div>
             <sector>
-                <div class="notice-grid">
+                <div class="notice-grid ">
                     <div class="notice-header">공지사항</div>
                     <div class="notice-body">
-                        <div>
-                           
-                             <c:if test="${sessionScope.userauth!='LEADER' }">
-                            <div>
-                                <div>
-                                    <div class="notice-title">
-                                        <input readonly  class="hideInputText" type="text" placeholder=" :Notice Title" maxlength="40" value="${projectnotice.pnoticetitle}">
-                                        <span id="writedDate">${projectnotice.pnoticedate}</span>
-
-                                    </div>
-                                    <div id="check">
-                                        <div class="notice-contentbox" rows="12" placeholder=":Notice Content">${projectnotice.pnoticecontent}</div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            </c:if>
-                           
-                            <c:if test="${sessionScope.userauth=='LEADER' }">
-                            <div>
-                                <div>
-                                    <div class="notice-title">
-                                        <input id="notice-title" class="hideInputText" type="text" placeholder=" :Notice Title" maxlength="40" value="${projectnotice.pnoticetitle}">
-                                        <span id="writedDate">${projectnotice.pnoticedate}</span>
-
-                                    </div>
-                                    <div id="check">
-                                        <textarea  id="notice-content" class="notice-contentbox scrollbar" rows="12" placeholder=":Notice Content">${projectnotice.pnoticecontent}</textarea>
-                                    </div>
-
-                                </div>
-                                <div class="buttonbox">
+                       <c:if test="${sessionScope.userauth eq 'LEADER'}">
+                       <div class="notice-title ">
+                           <input class="InputText" type="text" placeholder=" :Notice Title" maxlength="40" value="${projectnotice.pnoticetitle}">
+                       </div>
+                       <div>
+                           <div class="noticeinfo">
+                               <span>${projectnotice.pnoticewriter}</span>
+                               <span> edited ${projectnotice.pnoticedate}</span> 
+                           </div>
+                           <div>
+                                <textarea  id="notice-content" class="notice-contentbox  scrollbar" rows="16" placeholder=":Notice Content">${projectnotice.pnoticecontent}</textarea>
+                           </div>
+                               <div class="buttonbox">
                                     <div class="button" onclick="modifiedNotice()">
                                         수정하기
                                     </div>
@@ -176,9 +157,23 @@
                                         삭제하기
                                     </div>
                                 </div>
-                            </div>
-                            </c:if>
-                        </div>
+                       </div>
+                        </c:if>
+                                               <c:if test="${sessionScope.userauth ne 'LEADER'}">
+                       <div class="notice-title ">
+                           <input readonly class="InputText" type="text" placeholder=" :Notice Title" maxlength="40" value="${projectnotice.pnoticetitle}">
+                       </div>
+                       <div>
+                           <div class="noticeinfo">
+                               <span>${projectnotice.pnoticewriter}</span>
+                               <span> edited ${projectnotice.pnoticedate}</span> 
+                           </div>
+                           <div>
+                                <textarea readonly id="notice-content" class="notice-contentbox  scrollbar" rows="16" placeholder=":Notice Content">${projectnotice.pnoticecontent}</textarea>
+                           </div>
+
+                       </div>
+                        </c:if>
                     </div>
                 </div>
             </sector>
@@ -191,10 +186,9 @@
         <script type="text/javascript">
             function modifiedNotice() {
                 var no = ${projectnotice.pnoticeno};
-                var title = $("#notice-title").val();
+                var title = $(".InputText").val();
                 var content = $("#notice-content").val();
                 var pno = ${projectnotice.projectno};
-
                 var form = document.createElement("form");
                 form.setAttribute("method", "post");
                 form.setAttribute("action", "modifiedNotice.do");

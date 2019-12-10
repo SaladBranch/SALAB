@@ -464,27 +464,18 @@ body{
 
 .member_top{
 	float: left;
-	font-size: 30pt;
-	padding: 40px 30px 25px 30px;
-	width:87%;
-	margin-left: 70px;
-	border-bottom: 2px solid black;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+    width: 80%;
+	margin-left: 100px;
 }
 
 .member_bottom{
-	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
+	font-size: 12pt;
+	width: 80%;
 	display: block;
-	margin-left: 70px;
-}
-
-
-input[type="radio"]{
-    position: relative;
-    opacity: 1;
-    width: 15px;
-    height: 15px;
+	margin-left: 100px;
+	border-top: 2px solid black;
 }
 
 .member_search_box{
@@ -509,28 +500,11 @@ input[type="radio"]{
 	font-size: 12pt;
 }
 
-/* #search::-webkit-input-placeholder {
-   color: #65737e;
-}
- 
-#search:-moz-placeholder { Firefox 18-
-   color: #65737e;  
-}
- 
-#search::-moz-placeholder {  Firefox 19+
-   color: #65737e;  
-} */
- 
 #search:-ms-input-placeholder {  
    color: #65737e;  
 }
 
-/* .member_search:hover{
-	border: 1px solid #3cb371;
-} */
-
 .member_head{
-	font-size: 16pt;
 	font-weight: bold;
 	text-align: center;
 	width: 100%;
@@ -610,7 +584,7 @@ a {
 	width: 80%;
 	height: 40px;
 	margin-top: 10px;
-	padding-left: 330px;
+	padding-left: 380px;
 }
 
 .paging_btn{

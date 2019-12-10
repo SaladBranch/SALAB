@@ -26,9 +26,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="logoutMain.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="logoutMain.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -95,12 +95,16 @@
 							<p class="notice_content">내용</p>
 							<textarea id="notice_box_content" name="noticecontent"></textarea>
 						</li>
-						<li>
-							<input type="button" class="notice_back_btn" value="목록으로" onclick="back_notice();">
-							<input type="button" class="notice_insert_btn" value="글 등록" onclick="insert_notice();">
-						</li>
 					</ul>
 				</form>
+					<ul>
+						<li class="back_btn">
+							<button class="notice_back_btn btn btn-full" onclick="back_notice();">목록으로</button>
+						</li>
+						<li class="insert_btn">
+							<button class="notice_insert_btn btn btn-full" onclick="insert_notice();">공지 등록</button>
+						</li>
+					</ul>
 			</div>
         </div>
         

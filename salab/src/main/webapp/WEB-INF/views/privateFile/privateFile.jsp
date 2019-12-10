@@ -32,7 +32,7 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
                 <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>

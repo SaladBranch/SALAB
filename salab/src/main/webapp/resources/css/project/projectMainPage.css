@@ -228,6 +228,9 @@ label{
 
 .notice-grid {
     height: 180px;
+    padding-top:  10px;
+    min-height: 180px;
+    
 }
 
 /*table*/
@@ -277,7 +280,7 @@ table tr:hover {
 
 /*멤버*/
 .member-section {
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .member-grid {
@@ -371,7 +374,7 @@ table tr:hover {
 
 .modalOutline {
     position: fixed;
-    z-index: 0;
+    z-index: 15;
     left: 0;
     top: 0;
     width: 100%;
@@ -379,8 +382,6 @@ table tr:hover {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.6);
     /* Black w/ opacity */
-    z-index: 4;
-
 }
 
 .modalContent {
@@ -392,7 +393,7 @@ table tr:hover {
     width: 35%;
     box-shadow: 0px 1px 3px;
     min-height: 160px;
-    z-index: 5;
+    z-index: 16;
 }
 
 .modalContent input[type="button"] {

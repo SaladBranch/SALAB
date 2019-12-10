@@ -133,12 +133,12 @@
             <i class="fas fa-chevron-left" onclick="goBack()"></i>
         </div>
 
-        <sector>
+        <section>
             <div class="notice-grid">
                 <div class="notice-header">공지사항</div>
                 <input type="hidden" value="${requestScope.projectno}" id="projectno">
                 <div class="notice-body">
-                    <table cellspacing="0">
+                    <table cellspacing="3 0px">
                         <tr>
                             <th>작성일자</th>
                             <th>게시글</th>
@@ -183,7 +183,7 @@
             </div>
 
 
-        </sector>
+        </secton>
 
 
 

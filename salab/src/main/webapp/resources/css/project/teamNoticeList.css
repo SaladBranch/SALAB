@@ -1,7 +1,6 @@
 table {
     text-align: center;
     width: 100%;
-
 }
 
 table th {
@@ -17,11 +16,13 @@ tr > th:nth-child(1) {
 }
 
 table th {
-    text-align: center;
+    text-align: left;
     height: 30px;
     width: 300px;
     border-spacing: 30px;
     font-size: 0.9em;
+    padding-left: 20px;
+
 }
 
 table th:nth-child(1) {
@@ -30,15 +31,16 @@ table th:nth-child(1) {
 }
 
 table th:nth-child(2) {
-    width: 20%;
+    width: 16%;
+    padding-left: 40px;
 }
-
 table th:nth-child(3) {
-    width: 4%;
+    width: 2%;
+    padding-right: 4px;
 }
 
 table tr:nth-child(1) {
-    height: 30px;
+    height: 35px;
 }
 
 table tr:nth-child(n+2) {
@@ -48,11 +50,12 @@ table tr:nth-child(n+2) {
 }
 
 table tr:nth-child(n+2):hover {
-    background-color: rgba(237, 147, 137, 0.2);
-
-    border-radius: 14px;
+    background-color: #BFBFBF;
+    }
+table tr > td:nth-child(2n+1) {
+    text-align: left;
+    padding-left: 20px;
 }
-
 table tr > td:nth-child(2n) {
     text-align: left;
     padding-left: 40px;
@@ -65,16 +68,11 @@ table tr > td:nth-child(2n) {
 
 }
 
-.notice-writing::before,
-.notice-writing::after {
-    content: "-";
-}
-
 /*페이지이동*/
 
 .paging {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 #notice-paging span {

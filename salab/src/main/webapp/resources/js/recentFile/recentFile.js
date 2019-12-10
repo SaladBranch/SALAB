@@ -67,10 +67,17 @@ $(document).on("mousedown", function(e) {
     $focus.css('height', 0);
     //범위 내 객체를 선택한다.
     rangeSelect(target, left, top, left + width, top + height, function(include) {
-    if(include)
-        $(this).addClass('highlight');
-    else
-        $(this).removeClass('highlight');
+    if(include){
+    	$(this).addClass('highlight').trigger('classChange');
+    	$('.far.fa-trash-alt').click(function(){
+    		filePermanentDelete();
+    	});
+    	$('.add-btn').hover(function(){
+    		$(this).css('background-color', '#000');
+    	});
+    }else{
+    	$(this).removeClass('highlight').trigger('classChange');
+    }
     });
 }).on('mousemove', function(e) {
     if(!mode) {
@@ -107,10 +114,11 @@ function rangeSelect(selector, x1, y1, x2, y2, cb) {
 $('.file-container').on('click', function(){
 	var index = $('.file-container').index($(this));
     for(var i = 0; i<$('.file-container').length; i++){
-    	if(i === index)
-    		$('.file-container').eq(i).addClass('highlight');
-    	else
-    		$('.file-container').eq(i).removeClass('highlight');
+    	if(i === index){
+    		$('.file-container').eq(i).addClass('highlight').trigger('classChange');
+    	}else{
+    		$('.file-container').eq(i).removeClass('highlight').trigger('classChange');
+    	}
     }
 });
 (function(){
@@ -137,16 +145,18 @@ $('.file-container').on('click', function(){
         });
         
         $('.file-container').on('contextmenu', function(e){
+        	
         	var cnt = $('.file-container.highlight').length;
         	if(cnt >= 2 && !$(this).hasClass('highlight')){
         		toggleOnOff(0, 'multi');
-        		$('.file-container.highlight').removeClass('highlight');
+        		$('.file-container.highlight').removeClass('highlight').trigger('classChange');
         	}if(cnt < 2 && !$(this).hasClass('highlight')){
         		toggleOnOff(0, 'single');
-        		$('.file-container.highlight').removeClass('highlight');
+        		$('.file-container.highlight').removeClass('highlight').trigger('classChange');
         	}
         	
-        	$(this).addClass('highlight');
+        	
+        	$(this).addClass('highlight').trigger('classChange');
         	cnt = $('.file-container.highlight').length;
         	
             if(cnt < 2){
@@ -330,11 +340,13 @@ $(function(){
     });
 });
 
-$(document).on('mouseenter', '.file-grid', function(e){
-	fileno = $(this).find('.fileno').val();
-	filetitle = $.trim($(this).find('.file-name').html());
-	teamAndPrivate = $.trim($(this).find('.pt').val());
-	uno = $(this).find('.userno').val();
+$(document).on('mousedown', '.file-grid', function(e){
+	if(e.which == 1 || e.which == 3){
+		fileno = $(this).find('.fileno').val();
+		filetitle = $.trim($(this).find('.file-name').html());
+		teamAndPrivate = $.trim($(this).find('.pt').val());
+		uno = $(this).find('.userno').val();
+	}
 });
 
 function newFile(){
@@ -450,30 +462,30 @@ function fileDelete(){
 
 //trashCan
 function filePermanentDelete(){
-	var conf = confirm('파일을 삭제하면 복구되지않습니다.');
-	if(conf == true){
-		$.ajax({
-			url: 'filePermanentDelete.do',
-			type: 'post',
-			data: {
-				pfileno: fileno,
-				userno: uno,
-				pt: teamAndPrivate
-			},
-			dataType: 'text',
-			success: function(data){
-				if(data = "success"){
-					location.reload();
-				}
-			},
-			error : function( jqXHR, textStatus, errorThrown ) {
-				console.log( jqXHR.status );
-				console.log( jqXHR.statusText );
-				console.log( jqXHR.responseText );
-				console.log( jqXHR.readyState );
-				}
-		});
-	}
+		var conf = confirm('파일을 삭제하면 복구되지않습니다.');
+		if(conf == true){
+			$.ajax({
+				url: 'filePermanentDelete.do',
+				type: 'post',
+				data: {
+					pfileno: fileno,
+					userno: uno,
+					pt: teamAndPrivate
+				},
+				dataType: 'text',
+				success: function(data){
+					if(data = "success"){
+						location.reload();
+					}
+				},
+				error : function( jqXHR, textStatus, errorThrown ) {
+					console.log( jqXHR.status );
+					console.log( jqXHR.statusText );
+					console.log( jqXHR.responseText );
+					console.log( jqXHR.readyState );
+					}
+			});
+		}
 }
 
 function fileDeleteUndo(){
@@ -506,3 +518,30 @@ function popup(){
 	var userno = $('#userNo').val();
 	window.open('webTest.do?pfileno='+fileno+'&userno='+userno+'&pt='+teamAndPrivate, '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');
 }
+
+$(document).on('classChange', '.file-container', function(){
+	if($('.file-container').hasClass('highlight')){
+		$('.far.fa-trash-alt.trash').css('pointer-events', 'auto');
+		$('.far.fa-trash-alt.recovery').css('pointer-events', 'auto');
+	}else{
+		$('.far.fa-trash-alt.trash').css('pointer-events', 'none');
+		$('.far.fa-trash-alt.recovery').css('pointer-events', 'none');
+	}
+});
+
+$(document).on('keyup', '#search-text', function(){
+	var keyword = $(this).val();
+	if(keyword == ''){
+		$('.file-grid').show();
+	}else{
+		$('.file-grid').hide();
+		//input 에 입력된 값에 해당하는 파일만 show 나머지는 hide
+		for(var i =0; i < $('.file-container').length; i++){
+			var target = $('.file-name:eq('+i+')');
+			
+			if($.trim(target.html()).includes(keyword)){
+				target.closest('.file-grid').show();
+			}
+		}
+	}
+});

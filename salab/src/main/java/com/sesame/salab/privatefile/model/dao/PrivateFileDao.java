@@ -1,6 +1,7 @@
 package com.sesame.salab.privatefile.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,11 @@ public class PrivateFileDao {
 	public int teamFilePermanentDelete(FileList pfile) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("privatefileMapper.teamFilePermanentDelete", pfile);
+	}
+
+	public List<FileList> searchKeyword(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("privatefileMapper.searchKeyword", map);
 	}
 
 }

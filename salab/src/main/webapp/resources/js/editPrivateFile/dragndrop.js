@@ -51,6 +51,7 @@ function includeElement(X, Y, temp) {
     	left: X
     });
     initSelect();
+    modified();
     setTimeout(function(){
     	Thumbnail();
     }, 100);
@@ -189,6 +190,8 @@ function addControl(){
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
+                
+                modified();
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -201,6 +204,7 @@ function addControl(){
             },
             stop: function() {
             	formatChange();
+            	modified();
             	setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -226,6 +230,7 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
+                    modified();
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -250,6 +255,7 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
+                    modified();
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -457,6 +463,8 @@ $(function(){
                     
                 }
             });
+            
+            modified();
             setTimeout(function(){
         		Thumbnail();
         	}, 100);

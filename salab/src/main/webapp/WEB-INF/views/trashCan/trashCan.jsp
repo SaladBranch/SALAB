@@ -38,7 +38,10 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div style="display: flex;">
+  	            	<div class="add-btn"><i class="far fa-trash-alt trash" aria-hidden="true" onclick="filePermanentDelete();"></i></div>
+                	<div class="add-btn"><i class="far fa-trash-alt recovery" aria-hidden="true" onclick="fileDeleteUndo();"></i></div>
+                </div>
                 <div class="user-profile">
                     <div class="profile-img">
                         <img src="/salab/resources/img/default_profile.png" alt="">

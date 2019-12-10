@@ -34,8 +34,9 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
+            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
+            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/image-icon.png"></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
-            <button><i class="far fa-play-circle" onclick="memo();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
             <div></div>
@@ -139,6 +140,7 @@
             	<div class="page ui-sortable-handle">
             		<div class="page-top ui-sortable-handle">
             			<div class="page-thumbnail"></div>
+            			<span class="isModified"></span>
             		</div>
             		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
             	</div>
@@ -146,9 +148,10 @@
         	<c:forEach var="page" items="${pageList }" begin="1">
            			<li class="page-item">
             		<div class="page">
-            			<div class="page-top">
-            				<div class="page-thumbnail"></div>
-            			</div>
+	            		<div class="page-top">
+	            			<div class="page-thumbnail"></div>
+	            			<span class="isModified"></span>
+	            		</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
             		</div>
             		</li>
@@ -427,6 +430,7 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/html2canvas.min.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/canvas2image.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
@@ -441,7 +445,7 @@
 
     	var privateLibrary = new Array();
     	
-    	async function Thumbnail(){
+    	 async function Thumbnail(){
     		var image;
         		var node = document.getElementById('droppable');
             	
@@ -449,7 +453,6 @@
             	canvas.width = node.scrollWidth;
             	canvas.height = node.scrollHeight;
             	
-
             		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
             	    image = new Image();
             	    $(image).attr('object-fit', 'contain');
@@ -461,26 +464,15 @@
             	        context.scale(-1, 1);
             	        context.drawImage(image, 0, 0);
 
-            	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
             	    };
             		image.src = pngDataUrl;
             		$('.ui-selected .page-thumbnail').html('');
         	        $('.ui-selected .page-thumbnail').append(image);
-            })
-            .catch(function (error) {
+            }).catch(function (error) {
+            	console.log(error);
             });
-    	    /* await html2canvas($('#droppable')[0], {
-    	    	width: $('#droppable').width(),
-    	    	height: $('#droppable').height()
-    	    }).then(function (canvas) { 
-    	    	var image = new Image();
-    	    	console.log(canvas);
-    	        image.src = canvas.toDataURL('image/png');
-    	        
-    	        $('.ui-selected .page-thumbnail').html('');
-    	        $('.ui-selected .page-thumbnail').append(image);
-    	        
-    	      });        */ 	
+            
+          
     }	
     $(function(){
     	

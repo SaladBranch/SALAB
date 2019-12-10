@@ -175,6 +175,7 @@ function addControl(){
                 ui.position.top = ui.originalPosition.top + (__dy);
                 ui.position.left += __recoupLeft;
                 ui.position.top += __recoupTop;
+                sortGuideLine(ui);
             },
             start: function (event, ui) {
             	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
@@ -192,6 +193,7 @@ function addControl(){
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
+                clearGuideLine();
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
@@ -330,7 +332,7 @@ $(function(){
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts")){
+    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts *")){
             mode = false;
     	}
         else {
@@ -681,4 +683,142 @@ function resizeLibImg(){
 //라이브러리 이미지로 내보내기
 function saveLibAsImg(target){
 	
+}
+
+function sortGuideLine(ui){
+	var zoom = Number($('.canvas-size p span').text().replace('%', ''))/100;
+	var left = parseInt(ui.helper.css('left'),10);
+	var top = parseInt(ui.helper.css('top'),10);
+	var right = left + ui.helper.width();
+	var bottom = top + ui.helper.height();
+	var hmid = parseInt(left + ui.helper.width()/2);
+	var vmid = parseInt(top + ui.helper.height()/2);
+	var canvasHmid = $('#droppable').width()/2; //canvas 가로 중앙 지점
+	var canvasVmid = $('#droppable').height()/2; //canvas 세로 중앙 지점
+	
+	var $verticalLine = $('<div class="v-guide" style="position: absolute; width: 1px; border-right: 1px dashed red;"></div>');
+	var $horizontalLine = $('<div class="h-guide" style="position: absolute; height: 1px; border-top: 1px dashed red;"></div>');
+	//canvas 수평 중앙 맞춤
+	if(hmid == canvasHmid){
+		$verticalLine.css({
+			height: canvasVmid*2 + 20,
+			left: hmid,
+			top: -10
+		});
+		$('#droppable').append($verticalLine);
+	}else{
+		setTimeout(function(){
+			$('#droppable').children('.v-guide').remove();
+		}, 10);
+	}
+	//canvas 수직 중앙 맞춤
+	if(vmid == canvasVmid){
+		$horizontalLine.css({
+			width: canvasHmid*2 + 20,
+			left: -10,
+			top: vmid
+		});
+		$('#droppable').append($horizontalLine);
+	}else{
+		setTimeout(function(){
+			$('#droppable').children('.h-guide').remove();
+		}, 10)
+	}
+	
+	objectVerticalGuideLine(left, top, right, bottom, hmid, vmid, ui);
+}
+function objectVerticalGuideLine(left, top, right, bottom, hmid, vmid, ui){
+	var vlineHeight = 0;
+	var vlinePosition = 9999;
+	var vleftLine = vrightLine = vcenterLine = false, leftTop = new Array(), rightTop = new Array(),
+	centerTop = new Array(), leftBottom = new Array(), rightBottom = new Array(), centerBottom = new Array();
+	
+	leftTop.push(top);
+	leftBottom.push(bottom);
+	rightTop.push(top);
+	rightBottom.push(bottom);
+	centerTop.push(top);
+	centerBottom.push(bottom);
+	for(var i = 0; i<$('#droppable .obj').length; i++){
+		if(i != $('#droppable .obj').index(ui.helper)){
+			$obj = $('#droppable .obj').eq(i);
+			var l = parseInt($obj.css('left'), 10); //left
+			var t = parseInt($obj.css('top'), 10); //top
+			var w = $obj.width(); //width
+			var h = $obj.height(); //height
+			var r = l + w; //right
+			var b = t + h; //bottom
+			var hm = parseInt(l + w/2);
+			if(l == left){
+				vleftLine = true;
+				leftTop.push(t);
+				leftBottom.push(b);
+			}
+			if(r == right){
+				vrightLine = true;
+				rightTop.push(t);
+				rightBottom.push(b);
+			}
+			if(hm == hmid){
+				vcenterLine = true;
+				centerTop.push(t);
+				centerBottom.push(b);
+			}
+		}
+	}
+	if(vleftLine && vcenterLine && vrightLine)
+		vcenterLine = false;
+	
+	//다른 obj와 왼쪽 맞춤
+	if(vleftLine){
+		$verticalObjectLine = $('<div class="v-obj-guide" style="position: absolute; width: 1px; border-right: 1px dashed red;"></div>');
+		$verticalObjectLine.css({
+			height: Math.max.apply(null, leftBottom) - Math.min.apply(null, leftTop) + 20,
+			top: Math.min.apply(null, leftTop) - 10,
+			left: left
+		});
+		$verticalObjectLine.addClass('obj-l-guide');
+		$('#droppable').append($verticalObjectLine);
+	}else{
+		setTimeout(function(){
+			$('#droppable').children('.obj-l-guide').remove();
+		}, 10)
+	}
+	//다른 obj와 가운데 맞춤
+	if(vcenterLine){
+		$verticalObjectLine = $('<div class="v-obj-guide" style="position: absolute; width: 1px; border-right: 1px dashed red;"></div>');
+		$verticalObjectLine.css({
+			height: Math.max.apply(null, centerBottom) - Math.min.apply(null, centerTop) + 40,
+			top: Math.min.apply(null, centerTop) - 20,
+			left: hmid
+		});
+		$verticalObjectLine.addClass('obj-c-guide');
+		$('#droppable').append($verticalObjectLine);
+	}else{
+		setTimeout(function(){
+			$('#droppable').children('.obj-c-guide').remove();
+		}, 10)
+	}
+	//다른 obj와 오른쪽 맞춤
+	if(vrightLine){
+		$verticalObjectLine = $('<div class="v-obj-guide" style="position: absolute; width: 1px; border-right: 1px dashed red;"></div>');
+		$verticalObjectLine.css({
+			height: Math.max.apply(null, rightBottom) - Math.min.apply(null, rightTop) + 20,
+			top: Math.min.apply(null, rightTop) - 10,
+			left: right
+		});
+		$verticalObjectLine.addClass('obj-r-guide');
+		$('#droppable').append($verticalObjectLine);
+	}else{
+		setTimeout(function(){
+			$('#droppable').children('.obj-r-guide').remove();
+		}, 10)
+	}
+}
+
+
+function clearGuideLine(){
+	$('#droppable').children('.v-guide').remove();
+    $('#droppable').children('.h-guide').remove();
+    $('#droppable').children('.v-obj-guide').remove();
 }

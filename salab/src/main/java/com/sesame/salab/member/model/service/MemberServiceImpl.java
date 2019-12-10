@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.dao.MemberDao;
 import com.sesame.salab.member.model.vo.Member;
 
@@ -70,8 +69,6 @@ public class MemberServiceImpl implements MemberService{
 	public void enrollGoogleUser(Member m) {
 		memberDao.enrollGoogleUser(m);
 	}
-  
-	
 
 	@Override
 	public List<Member> memberList(HashMap<String, Object> map) {

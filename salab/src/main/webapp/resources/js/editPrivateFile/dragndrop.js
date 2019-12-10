@@ -807,6 +807,7 @@ function objectVerticalGuideLine(left, top, right, bottom, hmid, vmid, ui){
 		}, 10)
 	}
 	//다른 obj와 오른쪽 맞춤
+	console.log("고마워요");
 	if(vrightLine){
 		$verticalObjectLine = $('<div class="v-obj-guide" style="position: absolute; width: 1px; border-right: 1px dashed red;"></div>');
 		$verticalObjectLine.css({

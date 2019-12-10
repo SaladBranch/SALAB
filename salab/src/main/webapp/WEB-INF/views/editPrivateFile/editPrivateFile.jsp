@@ -83,27 +83,27 @@
             <li id="toggle-edit">
                 편집<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-edit-menu">
-                    <li><a href="#">실행취소</a></li>
-                    <li><a href="#">다시실행</a></li>
-                    <li><a href="#">삭제하기</a></li>
-                    <li><a href="#">잘라내기</a></li>
-                    <li><a href="#">복사</a></li>
-                    <li><a href="#">붙여넣기</a></li>
-                    <li><a href="#">개인 라이브러리</a></li>
+                    <li><a href="javascript:undoPage();">실행취소</a></li>
+                    <li><a href="javascript:redoPage();">다시실행</a></li>
+                    <li><a href="javascript:deleteObject();">삭제하기</a></li>
+                    <li><a href="javascript:cutObject();">잘라내기</a></li>
+                    <li><a href="javascript:copyObject();">복사</a></li>
+                    <li><a href="javascript:pasteObject();">붙여넣기</a></li>
+                    <li><a href="javascript:savetoLibrary();">개인 라이브러리</a></li>
                 </ul>
             </li>
             <li id="toggle-sort">
                 정렬<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-sort-menu">
-                    <li><a href="#">그룹</a></li>
-                    <li><a href="#">그룹해제</a></li>
+                    <li><a href="javascript:groupObject();">그룹</a></li>
+                    <li><a href="javascript:ungroupObject();">그룹해제</a></li>
                     <li id="toggle-sort-order">
                     순서<span><i class="fas fa-caret-right"></i></span>
                         <ul class="toggle-sort-order">
-                            <li><a href="#">맨 앞으로</a></li>
-                            <li><a href="#">앞으로</a></li>
-                            <li><a href="#">맨 뒤로</a></li>
-                            <li><a href="#">뒤로</a></li>
+                            <li><a href="javascript:send_forward();">맨 앞으로</a></li>
+                            <li><a href="javascript:send_front();">앞으로</a></li>
+                            <li><a href="javascript:send_backward();">맨 뒤로</a></li>
+                            <li><a href="javascript:send_back();">뒤로</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -166,7 +166,7 @@
                 <p>&#9660;</p>기본도형(common shape)
             </div>
               <div class="common-shape-comps">
-                <div style="padding:5px;">
+                <div style="padding:4px;">
                     <!--직사각형-->
                     <a id="obj_rect" class="geItem c_rectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -442,46 +442,37 @@
     	var privateLibrary = new Array();
     	
     	async function Thumbnail(){
-    		var image;
-        		var node = document.getElementById('droppable');
-            	
-            	var canvas = document.createElement('canvas');
-            	canvas.width = node.scrollWidth;
-            	canvas.height = node.scrollHeight;
-            	
-
-            		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
-            	    image = new Image();
-            	    $(image).attr('object-fit', 'contain');
-            	    $(image).addClass('centered');
-            	    image.onload = function () {
-            	        var context = canvas.getContext('2d');
-
-            	        context.translate(canvas.width, 0);
-            	        context.scale(-1, 1);
-            	        context.drawImage(image, 0, 0);
-
-            	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
-            	    };
-            		image.src = pngDataUrl;
-            		$('.ui-selected .page-thumbnail').html('');
-        	        $('.ui-selected .page-thumbnail').append(image);
-            })
-            .catch(function (error) {
-            });
-    	    /* await html2canvas($('#droppable')[0], {
-    	    	width: $('#droppable').width(),
-    	    	height: $('#droppable').height()
-    	    }).then(function (canvas) { 
-    	    	var image = new Image();
-    	    	console.log(canvas);
-    	        image.src = canvas.toDataURL('image/png');
-    	        
-    	        $('.ui-selected .page-thumbnail').html('');
-    	        $('.ui-selected .page-thumbnail').append(image);
-    	        
-    	      });        */ 	
-    }	
+            var image;
+            var node = document.getElementById('droppable');
+            
+            var canvas = document.createElement('canvas');
+            canvas.width = node.scrollWidth;
+            canvas.height = node.scrollHeight;
+            await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
+				image = new Image();
+				$(image).attr('object-fit', 'contain');
+				$(image).addClass('centered');
+				image.onload = function () {
+				    var context = canvas.getContext('2d');
+				
+				    context.translate(canvas.width, 0);
+				    context.scale(-1, 1);
+				    context.drawImage(image, 0, 0);
+				
+				     //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
+				};
+				image.src = pngDataUrl;
+				$('.ui-selected .page-thumbnail').html('');
+				$('.ui-selected .page-thumbnail').append(image);
+         	}).catch(function (error) {
+         	});
+      }
+	function filter (node) {
+        return (node.className !== 'memo' && node.className !== 'canvas ui-widget-content ui-selectable grid-canvas' && node.className !== 'ui-resizable-handle ui-resizable-n' 
+           && node.className !== 'ui-resizable-handle ui-resizable-e' && node.className !== 'ui-resizable-handle ui-resizable-s' && node.className !== 'ui-resizable-handle ui-resizable-w' 
+              && node.className !== 'ui-resizable-handle ui-resizable-ne' && node.className !== 'ui-resizable-handle ui-resizable-se' && node.className !== 'ui-resizable-handle ui-resizable-sw' 
+                 && node.className !== 'ui-resizable-handle ui-resizable-nw' && node.className !== 'ui-rotatable-handle ui-draggable');
+    }
     $(function(){
     	
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음

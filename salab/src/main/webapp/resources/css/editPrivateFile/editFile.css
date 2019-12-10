@@ -439,6 +439,9 @@ ol.page-tab-content li{
     border-bottom: 1px solid #c6c6c6;
     user-select: none;
 }
+.common-shape-comps a{
+	width: 40px;
+}
 
 .comp-tab-content svg:hover{
     background: #eaeaea;
@@ -1125,5 +1128,7 @@ ol.page-tab-content li{
 	border: none;
 }
 
-
+.ui-selected-temp{
+	border: 1.5px solid transparent !important;
+}
 

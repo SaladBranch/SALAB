@@ -206,7 +206,6 @@ function addControl(){
             rotate : function() {
             	formatChange();
             	modified();
-
             },
             stop: function() {
             	setTimeout(function(){
@@ -322,7 +321,6 @@ function getRotateDegree($obj){
         var b = values[1];
         var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
     } else { var angle = 0; }
-    console.log("계산 결과 : " + ((angle < 0) ? angle + 360 : angle));
     return (angle < 0) ? angle + 360 : angle;
 }
 
@@ -344,7 +342,6 @@ $(function(){
             selectedObj.push($(ui.selected));
         },
         unselected: function(e, ui){
-        	console.log("함");
             $(ui.unselected).children().remove('.ui-resizable-handle');
             if($(ui.unselected).hasClass('ui-draggable'))
                 $(ui.unselected).draggable('destroy');
@@ -396,8 +393,7 @@ $(function(){
             setDragLocation(e);
         }
     }).on('mouseup', function(e){
-    	// 수정중
-/*    	mode = false;
+    	mode = false;
         $focus.hide();
         $focus.css({width: 0, height: 0});
         
@@ -413,7 +409,7 @@ $(function(){
             appendElement = "";
         }else{
             appendElement = "";
-        }*/
+        }
     });
 
     //obj 삽입
@@ -436,13 +432,11 @@ $(function(){
             initSelect();
             clicks = 0;
         }else{
-        	
-        	//수정중
-        	var $copyElement = $(this).clone().children("svg").css({
-        		width : "76px",
-        		height : "76px"
-        	})
-        	console.log($copyElement);
+        	var $copyElement = $(this).clone();
+        	$copyElement.children("svg").css({
+        		width : "100%",
+        		height : "100%"
+        	});
             appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $copyElement.wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
@@ -466,7 +460,13 @@ $(function(){
         		initSelect();
         		clicks = 0;
         	}else{
-                appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
+        		// 수정중
+            	var $copyElement = $(this).clone();
+            	$copyElement.children("svg").css({
+            		width : "100%",
+            		height : "100%"
+            	});
+                appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $copyElement.wrap("<div/>").parent().html() + "</div>").appendTo("body");
                 moveDragging();
         	}
     	}

@@ -51,6 +51,7 @@ function includeElement(X, Y, temp) {
     	left: X
     });
     initSelect();
+    modified();
     setTimeout(function(){
     	Thumbnail();
     }, 100);
@@ -190,6 +191,8 @@ function addControl(){
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
+                
+                modified();
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -203,6 +206,8 @@ function addControl(){
             },
             rotate : function() {
             	formatChange();
+            	modified();
+
             },
             stop: function() {
             	setTimeout(function(){
@@ -232,6 +237,8 @@ function addControl(){
                 	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
                 },
                 stop: function(){
+                    formatChange();
+                    modified();
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -258,6 +265,9 @@ function addControl(){
                 	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 },
                 stop: function(){
+                    formatChange();
+                    modified();
+
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -467,6 +477,8 @@ $(function(){
                     
                 }
             });
+            
+            modified();
             setTimeout(function(){
         		Thumbnail();
         	}, 100);

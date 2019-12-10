@@ -75,7 +75,7 @@
         <div class="left-top-side-bar">
             <div class="search-bar">
                 <i class="fas fa-search" id="search-icon"></i>
-                <input type="text" id="search-text" placeholder="검색" maxlength="20">
+                <input type="text" id="search-text" placeholder="검색" maxlength="20" value="">
             </div>
             <div class="recent-file active-menu">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>

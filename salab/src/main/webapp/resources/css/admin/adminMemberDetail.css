@@ -463,25 +463,24 @@ body{
 
 .member_top{
 	float: left;
-	font-size: 30pt;
-	padding: 40px 30px 25px 30px;
-	width:87%;
-	margin-left: 70px;
-	border-bottom: 2px solid black;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+    width: 80%;
+	margin-left: 100px;
 }
 
 .member_bottom{
 	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
+	width: 80%;
 	display: block;
-	margin-left: 70px;
+	margin-left: 100px;
+	border-top: 2px solid black;
 }
 
 .member_box{
 	border: 1px solid black;
 	width: 65%;
-	padding: 20px 40px;
+	padding: 20px 40px 80px 40px;
 	margin: 20px 30px 10px 150px;
 }
 
@@ -508,71 +507,44 @@ body{
 }
 
 .member_info{
+	margin: 10px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#userlevel{
+	padding: 5px 10px;
 	margin: 5px;
-	font-size: 13pt;
+	font-size: 11pt;
 	font-weight: bold;
 }
 
-.member_input{
-	margin: 5px;
-	text-align: center;
-	font-size: 13pt;
-	font-weight: bold;
-	border: 1px solid transparent;
-	background: transparent;
-}
-
-.member_input:hover{
-	background: #A7F5B2
-}
-
-.member_input:focus{
-	border: 1px solid #3cb371;
-	background : #8CCA95;
-}
-
-.member_email{
-	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
-	font-weight: bold;
-}
-
-.member_name{
-	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
-	font-weight: bold;
-}
-
-.member_enrolldate{
-	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
-	font-weight: bold;
-}
-
-.member_level{
-	margin: 5px 5px 5px 10px;
-	font-size: 13pt;
-	font-weight: bold;
+.back_btn{
+	float: left;
 }
 
 .member_back_btn{
-	margin: 10px 50px 0px 100px;
 	padding: 10px 40px;
 	border: 1px solid lightgreen;
 	cursor: pointer;
 	background: transparent;
+	margin: 15px 0px 0px 60px;
 }
 
 .member_back_btn:hover{
 	border: 1px solid #3cb371;
 }
 
+.update_btn{
+	float: right;
+}
+
 .member_update_btn{
-	margin: 10px 20px 0px 60px;
 	padding: 10px 40px;
 	border: 1px solid lightgreen;
 	cursor: pointer;
 	background: transparent;
+	margin: 15px 60px 0px 0px;
 }
 
 .member_update_btn:hover{

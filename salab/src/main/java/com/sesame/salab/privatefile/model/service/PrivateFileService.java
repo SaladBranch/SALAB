@@ -1,6 +1,7 @@
 package com.sesame.salab.privatefile.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Page;
@@ -43,5 +44,7 @@ public interface PrivateFileService {
 	int teamFileDeleteUndo(FileList pfile);
 
 	int teamFilePermanentDelete(FileList pfile);
+
+	List<FileList> searchKeyword(Map map);
 	
 }

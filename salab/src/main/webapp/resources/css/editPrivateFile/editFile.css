@@ -374,7 +374,7 @@ ol.page-tab-content li{
 .page-thumbnail{
     height: 91px;
     width: 150px;
-    border: 1.5px solid transparent;
+    border: 1px solid #c6c6c6;
     text-align: center;
     margin-bottom: 5px;
 }
@@ -384,10 +384,9 @@ ol.page-tab-content li{
 .page-thumbnail img{
     display: inline-block;
     max-width: 150px;
-    max-height: 90px;
+    max-height: 88px;
     width: auto;
     height: auto;
-    border: 1px solid #c6c6c6;
 }
 .page-name{
     width: 85%;
@@ -438,6 +437,9 @@ ol.page-tab-content li{
 .common-shape-comps{
     border-bottom: 1px solid #c6c6c6;
     user-select: none;
+}
+.common-shape-comps a{
+	width: 40px;
 }
 
 .comp-tab-content svg:hover{
@@ -1125,5 +1127,44 @@ ol.page-tab-content li{
 	border: none;
 }
 
+.page-top{
+	display: inline-flex;
+	justify-content: space-between;
+}
 
+.isModified{
+	font-weight: bold;
+	font-size: 19pt;
+	color: rgb(166, 166, 166);
+	display: inline-block;
+	opacity: 0;
+}
+
+.isModified:before{
+	content: 	"*";
+}
+
+.isModified.active{
+	opacity: 1;
+}
+.ui-selected-temp{
+	border: 1.5px solid transparent !important;
+}
+
+.guide {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#guide-h {
+  border-top: 1px dashed red;
+  width: 100%;
+}
+
+#guide-v {
+  border-left: 1px dashed red;
+  height: 100%;
+}
 

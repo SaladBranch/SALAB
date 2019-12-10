@@ -268,7 +268,7 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(value="adminMemberUpdate.do", method=RequestMethod.POST)
+	/*@RequestMapping(value="adminMemberUpdate.do", method=RequestMethod.POST)
 	public ModelAndView updateMemberMethod(ModelAndView mv, Member member, @RequestParam("userno") int userno) throws Exception{
 		
 		member.setUserno(userno);
@@ -282,5 +282,5 @@ public class MemberController {
 	    }
 		
 		return mv;
-	}
+	}*/
 }

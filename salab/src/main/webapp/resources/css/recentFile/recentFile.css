@@ -76,14 +76,15 @@ body{
     z-index: 80;
 }
 .top-bar-children .add-btn{
-    width: 40px;
+    width: 30px;
     text-align: center;
-    font-size: 30px;
+    font-size: 23px;
     z-index: 81;
+    pointer-events: none;
 }
-.top-bar-children .add-btn:hover{
+/* .top-bar-children .add-btn:hover{
     background-color: #000;
-}
+} */
 
 .user-profile{
     display: flex;

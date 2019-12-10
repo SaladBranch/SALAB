@@ -41,6 +41,9 @@
     width: auto;
     height: auto;
 }
+[contenteditable=true] {
+	cursor : text;
+}
 /*--------------------------*/
 /* Resizable */
 /*--------------------------*/

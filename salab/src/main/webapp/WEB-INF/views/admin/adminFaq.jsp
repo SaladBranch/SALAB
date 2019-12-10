@@ -27,9 +27,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="logoutMain.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="logoutMain.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -84,7 +84,7 @@
         <div class="faq_bottom">
         	<ul>
         		<li class="faq_btn">
-        			<input type="button" class="faqInsert-btn" value="NEW">
+        			<button class="faqInsert-btn btn btn-full">NEW</button>
         		</li>
         		<c:forEach var="faq" items="${requestScope.adminFaqList }">
 	        		<li class="faq_open">

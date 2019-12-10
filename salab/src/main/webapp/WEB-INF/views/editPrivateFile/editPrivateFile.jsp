@@ -34,8 +34,9 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
+            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
+            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/image-icon.png"></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
-            <button><i class="far fa-play-circle" onclick="memo();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
             <div></div>
@@ -83,27 +84,27 @@
             <li id="toggle-edit">
                 편집<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-edit-menu">
-                    <li><a href="#">실행취소</a></li>
-                    <li><a href="#">다시실행</a></li>
-                    <li><a href="#">삭제하기</a></li>
-                    <li><a href="#">잘라내기</a></li>
-                    <li><a href="#">복사</a></li>
-                    <li><a href="#">붙여넣기</a></li>
-                    <li><a href="#">개인 라이브러리</a></li>
+                    <li><a href="javascript:undoPage();">실행취소</a></li>
+                    <li><a href="javascript:redoPage();">다시실행</a></li>
+                    <li><a href="javascript:deleteObject();">삭제하기</a></li>
+                    <li><a href="javascript:cutObject();">잘라내기</a></li>
+                    <li><a href="javascript:copyObject();">복사</a></li>
+                    <li><a href="javascript:pasteObject();">붙여넣기</a></li>
+                    <li><a href="javascript:savetoLibrary();">개인 라이브러리</a></li>
                 </ul>
             </li>
             <li id="toggle-sort">
                 정렬<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-sort-menu">
-                    <li><a href="#">그룹</a></li>
-                    <li><a href="#">그룹해제</a></li>
+                    <li><a href="javascript:groupObject();">그룹</a></li>
+                    <li><a href="javascript:ungroupObject();">그룹해제</a></li>
                     <li id="toggle-sort-order">
                     순서<span><i class="fas fa-caret-right"></i></span>
                         <ul class="toggle-sort-order">
-                            <li><a href="#">맨 앞으로</a></li>
-                            <li><a href="#">앞으로</a></li>
-                            <li><a href="#">맨 뒤로</a></li>
-                            <li><a href="#">뒤로</a></li>
+                            <li><a href="javascript:send_forward();">맨 앞으로</a></li>
+                            <li><a href="javascript:send_front();">앞으로</a></li>
+                            <li><a href="javascript:send_backward();">맨 뒤로</a></li>
+                            <li><a href="javascript:send_back();">뒤로</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -139,6 +140,7 @@
             	<div class="page ui-sortable-handle">
             		<div class="page-top ui-sortable-handle">
             			<div class="page-thumbnail"></div>
+            			<span class="isModified"></span>
             		</div>
             		<div class="page-name ui-sortable-handle"><input type="text" class="page-title" value="${pageList[0].pagename }"></div>
             	</div>
@@ -146,9 +148,10 @@
         	<c:forEach var="page" items="${pageList }" begin="1">
            			<li class="page-item">
             		<div class="page">
-            			<div class="page-top">
-            				<div class="page-thumbnail"></div>
-            			</div>
+	            		<div class="page-top">
+	            			<div class="page-thumbnail"></div>
+	            			<span class="isModified"></span>
+	            		</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
             		</div>
             		</li>
@@ -166,7 +169,7 @@
                 <p>&#9660;</p>기본도형(common shape)
             </div>
               <div class="common-shape-comps">
-                <div style="padding:5px;">
+                <div style="padding:4px;">
                     <!--직사각형-->
                     <a id="obj_rect" class="geItem c_rectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -235,6 +238,8 @@
     
     <div class="canvas-container">
         ${pageList[0].content }
+        <div id="guide-h" class="guide"></div>
+		<div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -421,12 +426,15 @@
         </div>
     </div>
     
+    
+    
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/html2canvas.min.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/canvas2image.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
@@ -441,7 +449,8 @@
 
     	var privateLibrary = new Array();
     	
-    	async function Thumbnail(){
+
+    	 async function Thumbnail(){
     		var image;
         		var node = document.getElementById('droppable');
             	
@@ -449,7 +458,6 @@
             	canvas.width = node.scrollWidth;
             	canvas.height = node.scrollHeight;
             	
-
             		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
             	    image = new Image();
             	    $(image).attr('object-fit', 'contain');
@@ -461,27 +469,17 @@
             	        context.scale(-1, 1);
             	        context.drawImage(image, 0, 0);
 
-            	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
             	    };
             		image.src = pngDataUrl;
             		$('.ui-selected .page-thumbnail').html('');
         	        $('.ui-selected .page-thumbnail').append(image);
-            })
-            .catch(function (error) {
+            }).catch(function (error) {
+            	console.log(error);
             });
-    	    /* await html2canvas($('#droppable')[0], {
-    	    	width: $('#droppable').width(),
-    	    	height: $('#droppable').height()
-    	    }).then(function (canvas) { 
-    	    	var image = new Image();
-    	    	console.log(canvas);
-    	        image.src = canvas.toDataURL('image/png');
-    	        
-    	        $('.ui-selected .page-thumbnail').html('');
-    	        $('.ui-selected .page-thumbnail').append(image);
-    	        
-    	      });        */ 	
+            
+          
     }	
+
     $(function(){
     	
     	//페이지 로딩시 전역변수에 pageList값을 옮겨담음
@@ -701,7 +699,11 @@
         	var changedWidth = $('#droppable').width() * scale/100;
     	}
     }
-    
+
+	$(document).on("mouseup", ".minicolors-grid", function() {
+       Thumbnail();
+	});
+	
     </script>
     
 </body>

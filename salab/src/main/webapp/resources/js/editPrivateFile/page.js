@@ -18,6 +18,10 @@
         //현재 캔버스위에 태글들을 임시저장
         tempStorage(beforeIndex);
         
+        setTimeout(function(){
+    		Thumbnail();
+    	}, 0);
+        
         $('.page-item').each(function(){
             $(this).removeClass('ui-selected');
         });
@@ -39,7 +43,6 @@
         	var file = files[i];
         	preview(file, size - 1); //미리보기 만들기
         	}
-        	
         	setTimeout(function(){
             	Thumbnail();
             }, 100);
@@ -63,7 +66,8 @@
             		fileno: list[beforepindex].fileno,
             		pageno: list[beforepindex].pageno,
 	    			pagename: list[beforepindex].pagename,
-	    			_id: list[beforepindex]._id
+	    			_id: list[beforepindex]._id,
+	    			thumbnail: $('page-thumbnail:eq('+beforepindex+')').html()
             }
         },
         stop: function(event, ui){
@@ -76,10 +80,12 @@
                     		list[i].content = list[i+1].content;
                         	list[i].pagename = list[i+1].pagename;
                         	list[i]._id = list[i+1]._id;
+                        	list[i].thumbnail = list[i+1].thumbnail;
                     	}else {
                     		list[i].content = pageMoveTempStorage.content;
                         	list[i].pagename = pageMoveTempStorage.pagename;
                         	list[i]._id = pageMoveTempStorage._id;
+                        	list[i].thumbnail = pageMoveTempStorage.thumbnail;
                     	}
                     }
             	}else if(beforepindex > pindex){
@@ -88,10 +94,12 @@
                     		list[i].content = list[i-1].content;
                         	list[i].pagename = list[i-1].pagename;
                         	list[i]._id = list[i-1]._id;
+                        	list[i].thumbnail = list[i-1].thumbnail;
                     	}else {
                     		list[i].content = pageMoveTempStorage.content;
                         	list[i].pagename = pageMoveTempStorage.pagename;
                         	list[i]._id = pageMoveTempStorage._id;
+                        	list[i].thumbnail = pageMoveTempStorage.thumbnail;
                     	}
                     }
             	}
@@ -155,7 +163,7 @@
                 }
             });
         }else{
-        	$('.minicolors').remove();
+        	$('#canvas-background .minicolors').remove();
         	$('.back-chk input').prop('checked', false);
         }
         
@@ -210,6 +218,7 @@
                 $('.right-side-bar .tab-content').hide();
             }
         });
+        
     }
 
     //페이지 삭제용 함수
@@ -374,6 +383,7 @@
     
     function pageSave(){
     	var index = $('.ui-selected').index();
+    	$('.isModified:eq('+index+')').removeClass('active');
     	
     	for(i = 0; i<selectedObj.length; i++){
     		$obj = selectedObj[i];
@@ -406,6 +416,7 @@
     
     function pageAllSave(){
     	var index = $('.ui-selected').index();
+    	$('.isModified').removeClass('active');
     	
     	for(i = 0; i<selectedObj.length; i++){
     		$obj = selectedObj[i];
@@ -631,6 +642,14 @@
         }
     }
     
-    function filter (node) {
-        return (node.className !== 'memo' && node.className !== 'grid-canvas');
+    function filter(node) {
+        return (node.className !== 'memo' && node.className !== 'grid-canvas' && node.className !== 'ui-resizable-handle ui-resizable-n' 
+        	&& node.className !== 'ui-resizable-handle ui-resizable-e' && node.className !== 'ui-resizable-handle ui-resizable-s' && node.className !== 'ui-resizable-handle ui-resizable-w' 
+        		&& node.className !== 'ui-resizable-handle ui-resizable-ne' && node.className !== 'ui-resizable-handle ui-resizable-se' && node.className !== 'ui-resizable-handle ui-resizable-sw' 
+        			&& node.className !== 'ui-resizable-handle ui-resizable-nw' && node.className !== 'ui-rotatable-handle ui-draggable');
+    }
+    
+    function modified(){
+    	var index = $('.page-item').index($('.page-item.ui-selected'));
+        $('.isModified:eq('+index+')').addClass('active');
     }

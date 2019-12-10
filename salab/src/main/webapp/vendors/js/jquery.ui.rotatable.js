@@ -301,6 +301,7 @@
     _getElementOffset: function () {
       this._performRotation(0)
       var offset = this.element.offset()
+      // 수정중
       this._performRotation(this.elementCurrentAngle)
       return offset
     },

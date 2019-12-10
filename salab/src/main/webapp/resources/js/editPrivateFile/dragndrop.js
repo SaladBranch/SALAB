@@ -201,8 +201,10 @@ function addControl(){
             	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
             	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
             },
-            stop: function() {
+            rotate : function() {
             	formatChange();
+            },
+            stop: function() {
             	setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -222,12 +224,14 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
+                resize : function() {
+                    formatChange();
+                },
                 alsoResize: $obj.children('.obj'),
                 start: function(){
                 	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
                 },
                 stop: function(){
-                    formatChange();
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -245,13 +249,15 @@ function addControl(){
                     'sw': '.ui-resizable-sw',
                     'nw': '.ui-resizable-nw',  
                 },
+                resize : function() {
+                    formatChange();
+                },
                 alsoResize: "this .obj-comp",
                 start: function(){
                 	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
                 	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 },
                 stop: function(){
-                    formatChange();
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -318,6 +324,7 @@ $(function(){
             selectedObj.push($(ui.selected));
         },
         unselected: function(e, ui){
+        	console.log("함");
             $(ui.unselected).children().remove('.ui-resizable-handle');
             if($(ui.unselected).hasClass('ui-draggable'))
                 $(ui.unselected).draggable('destroy');
@@ -332,7 +339,8 @@ $(function(){
     var mode = false; //드래그 영역 토글 변수
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
-    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts *")){
+    	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts *") || $(e.target).is(".text-dragged")){
+
             mode = false;
     	}
         else {
@@ -342,7 +350,7 @@ $(function(){
             width = height = 0;
             $focus.show();
         }
-    	if(!$(e.target).is("#droppable .obj *") && !$(e.target).is(".tab-menu *") && !$(e.target).is(".text-item *") && !$(e.target).is(".figure-item *") && !$(e.target).is(".minicolors-panel *")) {
+    	if(!$(e.target).is("#droppable .obj *") && !$(e.target).is(".tab-menu *") && !$(e.target).is(".text-item *") && !$(e.target).is(".figure-item *") && !$(e.target).is(".minicolors-panel *") && !$(e.target).is(".component")) {
     		$("#droppable .obj-comp[contenteditable=true]").each(function() {
     	        $(this).attr("contenteditable", "false");
     		})
@@ -552,8 +560,7 @@ $(function(){
 });
 
 $('#droppable').bind('DOMSubtreeModified', function(e){
-	
-    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-selected").length == 0 && $(".text-reselect").length == 0 && $(".text-editing").length == 0){
+    if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-editing").length == 0){
         $('.right-side-bar .canvas-menu').show();
         $('.right-side-bar .tab-menu').hide();
         $('.right-side-bar .tab-content').hide();

@@ -1,5 +1,6 @@
 package com.sesame.salab.member.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,14 +71,11 @@ public class MemberServiceImpl implements MemberService{
 		memberDao.enrollGoogleUser(m);
 	}
   
-	@Override
-	public int mlistCount() {
-		return memberDao.mlistCount();
-	}
+	
 
 	@Override
-	public List<Member> memberList(Paging paging) {
-		return memberDao.memberList(paging);
+	public List<Member> memberList(HashMap<String, Object> map) {
+		return memberDao.memberList(map);
 	}
 
 	@Override
@@ -86,8 +84,17 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public int mlistCount(String keyword) {
+		return memberDao.mlistCount(keyword);
+  }
+  
 	public int changePhoneNum(Member member) {
 		return memberDao.changePhoneNum(member);
+	}
+
+	@Override
+	public int memberUpdate(Member member) {
+		return memberDao.memberUpdate(member);
 	}
 
 }

@@ -136,7 +136,6 @@ function insert_notice(){
 		alert("내용을 입력해 주세요.");
 		$("#notice_box_content").focus();
 	} else{
-		alert("hi");
 		$("#noticeinsert").submit();
 	}
 }

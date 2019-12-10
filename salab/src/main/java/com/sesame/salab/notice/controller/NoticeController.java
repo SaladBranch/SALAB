@@ -41,6 +41,8 @@ public class NoticeController {
 		
 		int listCount = noticeService.listCount(); //DB에서 현재 총 Row수 가져옴 
 		Paging paging = new Paging(); //현재 페이지 
+		paging.setLimit(6);
+		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		
 		List<Notice> noticelist = noticeService.noticeList(paging);
@@ -89,6 +91,8 @@ public class NoticeController {
 		
 		int listCount = noticeService.listCount(); //DB에서 현재 총 Row수 가져옴 
 		Paging paging = new Paging(); //현재 페이지 
+		paging.setLimit(6);
+		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		
 		List<Notice> adminNoticeList = noticeService.noticeList(paging);

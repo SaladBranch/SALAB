@@ -692,7 +692,11 @@
         	var changedWidth = $('#droppable').width() * scale/100;
     	}
     }
-    
+
+	$(document).on("mouseup", ".minicolors-grid", function() {
+       Thumbnail();
+	});
+	
     </script>
     
 </body>

@@ -42,6 +42,8 @@ public class QnaController {
 		
 		int listCount = qnaService.listCount(userno); //DB에서 현재 총 Row수 가져옴 
 		Paging paging = new Paging(); //현재 페이지 
+		paging.setLimit(6);
+		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		
 		
@@ -114,6 +116,8 @@ public class QnaController {
 		int listCount = qnaService.adminListCount(); //DB에서 현재 총 Row수 가져옴 
 		
 		Paging paging = new Paging(); //현재 페이지 
+		paging.setLimit(6);
+		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -159,7 +163,6 @@ public class QnaController {
 		qna.setAdminid(((Admin)session.getAttribute("loginAdmin")).getAdminid());
 		
 		int result = qnaService.qnaUpdate(qna);
-		System.out.println(qna.toString());
 		
 		if(result <= 0) {
 	    	mv.setViewName("common/error");

@@ -195,7 +195,6 @@ label{
 }
 
 .file-info {
-    margin-top: 10px;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -210,11 +209,15 @@ label{
     font-size: 16px;
     font-weight: 500;
 }
+.file-thumbnail{
+    height: 160px;
+}
 
 /**********우측페이지*********/
 
 
 .new-file{
+    cursor: pointer;
 }
 
 /*공지사항*/
@@ -514,3 +517,4 @@ table tr:hover {
 .close-crop{
 	cursor: pointer;
 }
+

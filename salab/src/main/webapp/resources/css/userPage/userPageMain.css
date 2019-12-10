@@ -338,8 +338,8 @@ ul > li::before {
     height: 120px;
 }
 
-.contentConfigure {
-    margin-left: 20px;
+.titleConfigure {
+    margin-bottom:3px;
 }
 
 /****if standard*****/

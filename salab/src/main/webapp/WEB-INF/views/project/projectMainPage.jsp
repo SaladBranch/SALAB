@@ -33,7 +33,7 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
                 <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
@@ -162,8 +162,7 @@
                     	 </c:if> 	
                     </div>
                     </label>
-                    <div class="name-box"> ${project.projectname}
-                    </div>
+                    <div class="name-box">${sessionScope.project.projectname}</div>
                 </div>
                 <section class="file-section">
                     <!--최근파일-->

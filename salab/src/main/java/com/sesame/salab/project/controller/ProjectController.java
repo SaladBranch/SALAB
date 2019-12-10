@@ -150,6 +150,8 @@ public class ProjectController {
 	project = pService.selectProject(project);
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
+	paging.setUnderlimit(1);
+	paging.setLimit(6);
 	paging.makePage(listCount, 1);
 	
 	//프로젝트 내에 공지사항 확인

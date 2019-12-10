@@ -238,6 +238,8 @@
     
     <div class="canvas-container">
         ${pageList[0].content }
+        <div id="guide-h" class="guide"></div>
+		<div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -423,6 +425,8 @@
         <div class="canvas-content">
         </div>
     </div>
+    
+    
     
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>

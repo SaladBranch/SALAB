@@ -34,7 +34,8 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
-            <button><i class="far fa-play-circle"></i></button>
+            <button><i class="far fa-play-circle" onclick="popup();"></i></button>
+            <button><i class="far fa-play-circle" onclick="memo();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
             <div></div>
@@ -110,16 +111,16 @@
             <li id="toggle-insert">
                 삽입<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-insert-menu">
-                    <li><a href="#">이미지</a></li>
+                    <li><a href="javascript:" onclick="upImage();">이미지</a></li>
                     <li><a href="#">테이블</a></li>
-                    <li><a href="#">메모</a></li>
+                    <li><a href="javascript:" onclick="memo();">메모</a></li>
                 </ul>
             </li>
             <li id="toggle-look">
                  보기<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-look-menu">
                     <li><a href="#">격자무늬 보이기</a></li>
-                    <li><a href="#">웹 테스트</a></li>
+                    <li><a href="javascript:" onclick="popup();">웹 테스트</a></li>
                 </ul>
             </li>
         </ul>
@@ -229,13 +230,8 @@
         </div>
         
         <div class="tab-content lib-tab-content">
-            
         </div>
     </div>
-    <!--<div class="component">
-        <div class="draggable rectangle ui-widget-content"></div>
-    </div>-->
-    
     
     <div class="canvas-container">
         ${pageList[0].content }
@@ -425,8 +421,7 @@
         </div>
     </div>
     
-    <div id="render" style="display: none;">왜 이러는걸까요</div>
-    
+	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
@@ -443,11 +438,10 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-    	
-    	
+
+    	var privateLibrary = new Array();
     	
     	async function Thumbnail(){
-    		console.log('start');
     		var image;
         		var node = document.getElementById('droppable');
             	
@@ -455,27 +449,26 @@
             	canvas.width = node.scrollWidth;
             	canvas.height = node.scrollHeight;
             	
-            		await domtoimage.toPng(node).then(function (pngDataUrl) {
-            		console.log('domtoimage in');
-            	    var img = new Image();
-            	    img.onload = function () {
+
+            		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
+            	    image = new Image();
+            	    $(image).attr('object-fit', 'contain');
+            	    $(image).addClass('centered');
+            	    image.onload = function () {
             	        var context = canvas.getContext('2d');
 
             	        context.translate(canvas.width, 0);
             	        context.scale(-1, 1);
-            	        context.drawImage(img, 0, 0);
+            	        context.drawImage(image, 0, 0);
 
             	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
-            	        console.log('domtoimage end');
             	    };
-            		img.src = pngDataUrl;
+            		image.src = pngDataUrl;
             		$('.ui-selected .page-thumbnail').html('');
-        	        $('.ui-selected .page-thumbnail').append(img);
+        	        $('.ui-selected .page-thumbnail').append(image);
             })
             .catch(function (error) {
-            	console.error('oops, something went wrong!', error);
             });
-        	console.log('end');
     	    /* await html2canvas($('#droppable')[0], {
     	    	width: $('#droppable').width(),
     	    	height: $('#droppable').height()
@@ -487,8 +480,7 @@
     	        $('.ui-selected .page-thumbnail').html('');
     	        $('.ui-selected .page-thumbnail').append(image);
     	        
-    	      }); */
-        	
+    	      });        */ 	
     }	
     $(function(){
     	
@@ -566,7 +558,35 @@
        
     });
     $('.lib-tab').click(function(){
-    	
+    	var plib = {
+    			fileno: list[0].fileno,
+    			userno: list[0].userno
+    	}
+    	$.ajax({
+    		url: 'getPlibList.do',
+    		type: 'post',
+    		data: JSON.stringify(plib),
+    		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
+    		success: function(data){
+    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
+    			privateLibrary = new Array();
+    			for(var i = 0; i<data.plib.length; i++){
+					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
+							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
+					$('.lib-tab-content').append($libItem);
+					var pl = {
+						_id: data.plib[i]._id,
+	    				code: data.plib[i].code	
+	    			}
+					privateLibrary.push(pl);
+				}
+    			resizeLibImg();
+    		},
+    		error: function(){
+    			console.log("plib list 가져오기 실패");
+    		}
+    	});
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -679,12 +699,6 @@
         	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
     		
         	var changedWidth = $('#droppable').width() * scale/100;
-            if(changedWidth > $('.canvas-container').width())
-            	$('#droppable').css('margin', '5% 5%');
-            else{
-            	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
-            }
-            	
     	}
     }
 

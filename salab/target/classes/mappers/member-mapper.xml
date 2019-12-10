@@ -59,4 +59,22 @@
 		SEQ_USERNO.NEXTVAL, #{useremail} , #{userpwd} , #{username} , NULL, NULL, NULL, DEFAULT, DEFAULT, #{userauthkey}, 'Y' , null, null
 		)
 	</insert>
+  <select id="mlistCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE USEREMAIL LIKE '%' || #{keyword} || '%'
+	</select>
+	<select id="memberList" parameterType="HashMap" resultMap="resultMember">
+		SELECT * FROM (SELECT ROWNUM RNUM, USERNO, USEREMAIL, USERNAME, USERPHONE, USERPROFILE_O, USERPROFILE_R, USERLEVEL, USERENROLLDATE, USERAUTHKEY, USEREMAILCHECKED, BILLINGKEY, PAYMENTDATE  FROM (SELECT * FROM MEMBER WHERE USEREMAIL LIKE '%' || #{keyword} || '%' ORDER BY USERNO DESC))WHERE RNUM BETWEEN #{paging.startRow} AND #{paging.endRow}
+	</select>
+	<select id="memberDetail" parameterType="int" resultMap="resultMember">
+		SELECT * FROM MEMBER WHERE USERNO = #{userno}
+	</select>
+
+	<update id="changePhoneNum" parameterType="Member">
+		UPDATE MEMBER SET USERPHONE=#{userphone} where userno=#{userno}
+	</update>
+	
+	<update id="memberUpdate" parameterType="Member">
+		UPDATE MEMBER SET USERLEVEL = #{userlevel} WHERE USERNO = #{userno}
+	</update>
+
 </mapper>

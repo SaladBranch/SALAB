@@ -53,11 +53,13 @@ var startY = 0;
 var left, top, width, height;
 var $focus = $(".focus");
 $(document).on("mousedown", function(e) {
-    mode = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    width = height = 0;
-    $focus.show();
+	if(e.which != 3){
+		mode = true;
+	    startX = e.clientX;
+	    startY = e.clientY;
+	    width = height = 0;
+	    $focus.show();
+	}
 }).on('mouseup', function(e) {
     mode = false;
     $focus.hide();
@@ -103,10 +105,13 @@ function rangeSelect(selector, x1, y1, x2, y2, cb) {
 })();
 /* 우클릭 메뉴 커스터마이징 */
 $('.file-container').on('click', function(){
-    $('.file-container').each(function(){
-        $(this).removeClass("highlight");
-    });
-    $(this).addClass('highlight');
+	var index = $('.file-container').index($(this));
+    for(var i = 0; i<$('.file-container').length; i++){
+    	if(i === index)
+    		$('.file-container').eq(i).addClass('highlight');
+    	else
+    		$('.file-container').eq(i).removeClass('highlight');
+    }
 });
 (function(){
     var menu = document.getElementById("right-click-menu");
@@ -120,21 +125,38 @@ $('.file-container').on('click', function(){
     
     function leftMouseListener(){
         document.addEventListener("click", function(e){
-            toggleOnOff(0);
+            toggleOnOff(0, 'single');
+            toggleOnOff(0, 'multi');
         });
     }
     function rightMouseListener(){
+    	var $focus = $(".focus");
+    	$focus.hide();
         $(window).on('contextmenu', function(){
             event.preventDefault();
         });
-
+        
         $('.file-container').on('contextmenu', function(e){
-            event.preventDefault();
-            
-            
-            
-            toggleOnOff(1);
-            showMenu(e.clientX, e.clientY);
+        	var cnt = $('.file-container.highlight').length;
+        	if(cnt >= 2 && !$(this).hasClass('highlight')){
+        		toggleOnOff(0, 'multi');
+        		$('.file-container.highlight').removeClass('highlight');
+        	}if(cnt < 2 && !$(this).hasClass('highlight')){
+        		toggleOnOff(0, 'single');
+        		$('.file-container.highlight').removeClass('highlight');
+        	}
+        	
+        	$(this).addClass('highlight');
+        	cnt = $('.file-container.highlight').length;
+        	
+            if(cnt < 2){
+            	toggleOnOff(1, 'single');
+            	showMenu(e.clientX, e.clientY, 'single');
+            }else{
+            	toggleOnOff(1, 'multi');
+            	$('#multi-right-click-menu span').text(cnt);
+            	showMenu(e.clientX, e.clientY, 'multi');
+            }
         });
     }
     function rangeSelect(selector, x1, y1, cb){
@@ -149,13 +171,22 @@ $('.file-container').on('click', function(){
         });
     }
     
-    function toggleOnOff(num){
-        num === 1 ? menu.classList.add("active") : menu.classList.remove("active");
+    function toggleOnOff(num, type){
+    	if(type == 'single')
+    		num === 1 ? menu.classList.add("active") : menu.classList.remove("active");
+		else if(type == 'multi')
+			num === 1 ? multimenu.classList.add("active") : multimenu.classList.remove("active");
     }
     
-    function showMenu(x, y){
-        menu.style.top = y + "px";
-        menu.style.left = x + "px";
+    function showMenu(x, y, type){
+    	if(type == 'single'){
+    		menu.style.top = y + "px";
+            menu.style.left = x + "px";
+    	}else if(type == 'multi'){showModal
+    		multimenu.style.top = y + "px";
+            multimenu.style.left = x + "px";
+    	}
+        
     }
     
     init();
@@ -189,8 +220,13 @@ $('.sort-by-mention').click(function(){
 });
 $(function(){
 	var sort = $('#span-content');
+	var type = $('.top-bar-titleText').text();
 	if(sort.text() === 'recent'){
-		sort.text("최근 본 파일");
+		if(type === '휴지통'){
+			sort.text("파일 삭제 일자");
+		}else{
+			sort.text("최근 본 파일");
+		}
 		$('.sort-standards ul li').each(function(){$(this).removeClass('sort-active')});
 		$('.sort-standards ul li').eq(0).addClass('sort-active');
 	}else if(sort.text() === 'name'){
@@ -414,27 +450,30 @@ function fileDelete(){
 
 //trashCan
 function filePermanentDelete(){
-	$.ajax({
-		url: 'filePermanentDelete.do',
-		type: 'post',
-		data: {
-			pfileno: fileno,
-			userno: uno,
-			pt: teamAndPrivate
-		},
-		dataType: 'text',
-		success: function(data){
-			if(data = "success"){
-				location.reload();
-			}
-		},
-		error : function( jqXHR, textStatus, errorThrown ) {
-			console.log( jqXHR.status );
-			console.log( jqXHR.statusText );
-			console.log( jqXHR.responseText );
-			console.log( jqXHR.readyState );
-			}
-	});
+	var conf = confirm('파일을 삭제하면 복구되지않습니다.');
+	if(conf == true){
+		$.ajax({
+			url: 'filePermanentDelete.do',
+			type: 'post',
+			data: {
+				pfileno: fileno,
+				userno: uno,
+				pt: teamAndPrivate
+			},
+			dataType: 'text',
+			success: function(data){
+				if(data = "success"){
+					location.reload();
+				}
+			},
+			error : function( jqXHR, textStatus, errorThrown ) {
+				console.log( jqXHR.status );
+				console.log( jqXHR.statusText );
+				console.log( jqXHR.responseText );
+				console.log( jqXHR.readyState );
+				}
+		});
+	}
 }
 
 function fileDeleteUndo(){
@@ -462,7 +501,7 @@ function fileDeleteUndo(){
 
 function popup(){
 	
-	var win_width = 1120;
+	var win_width = 1040;
 	var height = 600+30;
 	var userno = $('#userNo').val();
 	window.open('webTest.do?pfileno='+fileno+'&userno='+userno+'&pt='+teamAndPrivate, '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');

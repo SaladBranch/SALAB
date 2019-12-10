@@ -27,10 +27,12 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sesame.salab.admin.model.vo.Admin;
 import com.sesame.salab.common.AuthInfo;
 import com.sesame.salab.common.MailUtils;
 import com.sesame.salab.common.Tempkey;
@@ -220,11 +222,9 @@ public class MemberController {
 		}
 		return "redirect:main.do";
 	}
-	
+	//팀원초대_등록된 이메일인지 확인
 	@RequestMapping(value="isExistEmail.do", method=RequestMethod.POST)
-	public void isExistEmailMethod(Member member, HttpServletResponse response) throws IOException {
-		logger.info("등록된 이메일인지 확인 중..." + member.getUseremail());
-		
+	public void isExistEmailMethod(Member member, HttpServletResponse response) throws IOException {	
 		int result = memberService.isExistEmail(member.getUseremail());
 		PrintWriter out = response.getWriter();
 		if(result > 0) {
@@ -236,9 +236,9 @@ public class MemberController {
 		}
 		out.close();
 	}
+	//비밀번호변경_비밀번호확인
 	@RequestMapping(value="pwdCheck.do", method=RequestMethod.POST)
 	public void pwdCheckMethod(Member member, HttpServletResponse response) throws IOException{
-		logger.info("비밀번호 일치 확인 중..." + member.toString());
 		Member loginMember = memberService.loginCheck(member);
 		PrintWriter out = response.getWriter();
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())){
@@ -250,5 +250,37 @@ public class MemberController {
 		}
 		out.close();
 	}
+	@RequestMapping(value="changePhoneNum.do", method=RequestMethod.POST)
+	public void changePhoneNumMethod(@RequestParam("userphone") String userphone,HttpSession session,HttpServletResponse response) throws IOException{
+		Member member = (Member)session.getAttribute("loginMember");
+		member.setUserphone(userphone);
+		PrintWriter out = response.getWriter();
+		int result = memberService.changePhoneNum(member);
+		if(result==1){
+			out.append("success");
+			logger.info("userphone chaged..");
+		}else {
+			out.append("fail");
+			logger.info("userphone didin't chaged..");
+		}
+		out.flush();
+		out.close();
+	}
 	
+	
+	@RequestMapping(value="adminMemberUpdate.do", method=RequestMethod.POST)
+	public ModelAndView updateMemberMethod(ModelAndView mv, Member member, @RequestParam("userno") int userno) throws Exception{
+		
+		member.setUserno(userno);
+		
+		int result = memberService.memberUpdate(member);
+		
+		if(result <= 0) {
+	    	mv.setViewName("common/error");
+	    } else {
+	    	mv.setViewName("redirect:adminMemberList.do");
+	    }
+		
+		return mv;
+	}
 }

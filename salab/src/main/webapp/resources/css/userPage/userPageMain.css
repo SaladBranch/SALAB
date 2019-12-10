@@ -1,43 +1,72 @@
+.z99{
+    z-index: 99 !important;
+    float: left;
+    min-width: 20px;
+}
 .section-grid {
     max-width: 40%;
     margin-top: 0px;
     margin-right: 0px;
     margin-left: 30px;
-    padding:0px;
+    padding: 0px;
+}
+
+.teamColor {
+    color: #3ec28f;
 }
 
 
 
 /* img 삽입*/
-#userImg {
+#imgLabel {
+    cursor: pointer;
+}
+
+#userImg-box {
     background: dimgray;
     padding: 15px 25px;
-   background: linear-gradient(90deg, dimgray 0%, #7a7a7a 70%, #b0b0b0 100%); 
+    background: linear-gradient(90deg, dimgray 0%, #7a7a7a 70%, #b0b0b0 100%);
     margin-bottom: 30px;
-}
-
-#userImg label {
-    font-size: 0.7em;
-    color: #ebe2e1;
-    cursor: pointer;
-    width: 100%;
-
+    height: 80px;
+    ;
 }
 
 
 
-#userImg input[type="file"] {
+#userimg {
     display: none;
 }
 
 #pImage {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     outline: none;
-    background-color: brown;
     border-radius: 100%;
-    padding-top: 18px;
+    display: inline-block;
+}
 
+#pImage:hover::before {
+    content: "Change!";
+    position: absolute;
+    margin-left: -1px;
+    margin-top: 45px;
+    padding: 2px 4px;
+    font-size: 0.6em;
+    color: #fff;
+
+
+}
+
+.selectImg {
+    width: 50px;
+    height: 50px;
+    color: red;
+}
+
+.selectImg img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
 }
 
 
@@ -61,16 +90,15 @@
 #userEmail {
     display: inline-block;
     top: 300px;
-    padding-left: 10px;
-    padding-bottom: 8px;
-    vertical-align: bottom;
+    margin-left: 8px;
+    margin-top: 14px;
+    vertical-align: top;
     color: #f7f7ed;
     font-size: 1.2em;
     font-weight: 400;
 
 }
 
-#userImg {}
 
 #main-title {
     margin: 0px;
@@ -107,6 +135,9 @@
 }
 
 /******name change****/
+#Modal-Name, #Modal-userPhone, #Modal-Password{
+    font-size: 0.7em;
+}
 #changeName input[type="text"] {
     margin: 15px auto;
     padding: 2px 15px;
@@ -121,7 +152,8 @@
 #deleteTitle {
     cursor: pointer;
     font-size: 0.6em;
-    color: dimgrey;`
+    color: dimgrey;
+    `
 }
 
 
@@ -169,6 +201,31 @@
 
 #box-changePwd input[type="button"] {
     margin-top: 10px;
+}
+
+/***폰번호변경모달****/
+.input-phone {
+    margin: 0px 16px;
+    margin-top: 15px;
+    padding: 2px 15px;
+    font-size: 14px;
+    width: 93%;
+    height: 28px;
+    border: 0.3px solid #3ec28f;
+
+}
+
+#phone-change-btn {
+    margin-top: 15px;
+}
+
+.chekc-span {
+    margin-top: 3px;
+    margin-left: 25px;
+    color: #EF4255;
+    float: left;
+    font-size: 0.6em;
+    font-weight: 200;
 }
 
 /*****modal*****/
@@ -247,28 +304,46 @@ ul > li::before {
     min-width: 15%;
 
 }
+
 /*******grade*******/
-.show-grade{
+.show-grade {
     margin-top: 10px;
     width: 100%;
     padding-left: 20px;
 }
-.grade-title{
+
+.grade-title {
     font-weight: 400;
+
+    color: #20aaf5;
+    margin: 10px 0px;
 }
-#next-payment-date, #first-payment-date{
+
+.grade-title:hover {
+    color: #3ec28f;
+
+}
+
+#next-payment-date,
+#first-payment-date {
     margin-bottom: 30px;
 }
+
 .content-box {
     min-height: 450px;
 }
 
 
-.outline-box{
+.outline-box {
     height: 120px;
 }
+
+.contentConfigure {
+    margin-left: 20px;
+}
+
 /****if standard*****/
-#downgrade-bottom>div{
+#downgrade-bottom > div {
     padding-right: 10%;
     display: block;
     margin-top: 50px;
@@ -276,38 +351,46 @@ ul > li::before {
     color: #e35d42;
     font-size: 0.7em;
 }
-.description-title{
-    font-size: 16px;
+
+.description-title {
+    font-size: 14px;
     margin-top 30px;
     padding: 10px 0px;
+    color: #595959;
 
 }
+
 #standard-description span {
     font-size: 16px;
     font-weight: 400
 }
-#standard-description >div p {
+
+#standard-description > div p {
     font-size: 14px;
-     padding-left: 20px;   
-    
-}
-#goto-upgrade{
-    font-size: 14px;
-    margin-top: 25px;
-    margin-left: 35%;
-    text-decoration: none;
-}
-#goto-upgrade:hover{
-    text-decoration: underline;
-}
-#goto-FAQ {
-	margin-right: 10px;
-	font-size:0.8em;
+    padding-left: 20px;
+
 }
 
-div a, div a:visited {
+#goto-upgrade {
+    font-size: 14px;
+    margin-top: 25px;
+    margin-left: 70%;
     text-decoration: none;
-    color:inherit;
+}
+
+#goto-upgrade:hover {
+    text-decoration: underline;
+}
+
+#goto-FAQ {
+    margin-right: 10px;
+    font-size: 0.8em;
+}
+
+div a,
+div a:visited {
+    text-decoration: none;
+    color: inherit;
 }
 
 
@@ -315,13 +398,13 @@ div a, div a:visited {
     position: relative;
     float: right;
     color: blue;
-    
+
 }
 
 
 /******crop******/
 
-.modal-crop{
+.modal-crop {
     display: none;
     position: fixed;
     z-index: 99;
@@ -332,39 +415,44 @@ div a, div a:visited {
     height: 100%;
     overflow: auto;
     opacity: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
     transition: all .2s linear;
 }
 
-.modal-crop-content{
+.modal-crop-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    border-radius: 10px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     width: 500px;
 }
+
 .is-visible {
     display: block;
 }
-.is-open{
+
+.is-open {
     opacity: 1;
 }
-.crop-top{
+
+.crop-top {
     width: 100%;
     margin-bottom: 15px;
     padding-bottom: 5px;
     border-bottom: 1px solid #dbdbdb;
 }
-.crop-top a{
+
+.crop-top a {
     display: inline-block;
     padding: 10px 10px;
     text-decoration: none;
     color: #2a2a2a;
 }
-.crop-top button{
+
+.crop-top button {
     display: inline-block;
     border: 0;
     border-radius: 5px;
@@ -376,12 +464,83 @@ div a, div a:visited {
     color: #00a8ff;
 }
 
-.crop-top button:hover{
+.crop-top button:hover {
     background: #d3f0ff;
 }
-.crop-main{
+
+.crop-main {
     background: #fff;
 }
-.close-crop{
-	cursor: pointer;
+
+.close-crop {
+    cursor: pointer;
+}
+
+/*유저메뉴 토글*/
+
+.user-profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 180px;
+    margin-right: 15px;
+    padding-right: 5px;
+}
+.user-profile img{
+    width: 30px;
+    margin-top: 5px;
+}
+
+.profile-name{
+    color: #fff;
+    margin-left: 5px;
+    font-size: 16px;
+    line-height: 40px;
+    cursor: pointer;
+}
+.profile-name i{
+    font-size: 10px;
+    margin-left: 8px;
+}
+
+.profile-dropmenu{
+    display: none;
+    position: absolute;
+    background-color: #fafafa;
+    width: 180px;
+    top: 40px;
+    right: 10px;
+    z-index: 6;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+}
+.profile-dropmenu:before{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fafafa;
+    top: -7px;
+    right: 5px;
+}
+.profile-menus li:hover{
+    background-color: #ebebeb;
+}
+.profile-menus li{
+    margin: 5px 0;
+}
+.profile-menus li:nth-child(2):after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #ebebeb;
+}
+.profile-menus li a{
+    padding-left: 15px;
+    font-size: 15px;
+    color: #393939;
+    font-weight: 300;
 }

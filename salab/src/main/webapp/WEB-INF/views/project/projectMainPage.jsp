@@ -28,7 +28,7 @@
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${project.projectname}</a></div>
+                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${sessionScope.project.projectname}</a></div>
                 <input id="projectno" type="hidden" value="${project.projectno}">
             </div>
             <div class="top-bar-logo">
@@ -46,10 +46,15 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div class=""></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
@@ -168,18 +173,16 @@
                         
 						<c:if test="${empty projectList }"> 
 							<div class="file-grid">
-				                <div class="new-file" onclick="showModal();">
+				                <div class="new-file" onclick="showModal('newFile');">
 				                    &#43; 새 파일
 				                </div>
 				            </div>
 						</c:if>
 						<c:if test="${!empty projectList }"> 
 	                        <c:forEach var="pfile" items="${projectList}">
-	                            <div class="file-grid" onclick="location.href='epFile.do'">
+	                            <div class="file-grid">
 	                                <div class="file-container">
-	                                    <div class="file-thumbnail">
-	
-	                                    </div>
+	                                    <div class="file-thumbnail"  onclick="location.href='etFile.do?projectno=${project.projectno}&fileno=${pfile.prfileno}'" ></div>
 	                                    <div class="file-info">
 	                                        <div class="about-file">
 	                                            <div class="file-name">
@@ -217,7 +220,7 @@
                     <!--teamNotice-grid-->
                     <div>
                         <div class="noticePreview-title left">공지사항</div>
-                        <div class="moreNotice right" onclick="gotoPNotice()">더보기</div>
+                        <div class="moreNotice right" onclick="gotoPNotice()">More</div>
                     </div>
                     <div class="notice-grid part-grid clear">
                         <!-- NoticeList -->
@@ -241,7 +244,7 @@
                     <div>
                         <div class="left">팀 원</div>
                         <c:if test="${sessionScope.userauth == 'LEADER'}">
-                            <div class="right" onclick="inviteModalToggle()"> 팀원 초대하기</div>
+                            <div class="right" onclick="inviteModalToggle()"><i class="fas fa-plus"></i> invite Members</div>
                         </c:if>
                     </div>
                     <div class="member-grid part-grid clear scrollbar">
@@ -325,7 +328,15 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- 새 파일 생성 모달 -->
+                    <div id="modal-name" class="modalOutline disable ">
+                        <div id="newFile" class="modalContent z-index1">
+                            <div class="titleConfigure">Create PrivateFile</div>
+                            <input id="userNo" type="hidden" value="${loginMember.userno}">
+                            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
+                            <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -369,14 +380,11 @@
     });
 
     function readFile(input) {
-        console.log("변경시작");
 
         if (input.files && input.files[0]) { //파일있다면 
-            console.log("파일있다");
             var reader = new FileReader();
 
             reader.onload = function(e) {
-                console.log("창띄울게");
                 $('.modal-crop').addClass('is-visible');
                 setTimeout(function() {
                     $('.modal-crop').addClass('is-open');
@@ -390,19 +398,11 @@
                         type: 'base64',
                         format: 'jpeg',
                         size: {
-                            width: 100,
-                            height: 100
+                            width: 500,
+                            height: 500
                         }
                     }).then(function(resp) {
-                        /* const blobUrl = window.URL.createObjectURL(resp);
-		                $('#editImg').attr("src", blobUrl); */
-                        alert("변환된 data : " + resp);
-                        /*$('#base64img').val(resp);*/
-
                         $('#editImg').attr("src", resp);
-/* 페이지새로고침이라 필요없음                       $('.modal-crop').removeClass('is-open');
-                        $('.modal-crop').removeClass('is-visible');*/
-                        
                         /*rest를 <hidden>에 넣어서  imgInsert.do로 연결*/
   {
                             var form = document.createElement("form");

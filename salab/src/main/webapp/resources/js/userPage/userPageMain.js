@@ -5,6 +5,8 @@ function showModal(findKey) {
         $("#modal-password").show();
     } else if (findKey == "delete") {
         $("#modal-delete").show();
+    } else if (findKey == "phone") {
+        $("#modal-phone").show();
     }
 }
 
@@ -14,7 +16,7 @@ $(document).ready(function () {
     $(".modalOutline").click(function () {
         HideOnBush();
     });
-    
+
     //모달창 클릭 시, 부모로 이벤트 전송 block
     $(".modalContent, .modalOutline").click(function () {
         event.stopImmediatePropagation();
@@ -26,7 +28,7 @@ $(document).ready(function () {
                     });*/
     });
 
-//새로운 비밀번호 맞게 입력했는지 체크.
+    //새로운 비밀번호 맞게 입력했는지 체크.
     $("#password1, #password2").keyup(function () {
         if (/.{6,20}$/.test($(this).val())) {
             $(this).css("border-color", "#3ec28f");
@@ -41,30 +43,23 @@ function HideOnBush() {
     $(".modalOutline").hide();
 }
 
-
-/*  스페이스 입력시,
-document.body.onkeyup = function (e) {
-    if (e.keyCode == 32) {
-        alert("key up SPACE")
-    }
-}
-*/
 //엔터키 입력 시 , button이랑 연동.
-function activeEnter(findKey) {
-
-    if (window.event.keyCode == 13) {
-        alert("엔터키감지");
-
-        if (findKey == "atName") {
-
-        } else if (findKey == "atPassword") {
-
-        } else if (findKey == "atDelete") {
-
-        }
-    }
-}
-
+/*
+	function activeEnter(findKey) {
+		
+		if (window.event.keyCode == 13) {
+			alert("엔터키감지");
+			
+			if (findKey == "atName") {
+				
+			} else if (findKey == "atPassword") {
+				
+			} else if (findKey == "atDelete") {
+				
+			}
+		}
+	}
+*/
 //이름변경 , 페이지 이동
 function nameChangedo() {
     var form = document.createElement("form");
@@ -88,9 +83,24 @@ function nameChangedo() {
     form.submit();
 }
 
+//변경할 비밀번호 동일하게 입력했는지 확인
+function validCheckPwd() {
+    var pwd1 = document.getElementById('password1').value;
+    var pwd2 = document.getElementById('password2').value;
+    if (pwd1.length < 6 || pwd2.length < 6) {
+        document.getElementById('validcheck-password').innerHTML = '<i class="fas fa-times"></i> 6글자 이상 입력하세요.';
+    }else{
+        if (pwd1 == pwd2) {
+            document.getElementById('validcheck-password').innerHTML = '';
+        } else {
+            document.getElementById('validcheck-password').innerHTML = '<i class="fas fa-times"></i> 동일한 비밀번호를 입력해 주세요.';
+        }
+    }
+
+}
+
 //비밀번호 변경.
 function passwordCheck(pwd, cpwd, cpwd2) {
-    console.log(pwd + "," + cpwd + "," + cpwd2);
     if (cpwd == cpwd2) {
         $.ajax({
             url: "changePwd.do",
@@ -113,7 +123,8 @@ function passwordCheck(pwd, cpwd, cpwd2) {
             }
         });
     } else {
-        alert("새로운 비밀번호를 동일하게 입력하세요");
+        document.getElementById('validcheck-password').innerHTML = '<i class="fas fa-times"></i> 동일한 비밀번호를 입력해 주세요.';
+
     }
 
 }
@@ -126,10 +137,10 @@ function accountDelete(pwd) {
         },
         type: "post",
         success: function (data) {
-            console.log("json data : " + data);
             if (data == 'fail') {
-                alert("패스워드가 불일치합니다.");
+                document.getElementById('validcheck-delete').innerHTML = '<i class="fas fa-times"></i> 비밀번호가 일치하지 않습니다.';
             } else if (data = 'success') {
+                alert("관련된 데이터가 모두 삭제되었습니다.");
                 location.href = 'logout.do';
             }
         },
@@ -138,3 +149,49 @@ function accountDelete(pwd) {
         }
     });
 }
+
+//전화번호 번경
+function validCheckPhone() {
+    var number = document.getElementById('input-userPhone').value;
+    var regExp = /^01\d{8,9}$/;
+    if (regExp.test(number)) {
+        document.getElementById('validcheck-phone').innerHTML = "";
+        document.getElementById('phone-change-btn').disabled = false;
+
+    } else {
+        document.getElementById('phone-change-btn').disabled = 'disabled';
+        document.getElementById('validcheck-phone').innerHTML = '<i class="fas fa-times"></i> 잘못된 전화번호 양식입니다.';
+
+    }
+
+}
+
+function phoneChangedo() {
+       var number = document.getElementById('input-userPhone').value;
+ 
+    $.ajax({
+        url: "changePhoneNum.do",
+        data: {
+            userphone: number
+        },
+        type: "post",
+        success: function (data) {
+            if(data=='success'){
+                location.href= "userMain.do";
+            }
+            console.log("json data : " + data);
+        },
+        error: function () {
+            alert("에러");
+        }
+    });
+}
+// 유저메뉴
+$('.user-profile').click(function(){
+    var drop = $('.profile-dropmenu');
+    if(drop.css('display') == 'block'){
+        drop.hide();
+    }else{
+        drop.show();
+    }
+});

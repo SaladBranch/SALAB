@@ -4,7 +4,6 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>상품</title>
 </head>
 <body>
     <header>
@@ -67,5 +66,12 @@
             </div>
         </div>
     </header>
+    <script type="text/javascript">
+    	$(function(){
+    		$('.google-login').on('click', function(){
+    			location.href = "${google_url}";
+    		});
+    	});
+    </script>
 </body>
 </html>

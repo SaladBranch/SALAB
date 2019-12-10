@@ -38,17 +38,22 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div class="add-btn add-btn-cursor">&#43;</div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
-                                <li><a href="#">계정 설정하기</a></li>
-                                <li><a href="#">도움말</a></li>
+                                <li><a href="userMain.do">계정 설정하기</a></li>
+                                <li><a href="noticelist.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
                         </div>
@@ -78,11 +83,20 @@
             </div>
         </div>
         <div class="left-middle-side-bar">
-            <c:if test="${!empty sessionScope.myProjectList }">
+        	<c:if test="${!empty sessionScope.myProjectList }">
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
 							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
@@ -118,12 +132,12 @@
         <div class="sort-standard">
             <div class="sort-by">
                 <div class="sort-by-mention">
-                <i class="fas fa-chevron-down"></i><span id="span-content">파일 삭제 일자</span>
+                <i class="fas fa-chevron-down"></i><span id="span-content">${sort }</span>
                 </div>
             </div>
             <div class="sort-standards">
                 <ul>
-                    <li><a href="trashCan.do?sort=recent" class="sort-active">파일 삭제 일자</a></li>
+                    <li><a href="trashCan.do?sort=recent">파일 삭제 일자</a></li>
                     <li><a href="trashCan.do?sort=name">파일 명</a></li>
                     <li><a href="trashCan.do?sort=date">파일 생성 일자</a></li>
                 </ul>

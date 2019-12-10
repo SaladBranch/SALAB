@@ -141,14 +141,13 @@ public class ProjectController {
 		
 		return mv;
 	}
-	
+	//프로젝트페이지로 이동
 	@RequestMapping(value="gotoProject.do")
 	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
 	logger.info("gotoTeamProject.do 진입");
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
 	project = pService.selectProject(project);
-	System.out.println(project.toString());
 	int listCount = pnService.listCount(project.getProjectno());
 	Paging paging = new Paging();
 	paging.makePage(listCount, 1);
@@ -161,7 +160,6 @@ public class ProjectController {
 	
 	//멤버 리스트 확인
 	List<ProjectMember> memberList = pService.selectProjectMemeber(project.getProjectno());
-	System.out.println("멤버결과:"+memberList.toString());
 	
 	//페이지메인에 표시될 프로젝트 확인 (최대4개)
 	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
@@ -177,34 +175,43 @@ public class ProjectController {
 	List<Project> projectList = mpService.selectProjectList(member.getUserno());
 	session.removeAttribute("myProjectList");
 	session.setAttribute("myProjectList", projectList);
-
+	session.setAttribute("project", project);
 	mv.addObject("projectList",teamProjectList);
 	mv.addObject("memberList", memberList);
 	mv.addObject("noticelist", pnoticelist);
 	mv.addObject("paging", paging);
-	mv.addObject("project", project);
   	mv.setViewName("project/projectMainPage");
 	return mv;
 	}
-
+	//projectMainPage.jsp_ 멤버의 권한 변경
 	@RequestMapping(value="changeAuth.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String changeAuthMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("changeAuth.do 진입 : "+member_project.toString());
-	
+	public String changeAuthMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
 	response.setContentType("application/json; charset=UTF-8");
 	JSONObject job = new JSONObject();
 	int result = pService.changeAuth(member_project);
-
-	if(result==1) {job.put("result", "success");}
+	if(result==1) {
+		job.put("result", "success");
+		if(member_project.getUserauth().equals("LEADER")) {
+			Member_Project leaderToEditor = new Member_Project();
+			Member member = (Member) session.getAttribute("loginMember");
+			leaderToEditor.setUserno(member.getUserno());
+			leaderToEditor.setProjectno(member_project.getProjectno());
+			leaderToEditor.setUserauth("CAN_EDIT");
+			int changeLeader = pService.changeAuth(leaderToEditor);
+			if(changeLeader>0) {
+				logger.info("Leader 변경 process 정상완료.");
+			}
+		}
+	}
 	
 	
 	return job.toJSONString();
 	
 	}
+	//projectMainPage.jsp_ 멤버 추가 이메일전송
 	@RequestMapping(value="inviteEmailCheck.do", method= RequestMethod.POST)
 	public void inviteEmailCheckMethod(@RequestParam("useremail") String useremail,@RequestParam("projectno") int projectno, HttpServletResponse response, HttpSession session ) throws IOException, MessagingException {
-		logger.info("진입");
 		response.setContentType("text/html; charset=UTF-8");
 		int result = pService.inviteEmailCheck(useremail,projectno);
 		PrintWriter out = response.getWriter();
@@ -227,12 +234,10 @@ public class ProjectController {
 		out.flush();
 		out.close();
 	}
-	
+	//projectMainPage.jsp_ 멤버 강퇴	
 	@RequestMapping(value="memberKick.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String memberKickMethod(ModelAndView mv, Member_Project member_project ,HttpServletResponse response ) throws MessagingException, UnsupportedEncodingException {
-	logger.info("memberKick.do 진입 : "+member_project.toString());
-	
 	response.setContentType("application/json; charset=UTF-8");
 	JSONObject job = new JSONObject();
 	int result = pService.memberKick(member_project);
@@ -243,10 +248,9 @@ public class ProjectController {
 	return job.toJSONString();
 	
 	}
-	//프로젝트 이미지 삽입
+	//projectMainPage.jsp_ 프로젝트 이미지삽입
 	@RequestMapping(value="projectImgInsert.do", method=RequestMethod.POST)
 	public String userImgInsertMethod(HttpServletRequest request,@RequestParam(name="upfiles", required=false) String upfiles, @RequestParam(name="ofilename",required=false) String ofilename,Project project, HttpSession session) throws IOException {
-		System.out.println(project.toString());
 		if (upfiles != null) {
 			String path = request.getSession().getServletContext().getRealPath("resources/projectUpfiles");
 

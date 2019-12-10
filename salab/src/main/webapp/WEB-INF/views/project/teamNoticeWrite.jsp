@@ -19,20 +19,21 @@
 
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
-    <title>Project | Salab</title>
+    <title>${project.projectname }  | Salab</title>
 </head>
 
 <body>
     <header>
         <nav class="top-bar">
             <div class="top-bar-title">
-                <div class="top-bar-titleText">공지사항</div>
+                <div class="top-bar-titleText"><a href="gotoProject.do?projectno=${project.projectno }">${project.projectname}</a></div>
+                <input id="projectno" type="hidden" value="${project.projectno}">
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -43,17 +44,22 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div class=""></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
                         <div class="profile-dropmenu">
                             <ul class="profile-menus">
                                 <li><a href="userMain.do">계정 설정하기</a></li>
-                                <li><a href="userNotice.do">도움말</a></li>
+                                <li><a href="noticelist.do">도움말</a></li>
                                 <li><a href="logout.do">로그아웃</a></li>
                             </ul>
                         </div>
@@ -69,7 +75,7 @@
                 <i class="fas fa-search" id="search-icon" onclick="goBack()"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
-            <div class="recent-file active-menu">
+            <div class="recent-file ">
                 <div class="icon-wrapper"><i class="far fa-clock"></i></div>
                 <a href="recentFile.do">최근 파일</a>
             </div>
@@ -83,10 +89,42 @@
             </div>
         </div>
         <div class="left-middle-side-bar">
-            <div class="new-team">
-                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
-                <a href="newTeam.do">새로운 팀 </a>
-            </div>
+        	<c:if test="${!empty sessionScope.myProjectList }">
+        		<div class="myTeam">
+					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
+						<div class="each-team">
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
+						
+							<c:if test="${projectno eq projectList.projectno }">
+								<a class="projectName active-menu" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<c:if test="${projectno ne projectList.projectno }">
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							</c:if>
+							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="new-team" style="border-top: 1px solid #e2e2e2;">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
+        	<c:if test="${empty sessionScope.myProjectList }">
+        		<div class="new-team">
+	                <div class="icon-wrapper"><i class="far fa-object-group"></i></div>
+	                <a href="newTeam.do">새로운 팀 </a>
+	            </div>
+        	</c:if>
         </div>
     </div>
     <div class="right-main-side">
@@ -132,7 +170,7 @@
         function noticeRegist() {
             var title = $('#noticeTitie').val();
             var content = $('#noticeContent').val();
-            var projectno =$('#projectno').val();
+            var projectno =${requestScope.projectno}
             location.href = 'projectNotiRegist.do?pnoticetitle=' + title + '&pnoticecontent=' + content+"&projectno="+projectno ;
         }
         function goBack(){

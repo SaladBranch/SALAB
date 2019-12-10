@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="/salab/resources/css/admin/adminMember.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/admin/adminMemberDetail.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
@@ -85,37 +85,55 @@
     	
     	<div class="member_bottom">
 			<div class="member_box">
+				<p class="member_fromMember">Info. Member</p>
 				<form action="adminMemberUpdate.do?userno=${requestScope.member.userno }" id="adminMemberUpdate" method="post" enctype="multipart/form-data">
-					<p class="member_fromMember">From. Member</p>
 					<ul>
-						<li>
-							<p class="member_title">제목</p>
-							<input type="text" id="member_box_title" name="qnatitle" value="${requestScope.member.qnatitle }" readonly >
+						<li class="member_line">
+							<c:if test="${!empty requestScope.member.userprofile_r }">
+								<img src="/salab/resources/userUpfiles/${requestScope.member.userprofile_r }" class="member_profile">
+							</c:if>
+							<c:if test="${empty requestScope.member.userprofile_r }">
+								<img src="/salab/resources/img/default_profile.png" class="member_profile">
+							</c:if>
+						</li>
+						<li class="member_line">
+							<p class="member_info">${requestScope.member.useremail }</p>
+						</li>
+						<li class="member_line">
+							<p class="member_info">${requestScope.member.username }</p>
+						</li>
+						<li class="member_line">
+							<p class="member_info">${requestScope.member.userphone }</p>
+						</li>
+						<li class="member_line">
+							<p class="member_info">${requestScope.member.userenrolldate }</p>
+						</li>
+						<li class="member_line">
+							<select name="userlevel" id="userlevel">
+								<c:if test="${requestScope.member.userlevel eq 'STANDARD'  }">
+									<option value="STANDARD" selected>STANDARD</option>
+									<option value="PREMIUM">PREMIUM</option>
+								</c:if>
+								<c:if test="${requestScope.member.userlevel ne 'STANDARD'  }">
+									<option value="STANDARD">STANDARD</option>
+									<option value="PREMIUM" selected>PREMIUM</option>
+								</c:if>
+							</select>
+						</li>
+						<li class="member_line">
+							<p class="member_info">
+								<c:if test="${!empty requestScope.member.paymentdate }">
+									${requestScope.member.paymentdate }
+								</c:if>
+								<c:if test="${empty requestScope.member.paymentdate }">
+									<span>결제예정일 정보 없음.</span>
+								</c:if>
+							</p>
 						</li>
 						<li>
-							<p class="member_content">내용</p>
-							<textarea id="member_box_content" name="qnacontent" readonly="readonly" >${requestScope.member.qnacontent }</textarea>
+							<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
+							<input type="button" class="member_update_btn" value="정보 수정" >
 						</li>
-						<c:if test="${!empty requestScope.member.qnareplycontent }">
-							<li>
-								<p class="member_ans">답변</p>
-								<textarea id="member_box_ans" name="qnareplycontent" readonly="readonly" >${requestScope.member.qnareplycontent }</textarea>
-							</li>
-							<li>
-								<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
-								<input type="button" class="member_update_btn" value="글 수정" onclick="finished_update();">
-							</li>
-						</c:if>
-						<c:if test="${empty requestScope.member.qnareplycontent }">
-							<li>
-								<p class="member_ans">답변</p>
-								<textarea id="member_box_ans" name="qnareplycontent" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
-							</li>
-							<li>
-								<input type="button" class="member_back_btn" value="목록으로" onclick="back_member();">
-								<input type="button" class="member_update_btn" value="글 수정" onclick="update_member();">
-							</li>
-						</c:if>
 					</ul>
 				</form>
 			</div>
@@ -127,4 +145,38 @@
     
     <script type="text/javascript" src="/salab/resources/js/admin/admin.js"></script>
 </body>
+
+<!-- 목록으로 버튼 click -->
+<script type="text/javascript">
+function back_member(){
+	history.go(-1);
+}
+</script>
+<!-- 목록으로 버튼 click -->
+
+<!-- 정보수정 버튼 click -->
+<script type="text/javascript">
+$(function(){
+	var changeVal = false;
+	
+	$("#userlevel").change(function(){
+		changeVal = true;
+	});
+	
+	$(".member_update_btn").click(function(){
+		if(changeVal){
+			var check = confirm("수정 하시겠습니까?");			
+			if(check){
+				$("#adminMemberUpdate").submit();
+			}
+		}else{
+			alert("변경사항이 없습니다.");
+		}
+	});
+	
+});
+</script>
+<!-- 정보수정 버튼 click -->
+
+
 </html>

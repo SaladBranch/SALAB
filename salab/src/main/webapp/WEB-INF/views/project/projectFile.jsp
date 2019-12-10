@@ -31,7 +31,7 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
                 <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
@@ -88,14 +88,26 @@
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
-							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
+						
 							<c:if test="${project.projectno eq projectList.projectno }">
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 								<a class="active-menu" href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 							</c:if>
 							<c:if test="${project.projectno ne projectList.projectno }">
-								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>	
+								<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
+								<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 							</c:if>
+							
 						</div>
 					</c:forEach>
 				</div>
@@ -147,9 +159,9 @@
         <div class="row recent-files">
         	<c:if test="${!empty fileList }">
         		<c:forEach var="tfile" items="${fileList }">
-        		<div class="file-grid" onclick="etFile(${tfile.prfileno});">
+        		<div class="file-grid" >
 	                <div class="file-container">
-	                    <div class="file-thumbnail">
+	                    <div class="file-thumbnail" onclick="etFile(${tfile.prfileno});">
 	                        ${tfile.prfilethumbnail }
 	                    </div>
 	                    <div class="file-info">

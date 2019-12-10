@@ -333,3 +333,23 @@ label.chk-label{
   to { -webkit-transform: rotate(360deg); }
 }
 
+/*유저이미지*/
+.profile-img >img{
+	border-radius: 100%;
+}
+/*상단 a태그 클릭시 이동가능하게 */
+.top-bar-titleText{
+    pointer-events: auto;
+}
+.top-bar-titleText > a {
+    color: #fff;
+}
+/*섬네임만 클릭하여 편집으로이동*/
+.file-thumbnail{
+    pointer-events: auto;
+    cursor: pointer;
+}
+/*top-bar +버튼 커서*/
+.add-btn-cursor{
+    cursor: pointer;
+}

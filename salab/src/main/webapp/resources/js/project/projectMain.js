@@ -95,8 +95,14 @@ function gotoNoticeDetail(no){
 
 //팀원 권한 메뉴창 toggle
 function openMenu() {
-    $('.setting-menu').addClass('hide');
-    $(event.target.nextElementSibling).toggleClass('hide');
+    
+    if($(event.target.nextElementSibling).hasClass('hide')){
+         $(event.target.nextElementSibling).removeClass('hide');
+    }else{
+        $(event.target.nextElementSibling).addClass('hide');
+    }
+    
+
 }
 //모달끄기 버튼_
 $(".modalOutline").click(function () {
@@ -147,14 +153,33 @@ $(".inviteBtn").click(function () {
 
     })
 });
-//게시판 이동
+//새파일생성
+function showModal(findKey) {
+	if(findKey === "newFile"){
+		$("#modal-name").show();
+	}else if(findKey == "renameFile"){
+		$("#modal-rename").show();
+		$('#fileRename').val(filetitle);
+	}
+	
+}
+function newTeamFile(){
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "insert_newteamFile.do");
+    document.body.appendChild(form);
 
-//게시글 이동
+    var insert = document.createElement("input");
+    insert.setAttribute("type", "hidden");
+    insert.setAttribute("name", "prfiletitle");
+    insert.setAttribute("value", $("#fileName").val());
+    form.append(insert);
 
-//사진변경
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "projectno");
+    insert2.setAttribute("value", $("#projectno").val());
+    form.append(insert2);
 
-//프로젝트이름변경
-
-//프로젝트 불러오기
-
-//프로젝트 이동하기
+    form.submit();
+}

@@ -33,17 +33,28 @@ function moveDragging(){
     });
 }
 function includeElement(X, Y, temp) {
+	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
+    $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
+    
     var objId = temp.children().attr("id");
     var module = getModule(objId);
-    module.setX(X);
-    module.setY(Y);
-    var comp = module.obj_code;
-	
-    //list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
-    $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-	$("#droppable").append(comp);
+    var comp;
+    if(module != undefined){
+        comp = module.obj_code;
+    }else{
+    	var index = temp.children().attr("data-order");
+    	comp = privateLibrary[index].code;
+    }
+    $("#droppable").append(comp);
+    $('#droppable .obj').last().css({
+    	top: Y,
+    	left: X
+    });
     initSelect();
-    Thumbnail();
+    setTimeout(function(){
+    	Thumbnail();
+    }, 100);
+    
 }
 function leftMouseListner(){
     $(document).on('click', function(event){
@@ -180,7 +191,7 @@ function addControl(){
                 $(this).css('cursor', 'default');
                 setTimeout(function(){
             		Thumbnail();
-            	}, 1000);
+            	}, 100);
             }
         }).rotatable({
             degrees: getRotateDegree($obj),
@@ -194,7 +205,7 @@ function addControl(){
             stop: function() {
             	setTimeout(function(){
             		Thumbnail();
-            	}, 1000);
+            	}, 100);
             },
             wheelRotate: false
         });
@@ -221,7 +232,7 @@ function addControl(){
                 stop: function(){
                     setTimeout(function(){
                 		Thumbnail();
-                	}, 1000);
+                	}, 100);
                 }
             });
         }else{
@@ -247,7 +258,7 @@ function addControl(){
                 stop: function(){
                     setTimeout(function(){
                 		Thumbnail();
-                	}, 1000);
+                	}, 100);
                 }
             });
         }
@@ -392,7 +403,31 @@ $(function(){
             appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
             moveDragging();
         }
-        
+    });
+    //라이브러리 obj 삽입
+    $('.lib-tab-content').on('mousedown', '.plib-item',function(e){
+    	event.preventDefault();
+    	if(e.button == 2){
+    	    $('.context-menu').html(contextmenu.library($(this).attr('data-order')));
+    	    toggleContext(1);
+    	    menuActivation();
+    	    showContext(e.clientX, e.clientY);
+    	}else{
+    		clicks++;
+        	setTimeout(function(){
+        		clicks = 0;
+        	}, 400);
+        	var index = $('.lib-tab-content .plib-item').index($(this));
+        	if(clicks == 2){
+        		$(target).append(privateLibrary[index].code);
+        		initSelect();
+        		clicks = 0;
+        	}else{
+                appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $(this).clone().wrap("<div/>").parent().html() + "</div>").appendTo("body");
+                moveDragging();
+        	}
+    	}
+    	
     });
     
     //마우스 움직일 때 드래그 영역 설정 함수
@@ -431,7 +466,7 @@ $(function(){
             });
             setTimeout(function(){
         		Thumbnail();
-        	}, 1000);
+        	}, 100);
         }else{
             $('.minicolors').remove();
             $('#droppable').css('background-color', '#fff');
@@ -448,7 +483,7 @@ $(function(){
             $options.hide();
         }
     });
-    
+    /* canvas margin */
     $('#canvas-sizing-opt li').on('click', function(){
         if($(this).text() != 'custom'){
             $('#canvas-sizing').html($(this).html());
@@ -460,14 +495,12 @@ $(function(){
             if(width < Number($('.canvas-container').css('width').replace('px', ''))){
             	$('#droppable').css({
                     width: width + 'px',
-                    height: height + 'px',
-                    margin: '5% auto'
+                    height: height + 'px'
                 });
             }else{
             	$('#droppable').css({
                     width: width + 'px',
-                    height: height + 'px',
-                    margin: '5% 5%'
+                    height: height + 'px'
                 });
             }
             
@@ -510,8 +543,6 @@ $(function(){
     
     $('#custom-width input').on('focusout', function(){
     	$('#droppable').css('width', $(this).val()+'px');
-    	if(Number($(this).val()) < Number($('.canvas-container').css('width').replace('px', '')))
-    		$('#droppable').css('margin', '5% auto');
     });
     $('#custom-height input').on('focusout', function(){
     	$('#droppable').css('height', $(this).val()+'px');
@@ -535,5 +566,125 @@ $('#droppable').bind('DOMSubtreeModified', function(e){
         $('.right-side-bar .tab-menu').show();
         $('.right-side-bar .tab-content').show();
     }
-    
 });
+
+function savetoLibrary(){
+	var comp = selectedObj[0].clone();
+	comp.removeClass('ui-resizable ui-selected ui-selectee ui-draggable ui-draggable-handle');
+	comp.children().remove('.ui-resizable-handle');
+	comp.children().remove('.ui-rotatable-handle');
+	
+	//canvas위에 실제로 뿌려줄 저장된 object의 코드
+	var code = comp.wrap("<div/>").parent().html();
+	code = code.substr(0, code.indexOf('</div>') + 6) + code.substr(code.indexOf('</div>') + 6).trim();
+	
+	var rotateDegree = getRotateDegree(selectedObj[0]);
+	
+	selectedObj[0].css('transform', 'rotate(0)').removeClass('ui-selected');
+	selectedObj[0].children('.ui-resizable-handle').hide();
+	
+	html2canvas(selectedObj[0], { 
+		onrendered: function(canvas){
+			var data = canvas.toDataURL('image/png');
+			var plib = {
+				code: code,
+				content: data,
+				fileno: list[0].fileno,
+				userno: list[0].userno,
+			};
+			
+			$.ajax({
+				url: 'toPrivateLib.do',
+				type: 'post',
+				cache: false,
+				data: JSON.stringify(plib),
+				contentType: "application/json; charset=UTF-8",
+				dataType: 'json',
+				success: function(data){
+					$libItem = $("<div class='plib-item' data-order='"+(privateLibrary.length)+"'><div class='plib-item-thumb'><img src='" 
+							+ plib.content + "'></div><div class='plib-item-name'>untitled</div></div>");
+					$('.lib-tab-content').append($libItem);
+					var pl = {
+						code: data.plib.code,
+						_id: data.plib._id
+					}
+					privateLibrary.push(pl);
+					resizeLibImg();
+				},
+				error: function(){
+					console.log("lib 추가 실패");
+				}
+			});
+		}
+	});
+	
+	selectedObj[0].css('transform', 'rotate(' + rotateDegree + 'deg)').addClass('ui-selected');
+	selectedObj[0].children('.ui-resizable-handle').show();
+}
+
+
+//라이브러리에서 지우기
+function deleteFromLib(index){
+	//privateLibrary에 현재 lib 코드들이 들어잇음
+	var chk = confirm("정말로 삭제하시겠습니까?\n삭제 후에는 복구되지 않습니다.");
+	if(chk){
+		$.ajax({
+			url: "deletePlib.do",
+			data: JSON.stringify(privateLibrary[index]),
+			type: 'post',
+			cache: false,
+			contentType: "application/json; charset=UTF-8",
+			error: function(){
+				console.log("lib 삭제 실패");
+			}
+		});
+		$('.lib-tab-content .plib-item').eq(index).remove();
+		privateLibrary.splice(index, 1);
+	}
+}
+function resizeLibImg(){
+	setTimeout(function(){
+		$('.plib-item-thumb img').each(function(){
+			var index = $('.plib-item-thumb img').index($(this));
+			var code = privateLibrary[index].code.split("rotate(")[1].split(")")[0];
+			
+			var w = $(this).width();
+			var h = $(this).height();
+			if(w >= h){
+				$(this).css({
+					width: "70px",
+					'margin-left': ($('.plib-item-thumb').width() - 70)/2 + 'px'
+				});
+				if($(this).height() < 70){
+					$(this).css({
+						'margin-top': (70-$(this).height())/2 + "px"
+					});
+				}
+			}else{
+				$(this).css({
+					height: "70px",
+					'margin-top': ($('.plib-item-thumb').height() - 70)/2 + 'px'
+				});
+				if($(this).width() < 70){
+					$(this).css({
+						'margin-left': ($('.plib-item-thumb').width()-$(this).width())/2 + "px"
+					});
+				}
+			}
+			var degree = code.replace(code.substr(-3),'');
+			if(degree != 0){
+				if(code.substr(-3) === 'rad'){
+					degree = Number(degree)*(180/Math.PI);
+					console.log(degree);
+				}
+				$(this).css({
+					transform: 'rotate(' + degree + 'deg)'
+				})
+			}
+		});	
+	}, 50);
+}
+//라이브러리 이미지로 내보내기
+function saveLibAsImg(target){
+	
+}

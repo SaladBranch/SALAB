@@ -47,10 +47,15 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn">&#43;</div>
+                <div class="add-btn add-btn-cursor" onclick="showModal('newFile')">&#43;</div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
@@ -90,7 +95,16 @@
         		<div class="myTeam">
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
-							<div class="icon-wrapper"><i class="fas fa-sitemap"></i></div>
+							<c:if test="${projectList.projectimage_o eq null }">
+								<div class="icon-wrapper">
+									<i class="fas fa-sitemap"></i>       	
+								</div>
+							</c:if>   
+							<c:if test="${projectList.projectimage_o ne null }">
+								<div class="img-wrapper">
+			          				<img src="/salab/resources/projectUpfiles/${projectList.projectimage_o} " alt="">
+			          			</div>
+			          		</c:if>       
 							<a class="projectName" href="gotoProject.do?projectno=${projectList.projectno }">${projectList.projectname }</a>
 							<a href="gotoProjectFile.do?projectno=${projectList.projectno }&sort=recent">프로젝트 파일</a>
 						</div>
@@ -144,16 +158,16 @@
         <div class="row recent-files">
         	<c:if test="${!empty fileList}">
         		<c:forEach var="pfile" items="${fileList }">
-        		<c:if test="${pfile.pt eq 'private'}">
-        			<div class="file-grid" onclick="epFile(${pfile.pfileno});">
-        		</c:if>
-        		<c:if test="${pfile.pt eq 'team' }">
-        			<div class="file-grid" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
-        		</c:if>
+       			<div class="file-grid">
         		<input class="fileno" type="hidden" value="${pfile.pfileno }">
         		<input class="pt" type="hidden" value="${pfile.pt }">
 	                <div class="file-container">
-	                    <div class="file-thumbnail">
+	                	<c:if test="${pfile.pt eq 'private'}">
+	                    <div class="file-thumbnail" onclick="epFile(${pfile.pfileno});">
+	                    </c:if>
+	                    <c:if test="${pfile.pt eq 'team' }">
+	                    <div class="file-thumbnail" onclick="etFile(${pfile.pfileno}, ${pfile.userno });">
+	                    </c:if>
 	                        ${pfile.pfilethumbnail }
 	                    </div>
 	                    <div class="file-info">
@@ -164,7 +178,13 @@
 	                            <div class="file-edited">
 	                                <span>${pfile.pfilelastmodified }</span>
 	                                <c:if test="${pfile.pt eq 'private'}"> in 개인파일</c:if>
-	                                <c:if test="${pfile.pt eq 'team'}"> in ${pfile.pfiletitle}</c:if>
+	                                <c:if test="${pfile.pt eq 'team'}">
+		                                <c:forEach var="projectList" items="${myProjectList }">
+		                                	<c:if test="${pfile.userno eq projectList.projectno }">
+		                                		in ${projectList.projectname }
+		                                	</c:if>
+		                                </c:forEach>
+	                                </c:if>
 	                            </div>
 	                        </div>
 	                        <div class="file-options">

@@ -1,10 +1,5 @@
 $(document).ready(function () {
-    alert("페이지진입");
-    $('.clickNotice').click(function () {
-        var projectno = $(this).children().val();
-        readNotice(projectno);
 
-    });
     /*
         $(".modalOutline").click(function () {
             HideOnBush();
@@ -21,9 +16,10 @@ $(document).ready(function () {
        console.log("ddd");*/
 });
 
-function readNotice(pnoticeno) {
-    var projectno = $("#projectno").val();
-    location.href = 'teamNoticeDetail.do?pnoticeno=' + pnoticeno + "&projectno=" + projectno;
+function readNotice(project,notice) {
+	var pnoticeno = parseInt(notice);
+	var projectno = parseInt(project);
+    location.href = 'teamNoticeDetail.do?projectno=' + projectno+'&pnoticeno=' + pnoticeno;
 }
 
 function moveListPage(page) {

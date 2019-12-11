@@ -96,5 +96,20 @@ public class MemberServiceImpl implements MemberService{
 	public int memberUpdate(Member member) {
 		return memberDao.memberUpdate(member);
 	}
+	//스탠다드로 다운그레이드
+	@Override
+	public int changeToStandard(int userno) {
+		return memberDao.changeToStandard(userno);
+	}
+
+	@Override
+	public List<Member> dailyChangeList() {
+		return memberDao.dailyChangeList();
+	}
+
+	@Override
+	public int daliySetStandard(List<Member> memberList) {
+		return memberDao.daliySetStandard(memberList);
+	}
 
 }

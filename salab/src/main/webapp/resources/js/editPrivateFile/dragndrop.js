@@ -261,7 +261,7 @@ function addControl(){
                 //guides
                 lgap = event.pageX - $(this).offset().left;
                 tgap = event.pageY - $(this).offset().top;
-                guides = $.map($('#droppable .obj, #droppable').not(this), computeGuidesForElement);
+                guides = $.map($('#droppable > .obj, #droppable').not(this), computeGuidesForElement);
                 innerOffsetX = __recoupLeft;
                 innerOffsetY = __recoupTop;
             },

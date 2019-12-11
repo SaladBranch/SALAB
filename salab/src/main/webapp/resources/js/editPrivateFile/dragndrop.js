@@ -289,6 +289,7 @@ function addControl(){
             	modified();
             },
             stop: function() {
+            	formatChange();
             	setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -592,7 +593,7 @@ $(function(){
         		Thumbnail();
         	}, 100);
         }else{
-            $('.minicolors').remove();
+            $('#canvas-background .minicolors').remove();
             $('#droppable').css('background-color', '#fff');
             $('#droppable').attr('data-background', '#ffffff');
         }

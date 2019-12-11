@@ -676,7 +676,6 @@ var lastChanged = "";
 	            			result = "diffrent";
 					}
 				});
-				console.log(result);
 				if (result != "diffrent") {
 					var $checkParent = $(".text-dragged").parent();
 					while(true) {

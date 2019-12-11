@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             <div id="goto-upgrade" class="clickable">
-                                <span><a href="userUpgrade.jsp">계정 업그레이드 하기</a></span>
+                                <span><a href="userUpgrade.do">계정 업그레이드 하기</a></span>
                             </div>
                         </div>
                     </c:if>

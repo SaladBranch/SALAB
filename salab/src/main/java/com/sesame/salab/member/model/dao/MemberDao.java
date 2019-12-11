@@ -80,5 +80,21 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.memberUpdate", member);
 	}
 
+	public int changeToStandard(int userno) {
+		return sqlSession.update("memberMapper.changeToStandard", userno);
+	}
+
+	public List<Member> dailyChangeList() {
+		return sqlSession.selectList("memberMapper.dailyChangeList");
+	}
+
+	public int daliySetStandard(List<Member> memberList) {
+		int result=0;
+		for(int i = 0 ; i < memberList.size() ; i++) {
+			result += sqlSession.update("memberMapper.daliySetStandard",memberList.get(i));
+		}
+		return result;
+	}
+
 	
 }

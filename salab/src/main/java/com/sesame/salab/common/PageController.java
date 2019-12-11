@@ -95,7 +95,6 @@ public class PageController {
 			viewFileName = "common/error";
 		}
 		List<Project> projectList = mpService.selectProjectList(member.getUserno());
-		session.removeAttribute("myProjectList");
 		session.setAttribute("myProjectList", projectList);
 		
 		return viewFileName;
@@ -368,7 +367,11 @@ public class PageController {
 
 	//건우
 	@RequestMapping(value="userMain.do")
-  	public String toUserPageMainMethod() {
+  	public String toUserPageMainMethod(HttpSession session){
+		Member member = (Member) session.getAttribute("loginMember");
+		member = memberService.memberDetail(member.getUserno());
+		System.out.println("멤버 재설정 : "+member.toString());
+		session.setAttribute("loginMember", member);
 		return "userPage/userPageMain";
 	}
  

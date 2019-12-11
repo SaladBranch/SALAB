@@ -198,6 +198,7 @@ function addControl(){
                 clearGuideLine();
             }
         }).rotatable({
+            angle : 0,
             degrees: getRotateDegree($obj),
             start: function(){
             	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
@@ -460,13 +461,11 @@ $(function(){
         		initSelect();
         		clicks = 0;
         	}else{
-        		// 수정중
             	var $copyElement = $(this).clone();
-            	$copyElement.children("svg").css({
-            		width : "100%",
-            		height : "100%"
+            	$copyElement.css({
+            		width : "100%"
             	});
-                appendElement = $("<div class='dragging' style='width : 80px; height : 80px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $copyElement.wrap("<div/>").parent().html() + "</div>").appendTo("body");
+                appendElement = $("<div class='dragging' style='width : 115px; height : 110px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $copyElement.wrap("<div/>").parent().html() + "</div>").appendTo("body");
                 moveDragging();
         	}
     	}
@@ -720,7 +719,6 @@ function resizeLibImg(){
 			if(degree != 0){
 				if(code.substr(-3) === 'rad'){
 					degree = Number(degree)*(180/Math.PI);
-					console.log(degree);
 				}
 				$(this).css({
 					transform: 'rotate(' + degree + 'deg)'

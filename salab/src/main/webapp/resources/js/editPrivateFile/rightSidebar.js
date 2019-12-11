@@ -360,9 +360,14 @@ var lastChanged = "";
     function formatChange() {
 
     	var targetMode;
-    	var object = $("div.ui-selected");
-		var target = $("div.ui-selected .obj-comp");
-    	
+    	var object = $("#droppable .ui-selected");
+		var target = $("#droppable .ui-selected .obj-comp");
+		
+		var degree = getRotateDegree(object);
+		console.log(degree);
+		var h = object.height() * Math.abs(Math.cos(degree)) + object.width() * Math.abs(Math.sin(degree));
+		var w = object.width() * Math.abs(Math.cos(degree)) + object.height() * Math.abs(Math.sin(degree));
+
     	if (object.length == 1 && !object.is(".group-obj")) {
     		$(".figure-shape-comps .figure-item[id=width]").fadeIn(100);
     		$(".figure-shape-comps .figure-item[id=height]").fadeIn(100);
@@ -737,7 +742,7 @@ var lastChanged = "";
                 		$(this).parents("div.ui-selected").css({
                 			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180 + "rad)"
                 		});
-                		elementCurrentAngle = $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180;
+                		$(this).parents("div.ui-selected").data("uiRotatable").angle($(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180);
                 	}
         		}
 

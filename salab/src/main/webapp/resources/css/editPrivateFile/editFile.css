@@ -892,7 +892,7 @@ ol.page-tab-content li{
     top: -7px;
     right: 20px;
 }
-#canvas-background .minicolors-swatch{
+#canvas-background span.minicolors-swatch{
     width: 40px !important;
     height: 20px !important;
 }
@@ -1166,5 +1166,20 @@ ol.page-tab-content li{
 #guide-v {
   border-left: 1px dashed red;
   height: 100%;
+}
+
+/*colorpic*/
+.colorpic-title, .colorpic-basic{
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 15px;
+}
+
+.colorpic-basic{
+    margin-top: 15px;
+    border-top: 1px solid #e6e6e6;
 }
 

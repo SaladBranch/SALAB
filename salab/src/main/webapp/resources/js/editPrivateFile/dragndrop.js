@@ -261,7 +261,7 @@ function addControl(){
                 //guides
                 lgap = event.pageX - $(this).offset().left;
                 tgap = event.pageY - $(this).offset().top;
-                guides = $.map($('#droppable .obj, #droppable').not(this), computeGuidesForElement);
+                guides = $.map($('#droppable > .obj, #droppable').not(this), computeGuidesForElement);
                 innerOffsetX = __recoupLeft;
                 innerOffsetY = __recoupTop;
             },
@@ -585,8 +585,13 @@ $(function(){
                     $('#droppable').css('background-color', hex);
                     $('#droppable').attr('data-background', hex);
                     
-                }
+                },
+                swatches: ["#800000", "#FF0000", "#FFA500", "#FFFF00", "#008000", "#0000FF", "#800080", "#000000", "#808080" ,"#FFFFFF"]
             });
+            $colorpicTitle = $('<div class="colorpic-title">색상 변경</div>');
+            $colorpicBasic = $('<div class="colorpic-basic">표준 색</div>');
+            $colorpicTitle.insertBefore($('.minicolors-slider'));
+            $colorpicBasic.insertBefore($('.minicolors-swatches'));
             
             modified();
             setTimeout(function(){

@@ -472,7 +472,7 @@
         	var y = e.offsetY - 30;
         	
         	var div = '<div class="memo" style="position: absolute; left: '+x+'px; top: '+y+'px" display: flex">' + 
-        		'<img src="/salab/resources/img/coordinates.png" class="memo-icon" style="width: 20px; height: 30px;" >' +
+        		'<img src="/salab/resources/img/coordinatess.png" class="memo-icon" style="width: 20px; height: 30px;" >' +
         		'<div class="memo-content">'+
         		'<div class="memo-userThumb">'+
                 '<div class="memo-info">'+
@@ -719,4 +719,13 @@
         
     });
     
-    
+    //component search
+    function searchComp(){
+    	var keywodrd = $('#search-comp').val();
+    	
+    	if(keyword == ''){
+    		return false;
+    	}else{
+    		
+    	}
+    }

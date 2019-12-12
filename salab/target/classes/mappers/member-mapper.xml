@@ -76,5 +76,15 @@
 	<update id="memberUpdate" parameterType="Member">
 		UPDATE MEMBER SET USERLEVEL = #{userlevel} WHERE USERNO = #{userno}
 	</update>
-
+	<update id="changeToStandard" parameterType="int">
+				UPDATE MEMBER SET BILLINGKEY = NULL WHERE USERNO = #{userno}
+	</update>
+	<select id="dailyChangeList" parameterType="Member" resultType="Member">
+		<![CDATA[
+		 	SELECT USERNO FROM MEMBER WHERE PAYMENTDATE < SYSDATE
+		]]>
+	</select>
+	<update id="daliySetStandard" parameterType="int">
+		UPDATE MEMBER SET USERLEVEL = 'STANDARD' , PAYMENTDATE=NULL, BILLINGKEY = NULL  WHERE USERNO = #{userno}
+	</update>
 </mapper>

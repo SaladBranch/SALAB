@@ -140,58 +140,52 @@
         
         <!-- paging -->
         <div class="box_footer">
-       		<ul>
-	       		<li class="paging_list">
-		       		<ul>
-						<!-- 처음 -->
-						<c:if test="${paging.currentPage eq 1}">
-							<li class="paging_btn">[처음]</li>
-						</c:if>
-						<c:if test="${paging.currentPage ne 1 }">
-							<li class="paging_btn"><a href="adminMemberList.do?page=1&&keyword=${keyword} ">[처음]</a></li>
-						</c:if>
-						<!-- 처음 -->
-						
-						<!-- 이전-->
-						<c:if test="${paging.startPage eq 1 }">
-							<li class="paging_btn">[이전]</li>
-						</c:if>
-						<c:if test="${paging.startPage ne 1 }">
-							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.startPage - 1 }&&keyword=${keyword} ">[이전]</a></li>
-						</c:if>
-						<!-- 이전-->
-						
-						<!-- 현재 Page 숫자 목록 -->
-						<c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
-							<c:if test="${pageno eq paging.currentPage }">		
-								<li class="paging_no_this">[${ pageno }]</li>
-							</c:if>
-							<c:if test="${pageno ne paging.currentPage }">
-								<a href="adminMemberList.do?page=${ pageno }&&keyword=${keyword} "><li class="paging_no">${ pageno }</li></a>
-							</c:if>
-						</c:forEach>
-						<!-- 현재 Page 숫자 목록 -->
-						
-						<!-- 다음-->
-						<c:if test="${paging.endPage eq paging.maxPage}">
-							<li class="paging_btn">[다음]</li>
-						</c:if>
-						<c:if test="${paging.endPage ne paging.maxPage}">
-							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.endPage + 1 }&&keyword=${keyword} ">[다음]</a></li>
-						</c:if>
-						<!-- 다음-->
-						
-						<!-- 끝 -->
-						<c:if test="${paging.currentPage ge paging.maxPage }">
-							<li class="paging_btn">[끝]</li>
-						</c:if>
-						<c:if test="${paging.currentPage lt paging.maxPage }">
-							<li class="paging_btn"><a href="adminMemberList.do?page=${paging.maxPage }&&keyword=${keyword} ">[끝]</a></li>
-						</c:if>
-						<!-- 끝 -->
-					</ul>
-				</li>
-       		</ul>
+			<!-- 처음 -->
+			<c:if test="${paging.currentPage eq 1}">
+				<span class="paging_btn"><i class="fas fa-angle-double-left"></i></span>
+			</c:if>
+			<c:if test="${paging.currentPage ne 1 }">
+				<span class="paging_btn"><a href="adminMemberList.do?page=1&&keyword=${keyword} "><i class="fas fa-angle-double-left"></i></a></span>
+			</c:if>
+			<!-- 처음 -->
+			
+			<!-- 이전-->
+			<c:if test="${paging.startPage eq 1 }">
+				<span class="paging_btn"><i class="fas fa-angle-left"></i></span>
+			</c:if>
+			<c:if test="${paging.startPage ne 1 }">
+				<span class="paging_btn"><a href="adminMemberList.do?page=${paging.startPage - 1 }&&keyword=${keyword} "><i class="fas fa-angle-left"></i></a></span>
+			</c:if>
+			<!-- 이전-->
+			
+			<!-- 현재 Page 숫자 목록 -->
+			<c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
+				<c:if test="${pageno eq paging.currentPage }">		
+					<span class="paging_no_this">${ pageno }</span>
+				</c:if>
+				<c:if test="${pageno ne paging.currentPage }">
+					<a href="adminMemberList.do?page=${ pageno }&&keyword=${keyword} "><span class="paging_no">${ pageno }</span></a>
+				</c:if>
+			</c:forEach>
+			<!-- 현재 Page 숫자 목록 -->
+			
+			<!-- 다음-->
+			<c:if test="${paging.endPage eq paging.maxPage}">
+				<span class="paging_btn"><i class="fas fa-angle-right"></i></span>
+			</c:if>
+			<c:if test="${paging.endPage ne paging.maxPage}">
+				<span class="paging_btn"><a href="adminMemberList.do?page=${paging.endPage + 1 }&&keyword=${keyword} "><i class="fas fa-angle-right"></i></a></span>
+			</c:if>
+			<!-- 다음-->
+			
+			<!-- 끝 -->
+			<c:if test="${paging.currentPage ge paging.maxPage }">
+				<span class="paging_btn"><i class="fas fa-angle-double-right"></i></span>
+			</c:if>
+			<c:if test="${paging.currentPage lt paging.maxPage }">
+				<span class="paging_btn"><a href="adminMemberList.do?page=${paging.maxPage }&&keyword=${keyword} "><i class="fas fa-angle-double-right"></i></a></span>
+			</c:if>
+			<!-- 끝 -->
         </div>
         <!-- paging -->
         

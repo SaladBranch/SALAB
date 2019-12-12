@@ -568,27 +568,18 @@ a {
 /* 페이징 css */
 .box_footer{
 	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
-	display: block;
-	margin-left: 70px;
-}
-
-.paging_list{
-	text-align: center;
 	width: 80%;
-	height: 40px;
-	margin-top: 20px;
-	padding-left: 380px;
+	display: block;
+	margin-top: 15px;
+	margin-left: 100px;
+	text-align: center;
 }
 
 .paging_btn{
-	float: left;
-	text-align: center;
 	line-height: 38px;
 	font-weight: 500;
 	color: gray;
-	width: 11%;
+	margin: 0px 3px;
 }
 .paging_btn > a{
 	color: black;
@@ -599,24 +590,14 @@ a {
 }
 
 .paging_no{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	width: 6%;
+	font-weight: 400;
 	color: black;
-}
-
-.paging_no:hover{
-	background: lightgreen;
+	margin: 0px 3px;
 }
 
 .paging_no_this{
-	float: left;
-	text-align: center;
-	line-height: 38px;
-	font-weight: 500;
-	width: 6%;
+	font-weight: 400;
 	color: #3cb371;
+	margin: 0px 3px;
 }
 

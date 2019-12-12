@@ -664,7 +664,6 @@ function minicolorsAddMenu(target){
     	var index = target.find('.minicolors-swatches .minicolors-swatch').index($(this));
     	if(index % 10 == 0)
     		$(this).css('margin-left', '13px');
-    	console.log("hi");
     });
 }
 $(document).on('mousedown', '#droppable', function(){

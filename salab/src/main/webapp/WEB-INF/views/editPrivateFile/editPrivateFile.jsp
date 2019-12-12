@@ -35,7 +35,7 @@
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
             <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
-            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/image-icon.png"></button>
+            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/img-icon.png"></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
@@ -163,8 +163,9 @@
         
         <div class="tab-content comp-tab-content">
             <div class="searchbox">
-                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+                <i class="fas fa-search"></i><input id="search-comp" type="text" placeholder="검색" onkeypress="if(event.keyCode==13) {searchComp(); return false;}">
             </div>
+            <div class="comp-searchResult"></div>
             <div class="comp-category common-shape" onclick="toggleComps(this, '.common-shape-comps');">
                 <p>&#9660;</p>기본도형(common shape)
             </div>

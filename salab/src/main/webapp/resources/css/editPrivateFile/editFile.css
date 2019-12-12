@@ -78,7 +78,7 @@ svg{
     margin-left: 5px;
 }
 .top-left-menus button img{
-    width: 20px;
+    width: 18px;
 }
 .fa-play-circle{
     font-size: 18px;
@@ -1098,6 +1098,7 @@ ol.page-tab-content li{
 
 .memo {
 	display: flex;
+	cursor: url('/salab/resources/');
 }
 
 .memo-icon{

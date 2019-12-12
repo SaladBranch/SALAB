@@ -5,17 +5,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width:device-width, initial-scale:1.0;">
+<title>Web Test</title>
 <style type="text/css">
 	/* Slide */
 body{margin:0; padding: 0;}
 
-.mySlides {display: none}
+.mySlides {display: none; text-align: center;}
 img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  max-width: 1200px;
+  max-height: 720px;
   position: relative;
   margin: auto;
 }
@@ -80,7 +82,9 @@ img {vertical-align: middle;}
 }
 
 .mySlides > img{
-	width: 100%;
+	max-width: 1200px;
+	max-height: 720px;
+	width: auto;
 	height: auto;
 }
 
@@ -126,17 +130,12 @@ function currentSlide(n) {
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
   if (n > slides.length) {slideIndex = 1}    
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";  
   }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
   slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
 }
 </script>
 </body>

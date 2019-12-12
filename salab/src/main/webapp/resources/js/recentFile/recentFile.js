@@ -516,7 +516,32 @@ function popup(){
 	var win_width = 1040;
 	var height = 600+30;
 	var userno = $('#userNo').val();
-	window.open('webTest.do?pfileno='+fileno+'&userno='+userno+'&pt='+teamAndPrivate, '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');
+	window.open('', 'popup', 'width=1040, height=630, menubar=yes, scrollbar=no, fullscreen=no');
+	
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "webTest.do");
+    document.body.appendChild(form);
+
+    var insert = document.createElement("input");
+    insert.setAttribute("type", "hidden");
+    insert.setAttribute("name", "pfileno");
+    insert.setAttribute("value", fileno);
+    form.append(insert);
+
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "pt");
+    insert2.setAttribute("value", teamAndPrivate);
+    form.append(insert2);
+    
+    var insert2 = document.createElement("input");
+    insert2.setAttribute("type", "hidden");
+    insert2.setAttribute("name", "userno");
+    insert2.setAttribute("value", userno);
+    form.append(insert2);
+    form.target = 'popup';
+    form.submit();
 }
 
 $(document).on('classChange', '.file-container', function(){

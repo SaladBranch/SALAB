@@ -1123,7 +1123,7 @@ ol.page-tab-content li{
 	width: 100%;
 }
 
-.memo-cnt.active{
+.memo-cnt.disabled{
 	border: none;
 }
 
@@ -1151,3 +1151,35 @@ ol.page-tab-content li{
 	border: 1.5px solid transparent !important;
 }
 
+.file-options{
+    width: 20px;
+}
+
+.file-options-btn{
+    height: 100%;
+    line-height: 100%;
+    text-align:center;
+    font-size: 25px;
+    cursor: pointer;
+}
+.file-options-menu{
+    display: none;
+    position: absolute;
+    width: 100px;
+    background-color: #2c2c2c;
+    bottom: 20px;
+    right: 20px;
+    padding: 3px 0;
+}
+.file-options-menu li{
+    cursor: pointer;
+    padding: 3px 0;
+}
+.file-options-menu li:hover{
+    background-color: #343434;
+}
+.file-options-menu li a{
+    color: #fff;
+    font-size: 13px;
+    padding-left: 10px;
+}

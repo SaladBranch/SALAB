@@ -493,15 +493,51 @@ body{
 }
 
 #keyword{
-	border-top: none;
-	border-left: none;
-	border-right: none;
-	border-bottom: 1px solid black;
-	font-size: 12pt;
+	font-size: 11pt;
+	width: 213px;
+	height: 100%;
+	padding: 10px;
+	border: none;
+	float: left;
 }
 
-#search:-ms-input-placeholder {  
-   color: #65737e;  
+.search_btn{
+	width: 35px;
+	height: 100%;
+	float: right;
+	border: none;
+	background: transparent;
+}
+
+.fa-search{
+	color: #3ec28f;
+}
+
+.fa-search:hover{
+	color: #27ad79;
+}
+
+.search_box{
+	height: 30px;
+	width: 250px;
+	border: 1px solid #3ec28f;
+	background: #ffffff;
+}
+
+/* .search_box:hover{
+	border: 1px solid #27ad79;
+} */
+
+input:-ms-input-placeholder {
+	color: #65737e;
+}
+
+input::-webkit-input-placeholder{
+	color: #65737e;
+}
+
+input::-moz-placeholder{
+	color: #65737e;
 }
 
 .member_head{

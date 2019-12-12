@@ -42,7 +42,7 @@ public class QnaController {
 		
 		int listCount = qnaService.listCount(userno); //DB에서 현재 총 Row수 가져옴 
 		Paging paging = new Paging(); //현재 페이지 
-		paging.setLimit(6);
+		paging.setLimit(7);
 		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		
@@ -116,7 +116,7 @@ public class QnaController {
 		int listCount = qnaService.adminListCount(); //DB에서 현재 총 Row수 가져옴 
 		
 		Paging paging = new Paging(); //현재 페이지 
-		paging.setLimit(6);
+		paging.setLimit(8);
 		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage);  //페이징 처리함 
 		

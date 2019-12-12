@@ -86,7 +86,9 @@
 			<div class="member_search_box">
 				<div class="member_search">
 					<form action="adminMemberList.do" method="post" enctype="multipart/form-data">
-						<input type="search" id="keyword" name="keyword" placeholder="Search..."><button type="submit"><i class="fa fa-search"></i></button>
+						<div class="search_box">
+							<input type="search" id="keyword" name="keyword" placeholder="Search..."><button class="search_btn"><i class="fa fa-search"></i></button>
+						</div>
 					</form>
 				</div>
 			</div>

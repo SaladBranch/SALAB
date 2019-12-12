@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
 
 @Repository("memberDao")

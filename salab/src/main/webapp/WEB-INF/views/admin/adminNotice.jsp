@@ -136,9 +136,7 @@
         
         <!-- 페이징 처리 -->
         <div class="box_footer">
-       		<ul>
-	       		<li class="paging_list">
-		       		<ul>
+		       		<ul class="paging_list">
 						<!-- 처음 -->
 						<c:if test="${paging.currentPage eq 1 }">
 							<li class="paging_btn">[처음]</li>
@@ -186,8 +184,6 @@
 						</c:if>
 						<!-- 끝 -->
 					</ul>
-				</li>
-       		</ul>
         </div>
         <!-- 페이징 처리 -->
     </div>

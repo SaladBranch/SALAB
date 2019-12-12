@@ -574,10 +574,10 @@ ol.page-tab-content li{
 	height : 24px !important;
 	border : 1px solid white;
 	border-radius : 5px;
-	margin : 4px 20px 0px 32px;
+	margin : 4px 20px 0px 40px;
 	padding : 1px 0px 0px 5px !important;
 }
-.figure-item .minicolors-swatch {
+.figure-item .minicolors > .minicolors-swatch {
 	width : 25px !important;
 	height : 25px !important;
 	top : 4px !important;
@@ -585,7 +585,7 @@ ol.page-tab-content li{
 	border : 1px solid white;
 	border-radius : 5px;
 }
-.figure-item .minicolors-swatch-color {
+.figure-item .minicolors > .minicolors-swatch-color {
 	border : 1px solid white;
 	border-radius : 5px;
 }
@@ -751,10 +751,10 @@ ol.page-tab-content li{
 	height : 24px !important;
 	border : 1px solid white;
 	border-radius : 5px;
-	margin : 4px 20px 0px 32px;
+	margin : 4px 20px 0px 40px;
 	padding : 1px 0px 0px 5px !important;
 }
-.text-item .minicolors-swatch {
+.text-item .minicolors > .minicolors-swatch {
 	width : 25px !important;
 	height : 25px !important;
 	top : 4px !important;
@@ -762,7 +762,7 @@ ol.page-tab-content li{
 	border : 1px solid white;
 	border-radius : 5px;
 }
-.text-item .minicolors-swatch-color {
+.text-item .minicolors > .minicolors-swatch-color {
 	border : 1px solid white;
 	border-radius : 5px;
 }
@@ -1203,7 +1203,7 @@ ol.page-tab-content li{
 }
 
 /*colorpic*/
-.colorpic-title, .colorpic-basic{
+.colorpic-title, .colorpic-basic, .colorpic-used{
     font-size: 13px;
     font-weight: bold;
     display: block;
@@ -1215,6 +1215,13 @@ ol.page-tab-content li{
 .colorpic-basic{
     margin-top: 15px;
     border-top: 1px solid #e6e6e6;
+}
+
+
+.colorpic-used{
+	clear: both;
+	margin-top: 30px;
+	border-top: 1px solid #e6e6e6;
 }
 
 

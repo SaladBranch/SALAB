@@ -669,6 +669,7 @@ function minicolorsAddMenu(target){
 }
 $(document).on('mousedown', '#droppable', function(){
 	if($('.back-chk input').prop('checked')){
+		console.log("hi")
 		$('.canvas-colorpic').minicolors('settings', {
 			control: 'hue',
 	        position: 'bottom right',

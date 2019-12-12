@@ -131,58 +131,52 @@
         
         <!-- paging -->
         <div class="box_footer">
-       		<ul>
-	       		<li class="paging_list">
-		       		<ul>
 						<!-- 처음 -->
 						<c:if test="${paging.currentPage eq 1}">
-							<li class="paging_btn">[처음]</li>
+							<span class="paging_btn"><i class="fas fa-angle-double-left"></i></span>
 						</c:if>
 						<c:if test="${paging.currentPage ne 1 }">
-							<li class="paging_btn"><a href="adminQnaList.do?page=1">[처음]</a></li>
+							<span class="paging_btn"><a href="adminQnaList.do?page=1"><i class="fas fa-angle-double-left"></i></a></span>
 						</c:if>
 						<!-- 처음 -->
 						
 						<!-- 이전-->
 						<c:if test="${paging.startPage eq 1 }">
-							<li class="paging_btn">[이전]</li>
+							<span class="paging_btn"><i class="fas fa-angle-left"></i></span>
 						</c:if>
 						<c:if test="${paging.startPage ne 1 }">
-							<li class="paging_btn"><a href="adminQnaList.do?page=${paging.startPage - 1 }">[이전]</a></li>
+							<span class="paging_btn"><a href="adminQnaList.do?page=${paging.startPage - 1 }"><i class="fas fa-angle-left"></i></a></span>
 						</c:if>
 						<!-- 이전-->
 						
 						<!-- 현재 Page 숫자 목록 -->
 						<c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
 							<c:if test="${pageno eq paging.currentPage }">		
-								<li class="paging_no_this">[${ pageno }]</li>
+								<span class="paging_no_this">${ pageno }</span>
 							</c:if>
 							<c:if test="${pageno ne paging.currentPage }">
-								<a href="adminQnaList.do?page=${ pageno }"><li class="paging_no">${ pageno }</li></a>
+								<a href="adminQnaList.do?page=${ pageno }"><span class="paging_no">${ pageno }</span></a>
 							</c:if>
 						</c:forEach>
 						<!-- 현재 Page 숫자 목록 -->
 						
 						<!-- 다음-->
 						<c:if test="${paging.endPage eq paging.maxPage}">
-							<li class="paging_btn">[다음]</li>
+							<span class="paging_btn"><i class="fas fa-angle-right"></i></span>
 						</c:if>
 						<c:if test="${paging.endPage ne paging.maxPage}">
-							<li class="paging_btn"><a href="adminQnaList.do?page=${paging.endPage + 1 }">[다음]</a></li>
+							<span class="paging_btn"><a href="adminQnaList.do?page=${paging.endPage + 1 }"><i class="fas fa-angle-right"></i></a></span>
 						</c:if>
 						<!-- 다음-->
 						
 						<!-- 끝 -->
 						<c:if test="${paging.currentPage ge paging.maxPage }">
-							<li class="paging_btn">[끝]</li>
+							<span class="paging_btn"><i class="fas fa-angle-double-right"></i></span>
 						</c:if>
 						<c:if test="${paging.currentPage lt paging.maxPage }">
-							<li class="paging_btn"><a href="adminQnaList.do?page=${paging.maxPage }">[끝]</a></li>
+							<span class="paging_btn"><a href="adminQnaList.do?page=${paging.maxPage }"><i class="fas fa-angle-double-right"></i></a></span>
 						</c:if>
 						<!-- 끝 -->
-					</ul>
-				</li>
-       		</ul>
         </div>
         <!-- paging -->
     </div>

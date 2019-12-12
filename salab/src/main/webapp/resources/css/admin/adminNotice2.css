@@ -536,17 +536,16 @@ a {
 	font-size: 13pt;
 	width: 80%;
 	display: block;
+	margin-top: 15px;
 	margin-left: 100px;
-}
-
-.paging_list{
-	float: left;
+	text-align: center;
 }
 
 .paging_btn{
 	line-height: 38px;
 	font-weight: 500;
 	color: gray;
+	margin: 0px 3px;
 }
 .paging_btn > a{
 	color: black;
@@ -557,19 +556,15 @@ a {
 }
 
 .paging_no{
-	line-height: 38px;
-	font-weight: 500;
+	font-weight: 400;
 	color: black;
-}
-
-.paging_no:hover{
-	background: lightgreen;
+	margin: 0px 3px;
 }
 
 .paging_no_this{
-	line-height: 38px;
-	font-weight: 500;
+	font-weight: 400;
 	color: #3cb371;
+	margin: 0px 3px;
 }
 
 .admin_btn_box{

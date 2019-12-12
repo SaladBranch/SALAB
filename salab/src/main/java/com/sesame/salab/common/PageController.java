@@ -191,7 +191,7 @@ public class PageController {
 		return "admin/adminMain";
 	}
 	
-	/*@RequestMapping(value="adminMemberList.do")
+	@RequestMapping(value="adminMemberList.do")
 	public ModelAndView toAdminMemberMethod(ModelAndView mv, Member member,@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value="page", required=false) String currentPage) throws Exception  {
 		
 		int curPage;
@@ -235,7 +235,7 @@ public class PageController {
 		
 		
 		return mv;
-	}*/
+	}
 	
 	@RequestMapping(value="adminMemberDetail.do")
 	public ModelAndView toAdminMemberDetailMethod(ModelAndView mv,  @RequestParam(value="userno") int userno , @RequestParam(value="page", required=false) String currentPage) throws Exception{

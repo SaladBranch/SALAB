@@ -149,23 +149,7 @@
         
         
         //페이지별 color 다르게 적용
-        var $colorpic = $('<div class="canvas-colorpic"></div>')
-        if($('#droppable').attr('data-background') != "#ffffff"){
-        	$('.back-chk input').prop('checked', true);
-        	$('#canvas-background').append($colorpic);
-            $('.canvas-colorpic').minicolors({
-                control: 'hue',
-                position: 'bottom right',
-                defaultValue: $('#droppable').attr('data-background'),
-                change: function(hex, opacity){
-                    $('#droppable').css('background-color', hex);
-                    $('#droppable').attr('data-background', hex);
-                }
-            });
-        }else{
-        	$('#canvas-background .minicolors').remove();
-        	$('.back-chk input').prop('checked', false);
-        }
+        toggleCanvasColor();
         
         //페이지별 grid 여부
         if($('#droppable').attr('data-grid') === 'true')

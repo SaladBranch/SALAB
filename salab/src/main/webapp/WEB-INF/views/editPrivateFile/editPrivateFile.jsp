@@ -518,21 +518,6 @@
                 
         });
         
-		$('.colorView').minicolors({
-            control: 'hue',
-            position : "bottom right",
-            defaultValue: "#FFFFFF",
-            letterCase : "uppercase",
-            change: function(hex, opacity){
-                switch ($(this).attr("id")) {
-                	case "background" : applyChange("backgroundColor"); break;
-                	case "line" : applyChange("lineColor"); break;
-                	case "text" : applyChange("textColor"); break;
-                	case "textground" : applyChange("textgroundColor"); break;
-                }
-            }
-        });
-		
 		//page onload시 lib-tab에 내용 추가
     	var plib = {
    			fileno: list[0].fileno,

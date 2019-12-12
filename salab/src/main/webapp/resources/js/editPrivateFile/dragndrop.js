@@ -569,40 +569,150 @@ $(function(){
 });
 
 //canvas sizing
+//color picker에 document에 사용된 색상들 추가하기
+function addUsedColor(){
+	var usedColor = new Array();
+	var baseTemplate = ["#800000", "#FF0000", "#FFA500", "#FFFF00", "#008000", "#0000FF", "#800080", "#000000", "#808080" ,"#FFFFFF"];
+	$('#droppable .obj-comp').each(function(){
+		usedColor.push($(this).css('background-color'));
+		usedColor.push($(this).css('border-color'));
+		if($(this).children('span').css('color') != undefined)
+			usedColor.push($(this).children('span').css('color'));
+	});
+	usedColor.push($('#droppable').css('background-color'));
+	usedColor = usedColor.reduce(function(a,b){
+		if(a.indexOf(b) < 0) a.push(b);
+		return a;
+	}, []);
+	baseTemplate = baseTemplate.concat(usedColor);
+	var swatches = "";
+	for(var i = 0; i<baseTemplate.length; i++){
+		if(i === baseTemplate.length -1)
+			swatches += baseTemplate[i];
+		else
+			swatches += baseTemplate[i] + '|';
+	}
+	return swatches;
+}
+
+function toggleCanvasColor(){
+	var initBack = $('#droppable').attr('data-background');
+	if(initBack === "#ffffff"){
+		$('.back-chk input').prop('checked', false);
+    	$('#canvas-background .minicolors, .canvas-colorpic').remove();
+        $('#droppable').css('background-color', '#fff').attr('data-background', '#ffffff');
+	}else{
+		$('.back-chk input').prop('checked', true);
+		initCanvasMiniColor();
+	}
+}
+
+function initCanvasMiniColor(){
+	$('#canvas-background .minicolors, .canvas-colorpic').remove();
+	$colorpic = $('<div class="canvas-colorpic"></div>');
+	$('#canvas-background').append($colorpic);
+	
+    $('.canvas-colorpic').minicolors({
+        control: 'hue',
+        position: 'bottom right',
+        defaultValue: $('#droppable').attr('data-background'),
+        swatches: $('.canvas-colorpic').attr('data-swatches', addUsedColor()) ? $('.canvas-colorpic').attr('data-swatches').split('|') : [],
+        change: function(hex, opacity){
+            $('#droppable').css('background-color', hex);
+            $('#droppable').attr('data-background', hex);
+            $('.canvas-colorpic').attr('data-swatches', addUsedColor());
+        }
+    });
+    
+    minicolorsAddMenu($('#canvas-background'));
+    
+    modified();
+    setTimeout(function(){
+		Thumbnail();
+	}, 100);
+}
+function initFigureMiniColor(){ //승진이 색깔
+    $('.colorView').minicolors({
+        control: 'hue',
+        position : "bottom right",
+        defaultValue: "#FFFFFF",
+        letterCase : "uppercase",
+        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
+        change: function(hex, opacity){
+            switch ($(this).attr("id")) {
+            	case "background" : applyChange("backgroundColor"); break;
+            	case "line" : applyChange("lineColor"); break;
+            	case "text" : applyChange("textColor"); break;
+            	case "textground" : applyChange("textgroundColor"); break;
+            }
+        }
+    });
+    $('.colorView').each(function(){
+    	minicolorsAddMenu($(this).parent('.minicolors'));
+    });
+}
+function minicolorsAddMenu(target){
+    $colorpicTitle = $('<div class="colorpic-title">색상 변경</div>');
+    $colorpicBasic = $('<div class="colorpic-basic">표준 색</div>');
+    $colorpicTitle.insertBefore(target.find('.minicolors-slider'));
+    $colorpicBasic.insertBefore(target.find('.minicolors-swatches'));
+    if(target.find('.minicolors-swatches li').length > 10){
+    	$ul = $('<div class="colorpic-used">사용된 색</div><ul class="used-color"></ul>');
+		$ul.insertAfter(target.find('.minicolors-swatches li').eq(9));
+    }
+    target.find('.minicolors-swatches .minicolors-swatch').each(function(){
+    	var index = target.find('.minicolors-swatches .minicolors-swatch').index($(this));
+    	if(index % 10 == 0)
+    		$(this).css('margin-left', '13px');
+    });
+}
+$(document).on('mousedown', '#droppable', function(){
+	$('.canvas-colorpic').minicolors('settings', {
+		control: 'hue',
+        position: 'bottom right',
+        defaultValue: $('#droppable').attr('data-background'),
+        swatches: $('.canvas-colorpic').attr('data-swatches', addUsedColor()) ? $('.canvas-colorpic').attr('data-swatches').split('|') : [],
+        change: function(hex, opacity){
+            $('#droppable').css('background-color', hex);
+            $('#droppable').attr('data-background', hex);
+            $('.canvas-colorpic').attr('data-swatches', addUsedColor());
+        }
+	});
+	$('.colorView').minicolors('settings', {
+        control: 'hue',
+        position : "bottom right",
+        defaultValue: "#FFFFFF",
+        letterCase : "uppercase",
+        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
+        change: function(hex, opacity){
+            switch ($(this).attr("id")) {
+            	case "background" : applyChange("backgroundColor"); break;
+            	case "line" : applyChange("lineColor"); break;
+            	case "text" : applyChange("textColor"); break;
+            	case "textground" : applyChange("textgroundColor"); break;
+            }
+        }
+    });
+    minicolorsAddMenu($('#canvas-background'));
+    $('.colorView').each(function(){
+    	minicolorsAddMenu($(this).parent('.minicolors'));
+    });
+});
 $(function(){
     $('.right-side-bar .tab-menu').hide();
     $('.right-side-bar .tab-content').hide();
+    toggleCanvasColor();
     $('.back-chk input').on('change', function(){
-        var $colorpic = $('<div class="canvas-colorpic"></div>')
         if($(this).is(':checked')){
-            $('#canvas-background').append($colorpic);
-            $('.canvas-colorpic').minicolors({
-                control: 'hue',
-                position: 'bottom right',
-                defaultValue: $('#droppable').attr('data-background'),
-                change: function(hex, opacity){
-                    $('#droppable').css('background-color', hex);
-                    $('#droppable').attr('data-background', hex);
-                    
-                },
-                swatches: ["#800000", "#FF0000", "#FFA500", "#FFFF00", "#008000", "#0000FF", "#800080", "#000000", "#808080" ,"#FFFFFF"]
-            });
-            $colorpicTitle = $('<div class="colorpic-title">색상 변경</div>');
-            $colorpicBasic = $('<div class="colorpic-basic">표준 색</div>');
-            $colorpicTitle.insertBefore($('.minicolors-slider'));
-            $colorpicBasic.insertBefore($('.minicolors-swatches'));
-            
-            modified();
-            setTimeout(function(){
-        		Thumbnail();
-        	}, 100);
+        	initCanvasMiniColor();
         }else{
-            $('.minicolors').remove();
+        	$('#canvas-background .minicolors, .canvas-colorpic').remove();
             $('#droppable').css('background-color', '#fff');
             $('#droppable').attr('data-background', '#ffffff');
         }
-        
     });
+    
+    initFigureMiniColor();
     
     $('#canvas-sizing').on('click', function(){
         $options = $('#canvas-sizing-opt');
@@ -684,6 +794,7 @@ $(function(){
     	$('.canvas-sizing .radio-label input').eq(1).prop('checked', true);
     }
 });
+
 
 $('#droppable').bind('DOMSubtreeModified', function(e){
     if($('#droppable .ui-selected').length == 0 && $(".obj-comp[contenteditable=true]").length == 0 && $(".text-editing").length == 0){
@@ -948,9 +1059,9 @@ function objectVerticalGuideLine(left, top, right, bottom, hmid, vmid, ui){
 	}
 }
 
-
 function clearGuideLine(){
 	$('#droppable').children('.v-guide').remove();
     $('#droppable').children('.h-guide').remove();
     $('#droppable').children('.v-obj-guide').remove();
 }
+

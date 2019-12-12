@@ -52,7 +52,8 @@ public class PrivateFileController {
 		page.setPageno(1);
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
-				"</div>");
+				"</div>"+
+				"<div id=\"clone-canvas\"></div>");
 		page.setPagename("Untitled");
 		String sbase64 = encodeToString(request.getSession().getServletContext().getRealPath("/resources/thumbnail.txt"));
 		page.setThumbnail("<img src='"+sbase64+"'>");
@@ -100,7 +101,8 @@ public class PrivateFileController {
 		
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
-				"</div>");
+				"</div>"+
+				"<div id=\"clone-canvas\"></div>");
 		page.setPagename("Untitled");
 		page.setPageno(result + 1);
 		page.setThumbnail("<img src='"+sbase64+"'/>");
@@ -159,6 +161,7 @@ public class PrivateFileController {
 		MongoService mgService = new MongoService();
 		
 		for(Page p : page) {
+			logger.info(p.getThumbnail());
 			mgService.saveDoc(collection, p);
 		}
 		

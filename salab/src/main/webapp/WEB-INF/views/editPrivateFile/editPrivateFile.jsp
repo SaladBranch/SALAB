@@ -239,7 +239,7 @@
     <div class="canvas-container">
         ${pageList[0].content }
         <div id="guide-h" class="guide"></div>
-		<div id="guide-v" class="guide"></div>
+		    <div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -451,9 +451,14 @@
     	
 
     	 async function Thumbnail(){
-    		var image;
-        		var node = document.getElementById('droppable');
-            	
+    			var image;
+    			
+    			var clone = $('#droppable').clone();
+    	    	$('#clone-canvas').html(clone);
+    	    	$('#clone-canvas').find('.canvas').removeClass('grid-canvas');
+    	    	$('#clone-canvas').find('.obj').removeClass('ui-selected');
+    			
+        		var node = document.getElementById('clone-canvas');
             	var canvas = document.createElement('canvas');
             	canvas.width = node.scrollWidth;
             	canvas.height = node.scrollHeight;
@@ -473,6 +478,7 @@
             		image.src = pngDataUrl;
             		$('.ui-selected .page-thumbnail').html('');
         	        $('.ui-selected .page-thumbnail').append(image);
+        	        $('#clone-canvas').html('');
             }).catch(function (error) {
             	console.log(error);
             });

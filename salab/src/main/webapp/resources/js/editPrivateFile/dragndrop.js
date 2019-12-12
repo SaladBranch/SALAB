@@ -617,7 +617,7 @@ function initCanvasMiniColor(){
         control: 'hue',
         position: 'bottom right',
         defaultValue: $('#droppable').attr('data-background'),
-        swatches: $('.canvas-colorpic').attr('data-swatches', addUsedColor()) ? $('.canvas-colorpic').attr('data-swatches').split('|') : [],
+        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
         change: function(hex, opacity){
             $('#droppable').css('background-color', hex);
             $('#droppable').attr('data-background', hex);
@@ -668,17 +668,20 @@ function minicolorsAddMenu(target){
     });
 }
 $(document).on('mousedown', '#droppable', function(){
-	$('.canvas-colorpic').minicolors('settings', {
-		control: 'hue',
-        position: 'bottom right',
-        defaultValue: $('#droppable').attr('data-background'),
-        swatches: $('.canvas-colorpic').attr('data-swatches', addUsedColor()) ? $('.canvas-colorpic').attr('data-swatches').split('|') : [],
-        change: function(hex, opacity){
-            $('#droppable').css('background-color', hex);
-            $('#droppable').attr('data-background', hex);
-            $('.canvas-colorpic').attr('data-swatches', addUsedColor());
-        }
-	});
+	if($('.back-chk input').prop('checked')){
+		console.log("hi")
+		$('.canvas-colorpic').minicolors('settings', {
+			control: 'hue',
+	        position: 'bottom right',
+	        defaultValue: $('#droppable').attr('data-background'),
+	        swatches: $('.canvas-colorpic').attr('data-swatches', addUsedColor()) ? $('.canvas-colorpic').attr('data-swatches').split('|') : [],
+	        change: function(hex, opacity){
+	            $('#droppable').css('background-color', hex);
+	            $('#droppable').attr('data-background', hex);
+	            $('.canvas-colorpic').attr('data-swatches', addUsedColor());
+	        }
+		});
+	}
 	$('.colorView').minicolors('settings', {
         control: 'hue',
         position : "bottom right",

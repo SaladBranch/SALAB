@@ -67,7 +67,7 @@
             		pageno: list[beforepindex].pageno,
 	    			pagename: list[beforepindex].pagename,
 	    			_id: list[beforepindex]._id,
-	    			thumbnail: $('page-thumbnail:eq('+beforepindex+')').html()
+	    			thumbnail: $('.page-thumbnail:eq('+beforepindex+')').html()
             }
         },
         stop: function(event, ui){
@@ -149,23 +149,7 @@
         
         
         //페이지별 color 다르게 적용
-        var $colorpic = $('<div class="canvas-colorpic"></div>')
-        if($('#droppable').attr('data-background') != "#ffffff"){
-        	$('.back-chk input').prop('checked', true);
-        	$('#canvas-background').append($colorpic);
-            $('.canvas-colorpic').minicolors({
-                control: 'hue',
-                position: 'bottom right',
-                defaultValue: $('#droppable').attr('data-background'),
-                change: function(hex, opacity){
-                    $('#droppable').css('background-color', hex);
-                    $('#droppable').attr('data-background', hex);
-                }
-            });
-        }else{
-        	$('#canvas-background .minicolors').remove();
-        	$('.back-chk input').prop('checked', false);
-        }
+        toggleCanvasColor();
         
         //페이지별 grid 여부
         if($('#droppable').attr('data-grid') === 'true')
@@ -429,7 +413,9 @@
     	}
     	
     	list[index].content = $('.canvas-container').html();
-    	list[index].thumbnail = $('.page-thumbnail:eq('+index+')').html();
+    	for(var i = 0; i < list.length; i++){
+        	list[i].thumbnail = $('.page-thumbnail:eq('+i+')').html();
+    	}
     	
     	$.ajax({
     		url: 'pageAllSave.do',
@@ -496,10 +482,10 @@
                 '</div>'+
                 '<div class="button">'+
                 '<button class="btn-ghost cancel">cancel</button>'+
-                '<button class="btn-ghost done">done</button>'+
+                '<button class="btn-ghost done" disabled="true">done</button>'+
                 '</div>'+
                 '</div>'+
-                '<input type="text" class="memo-cnt" value="test">'+
+                '<input type="text" class="memo-cnt" value="">'+
 		        '</div>'+
 		        '</div>'+
         		'</div>'+
@@ -510,12 +496,38 @@
         	
         });
     	
+    	$(document).on('keyup', '.memo-cnt', function(){
+    		var keyword = $(this).val();
+    		if(keyword == ''){
+    			console.log($(this).siblings('.memo-info').find('.done').text());
+    			$(this).siblings('.memo-info').find('.done').attr('disabled', true);
+    		}else{
+    			$(this).siblings('.memo-info').find('.done').attr('disabled', false);
+    		}
+    	});
+    	
     	$(document).on('mouseup', '.memo-icon', function(){
-    		$('.memo-content').toggle();
+    		$(this).siblings('.memo-content').toggle();
     	});
     	
     	$(document).on('click', '.btn-ghost.cancel', function(){
-    		$('.memo').remove();
+    		$(this).closest('.memo').remove();
+    	});
+    	
+    	$(document).on('mouseup', '.memoRemove', function(){
+    		$(this).closest('.memo').remove();
+    	});
+    	
+    	$(document).on('mouseup', '.memoEdit', function(){
+    		var $memo = $(this).closest('.memo-info').siblings('.memo-cnt');
+    		var $button = $(this).closest('.button');
+    		
+    		$($memo).attr('readOnly', false);
+    		$($memo).removeClass('disabled');
+    		$($button).html(
+    				 '<button class="btn-ghost cancel">cancel</button>'+
+    	                '<button class="btn-ghost done">done</button>'
+    	                );
     	});
     	
     	$(document).on('click', '.btn-ghost.done', function(){
@@ -523,6 +535,17 @@
     		var $button = $(this).closest('.button');
     		
     		$($memo).attr('readOnly', true);
+    		$($memo).addClass('disabled');
+    		$($button).html(
+    				'<div class="file-options">'+
+	                '<div class="file-options-btn">⋮</div>'+
+	                '<div class="file-options-menu">'+
+	                '<ul>'+
+	                '<li><a href="javascript:" class="memoEdit">메모 수정</a></li>'+
+	                '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
+	                '</ul>'+
+	                '</div>'+
+    				'</div>');
     		
     	});
     	
@@ -619,9 +642,34 @@
     
     function popup(){
     	
-    	var win_width = 1050;
-    	var height = 600+30;
-    	window.open('webTest.do?pfileno='+list[0].fileno +'&userno='+list[0].userno+'&pt=private', '_blank', 'width='+win_width+', height=' + height + ', menubar=yes, scrollbar=no');
+    	var win_width = 1040;
+    	var height = 630;
+    	window.open('', 'popup', 'width='+win_width+', height=' + height + ', menubar=no, scrollbar=no');
+    	
+    	var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "webTest.do");
+        document.body.appendChild(form);
+
+        var insert = document.createElement("input");
+        insert.setAttribute("type", "hidden");
+        insert.setAttribute("name", "pfileno");
+        insert.setAttribute("value", list[0].fileno);
+        form.append(insert);
+
+        var insert2 = document.createElement("input");
+        insert2.setAttribute("type", "hidden");
+        insert2.setAttribute("name", "pt");
+        insert2.setAttribute("value", 'private');
+        form.append(insert2);
+        
+        var insert2 = document.createElement("input");
+        insert2.setAttribute("type", "hidden");
+        insert2.setAttribute("name", "userno");
+        insert2.setAttribute("value", list[0].userno);
+        form.append(insert2);
+        form.target = 'popup';
+        form.submit();
     }
     
     function upImage(){
@@ -643,13 +691,32 @@
     }
     
     function filter(node) {
+    	console.log(node.className === 'ui-selectee ui-selected');
         return (node.className !== 'memo' && node.className !== 'grid-canvas' && node.className !== 'ui-resizable-handle ui-resizable-n' 
         	&& node.className !== 'ui-resizable-handle ui-resizable-e' && node.className !== 'ui-resizable-handle ui-resizable-s' && node.className !== 'ui-resizable-handle ui-resizable-w' 
         		&& node.className !== 'ui-resizable-handle ui-resizable-ne' && node.className !== 'ui-resizable-handle ui-resizable-se' && node.className !== 'ui-resizable-handle ui-resizable-sw' 
-        			&& node.className !== 'ui-resizable-handle ui-resizable-nw' && node.className !== 'ui-rotatable-handle ui-draggable');
+        			&& node.className !== 'ui-resizable-handle ui-resizable-nw' && node.className !== 'ui-rotatable-handle ui-draggable' && node.className !== 'ui-selectee ui-selected');
     }
     
     function modified(){
     	var index = $('.page-item').index($('.page-item.ui-selected'));
         $('.isModified:eq('+index+')').addClass('active');
     }
+    
+    $(document).on('mouseup', '.file-options-btn',function(){
+        var index = $('.file-options-btn').index($(this));
+        $('.file-options-menu').each(function(){
+            if($('.file-options-menu').index($(this)) == index){
+                if($(this).css('display') == 'block'){
+                    $(this).hide();
+                }else{
+                    $(this).show();
+                }
+            }else{
+                $(this).hide();
+            }
+        });
+        
+    });
+    
+    

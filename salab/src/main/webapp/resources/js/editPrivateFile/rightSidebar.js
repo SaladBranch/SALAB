@@ -413,7 +413,7 @@ var lastChanged = "";
     	
     	// 배경색
     	var backgroundColor = checkAttr("backgroundColor", target);
-		$(".figure-shape-comps .figure-item[id=backgroundColor] .minicolors-swatch-color").css("background", (backgroundColor == "diffrent" ? "white" : backgroundColor));
+		/*$(".figure-shape-comps .figure-item[id=backgroundColor] .minicolors-swatch-color").css("background", (backgroundColor == "diffrent" ? "white" : backgroundColor));*/
 		$(".figure-shape-comps .figure-item[id=backgroundColor] input").val(backgroundColor == "diffrent" ? "" : backgroundColor);
 
 		// 선 타입
@@ -424,7 +424,7 @@ var lastChanged = "";
     	
     	// 선 색상
 		var lineColor = checkAttr("lineColor", target);
-		$(".figure-line-comps .figure-item[id=lineColor] .minicolors-swatch-color").css("background", (lineColor == "diffrent" ? "white" : lineColor));
+		/*$(".figure-line-comps .figure-item[id=lineColor] .minicolors-swatch-color").css("background", (lineColor == "diffrent" ? "white" : lineColor));*/
 		$(".figure-line-comps .figure-item[id=lineColor] input").val(lineColor == "diffrent" ? "" : lineColor);
 	
     	// 선 굵기
@@ -462,7 +462,7 @@ var lastChanged = "";
     	
     	// font 색상
 		var fontColor = checkAttr("fontColor", target);
-		$(".text-font-comps .text-item[id=textColor] .minicolors-swatch-color").css("background", (fontColor == "diffrent" ? "white" : fontColor));
+		/*$(".text-font-comps .text-item[id=textColor] .minicolors-swatch-color").css("background", (fontColor == "diffrent" ? "white" : fontColor));*/
 		$(".text-font-comps .text-item[id=textColor] input").val(fontColor == "diffrent" ? "mixed" : fontColor);
 		
     	// text effect
@@ -477,7 +477,7 @@ var lastChanged = "";
 
     	// font 강조 색상
 		var textgroundColor = checkAttr("textgroundColor", target);
-		$(".text-shape-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
+		/*$(".text-shape-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));*/
 		$(".text-shape-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "mixed" : textgroundColor);
 		
     	// text sort

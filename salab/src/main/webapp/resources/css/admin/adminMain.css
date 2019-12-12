@@ -543,8 +543,8 @@ body{
 }
 
 .login-btn{
-	background: #3cb371;
-	border-radius: 15px;
+	background: /* #3cb371; */#3ec28f;
+	border-radius: 18px;
 	border: none;
     padding: 5px;
     text-align: center;
@@ -555,12 +555,12 @@ body{
 }
 
 .login-btn:hover{
-	background: #2b8b57;
+	background: /* #2b8b57; */#27ad79;
 }
 
 .admin-login-arrow{
-	padding:10px;
-	font-size: 40pt;
+	padding: 20px;
+	font-size: 25pt;
 	color: white;
 }
 

@@ -23,5 +23,8 @@ public interface MemberService {
 	Member memberDetail(int userno);
 	int changePhoneNum(Member member);
 	int memberUpdate(Member member);
+	int changeToStandard(int userno);
+	List<Member> dailyChangeList();
+	int daliySetStandard(List<Member> memberList);
 
 }

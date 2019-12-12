@@ -140,7 +140,7 @@
                     <c:if test="${sessionScope.loginMember.userlevel eq 'PREMIUM'}">
                         <div id="downgrade-bottom">
                             <div>SALAB의 PREMIUM 기능들을 더 이상 사용하지 않으실껀가요?</div>
-                            <input type="button" value="STANDARD로  변경하기">
+                            <input type="button" value="STANDARD로  변경하기"  onclick="downGrade()">
                         </div>
                     </c:if>
                     <c:if test="${sessionScope.loginMember.userlevel ne 'PREMIUM'}">
@@ -215,6 +215,32 @@
                 }
             });
         });
+    }
+    //standard로 변경
+    function downGrade(){
+       if( confirm("STANDARD로 변경합니다.") ){
+           $.ajax({
+                url: 'changeToStandard.do',
+                data: {
+                    userno: '${loginMember.userno}'
+                },
+                type: 'POST',
+                success: function(data) {
+                    console.log("갔다왔다리");
+                    if(data=='changeSuccess'){
+                        alert("정기 결제가 취소되었습니다.");
+                        location.href = 'userMain.do';
+                    }else{
+                        alert("정기 결제 취소가 실패되었습니다. 재 시도 해주세요");
+                    }
+               
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("error : " + textStatus);
+                }
+            });
+       }
+        
     }
 
     function uptest() {

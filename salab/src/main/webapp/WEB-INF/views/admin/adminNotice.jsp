@@ -27,9 +27,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="logoutMain.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="recentFile.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="logoutMain.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">
@@ -85,9 +85,7 @@
         
         	<div class="admin_btn_box">
 				<a href="adminNoticeInsert.do">
-					<div class="adminNoticeInsert_btn">
-						<span>NEW</span>
-					</div>
+					<button class="adminNoticeInsert_btn btn btn-full">NEW</button>
 				</a>
 			</div>
 			

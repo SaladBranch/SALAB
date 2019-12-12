@@ -238,7 +238,8 @@
     
     <div class="canvas-container">
         ${pageList[0].content }
-        
+        <div id="guide-h" class="guide"></div>
+		    <div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -425,6 +426,8 @@
         </div>
     </div>
     
+    
+    
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
@@ -535,33 +538,11 @@
                 }
             }
         });
-    });
-    $('.page-tab').click(function(){
-    	
-        $('.left-side-bar .tab').each(function(){
-            $(this).removeClass('active-tab'); 
-        });
-        $('.page-tab').addClass('active-tab');
-        $('.page-tab-content').show();
-        $('.comp-tab-content').hide();
-        $('.lib-tab-content').hide();
-        
-    });
-    $('.comp-tab').click(function(){
-    	
-        $('.left-side-bar .tab').each(function(){
-            $(this).removeClass('active-tab'); 
-        });
-        $('.comp-tab').addClass('active-tab');
-        $('.page-tab-content').hide();
-        $('.comp-tab-content').show();
-        $('.lib-tab-content').hide();
-       
-    });
-    $('.lib-tab').click(function(){
+		
+		//page onload시 lib-tab에 내용 추가
     	var plib = {
-    			fileno: list[0].fileno,
-    			userno: list[0].userno
+   			fileno: list[0].fileno,
+   			userno: list[0].userno
     	}
     	$.ajax({
     		url: 'getPlibList.do',
@@ -588,6 +569,30 @@
     			console.log("plib list 가져오기 실패");
     		}
     	});
+    });
+    $('.page-tab').click(function(){
+    	
+        $('.left-side-bar .tab').each(function(){
+            $(this).removeClass('active-tab'); 
+        });
+        $('.page-tab').addClass('active-tab');
+        $('.page-tab-content').show();
+        $('.comp-tab-content').hide();
+        $('.lib-tab-content').hide();
+        
+    });
+    $('.comp-tab').click(function(){
+    	
+        $('.left-side-bar .tab').each(function(){
+            $(this).removeClass('active-tab'); 
+        });
+        $('.comp-tab').addClass('active-tab');
+        $('.page-tab-content').hide();
+        $('.comp-tab-content').show();
+        $('.lib-tab-content').hide();
+       
+    });
+    $('.lib-tab').click(function(){
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });

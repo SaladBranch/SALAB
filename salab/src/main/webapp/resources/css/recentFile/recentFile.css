@@ -273,12 +273,13 @@ body{
     line-height: 40px;
     width: 30px;
     height: 40px;
+    z-index:5;
 }
-.img-wrapper img{
+.img-wrapper>img{
     margin-top: 5px;
     width: 30px;
     height: 30px;
-    z-index: 99;
+    z-index: -99;
     border-radius: 100%;
 }
 /*----------------------------*/
@@ -536,7 +537,7 @@ body{
 .modalOutline {
     display: none;
     position: fixed;
-    z-index: 0;
+    z-index: 15;
     left: 0;
     top: 0;
     width: 100%;
@@ -556,6 +557,7 @@ body{
     width: 35%;
     box-shadow: 0px 1px 3px;
     min-height: 160px;
+    z-index: 16;
 }
 
 .modalContent input[type="button"] {

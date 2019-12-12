@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -79,11 +80,17 @@
     </div>
 
     <div class="right-main-side">
-        <!-- Standard 등급 시 -->
-        <section id="upgrade-section" class="">
-            <div id="upgrade-title" class="section-title titleConfigure">
+        <c:if test="${sessionScope.loginMember.userlevel eq 'PREMIUM'}">
+              <div id="upgrade-title" class="section-title titleConfigure">
+                <span>ACCOUNT DOWNGRADE</span>
+            </div>  
+        </c:if>
+        <c:if test="${sessionScope.loginMember.userlevel ne 'PREMIUM'}">
+             <div id="upgrade-title" class="section-title titleConfigure">
                 <span>ACCOUNT UPGRADE</span>
             </div>
+        </c:if>
+        <section id="upgrade-section" class="">
             <div class="box-outline">
                 <div id="upgrade-header">
                     <div class="horizontally">STANDARD</div>
@@ -130,74 +137,21 @@
                     </table>
                 </div>
                 <div>
-                    <div id="upgrade-bottom">
-                        <div>월 11$에 SALAB의 모든 기능을 사용해보세요 !</div>
-                        <input type="button" value="PREMIUM 등록하기" onclick="firstPay()">
-                    </div>
-                </div>
-                <div id="goto-FAQ" class="escapeSentence">등급에 관련하여 궁금하신 사항이 있으신가요?</div>
-            </div>
+                    <c:if test="${sessionScope.loginMember.userlevel eq 'PREMIUM'}">
+                        <div id="downgrade-bottom">
+                            <div>SALAB의 PREMIUM 기능들을 더 이상 사용하지 않으실껀가요?</div>
+                            <input type="button" value="STANDARD로  변경하기"  onclick="downGrade()">
+                        </div>
+                    </c:if>
+                    <c:if test="${sessionScope.loginMember.userlevel ne 'PREMIUM'}">
+                        <div id="upgrade-bottom">
+                            <div>월 11$에 SALAB의 모든 기능을 사용해보세요 !</div>
+                            <input type="button" value="PREMIUM 등록하기" onclick="firstPay()">
+                        </div>
+                    </c:if>
 
-            <div id="horizon-line"></div>
-        </section>
-
-        <!-- premium 등급 시 -->
-        <section id="upgrade-section" class="disable">
-            <div id="upgrade-title" class="section-title titleConfigure">
-                <span>ACCOUNT DOWNGRADE</span>
-            </div>
-            <div class="box-outline">
-                <div id="upgrade-header">
-                    <div class="horizontally">STANDARD</div>
-                    <div class="horizontally ">PREMINUM</div>
                 </div>
-                <div id="upgrade-body">
-                    <table>
-
-                        <tr>
-                            <th>참여 가능한 프로젝트</th>
-                            <td>5개</td>
-                            <td>20개</td>
-                        </tr>
-                        <tr>
-                            <th>파일 별 최대 페이지 수</th>
-                            <td>5개</td>
-                            <td>20개</td>
-                        </tr>
-                        <tr>
-                            <th>동시 협업 인원</th>
-                            <td>3인</td>
-                            <td>10인</td>
-                        </tr>
-                        <tr>
-                            <th>LIBRARY</th>
-                            <td>ONLY PERSONAL</td>
-                            <td>PERSONAL / TEAM</td>
-                        </tr>
-                        <tr>
-                            <th>MESSENGER in file</th>
-                            <td>X</td>
-                            <td>Yes</td>
-                        </tr>
-                        <tr>
-                            <th>MOUSE TRACKING</th>
-                            <td>X</td>
-                            <td>Yes</td>
-                        </tr>
-                        <tr>
-                            <th>TRANS-CO</th>
-                            <td>X</td>
-                            <td>Yes</td>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <div id="downgrade-bottom">
-                        <div>SALAB의 PREMIUM 기능들을 더 이상 사용하지 않으실껀가요?</div>
-                        <input type="button" value="STANDARD로  변경하기">
-                    </div>
-                </div>
-                <div id="goto-FAQ" class="escapeSentence"><a href="noticelist.do">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
+                <div id="goto-FAQ" class="escapeSentence"><a href="qnalist.do">등급에 관련하여 궁금하신 사항이 있으신가요?</a></div>
             </div>
 
             <div id="horizon-line"></div>
@@ -261,6 +215,32 @@
                 }
             });
         });
+    }
+    //standard로 변경
+    function downGrade(){
+       if( confirm("STANDARD로 변경합니다.") ){
+           $.ajax({
+                url: 'changeToStandard.do',
+                data: {
+                    userno: '${loginMember.userno}'
+                },
+                type: 'POST',
+                success: function(data) {
+                    console.log("갔다왔다리");
+                    if(data=='changeSuccess'){
+                        alert("정기 결제가 취소되었습니다.");
+                        location.href = 'userMain.do';
+                    }else{
+                        alert("정기 결제 취소가 실패되었습니다. 재 시도 해주세요");
+                    }
+               
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("error : " + textStatus);
+                }
+            });
+       }
+        
     }
 
     function uptest() {

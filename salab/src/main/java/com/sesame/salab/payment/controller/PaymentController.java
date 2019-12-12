@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mchange.v2.cfg.PropertiesConfigSource.Parse;
 import com.sesame.salab.common.bootpay.javaApache.BootpayApi;
 import com.sesame.salab.common.bootpay.javaApache.model.request.SubscribeBilling;
+import com.sesame.salab.member.model.service.MemberService;
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.payment.model.vo.Payment;
 import com.sesame.salab.payment.service.PaymentService;
@@ -32,6 +32,8 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService pmService;
+	@Autowired
+	private MemberService memberService;	
 	
 	@RequestMapping("test.do")
 	public String returntestPage() {
@@ -96,7 +98,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="regularPayment.do", method=RequestMethod.POST)
-	public void dailyPayMethod( HttpServletResponse response) throws IOException {
+	public void dailyPayMethod() throws IOException {
 		BootpayApi bootpay = new BootpayApi("5d5a6ed20627a800303d1954", "neJWvNvI9giAwmfjHyVS6UbU1XsnI8JxXxYHVC7WnG0=");
 		SubscribeBilling bill = new SubscribeBilling();
 		List<Payment> paySuccess = new ArrayList<Payment>();
@@ -167,19 +169,28 @@ public class PaymentController {
 				}
 				if( paySuccess.size() !=saveSuccessResult  || payFail.size() != changeFailResult ) {
 					logger.info("저장실패, log확인");
-				}
-				
+				}		
 		}
-
-			
-
-
-
-		//해당 MemberList의 빌링키로 결제
+	}
+	//날자 만료된 인원 Standard 권한으로 변경
+	@RequestMapping(value="dailyChangeLevel.do", method=RequestMethod.POST)
+	public void dailyChangeLevelMethod() throws IOException {
+		logger.info("dailyChangeLevel.do run..");
+		//standard중에 권한 만료된 리스트 불러오기
+		List<Member> memberList = memberService.dailyChangeList();
+		logger.info("금일 만료 인원 : "+memberList.size()+"명");
+		//리스트를 이용하여, standard로 초기화
+		if(memberList.size()>0) {
+			int result = memberService.daliySetStandard(memberList);
+			if(result ==memberList.size()) {
+				logger.info(result+"명 All Success..");
+			}else {
+				result=memberList.size()-result;
+				logger.info(result+"명 Change Fail..");
+			}
+		}
+		logger.info("end..");
 		
-		//다음 결제일 지정해주기.
-		
-
 	}
 	@RequestMapping(value="pm_isbilling.do", method=RequestMethod.POST)
 	public void paymentIsBillingMethod(@RequestParam("userno") String userno, @RequestParam("order_id") String orderid, HttpServletResponse response) throws IOException {

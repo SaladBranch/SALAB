@@ -41,7 +41,8 @@ public class projectnoticeController {
 
 		int listCount = pnService.listCount(projectno); // DB에서 현재 총 Row수 가져옴
 		Paging paging = new Paging(); // 현재 페이지
-		paging.setLimit(10); // 한페이지에 10개의 리스트
+		paging.setLimit(5); // 한페이지에 10개의 리스트
+		paging.setUnderlimit(5);
 		paging.makePage(listCount, curPage); // 페이징 처리함
 
 		HashMap<String, Object> map = new HashMap<String, Object>();

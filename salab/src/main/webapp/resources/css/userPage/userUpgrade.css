@@ -1,14 +1,9 @@
 #upgrade-section {
     max-width: 60%;
-    margin-top: 20px;
-    margin-left: 40px;
+    margin-top: 60px;
+    margin-left: 220px;
     padding: 0px;
     height: 700px;
-}
-
-#upgrade-title {
-    margin-top: 10px;
-    margin-bottom:40px;
 }
 
 #upgrade-header {
@@ -82,8 +77,8 @@ input[type="button"]{
     width: 600px;
     border-top: 0.5px solid #787878;
     position: absolute;
-    top:160px;
-    left: 100px;
+    top:190px;
+    left: 270px;
     z-index: 5;
 }
 #downgrade-bottom>div{
@@ -169,4 +164,9 @@ input[type="button"]{
 .top-bar   a {
     color: #fff;
     pointer-events: auto;
+}
+
+.section-title {
+    margin-top: 35px;
+    margin-left: 90px;
 }

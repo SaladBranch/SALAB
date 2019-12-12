@@ -33,7 +33,7 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="recentPage.html"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="recentFile.do?sort=recent"><img src="/salab/resources/img/logo.png"></a>
                 </div>
                 <div class="top-bar-logotext"><a href="recentFile.do?sort=recent">SALAB</a></div>
             </div>
@@ -162,8 +162,7 @@
                     	 </c:if> 	
                     </div>
                     </label>
-                    <div class="name-box"> ${project.projectname}
-                    </div>
+                    <div class="name-box">${sessionScope.project.projectname}</div>
                 </div>
                 <section class="file-section">
                     <!--최근파일-->
@@ -334,7 +333,7 @@
                             <div class="titleConfigure">Create PrivateFile</div>
                             <input id="userNo" type="hidden" value="${loginMember.userno}">
                             <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
-                            <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
+                            <input class="" type="button" id="id-change-btn" value="New file" onclick="newTeamFile();">
                         </div>
                     </div>
                 </section>
@@ -450,6 +449,37 @@
             $('.modal-crop').removeClass('is-open');
             $('.modal-crop').removeClass('is-visible');
         }
+    }
+  //새파일생성
+    function showModal(findKey) {
+    	if(findKey === "newFile"){
+    		$("#modal-name").show();
+    	}else if(findKey == "renameFile"){
+    		$("#modal-rename").show();
+    		$('#fileRename').val(filetitle);
+    	}
+    	
+    }
+    function newTeamFile(){
+    	var num = parseInt($("#projectno").val());
+    	var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "insert_newteamFile.do");
+        document.body.appendChild(form);
+
+        var insert = document.createElement("input");
+        insert.setAttribute("type", "hidden");
+        insert.setAttribute("name", "prfiletitle");
+        insert.setAttribute("value", $("#fileName").val());
+        form.append(insert);
+
+        var insert2 = document.createElement("input");
+        insert2.setAttribute("type", "hidden");
+        insert2.setAttribute("name", "projectno");
+        insert2.setAttribute("value", num);
+        form.append(insert2);
+
+        form.submit();
     }
 </script>
 

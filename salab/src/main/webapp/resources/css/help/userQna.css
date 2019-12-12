@@ -218,10 +218,10 @@ body{
 .trashcan a,
 .new-team a{
     display: inline-block;
-    color: #2c2c2c;
-    font-size: 15px;
-    margin-left: 8px;
-    line-height: 40px;
+	color: #2c2c2c;
+	font-size: 15px;
+	margin-left: 20px;
+	line-height: 40px;
 }
 
 .active-menu{
@@ -456,25 +456,28 @@ body{
 
 .menu-title{
 	margin-top: 40px;
-	height: 35px;
-	padding: 10px 3px;
+	height: 80px;
+	padding: 15px 12px;
+	line-height: 60px;
+	font-size: 1.2em;
+	font-weight: 400;
+	vertical-align: bottom;
 }
 
 .qna_top{
 	float: left;
-	font-size: 30pt;
-	padding: 40px 30px 25px 30px;
-	width:87%;
-	margin-left: 70px;
-	border-bottom: 2px solid black;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+    width: 80%;
+	margin-left: 100px;
 }
 
 .qna_bottom{
 	font-size: 13pt;
-	width: 87%;
-	padding: 0px 30px;
+	width: 80%;
 	display: block;
-	margin-left: 70px;
+	margin-left: 100px;
+	border-top: 2px solid black;
 }
 
 .qna_btn_box{
@@ -489,20 +492,11 @@ body{
 	font-weight: 600;
 }
 
-.qna_btn{
+.qna_insert{
 	float: right;
-	font-size: 18pt;
-	font-weight: 600;
-	padding: 3px 30px 3px 30px;
-	border: 1px solid lightgreen;
-}
-
-.qna_btn:hover{
-	border: 1px solid #3cb371;
 }
 
 .qna_head{
-	font-size: 16pt;
 	font-weight: bold;
 	text-align: center;
 	width: 100%;
@@ -513,46 +507,46 @@ body{
 
 .qna_list{
 	text-align: center;
-	height: 55px;
+	height: 50px;
 	border-bottom: 1px solid lightgray;
 }
 
 .qna_head_no{
 	float: left;
 	text-align: center;
-	line-height: 48px;
-	font-weight: 500;
+	line-height: 50px;
+	font-weight: 400;
 	width: 15%;
 }
 
 .qna_head_title{
 	float: left;
 	text-align: center;
-	line-height: 48px;
-	font-weight: 500;
+	line-height: 50px;
+	font-weight: 400;
 	width: 50%;
 }
 
 .qna_head_date{
 	float: left;
 	text-align: center;
-	line-height: 48px;
-	font-weight: 500;
+	line-height: 50px;
+	font-weight: 400;
 	width: 20%;
 }
 
 .qna_head_yn{
 	float: left;
 	text-align: center;
-	line-height: 48px;
-	font-weight: 500;
+	line-height: 50px;
+	font-weight: 400;
 	width: 15%;
 }
 
 .qna_head_null{
 	float: left;
 	text-align: center;
-	line-height: 55px ;
+	line-height: 50px ;
 	width:100%;
 	color: gray;
 	font-weight: 400;
@@ -562,10 +556,6 @@ a {
 	text-decoration: none; 
 	color: black;
 }
-
-/* a:hover{
-	color: #3cb371;
-} */
 
 
 /* 페이징 css */
@@ -582,7 +572,7 @@ a {
 	width: 80%;
 	height: 40px;
 	margin-top: 20px;
-	padding-left: 330px;
+	padding-left: 380px;
 }
 
 .paging_btn{

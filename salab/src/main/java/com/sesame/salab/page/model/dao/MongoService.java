@@ -244,8 +244,7 @@ public class MongoService {
 
 	public List<PrivateLibrary> getPlibItems(String collectionName, PrivateLibrary plib) {
 		Query query = new Query(new Criteria().andOperator(
-				Criteria.where("userno").is(plib.getUserno()),
-				Criteria.where("fileno").is(plib.getFileno())
+				Criteria.where("userno").is(plib.getUserno())
 				));
 		return mongoOps.find(query, PrivateLibrary.class, collectionName);
 	}

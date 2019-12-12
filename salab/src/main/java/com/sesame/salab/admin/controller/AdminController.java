@@ -46,12 +46,24 @@ public class AdminController {
 	
 	//관리자 로그아웃
 	@RequestMapping(value="adminLogout.do")
-	public String adminLoginMethod(HttpServletRequest request) {
+	public String adminLogoutMethod(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			session.invalidate();
 		}
 		return "admin/adminMain";
+	}
+	
+	
+	//관리자 로그아웃 && SALAB main 으로 이동
+	@RequestMapping(value="logoutMain.do")
+	public String adminLogoutMainMethod(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			session.invalidate();
+		}
+		
+		return "redirect:main.do";
 	}
 
 }

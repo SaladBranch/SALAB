@@ -133,33 +133,33 @@
             <i class="fas fa-chevron-left"></i>
         </div>
         <sector>
-            <div class="notice-grid">
+            <div class="notice-grid ">
                 <div class="notice-header">공지사항</div>
-                <input type="hidden" id="projectno" value="${requestScope.projectno}">
                 <div class="notice-body">
-                    <div>
-                        <div class="notice-title">
-                            <input id="noticeTitie" class="hideInputText" type="text" placeholder=" :Notice Title" maxlength="40">
-
-                            <span id="writedDate">
-                                <c:set var="today" value="<%= new java.util.Date() %>" />
-                                <fmt:formatDate value="${today }" dateStyle="short" /></span>
-
+                    <c:if test="${sessionScope.userauth eq 'LEADER'}">
+                        <div class="notice-title ">
+                            <input class="InputText" type="text" placeholder=" :Notice Title" maxlength="40" value="">
                         </div>
-                        <div id="check">
-                            <textarea id="noticeContent" class="notice-contentbox" rows="12" placeholder=":Notice Content"></textarea>
+                        <div>
+                            <div class="noticeinfo">
+                               <c:set var="today" value="<%= new java.util.Date() %>" />
+                                <span>${sessionScope.loginMember.username}</span>
+                                <span> edited <fmt:formatDate value="${today }" dateStyle="short" /></span>
+                            </div>
+                            <div>
+                                <textarea id="notice-content" class="notice-contentbox  scrollbar" rows="16" placeholder=":Notice Content"></textarea>
+                            </div>
+                        </div>
+                        <div class="buttonbox">
+                            <div class="button" onclick="noticeRegist()">
+                                등록하기
+                            </div>
                         </div>
 
-                    </div>
-                    <div class="buttonbox">
-                        <div class="button" onclick="noticeRegist()">
-                            등록하기
-                        </div>
-                    </div>
+
+                    </c:if>
                 </div>
             </div>
-
-
         </sector>
 
 
@@ -168,8 +168,8 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
         function noticeRegist() {
-            var title = $('#noticeTitie').val();
-            var content = $('#noticeContent').val();
+            var title = $('.InputText').val();
+            var content = $('#notice-content').val();
             var projectno =${requestScope.projectno}
             location.href = 'projectNotiRegist.do?pnoticetitle=' + title + '&pnoticecontent=' + content+"&projectno="+projectno ;
         }

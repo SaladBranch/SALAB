@@ -74,11 +74,11 @@ var lastChanged = "";
         } else {
             $(this).addClass("checked");
             if ($(this).attr("id") == "size-ratioFix")
-                $(".ui-selected").addClass(".size-ratiofixed");
+                $(".ui-selected").addClass("size-ratiofixed");
             if ($(this).attr("id") == "weight-ratioFix")
-                $(".ui-selected").addClass(".weight-ratiofixed");
+                $(".ui-selected").addClass("weight-ratiofixed");
             if ($(this).attr("id") == "radius-ratioFix")
-            	$(".ui-selected").addClass(".radius-ratiofixed");
+            	$(".ui-selected").addClass("radius-ratiofixed");
         	$(this).children("div.checkbox").css({ border : "1px solid gray" });
         	$(this).children("div.checkbox").children("img").css({ display : "block" });
         }
@@ -329,13 +329,52 @@ var lastChanged = "";
     		}
     	}
 	}, true);
-	
+	/*
+	document.addEventListener('mouseup', () => {
+		  
+		  console.clear();
+		  
+		  const selection = window.getSelection();
+		  if (!selection.rangeCount) return;
+		  
+		  const range = selection.getRangeAt(0);
+		  
+		  console.log('Selected elements:');
+		  range.cloneContents().querySelectorAll('*').forEach(e => console.log(e));
+		  
+		  console.log('Selected text/elements parent:');
+		  console.log(range.commonAncestorContainer.parentNode);
+
+		});
+	*/
 	$(document).on("mouseup", function() {
 		if ($(".text-dragged").length == 0 && window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
-			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
-			clearDragged();
-			formatChange();
-			$(".text-dragged").selectText();
+    		var isTextarea = "false";
+    		var $checkTarget = $(window.getSelection().anchorNode).parent();
+    		while(true) {
+    			if (!$checkTarget.is("span")) {
+    				if ($checkTarget.is(".textarea"))
+    					isTextarea = "true";
+    				break;
+    			}
+    			$checkTarget = $checkTarget.parent();
+    		}
+    		if (isTextarea == "true") {
+    			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
+    			clearDragged();
+    			formatChange();
+    			$(".text-dragged").selectText();
+    		} else {
+    			if ($(".text-dragged").text() != "")
+    				$(".text-dragged").content().unwrap();
+    			else
+    				$(".text-dragged").remove();
+    		}
+    		$(".textarea span").each(function() {
+    			if ($(this).text() == "") {
+    				$(this).remove();
+    			}
+    		});
 		}
 	});
 	
@@ -343,9 +382,9 @@ var lastChanged = "";
     function formatChange() {
 
     	var targetMode;
-    	var object = $("div.ui-selected");
-		var target = $("div.ui-selected .obj-comp");
-    	
+    	var object = $("#droppable .ui-selected");
+		var target = $("#droppable .ui-selected .obj-comp");
+		
     	if (object.length == 1 && !object.is(".group-obj")) {
     		$(".figure-shape-comps .figure-item[id=width]").fadeIn(100);
     		$(".figure-shape-comps .figure-item[id=height]").fadeIn(100);
@@ -465,9 +504,9 @@ var lastChanged = "";
 	function checkAttr(type, object) {
 
     	var result = "start";
-		var value;
+		var value = "";
 		
-		if (type == "fontType" || type == "fontSize" || type == "fontColor" || type == "bold" || type == "italic" || type == "textgroundColor") {
+		if (type == "fontType" || type == "fontSize" || type == "fontColor" || type == "bold" || type == "italic") {
 			if ($(".text-dragged").length > 0) {
 				if (result != "diffrent" && ($(".text-dragged").text() != $(".text-dragged").children().text() ? true : $(".text-dragged").text() == "")) {
 					switch(type) {
@@ -476,9 +515,8 @@ var lastChanged = "";
 						case "fontColor" : value = $(".text-dragged").css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 						case "bold" : value = $(".text-dragged").css("font-weight"); break;
 						case "italic" : value = $(".text-dragged").css("font-style"); break;
-						case "textgroundColor" : value = $(".text-dragged").css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 					}
-            		if (result == "start")
+            		if (result == "start" || result == "")
             			result = value;
             		else if (result != value)
             			result = "diffrent";
@@ -491,9 +529,8 @@ var lastChanged = "";
 							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 							case "bold" : value = $(this).css("font-weight"); break;
 							case "italic" : value = $(this).css("font-style"); break;
-							case "textgroundColor" : value = $(this).css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 						}
-	            		if (result == "start")
+	            		if (result == "start" || result == "")
 	            			result = value;
 	            		else if (result != value)
 	            			result = "diffrent";
@@ -508,7 +545,6 @@ var lastChanged = "";
 							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 							case "bold" : value = $(this).css("font-weight"); break;
 							case "italic" : value = $(this).css("font-style"); break;
-							case "textgroundColor" : value = $(this).css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 						}
 	            		if (result == "start")
 	            			result = value;
@@ -524,7 +560,6 @@ var lastChanged = "";
 							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 							case "bold" : value = $(this).css("font-weight"); break;
 							case "italic" : value = $(this).css("font-style"); break;
-							case "textgroundColor" : value = $(this).css("background").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
 						}
 	            		if (result == "start")
 	            			result = value;
@@ -626,7 +661,60 @@ var lastChanged = "";
 			}
 			return result;
 		}
-		
+
+		if (type == "textgroundColor") {
+			if ($(".text-dragged").length > 0) {
+				$(".text-dragged span").each(function() {
+					var innerHTML = $(this).wrap("<div>").parent().html();
+					$(this).unwrap();
+					if (innerHTML.startsWith("<span style=\"background:rgb(")) {
+						value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
+						value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+	            		if (result == "start")
+	            			result = value;
+	            		else if (result != value)
+	            			result = "diffrent";
+					}
+				});
+				console.log(result);
+				if (result != "diffrent") {
+					var $checkParent = $(".text-dragged").parent();
+					while(true) {
+						var innerHTML = $checkParent.wrap("<div>").parent().html();
+						$checkParent.unwrap();
+						if ($checkParent.is(".textarea"))
+							break;
+						else if (innerHTML.startsWith("<span style=\"background:rgb(")) {
+							value = $checkParent.css("background").split("(")[1].split(")")[0].split(", ");
+							value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+		            		if (result == "start")
+		            			result = value;
+		            		else if (result != value)
+		            			result = "diffrent";
+							break;
+						}
+						$checkParent = $checkParent.parent();
+					}
+				}
+			} else {
+				$("#droppable .ui-selected span").each(function() {
+					var innerHTML = $(this).wrap("<div>").parent().html();
+					$(this).unwrap();
+					if (innerHTML.startsWith("<span style=\"background:rgb(")) {
+						value = $(this).css("background").split("(")[1].split(")")[0].split(", ");
+						value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase();
+	            		if (result == "start")
+	            			result = value;
+	            		else if (result != value)
+	            			result = "diffrent";
+					}
+				});
+			}
+			if (result == "start")
+				result = "#FFFFFF";
+			return result;
+		}
+
 		object.each(function() {
 			if (result != "diffrent") {
 				
@@ -718,8 +806,9 @@ var lastChanged = "";
                 	radius = Math.round(Math.atan2(radius[1], radius[0]) * (180/Math.PI));
                 	if (radius != $(".figure-shape-comps .figure-item[id=rotation] input").val()) {
                 		$(this).parents("div.ui-selected").css({
-                			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() + "deg)"
+                			transform : "rotate(" + $(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180 + "rad)"
                 		});
+                		$(this).parents("div.ui-selected").data("uiRotatable").angle($(".figure-shape-comps .figure-item[id=rotation] input").val() * Math.PI / 180);
                 	}
         		}
 
@@ -791,7 +880,6 @@ var lastChanged = "";
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
 
         			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
-                	var textSelected = $(".textarea span.text-selected");
         		    clearChanged("color");
         		}
 
@@ -947,11 +1035,17 @@ var lastChanged = "";
     }
 
 	function clearChanged(type) {
+		
+		var $checkParent = $(".ui-selected .changed").parent();
+		while(true) {
+			if ($checkParent.is(".textarea"))
+				break;
+			else if ($checkParent.text() == $(".ui-selected .changed").text()) {
+				$checkParent.css(type, "");
+			}
+			$checkParent = $checkParent.parent();
+		}
 
-	    if (!$(".ui-selected .changed").parent().is(".textarea") && $(".ui-selected .changed").parent().text() == $(".ui-selected .changed").text()) {
-	    	$(".ui-selected .changed").parent().css(type, "");
-	    }
-	    
 	    $(".ui-selected .changed span").each(function() {
 			if (type.startsWith("textDecoration")) {
 				var spanText = $(this).wrap("<div>").parent().html();
@@ -982,6 +1076,23 @@ var lastChanged = "";
 		$(".ui-selected span").each(function() {
 			if ($(this).html() == "") {
 				$(this).contents().unwrap();
+			}
+		});
+		$(".text-dragged span").each(function() {
+			if ($(this).children().length == 0) {
+				var innerTEXT = $(this).text();
+				var $checkParent = $(this).parent();
+				while(true) {
+					var innerHTML = $checkParent.wrap("<div>").parent().html();
+					$checkParent.unwrap();
+					if ($checkParent.is(".textarea"))
+						break;
+					else if (innerHTML.startsWith("<span style=\"background:rgb(") && innerTEXT == $checkParent.text()) {
+						$checkParent.contents().unwrap();
+						break;
+					}
+					$checkParent = $checkParent.parent();
+				}
 			}
 		});
 	}

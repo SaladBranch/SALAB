@@ -217,11 +217,11 @@ body{
 .private-file a,
 .trashcan a,
 .new-team a{
-    display: inline-block;
-    color: #2c2c2c;
-    font-size: 15px;
-    margin-left: 8px;
-    line-height: 40px;
+	display: inline-block;
+	color: #2c2c2c;
+	font-size: 15px;
+	margin-left: 20px;
+	line-height: 40px;
 }
 
 .active-menu{
@@ -456,28 +456,30 @@ body{
 
 .menu-title{
 	margin-top: 40px;
-	height: 35px;
-	padding: 10px 3px;
+	height: 80px;
+	padding: 15px 12px;
+	line-height: 60px;
+	font-size: 1.2em;
+	font-weight: 400;
+	vertical-align: bottom;
 }
 
 .faq_top{
 	float: left;
-   font-size: 30pt;
-   padding: 40px 30px 25px 30px;
-   width:87%;
-   margin-left: 70px;
-   border-bottom: 2px solid black;
+	font-size: 18pt;
+	padding: 35px 30px 25px 35px;
+    width: 80%;
+	margin-left: 100px;
 }
 
 .faq_bottom{
-	font-size: 13pt;
-   width: 87%;
-   padding: 0px 30px;
+   width: 80%;
    padding-bottom: 30px;
    display: block;
-   margin-left: 70px;
+   margin-left: 100px;
    overflow: auto;
    overflow-sytyle:  none;
+   border-top: 2px solid black;
 }
 
 .faq_bottom::-webkit-scrollbar {
@@ -486,7 +488,6 @@ body{
 
 
 .faq_head{
-	font-size: 14pt;
 	text-align: center;
 	float: left;
 	width: 100%;
@@ -510,7 +511,7 @@ body{
 
 .faq_open{
 	float: left;
-	font-size: 13pt;
+	font-size: 11pt;
 	text-align: center;
 	width: 100%;
 	border-bottom: 1px solid gray;
@@ -531,37 +532,41 @@ body{
 .faq_open_category{
 	float: left;
 	text-align: center;
-	line-height: 80px;
+	line-height: 65px;
 	font-weight: 600;
 	width: 20%;
+	height: 65px;
 }
 
 .faq_open_title{
 	float: left;
 	text-align: left;
-	line-height: 80px;
+	line-height: 65px;
 	font-weight: 600;
 	width: 60%;
+	height: 65px;
 }
 
 
 .faq_open_plus{
 	float: left;
 	text-align: center;
-	line-height: 80px;
+	line-height: 65px;
 	font-weight: 600;
 	width: 20%;
 	font-size: 25pt;
+	height: 65px;
 }
 
 .faq_open_minus{
 	float: left;
 	text-align: center;
-	line-height: 80px;
+	line-height: 65px;
 	font-weight: 600;
 	width: 20%;
 	font-size: 25pt;
 	display: none;
+	height: 65px;
 }
 
 
@@ -578,7 +583,8 @@ body{
 	text-align: left;
 	padding: 20px 130px 20px 110px;
 	font-family: san-serif;
-	font-size: 17px;
+	font-size: 16px;
+	font-weight: 450;
 }
 
 a { 

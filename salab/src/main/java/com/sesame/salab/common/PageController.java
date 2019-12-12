@@ -95,7 +95,6 @@ public class PageController {
 			viewFileName = "common/error";
 		}
 		List<Project> projectList = mpService.selectProjectList(member.getUserno());
-		session.removeAttribute("myProjectList");
 		session.setAttribute("myProjectList", projectList);
 		
 		return viewFileName;
@@ -192,7 +191,7 @@ public class PageController {
 		return "admin/adminMain";
 	}
 	
-	@RequestMapping(value="adminMemberList.do")
+	/*@RequestMapping(value="adminMemberList.do")
 	public ModelAndView toAdminMemberMethod(ModelAndView mv, Member member,@RequestParam(value = "keyword", required = false) String keyword, @RequestParam(value="page", required=false) String currentPage) throws Exception  {
 		
 		int curPage;
@@ -208,9 +207,9 @@ public class PageController {
 		
 		int listCount = memberService.mlistCount(keyword); //DB에서 현재 총 Row수 가져옴 
 		
-		/*String lcount = String.valueOf(listCount);
+		String lcount = String.valueOf(listCount);
 		logger.info(lcount);
-		logger.info(keyword);*/
+		logger.info(keyword);
 		
 		Paging paging = new Paging(); //현재 페이지 
 		paging.setLimit(10);
@@ -222,7 +221,7 @@ public class PageController {
 		map.put("keyword", keyword);
 		
 		List<Member> memberList = memberService.memberList(map);
-		/*logger.info(paging.toString());*/
+		logger.info(paging.toString());
 		
 		if(memberList != null) {
 			mv.addObject("memberList", memberList);
@@ -236,7 +235,7 @@ public class PageController {
 		
 		
 		return mv;
-	}
+	}*/
 	
 	@RequestMapping(value="adminMemberDetail.do")
 	public ModelAndView toAdminMemberDetailMethod(ModelAndView mv,  @RequestParam(value="userno") int userno , @RequestParam(value="page", required=false) String currentPage) throws Exception{
@@ -368,7 +367,11 @@ public class PageController {
 
 	//건우
 	@RequestMapping(value="userMain.do")
-  	public String toUserPageMainMethod() {
+  	public String toUserPageMainMethod(HttpSession session){
+		Member member = (Member) session.getAttribute("loginMember");
+		member = memberService.memberDetail(member.getUserno());
+		System.out.println("멤버 재설정 : "+member.toString());
+		session.setAttribute("loginMember", member);
 		return "userPage/userPageMain";
 	}
  

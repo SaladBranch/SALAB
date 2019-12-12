@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="/salab/resources/css/common.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="/salab/resources/img/logo.png">
 
-    <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
+    <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="1text/css">
 
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageCommon.css">
     <link rel="stylesheet" href="/salab/resources/css/userPage/userPageMain.css">
@@ -166,7 +167,7 @@
                                 </div>
                             </div>
                             <div id="goto-upgrade" class="clickable">
-                                <span><a href="userUpgrade.jsp">계정 업그레이드 하기</a></span>
+                                <span><a href="userUpgrade.do">계정 업그레이드 하기</a></span>
                             </div>
                         </div>
                     </c:if>
@@ -182,14 +183,17 @@
                             <span id="Modal-Name" class="blank clickable" onclick="showModal('name')">change name !</span>
                         </div>
                     </div>
-                    <div class="outline-box">
-                        <div id="pwdTitle" class="titleConfigure outline">
-                            Password
-                        </div>
-                        <div id="userpwd" class=" blank">
-                            <span value="vv" id="Modal-Password" class="blank clickable" onclick="showModal('pwd')">change password !</span>
-                        </div>
-                    </div>
+                    <c:set var="pwdLength" value="${fn:length(loginMember.userpwd)}"/>
+                   <c:if test="${pwdLength gt 40}">
+	                    <div class="outline-box">
+	                        <div id="pwdTitle" class="titleConfigure outline">
+	                            Password	
+	                        </div>
+	                        <div id="userpwd" class=" blank">
+	                            <span value="vv" id="Modal-Password" class="blank clickable" onclick="showModal('pwd')">change password !</span>
+	                        </div>
+	                    </div>
+                    </c:if>
                     <div class="outline-box">
                         <div id="userPhoneTitle" class="titleConfigure">Phone</div>
                         <div id="userPhone" class="blank">

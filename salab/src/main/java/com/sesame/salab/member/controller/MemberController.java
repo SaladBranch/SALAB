@@ -267,7 +267,17 @@ public class MemberController {
 		out.close();
 	}
 	
-	
+	@RequestMapping(value="changeToStandard.do", method=RequestMethod.POST)
+	public void changeToStandardMethod(@RequestParam("userno") int userno, HttpServletResponse response) throws IOException {
+		int result = memberService.changeToStandard(userno);
+		System.out.println(result);
+		PrintWriter out = response.getWriter();
+		if(result >0) {
+			out.append("changeSuccess");
+		}
+		out.flush();
+		out.close();
+	}
 	/*@RequestMapping(value="adminMemberUpdate.do", method=RequestMethod.POST)
 	public ModelAndView updateMemberMethod(ModelAndView mv, Member member, @RequestParam("userno") int userno) throws Exception{
 		

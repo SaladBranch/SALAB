@@ -18,4 +18,5 @@ public interface PaymentService {
 	int savePaySuccess(List<Payment> paySuccess);
 
 	int changePayFail(List<String> payFail);
+
 }

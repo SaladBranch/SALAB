@@ -231,6 +231,12 @@
             <div class="comp-category form-control">
                 <p>&#9654;</p>폼(form)
             </div>
+                    
+        </div>
+        <div class="tab-content lib-tab-content">
+            <div class="searchbox">
+                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+            </div>
         </div>
         
     </div>

@@ -627,7 +627,7 @@ function initCanvasMiniColor(){
 		Thumbnail();
 	}, 100);
 }
-function initFigureMiniColor(){ //승진이 색깔
+function initFigureMiniColor(){ 
     $('.colorView').minicolors({
         control: 'hue',
         position : "bottom right",

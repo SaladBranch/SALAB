@@ -147,21 +147,21 @@ function menuActivation(){
     selectedObj.length === 1 ? $('.groupObj').addClass('disabled') : $('.groupObj').removeClass('disabled');
 }
 function computeGuidesForElement(elem, pos, w, h) {
+	  var __scale = Number($('.canvas-size p span').text().replace('%',''))/100;
 	  if (elem != null) {
 	    var $t = $(elem);
 	    pos = $t.offset();
 	    w = $t.outerWidth() - 1;
 	    h = $t.outerHeight() - 1;
 	  }
-
+	  console.log("scale: " + __scale + ", left : " + (pos.left - 230));
 	  return [
 	        { type: "h", left: pos.left - 230, top: pos.top - 40 }, 
 	        { type: "h", left: pos.left - 230, top: pos.top - 40 + h }, 
 	        { type: "v", left: pos.left - 230, top: pos.top - 40 }, 
 	        { type: "v", left: pos.left - 230 + w, top: pos.top - 40 },
-	        // you can add _any_ other guides here as well (e.g. a guide 10 pixels to the left of an element)
 	        { type: "h", left: pos.left - 230, top: pos.top + h/2 - 40},
-	        { type: "v", left: pos.left - 230 + w/2, top: pos.top - 40} 
+	        { type: "v", left: pos.left - 230 + w/2, top: pos.top - 40}
       ];
 	}
 function addControl(){
@@ -181,7 +181,7 @@ function addControl(){
         $obj.children('.ui-rotatable-handle').show();
         var __dx;
         var __dy;
-        var __scale=0.5;
+        var __scale=1;
         var __recoupLeft, __recoupTop;
         
         var MIN_DISTANCE = 10;
@@ -237,9 +237,16 @@ function addControl(){
                 });
                 
                 var scHeight = $('.canvas-container').scrollTop();
+                var scLeft = $('.canvas-container').scrollLeft();
                 var pageHeight = $('.canvas-container').prop("scrollHeight");
+                var pageWidth = $('.canvas-container').prop("scrollWidth");
+                console.log("scLeft: " + scLeft);
+                console.log("pageWidth: " + pageWidth);
                 if( chosenGuides.top.dist <= MIN_DISTANCE ){
-                    $( "#guide-h" ).css( "top", chosenGuides.top.guide.top + scHeight).show();
+                    $( "#guide-h" ).css({
+                    	"top": chosenGuides.top.guide.top + scHeight,
+                    	"width": pageWidth
+                    }).show();
                     ui.position.top = ui.position.top - chosenGuides.top.dist;
                 }
                 else{
@@ -248,7 +255,7 @@ function addControl(){
                 
                 if( chosenGuides.left.dist <= MIN_DISTANCE ){
                     $( "#guide-v" ).css({
-                    	"left": chosenGuides.left.guide.left,
+                    	"left": chosenGuides.left.guide.left + scLeft,
                     	"height": pageHeight
                     }).show();
                     ui.position.left = ui.position.left - chosenGuides.left.dist; 

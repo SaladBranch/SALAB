@@ -268,7 +268,6 @@ function addControl(){
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
                 
-                modified();
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -286,7 +285,6 @@ function addControl(){
             },
             rotate : function() {
             	formatChange();
-            	modified();
             },
             stop: function() {
             	formatChange();
@@ -323,7 +321,6 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
-                    modified();
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -356,7 +353,6 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
-                    modified();
 
                     setTimeout(function(){
                 		Thumbnail();
@@ -627,7 +623,6 @@ function initCanvasMiniColor(){
     
     minicolorsAddMenu($('#canvas-background'));
     
-    modified();
     setTimeout(function(){
 		Thumbnail();
 	}, 100);

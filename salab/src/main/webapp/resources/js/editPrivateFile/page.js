@@ -14,13 +14,9 @@
     	var beforeIndex = $('.ui-selected').index();
     	//현재 새로 셀렉트된 페이지 인덱스
         var index = $('.page-item').index($(this));
-        
+
         //현재 캔버스위에 태글들을 임시저장
         tempStorage(beforeIndex);
-        
-        setTimeout(function(){
-    		Thumbnail();
-    	}, 0);
         
         $('.page-item').each(function(){
             $(this).removeClass('ui-selected');
@@ -45,7 +41,7 @@
         	}
         	setTimeout(function(){
             	Thumbnail();
-            }, 100);
+            }, 500);
         });
     });
     
@@ -214,15 +210,22 @@
         		url: 'pageDelete.do',
         		data: JSON.stringify(list[index]),
         		contentType: "application/json; charset=UTF-8",
-        		cache: false,
         		type: 'post',
         		success: function(data){
         			console.log('delete success');
-        			pageTab();
+        			$('.page-item:eq('+index+')').remove();
+        			for(var i = index; i < list.length; i++){
+        				if(i != list.length-1){
+        					list[i] = list[i+1];
+        					list[i].pageno = list[i].pageno - 1;
+        				}else{
+        					list.pop();
+        				}
+        			}
+        			$('.page-item:eq(0)').addClass('ui-selected');
         		},
         		error: function(){
         			console.log("error");
-        			pageTab();
         		},
         	});
     	}
@@ -235,7 +238,7 @@
     
     function pageCopy(){
     	var index = $('.ui-selected').index();
-    	
+    	console.log(list[index]);
     	$.ajax({
     		url: 'pageCopy.do',
     		type: 'post',
@@ -244,6 +247,19 @@
     		contentType: "application/json; charset=UTF-8",
     		success: function(data){
     			console.log('copy success');
+    			$($('.page-item:eq('+index+')').after('<li class="page-item">' +
+						'<div class="page">' +
+    	                '<div class="page-top">' +
+    	                    '<div class="page-thumbnail">' +
+    	                        list[index].thumbnail +
+    	                    '</div>'+
+    	                '</div>' +
+    	                '<div class="page-name">' + 
+    	                    '<input type="text" class="page-title" value="Copy of '+ list[index].pagename +'">' +
+    	                '</div>' +
+    	            '</div>'	+ 
+    	            '</li>'));
+    			
     			pageTab();
     		},
     		error: function(){
@@ -252,8 +268,22 @@
     	});
     }
     
+    function test(){
+    	for(var i=0; i < list.length; i++){
+    		console.log(list[i]);
+    	}
+    }
+    
     //page 탭 리스트 불러오는 ajax
     function pageTab(){
+    	
+    	var thumblist = new Array();
+    	for(var i = 0; i < $('.page-thumbnail').length; i++){
+    		thumblist.push({
+    				thumb: $('.page-thumbnail:eq('+i+')').html()
+    		});
+    		console.log(i, thumblist[i]);
+    	}
     	
     	$.ajax({
     		url: 'pageTab.do',
@@ -265,7 +295,7 @@
     		dataType: 'json',
     		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
     		success: function(data){
-    			$('.page-tab-content').html('');
+    			/*$('.page-tab-content').html('');*/
     			for(var i =0; i < data.page.length; i++){
     			
 	    			var dataSet = {
@@ -277,46 +307,23 @@
 	    					thumbnail: data.page[i].thumbnail,
 	    					_id: data.page[i]._id
 	    			}
-    			
-    				if(i == 0){
-    					$('.page-tab-content').append(
-            					'<li class="page-item  ui-selectee ui-selected">' +
-        						'<div class="page ui-sortable-handle">' +
-            	                '<div class="page-top ui-sortable-handle">' +
-            	                    '<div class="page-thumbnail">' +
-            	                        '<img src="/salab/resources/img/whitebox.png">' +
-            	                    '</div>'+
-            	                '</div>' +
-            	                '<div class="page-name ui-sortable-handle">' + 
-            	                    '<input type="text" class="page-title" value="'+ dataSet.pagename +'">' +
-            	                '</div>' +
-            	            '</div>'	+ 
-            	            '</li>'
-            			);
-    					
-    					$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
-    				}else{
-    					$('.page-tab-content').append(
-            					'<li class="page-item">' +
-        						'<div class="page">' +
-            	                '<div class="page-top">' +
-            	                    '<div class="page-thumbnail">' +
-            	                        '<img src="/salab/resources/img/whitebox.png">' +
-            	                    '</div>'+
-            	                '</div>' +
-            	                '<div class="page-name">' + 
-            	                    '<input type="text" class="page-title" value="'+ dataSet.pagename +'">' +
-            	                '</div>' +
-            	            '</div>'	+ 
-            	            '</li>'
-            			);
-
-    					$('.page-thumbnail:eq('+i+')').html(dataSet.thumbnail);
-    				}
     				list[i] = dataSet;
     			}
-    			
-    			
+    			$('.newpage').remove();
+    			$('.page-tab-content').append(
+    					'<li class="page-item">' +
+						'<div class="page">' +
+    	                '<div class="page-top">' +
+    	                    '<div class="page-thumbnail">' +
+    	                        '<img src="/salab/resources/img/whitebox.png">' +
+    	                    '</div>'+
+    	                '</div>' +
+    	                '<div class="page-name">' + 
+    	                    '<input type="text" class="page-title" value="'+ dataSet.pagename +'">' +
+    	                '</div>' +
+    	            '</div>'	+ 
+    	            '</li>'
+    			);
     			$('.page-tab-content').append(
     					'<div class="newpage" onclick="newPage()">' +
     	                '&#43;' +
@@ -454,7 +461,7 @@
         		
         	setTimeout(function(){
         		Thumbnail();
-        	}, 100);
+        	}, 500);
         	
         });
     	
@@ -691,7 +698,6 @@
     }
     
     function filter(node) {
-    	console.log(node.className === 'ui-selectee ui-selected');
         return (node.className !== 'memo' && node.className !== 'grid-canvas' && node.className !== 'ui-resizable-handle ui-resizable-n' 
         	&& node.className !== 'ui-resizable-handle ui-resizable-e' && node.className !== 'ui-resizable-handle ui-resizable-s' && node.className !== 'ui-resizable-handle ui-resizable-w' 
         		&& node.className !== 'ui-resizable-handle ui-resizable-ne' && node.className !== 'ui-resizable-handle ui-resizable-se' && node.className !== 'ui-resizable-handle ui-resizable-sw' 
@@ -721,11 +727,19 @@
     
     //component search
     function searchComp(){
-    	var keywodrd = $('#search-comp').val();
+    	var keyword = $('#search-comp').val();
+    	//승진 say : a태그의 아이디를 다 검색해와서 값으로 만들고 하나씩 비교해서 
+    	
+    	console.log($('.common-shape-comps').find('a').length);
     	
     	if(keyword == ''){
-    		return false;
+    		$('.comp-searchResult').html('');
     	}else{
-    		
+    		$('.common-shape-comps').find('a').each(function() {
+        		//console.log($(this).attr("id").split("_")[1]);
+            	if($(this).attr("id").split("_")[1].includes(keyword)){
+            		$('.comp-searchResult').append($(this).clone());
+            	}
+        	});
     	}
     }

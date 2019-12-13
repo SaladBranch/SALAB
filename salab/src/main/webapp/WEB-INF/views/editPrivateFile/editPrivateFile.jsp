@@ -695,7 +695,9 @@
     }
 
 	$(document).on("mouseup", ".minicolors-grid", function() {
-       Thumbnail();
+       setTimeout(function(){
+    	   Thumbnail();
+       }, 500);
 	});
 	
     </script>

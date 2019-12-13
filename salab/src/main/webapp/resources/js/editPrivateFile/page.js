@@ -212,7 +212,8 @@
         		contentType: "application/json; charset=UTF-8",
         		type: 'post',
         		success: function(data){
-        			console.log('delete success');
+        			
+        			$('.page-item:eq(0)').click();
         			$('.page-item:eq('+index+')').remove();
         			for(var i = index; i < list.length; i++){
         				if(i != list.length-1){
@@ -222,7 +223,7 @@
         					list.pop();
         				}
         			}
-        			$('.page-item:eq(0)').addClass('ui-selected');
+        			console.log('delete success');
         		},
         		error: function(){
         			console.log("error");
@@ -279,12 +280,32 @@
 	    					userno: data.pageList[i].userno,
 	    					pagename: data.pageList[i].pagename,
 	    					thumbnail: data.pageList[i].thumbnail,
-	    					_id: data.pageList[i]._id
+	    					_id: data.pageList[i]._id,
+	    					undo: new Array(),
+	    					redo: new Array()
 	    			}
     				list[i] = dataSet;
     			}
     			
+    			$('.page-item').on('click', function(){
+    		    	//이전에 셀렉트된 페이지에 대한 인덱스
+    		    	var beforeIndex = $('.ui-selected').index();
+    		    	//현재 새로 셀렉트된 페이지 인덱스
+    		        var index = $('.page-item').index($(this));
+    		        
+    		        //현재 캔버스위에 태글들을 임시저장
+    		        tempStorage(beforeIndex);
+    		        
+    		        $('.page-item').each(function(){
+    		            $(this).removeClass('ui-selected');
+    		        });
+    		        pageContent(index);
+    		        $('.page-item').eq(index).addClass('ui-selected');
+    		        
+    		    });
+    			
     			console.log('copy success');
+    			$('.page-item:eq('+(index + 1)+')').click();
     			
     		},
     		error : function( jqXHR, textStatus, errorThrown ) {
@@ -332,7 +353,9 @@
 	    					userno: data.page[i].userno,
 	    					pagename: data.page[i].pagename,
 	    					thumbnail: data.page[i].thumbnail,
-	    					_id: data.page[i]._id
+	    					_id: data.page[i]._id,
+	    					undo: new Array(),
+	    					redo: new Array()
 	    			}
     				list[i] = dataSet;
     			}

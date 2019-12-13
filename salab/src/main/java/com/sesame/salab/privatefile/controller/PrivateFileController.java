@@ -82,7 +82,7 @@ public class PrivateFileController {
 		
 		MongoService mgService = new MongoService();
 		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
-		
+		logger.info(pageList.size()+"");
 		Gson gson = new Gson();
 		String result = gson.toJson(pageList);
 		mv.addObject("page", pageList);
@@ -141,6 +141,7 @@ public class PrivateFileController {
 		for(Page p : list) {
 			mgService.updatePageNo(collection, p, "copy");
 		}
+		logger.info(page.getThumbnail());
 		page.set_id(null);
 		page.setPagename("Copy of " + page.getPagename());
 		page.setPageno(page.getPageno() + 1);

@@ -238,33 +238,61 @@
     
     function pageCopy(){
     	var index = $('.ui-selected').index();
-    	console.log(list[index]);
+
+    	$($('.page-item:eq('+index+')').after('<li class="page-item">' +
+				'<div class="page">' +
+                '<div class="page-top">' +
+                    '<div class="page-thumbnail">' +
+                        $('.page-thumbnail:eq('+index+')').html() +
+                    '</div>'+
+                '</div>' +
+                '<div class="page-name">' + 
+                    '<input type="text" class="page-title" value="Copy of '+ $('.page-title:eq('+index+')').val() +'">' +
+                '</div>' +
+            '</div>'	+ 
+            '</li>'));
+    	
+    	list.splice(index+1, 0, {
+    		content: $('.canvas-container').html(),
+    		pageno: list[index].pageno,
+    		fileno: list[index].fileno,
+    		userno: list[index].userno,
+    		pagename: list[index].pagename,
+    		thumbnail: $('.page-thumbnail:eq('+index+')').html(),
+    		_id: null,
+    		undo: new Array(),
+    		redo: new Array()
+    	});
+    	
     	$.ajax({
     		url: 'pageCopy.do',
     		type: 'post',
-    		cache: false,
-    		data: JSON.stringify(list[index]),
+    		data: JSON.stringify(list[index+1]),
     		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
     		success: function(data){
-    			console.log('copy success');
-    			$($('.page-item:eq('+index+')').after('<li class="page-item">' +
-						'<div class="page">' +
-    	                '<div class="page-top">' +
-    	                    '<div class="page-thumbnail">' +
-    	                        list[index].thumbnail +
-    	                    '</div>'+
-    	                '</div>' +
-    	                '<div class="page-name">' + 
-    	                    '<input type="text" class="page-title" value="Copy of '+ list[index].pagename +'">' +
-    	                '</div>' +
-    	            '</div>'	+ 
-    	            '</li>'));
+    			for(var i =0; i < data.pageList.length; i++){
+	    			var dataSet = {
+	    					content: data.pageList[i].content, 
+	    					pageno: data.pageList[i].pageno,
+	    					fileno: data.pageList[i].fileno,
+	    					userno: data.pageList[i].userno,
+	    					pagename: data.pageList[i].pagename,
+	    					thumbnail: data.pageList[i].thumbnail,
+	    					_id: data.pageList[i]._id
+	    			}
+    				list[i] = dataSet;
+    			}
     			
-    			pageTab();
+    			console.log('copy success');
+    			
     		},
-    		error: function(){
-    			console.log("error");
-    		}
+    		error : function( jqXHR, textStatus, errorThrown ) {
+				console.log( jqXHR.status );
+				console.log( jqXHR.statusText );
+				console.log( jqXHR.responseText );
+				console.log( jqXHR.readyState );
+				}
     	});
     }
     
@@ -295,7 +323,6 @@
     		dataType: 'json',
     		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
     		success: function(data){
-    			/*$('.page-tab-content').html('');*/
     			for(var i =0; i < data.page.length; i++){
     			
 	    			var dataSet = {

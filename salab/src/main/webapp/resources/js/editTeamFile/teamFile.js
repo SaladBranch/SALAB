@@ -8,7 +8,6 @@ $(document).ready(function(){
 		}
 	});
 	$('#chat_sendbtn').click(function(){
-		console.log("버튼 클릭드!");
 		var message = {
 			userno: $('#userno').val(),
 			prfileno: $('#prfileno').val(),
@@ -19,7 +18,7 @@ $(document).ready(function(){
 	});
 	
 	socket.on("send_msg", function(message){
-		if($('#prfileno').val() === message.prfileno){
+		if($('#prfileno').val() === message.prfileno){ //같은 프로젝트 파일일 경우
 			var $msg = $("<div class='send-msg'></div>").text(message.msg);
 			if($('#userno').val() === message.userno){
 				var $to = $("<div class='chat-to'></div>");
@@ -38,6 +37,8 @@ $(document).ready(function(){
 				$from.append($profile.append($profileimg)).append($name).append($msg);
 				$from.appendTo($('.chat-messages'));
 			}
+			$('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 		}
 	});
+	
 });

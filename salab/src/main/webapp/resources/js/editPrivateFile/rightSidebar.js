@@ -323,10 +323,10 @@ var lastChanged = "";
     		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)" : false) {
 				$(".text-dragged").css("background", "");
 				$(".text-dragged").selectText();
-    		} else {
-        		$(".text-dragged").contents().unwrap();
-            	window.getSelection().removeAllRanges();
-    		}
+    		} else if ($(".text-dragged").length > 0 || window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
+				$(".text-dragged").contents().unwrap();
+				window.getSelection().removeAllRanges();
+			}
     	}
 	}, true);
 	/*

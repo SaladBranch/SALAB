@@ -426,12 +426,42 @@
     <div id="render" style="display: none;">왜 이러는걸까요</div>
     
     <div class="context-menu"></div>
+        <div class="team-chat">
+        <i class="far fa-comment-dots"></i>
+    </div>
+    <div class="chat-box">
+    	<input type="hidden" value="${pfile.prfileno }" id="prfileno">
+    	<input type="hidden" value="${sessionScope.loginMember.userno }" id="userno">
+        <div class="chat-title">
+            ${pfile.prfiletitle }
+        </div>
+        <div class="chat-messages">
+            <div class="chat-from">
+                <div class="send-user-profile">
+                    <img src="/salab/resources/img/customer-3.jpg" title="오세준">
+                </div>
+                <div class="send-user-name">오세준</div>
+                <div class="send-msg">메에에에에엥에에에에에엥매에에에에에에에에</div>
+            </div>
+            
+            <div class="chat-to">
+                <div class="send-msg">메에에에에엥에에에에에엥매에에에에에에에에</div>
+            </div>
+            
+        </div>
+        <div class="chat-sendbox">
+            <input type="text" id="chat_input">
+            <button id="chat_sendbtn">전송</button>
+        </div>
+    </div>
+    <script src="http://localhost:8889/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/html2canvas.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
+    <script src="/salab/resources/js/editTeamFile/teamFile.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/page.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/componentList.js"></script>
@@ -700,10 +730,17 @@
             else{
             	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
             }
-            	
     	}
     }
     
+    /* Chat */
+    $('.team-chat').on('click', function(){
+        if($('.chat-box').css("display") == "none"){
+            $('.chat-box').show();
+        }else{
+            $('.chat-box').hide();
+        }
+    });
     </script>
     
 </body>

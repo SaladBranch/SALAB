@@ -411,6 +411,9 @@ ol.page-tab-content li{
     border: 1px dotted #50c2ff;
     cursor: default;
 }
+.dragging {
+	cursor : pointer;
+}
 
 /* Component Tab CSS */
 .comp-category{
@@ -445,6 +448,7 @@ ol.page-tab-content li{
 .comp-tab-content svg:hover{
     background: #eaeaea;
     border-radius: 3px;
+    cursor : pointer;
 }
 
 /*.rectangle{
@@ -1013,6 +1017,15 @@ ol.page-tab-content li{
     margin: 0;
 }
 
+.ui-resizable-n { cursor : n-resize }
+.ui-resizable-e { cursor : e-resize }
+.ui-resizable-s { cursor : s-resize }
+.ui-resizable-w { cursor : w-resize }
+.ui-resizable-ne { cursor : ne-resize }
+.ui-resizable-se { cursor : se-resize }
+.ui-resizable-sw { cursor : sw-resize }
+.ui-resizable-nw { cursor : nw-resize }
+
 /*우클릭 메뉴*/
 .context-menu{
     display: none;
@@ -1225,4 +1238,150 @@ ol.page-tab-content li{
 	border-top: 1px solid #e6e6e6;
 }
 
+/* Team Chatting */
+.team-chat{
+    display: block;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #1d1d1d;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.3);
+}
+.team-chat > .fa-comment-dots{
+    color: #fff;
+    line-height: 50px;
+}
+
+.chat-box{
+    display: none;
+    position: absolute;
+    bottom: 70px;
+    right: 15px;
+    width: 250px;
+    height: 330px;
+    background: #fff;
+    border-radius: 7px;
+    border: 1px solid #1d1d1d;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.3);
+}
+.chat-title{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding-left: 10px;
+    border-bottom: 1px solid #7e7e7e;
+    height: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 30px;
+}
+.chat-messages{
+    position: absolute;
+    width: 100%;
+    height: 257px;
+    top: 30px;
+    background: #9bbbd4;
+    font-size: 12px;
+    padding: 10px;
+    overflow-y: auto;
+}
+.chat-messages::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+.chat-messages::-webkit-scrollbar{
+    width: 7px;
+    background-color: transparent;
+}
+.chat-messages::-webkit-scrollbar-thumb{
+    background-color: #898989;
+}
+.chat-from, .chat-to{
+    width: 100%;
+    display: block;
+    position: relative;
+    clear: both;
+    margin-bottom: 5px;
+}
+.chat-to .send-msg{
+    float: right;
+    margin-bottom: 5px;
+}
+
+.send-user-profile{
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+}
+.send-user-profile img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.send-user-name{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+.chat-from .send-msg, .chat-to .send-msg{
+    display: inline-block;
+    max-width: 150px;
+    padding: 5px;
+}
+.chat-from .send-msg{background: #fff;}
+.chat-to .send-msg{background: #fef01b;}
+.chat-from .send-msg:before{
+    content: "";
+    display: block;
+    position: absolute;
+    left: 36px;
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-right: 4px solid #fff;
+}
+.chat-to .send-msg:after{
+    content: "";
+    display: block;
+    position: absolute;
+    right: -4px;
+    top: 4px;
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid #fef01b;
+}
+.chat-sendbox{
+    position: absolute;
+    bottom: 0;
+    padding: 5px;
+    width: 100%;
+    border-top: 1px solid #7e7e7e;
+}
+.chat-sendtbox input, .chat-sendbox button{
+    display: inline-block;
+    margin: 0;
+}
+.chat-sendbox #chat_input{
+    width: 190px;
+    height: 30px;
+    font-size: 12px;
+    float: left;
+}
+.chat-sendbox #chat_sendbtn{
+    height: 30px;
+    font-size: 12px;
+    width: 40px;
+    margin-left: 7px;
+    border: 0;
+    border-radius: 5px;
+    background: #1d1d1d;
+    color: #fff;
+}
 

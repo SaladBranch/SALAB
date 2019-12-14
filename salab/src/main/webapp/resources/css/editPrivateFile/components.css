@@ -35,7 +35,29 @@
 .obj-comp *{
     width: 100%;
 }
+.obj-comp span{
+    font : inherit;
+    font-size : inherit;
+    font-weight : inherit;
+    text-decoration : inherit;
+    background : inherit;
+}
+.obj-comp span.text-dragged {
+    font : none;
+    font-size : none;
+    font-weight : none;
+    text-decoration : none;
+    background : none;
+}
 
+#multiselect{
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+[contenteditable=true] {
+	cursor : text;
+}
 /*연영*/
 .obj-buttonInput_Normal_A, .obj-buttonInput_Normal_B, .obj-buttonInput_Long_A, .obj-buttonInput_Long_B{
 	color: #fff;
@@ -68,14 +90,6 @@
 }
 /*연영*/
 
-#multiselect{
-    position: absolute;
-    width: auto;
-    height: auto;
-}
-[contenteditable=true] {
-	cursor : text;
-}
 /*--------------------------*/
 /* Resizable */
 /*--------------------------*/
@@ -142,3 +156,4 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+

@@ -135,25 +135,28 @@ public class PrivateFileController {
 	
 	@RequestMapping(value="pageCopy.do", method=RequestMethod.POST)
 	@ResponseBody
-	public void pageCopy(@RequestBody Page page) {
+	public ModelAndView pageCopy(ModelAndView mv, @RequestBody Page page) {
+		mv.setViewName("jsonView");
 		MongoService mgService = new MongoService();
 		List<Page> list = mgService.selectUpdatePageNo(collection, page);
 		for(Page p : list) {
 			mgService.updatePageNo(collection, p, "copy");
 		}
-		logger.info(page.getThumbnail());
 		page.set_id(null);
 		page.setPagename("Copy of " + page.getPagename());
 		page.setPageno(page.getPageno() + 1);
-		System.out.println(page.toString());
 		
 		mgService.insertNewPage(page, collection);
 		
+		List<Page> pageList = mgService.findPage(collection, page);
+
 		mgService.close();
+		mv.addObject("pageList", pageList);
+		
 		
 		//페이지 복사 후 최근변경일 업데이트
 		changeLastModified(page.getUserno(), page.getFileno());
-		
+		return mv;
 	}
 	
 	@RequestMapping(value="pageMove.do", method=RequestMethod.POST)

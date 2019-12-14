@@ -60,7 +60,7 @@ var obj_heading = {
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_heading.insertY}px; left: ${obj_heading.insertX}px; width: 200px;">
           <div class="obj-comp textarea obj-heading" contenteditable="false">
-            <h1 style="font-size: 35px;">Heading</h1>
+            <span style="font-size: 35px;"><span style="font-weight: 600;">Heading</span></span>
           </div>
         </div>`
         return code;
@@ -78,7 +78,7 @@ var obj_paragraph = {
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 200px;">
           <div class="obj-comp textarea obj-paragraph" contenteditable="false">
-            <h1 style="font-size: 35px;">Heading</h1>
+            <span style="font-size: 35px;"><span style="font-weight: 600">Heading</span></span>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
           </div>
         </div>`

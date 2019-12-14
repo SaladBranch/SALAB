@@ -335,15 +335,18 @@
                </div>
             </div>  
         </div>
-        
         <div class="tab-content lib-tab-content">
+            <div class="searchbox">
+                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+            </div>
         </div>
+        
     </div>
     
     <div class="canvas-container">
         ${pageList[0].content }
         <div id="guide-h" class="guide"></div>
-		    <div id="guide-v" class="guide"></div>
+	    <div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -798,7 +801,9 @@
     }
 
 	$(document).on("mouseup", ".minicolors-grid", function() {
-       Thumbnail();
+       setTimeout(function(){
+    	   Thumbnail();
+       }, 500);
 	});
 	
     </script>

@@ -432,6 +432,14 @@
     <div class="chat-box">
     	<input type="hidden" value="${pfile.prfileno }" id="prfileno">
     	<input type="hidden" value="${sessionScope.loginMember.userno }" id="userno">
+    	<input type="hidden" value="${sessionScope.loginMember.username }" id="username">
+    	<c:if test="${empty sessionScope.loginMember.userprofile_r}">
+ 	       <input type="hidden" value="empty" id="userprofile_r">
+        </c:if>
+        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+    	    <input type="hidden" value="${sessionScope.loginMember.userprofile_r}" id="userprofile_r">
+        </c:if>
+        
         <div class="chat-title">
             ${pfile.prfiletitle }
         </div>

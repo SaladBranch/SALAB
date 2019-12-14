@@ -411,6 +411,9 @@ ol.page-tab-content li{
     border: 1px dotted #50c2ff;
     cursor: default;
 }
+.dragging {
+	cursor : pointer;
+}
 
 /* Component Tab CSS */
 .comp-category{
@@ -445,6 +448,7 @@ ol.page-tab-content li{
 .comp-tab-content svg:hover{
     background: #eaeaea;
     border-radius: 3px;
+    cursor : pointer;
 }
 
 /*.rectangle{
@@ -1012,6 +1016,15 @@ ol.page-tab-content li{
     background: #fff;
     margin: 0;
 }
+
+.ui-resizable-n { cursor : n-resize }
+.ui-resizable-e { cursor : e-resize }
+.ui-resizable-s { cursor : s-resize }
+.ui-resizable-w { cursor : w-resize }
+.ui-resizable-ne { cursor : ne-resize }
+.ui-resizable-se { cursor : se-resize }
+.ui-resizable-sw { cursor : sw-resize }
+.ui-resizable-nw { cursor : nw-resize }
 
 /*우클릭 메뉴*/
 .context-menu{

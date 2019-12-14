@@ -27,9 +27,15 @@ $(document).ready(function(){
 				$to.appendTo($('.chat-messages'));
 			}else{
 				var $from = $("<div class='chat-from'></div>");
-				var $profile = $("<div class='send-user-profile'><img src='/salab/resources/img/customer-3.jpg' title='오세준'></div>");
-				var $name = $("<div class='send-user-name'>오세준</div>");
-				$from.append($profile).append($name).append($msg);
+				var $profile = $("<div class='send-user-profile'></div>");
+				var $profileimg = $("<img>")
+				var img = $('#userprofile_r').val();
+				if(img === 'empty')
+					$profileimg.attr('src', '/salab/resources/img/default_profile.png')
+				else
+					$profileimg.attr('src', '/salab/resources/userUpfiles/' + img)
+				var $name = $("<div class='send-user-name'></div>").text($('#username').val());
+				$from.append($profile.append($profileimg)).append($name).append($msg);
 				$from.appendTo($('.chat-messages'));
 			}
 		}

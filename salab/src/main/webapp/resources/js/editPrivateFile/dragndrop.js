@@ -691,7 +691,7 @@ $(document).on('mousedown', '#droppable', function(){
 	        }
 		});
 	}
-	$('.colorView').minicolors('settings', {
+	/*$('.colorView').minicolors('settings', {
         control: 'hue',
         position : "bottom right",
         defaultValue: "#FFFFFF",
@@ -705,7 +705,7 @@ $(document).on('mousedown', '#droppable', function(){
             	case "textground" : applyChange("textgroundColor"); break;
             }
         }
-    });
+    });*/
     minicolorsAddMenu($('#canvas-background'));
     $('.colorView').each(function(){
     	minicolorsAddMenu($(this).parent('.minicolors'));

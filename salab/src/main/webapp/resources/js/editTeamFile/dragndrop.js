@@ -49,8 +49,7 @@ function leftMouseListner(){
     $(document).on('click', function(event){
         toggleContext(0);
     	if(!$(event.target).is("#droppable .obj *") && !$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *")) {
-	        window.getSelection().removeAllRanges();
-			$(".ui-selected .obj-comp .text-selected").contents().unwrap();
+			$(".ui-selected .obj-comp .text-dragged").contents().unwrap();
     	}
     });
     $('#droppable').on('click', function(){

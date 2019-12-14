@@ -432,6 +432,24 @@ function fileCopy(){
 	    }
 	});
 }
+function multiFileCopy(){
+	$.ajax({
+		url: 'fileCopy.do',
+		type: 'post',
+		data: {
+			pfileno: fileno,
+			userno: $('#userNo').val(),
+			pt: teamAndPrivate
+		},
+		dataType: 'json',
+		success: function(data){
+			location.reload();
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	});
+}
 
 function fileDelete(){
 	if(confirm){

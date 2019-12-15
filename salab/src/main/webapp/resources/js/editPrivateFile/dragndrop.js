@@ -687,26 +687,30 @@ $(document).on('mousedown', '#droppable', function(){
 	            $('.canvas-colorpic').attr('data-swatches', addUsedColor());
 	        }
 		});
+		minicolorsAddMenu($('#canvas-background'));
 	}
-	$('.colorView').minicolors('settings', {
-        control: 'hue',
-        position : "bottom right",
-        defaultValue: "#FFFFFF",
-        letterCase : "uppercase",
-        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
-        change: function(hex, opacity){
-            switch ($(this).attr("id")) {
-            	case "background" : applyChange("backgroundColor"); break;
-            	case "line" : applyChange("lineColor"); break;
-            	case "text" : applyChange("textColor"); break;
-            	case "textground" : applyChange("textgroundColor"); break;
-            }
-        }
-    });
-    minicolorsAddMenu($('#canvas-background'));
-    $('.colorView').each(function(){
-    	minicolorsAddMenu($(this).parent('.minicolors'));
-    });
+	if($('.colorView').is(':visible')){
+		$('.colorView').minicolors('settings', {
+	        control: 'hue',
+	        position : "bottom right",
+	        defaultValue: "#FFFFFF",
+	        letterCase : "uppercase",
+	        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
+	        change: function(hex, opacity){
+	            switch ($(this).attr("id")) {
+	            	case "background" : applyChange("backgroundColor"); break;
+	            	case "line" : applyChange("lineColor"); break;
+	            	case "text" : applyChange("textColor"); break;
+	            	case "textground" : applyChange("textgroundColor"); break;
+	            }
+	        }
+	    });
+	    
+	    $('.colorView').each(function(){
+	    	minicolorsAddMenu($(this).parent('.minicolors'));
+	    });
+	}
+	
 });
 $(function(){
     $('.right-side-bar .tab-menu').hide();

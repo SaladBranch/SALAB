@@ -18,15 +18,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.message.model.vo.Message;
 import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
-import com.sesame.salab.privatefile.model.vo.PrivateFile;
 import com.sesame.salab.project.model.service.ProjectService;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.projectfile.model.service.ProjectFileService;
@@ -177,6 +179,20 @@ public class ProjectFileController {
 	                e.printStackTrace();
 	            }            
 	        return a;
+	}
+	
+	@RequestMapping(value="getMessageList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView initMessageList(@RequestBody Message msg, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		String collectionName = "message";
+		System.out.println("prfileno: " + msg);
+		List<Message> messageList = (List<Message>)mgService.getMessageList(collectionName, msg);
+		mv.setViewName("jsonView");
+		mv.addObject("messageList", messageList);
+		mgService.close();
+		System.out.println(messageList.size());
+		return mv;
 	}
 }
 

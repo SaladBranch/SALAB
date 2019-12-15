@@ -1257,7 +1257,20 @@ ol.page-tab-content li{
     color: #fff;
     line-height: 50px;
 }
-
+#chat-alert{
+    display: none;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50%;
+    line-height: 25px;
+    font-size: 12px;
+}
 .chat-box{
     display: none;
     position: absolute;

@@ -212,8 +212,11 @@
         		contentType: "application/json; charset=UTF-8",
         		type: 'post',
         		success: function(data){
-        			
-        			$('.page-item:eq(0)').click();
+        			if(index != 0){
+        				$('.page-item:eq(0)').click();
+        			}else{
+        				$('.page-item:eq(1)').click();
+        			}
         			$('.page-item:eq('+index+')').remove();
         			for(var i = index; i < list.length; i++){
         				if(i != list.length-1){
@@ -619,18 +622,53 @@
     	reader.readAsDataURL(file);
     }
     
+    function exportPdf(){
+    	var index = $('.page-item.ui-selected').index();
+    	pdf = new jsPDF('l', 'mm', 'a4', true);
+    	
+    	var image = new Image();
+    	image.src= $(list[index].thumbnail).attr('src');
+    	
+    	var imgWidth = pdf.internal.pageSize.width;
+    	var imgHeight = pdf.internal.pageSize.height;
+    	
+    		if(image.width > image.height){
+        		pdf.addImage(image.src, 'PNG', 0, 0, imgWidth, imgHeight);
+        	}else{
+        		imgWidth = (pdf.internal.pageSize.width / (image.width / pdf.internal.pageSize.width)) * 2;
+        		pdf.addImage(image.src, 'PNG', (imgWidth / 2) - 20, 0, imgWidth, imgHeight);
+        	}
+    		pdf.save($('.page-title:eq('+index+')').val() + '.pdf');
+    }
+    
     function exportAllPdf(){
-    	pdf = new jsPDF('landscape', 'mm', 'a4', true);
+    	pdf = new jsPDF('l', 'mm', 'a4', true);
     	
     	for(var i = 0; i < list.length; i++){
     		var image = new Image();
         	image.src= $(list[i].thumbnail).attr('src');
-    		
-        		pdf.addImage(image.src, 'PNG', 0, 0, (image.width * 0.186), (image.height * 0.179));
-        		pdf.addPage();
+        	
+        	var imgWidth = pdf.internal.pageSize.width;
+        	var imgHeight = pdf.internal.pageSize.height;
+        		if(i < list.length -1){
+        			if(image.width > image.height){
+            			pdf.addImage(image.src, 'PNG', 0, 0, imgWidth, imgHeight);
+            		}else{
+            			imgWidth = (pdf.internal.pageSize.width / (image.width / pdf.internal.pageSize.width)) * 2;
+            			pdf.addImage(image.src, 'PNG',(imgWidth / 2) - 20, 0, imgWidth, imgHeight);
+            		}
+            		pdf.addPage();
+        		}else{
+        			if(image.width > image.height){
+            			pdf.addImage(image.src, 'PNG', 0, 0, imgWidth, imgHeight);
+            		}else{
+            			imgWidth = (pdf.internal.pageSize.width / (image.width / pdf.internal.pageSize.width)) * 2;
+            			pdf.addImage(image.src, 'PNG', (imgWidth / 2) - 20, 0, imgWidth, imgHeight);
+            		}
+        		}
     	}
     	
-    	pdf.save('test.pdf');
+    	pdf.save($('#file-title').val() + '.pdf');
     }
     
     $(document).on('dblclick','.page-title', function(e){
@@ -778,15 +816,11 @@
     //component search
     function searchComp(){
     	var keyword = $('#search-comp').val();
-    	//승진 say : a태그의 아이디를 다 검색해와서 값으로 만들고 하나씩 비교해서 
-    	
-    	console.log($('.common-shape-comps').find('a').length);
     	
     	if(keyword == ''){
     		$('.comp-searchResult').html('');
     	}else{
     		$('.common-shape-comps').find('a').each(function() {
-        		//console.log($(this).attr("id").split("_")[1]);
             	if($(this).attr("id").split("_")[1].includes(keyword)){
             		$('.comp-searchResult').append($(this).clone());
             	}

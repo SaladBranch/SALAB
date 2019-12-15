@@ -133,6 +133,151 @@ var obj_circle = {
         return code;
     }
 };
+var obj_textInput = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 200px; height: 30px;">
+	        	<div class="obj-comp textarea obj-textInput" contenteditable="false">
+	        		<input class="obj-comp textarea obj-textInput" type="text" placeholder="내용 입력">
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Normal_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Normal_A">Button<div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Normal_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_B.insertY}px; left: ${obj_buttonInput_Normal_B.insertX}px; width: 100px; height: 45px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Normal_B">Button</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Long_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_A.insertY}px; left: ${obj_buttonInput_Long_A.insertX}px; width: 210px; height: 40px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Long_A">Button<div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Long_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 50px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Long_B">Button</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_plusBtn = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_plusBtn.insertY}px; left: ${obj_plusBtn.insertX}px; width: 28px; height: 28px;">
+	        	<div class="obj-comp textarea obj_plusBtn" contenteditable="false">
+	        		<div class="obj-comp obj_plusBtn">+</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_minusBtn = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_minusBtn.insertY}px; left: ${obj_minusBtn.insertX}px; width: 28px; height: 28px;">
+	        	<div class="obj-comp textarea obj_minusBtn" contenteditable="false">
+	        		<div class="obj-comp obj_minusBtn">-</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_messageForm = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm.insertY}px; left: ${obj_messageForm.insertX}px; width: 150px; height: 50px;">
+	        	<div class="obj-comp textarea" contenteditable="false">
+					<div class="obj-comp obj_messageForm">Message</div>
+	        	</div>
+	        	<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
+	        </div>`;
+	        return code;
+	    }
+}
 
 var getModule = function(id){
     switch(id){
@@ -150,6 +295,22 @@ var getModule = function(id){
             return obj_square;
         case 'obj_circle':
             return obj_circle;
+        case 'obj_textInput':
+    		return obj_textInput;
+        case 'obj_buttonInput_Normal_A':
+        	return obj_buttonInput_Normal_A;
+        case 'obj_buttonInput_Normal_B':
+        	return obj_buttonInput_Normal_B;
+        case 'obj_buttonInput_Long_A':
+        	return obj_buttonInput_Long_A;
+        case 'obj_buttonInput_Long_B':
+        	return obj_buttonInput_Long_B;
+        case 'obj_plusBtn':
+        	return obj_plusBtn;
+        case 'obj_minusBtn':
+        	return obj_minusBtn;
+        case 'obj_messageForm':
+        	return obj_messageForm;
     }
 };
 

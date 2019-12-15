@@ -134,7 +134,7 @@
     </div>
     <div id="multi-right-click-menu" class="multi-right-click-menu">
         <ul>
-            <li><a href="#"><span></span>개 파일 사본만들기</a></li>
+            <li><a href="javascript:" onclick="multiCopy();"><span></span>개 파일 사본만들기</a></li>
             <li><a href="#"><span></span>개 파일 삭제</a></li>
         </ul>
     </div>

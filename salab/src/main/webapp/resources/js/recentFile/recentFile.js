@@ -1,4 +1,5 @@
 var fileno, filetitle, teamAndPrivate, uno;
+var fileList = new Array();
 
 $(document).ready(function(){
     
@@ -76,7 +77,7 @@ $(document).on("mousedown", function(e) {
     		$(this).css('background-color', '#000');
     	});
     }else{
-    	$(this).removeClass('highlight').trigger('classChange');
+    	$(this).removeClass('highlight');
     }
     });
 }).on('mousemove', function(e) {
@@ -116,8 +117,10 @@ $('.file-container').on('click', function(){
     for(var i = 0; i<$('.file-container').length; i++){
     	if(i === index){
     		$('.file-container').eq(i).addClass('highlight').trigger('classChange');
+    		console.log('right');
     	}else{
-    		$('.file-container').eq(i).removeClass('highlight').trigger('classChange');
+    		$('.file-container').eq(i).removeClass('highlight');
+    		console.log(1);
     	}
     }
 });
@@ -149,10 +152,12 @@ $('.file-container').on('click', function(){
         	var cnt = $('.file-container.highlight').length;
         	if(cnt >= 2 && !$(this).hasClass('highlight')){
         		toggleOnOff(0, 'multi');
-        		$('.file-container.highlight').removeClass('highlight').trigger('classChange');
+        		$('.file-container.highlight').removeClass('highlight');
+        		console.log(1);
         	}if(cnt < 2 && !$(this).hasClass('highlight')){
         		toggleOnOff(0, 'single');
-        		$('.file-container.highlight').removeClass('highlight').trigger('classChange');
+        		$('.file-container.highlight').removeClass('highlight');
+        		console.log(1);
         	}
         	
         	
@@ -166,6 +171,7 @@ $('.file-container').on('click', function(){
             	toggleOnOff(1, 'multi');
             	$('#multi-right-click-menu span').text(cnt);
             	showMenu(e.clientX, e.clientY, 'multi');
+            	console.log('right');
             }
         });
     }
@@ -185,7 +191,7 @@ $('.file-container').on('click', function(){
     	if(type == 'single')
     		num === 1 ? menu.classList.add("active") : menu.classList.remove("active");
 		else if(type == 'multi')
-			num === 1 ? multimenu.classList.add("active") : multimenu.classList.remove("active");
+			num === 1 ? multimenu.classList.add("active") : multimenu.classList.remove("active").trigger('cancel');
     }
     
     function showMenu(x, y, type){
@@ -331,12 +337,7 @@ $(function(){
     //모달창 클릭 시, 부모로 이벤트 전송 block
     $(".modalContent, .modalOutline").click(function () {
         event.stopImmediatePropagation();
-        /*        e.keypress(
-                    function () {
-                        if (e.keyCode == 32) {
-                            alert("key up SPACE")
-                        }
-                    });*/
+        
     });
 });
 
@@ -565,11 +566,13 @@ function popup(){
 $(document).on('classChange', '.file-container', function(){
 	if($('.file-container').hasClass('highlight')){
 		$('.far.fa-trash-alt.trash').css('pointer-events', 'auto');
-		$('.far.fa-trash-alt.recovery').css('pointer-events', 'auto');
+		$('.fas.fa-sync-alt.recovery').css('pointer-events', 'auto');
 	}else{
 		$('.far.fa-trash-alt.trash').css('pointer-events', 'none');
-		$('.far.fa-trash-alt.recovery').css('pointer-events', 'none');
+		$('.fas.fa-sync-alt.recovery').css('pointer-events', 'none');
 	}
+	
+	
 });
 
 $(document).on('keyup', '#search-text', function(){
@@ -587,4 +590,24 @@ $(document).on('keyup', '#search-text', function(){
 			}
 		}
 	}
+});
+
+$(document).on('multiSelected', '.file-container', function(){
+	if(fileList.length > 1){
+		
+	}
+	console.log($('.file-container.highlight').length);
+	
+	fileList.push({
+		fileno: $(this).siblings('.fileno').val(),
+		userno: $('#userno').val(),
+		filetitle: $.trim($(this).find('.file-name').html()),
+		pt: $(this).siblings('.fileno').val()
+	});
+	console.log(JSON.stringify(fileList));
+});
+
+$(document).on('cancel', '.file-container', function(){
+	/*console.log($('.file-container.highlight').length);*/
+	console.log('remove');
 });

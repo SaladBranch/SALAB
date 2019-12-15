@@ -82,6 +82,10 @@ body{
     z-index: 81;
     pointer-events: none;
 }
+
+.add-btn.add-btn-cursor{
+	pointer-events: auto;
+}
 /* .top-bar-children .add-btn:hover{
     background-color: #000;
 } */

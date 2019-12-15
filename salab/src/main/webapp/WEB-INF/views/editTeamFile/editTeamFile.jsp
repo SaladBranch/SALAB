@@ -426,8 +426,9 @@
     <div id="render" style="display: none;">왜 이러는걸까요</div>
     
     <div class="context-menu"></div>
-        <div class="team-chat">
+    <div class="team-chat">
         <i class="far fa-comment-dots"></i>
+        <div id="chat-alert"></div>
     </div>
     <div class="chat-box">
     	<input type="hidden" value="${pfile.prfileno }" id="prfileno">
@@ -444,18 +445,6 @@
             ${pfile.prfiletitle }
         </div>
         <div class="chat-messages">
-            <div class="chat-from">
-                <div class="send-user-profile">
-                    <img src="/salab/resources/img/customer-3.jpg" title="오세준">
-                </div>
-                <div class="send-user-name">오세준</div>
-                <div class="send-msg">메에에에에엥에에에에에엥매에에에에에에에에</div>
-            </div>
-            
-            <div class="chat-to">
-                <div class="send-msg">메에에에에엥에에에에에엥매에에에에에에에에</div>
-            </div>
-            
         </div>
         <div class="chat-sendbox">
             <input type="text" id="chat_input">
@@ -741,14 +730,7 @@
     	}
     }
     
-    /* Chat */
-    $('.team-chat').on('click', function(){
-        if($('.chat-box').css("display") == "none"){
-            $('.chat-box').show();
-        }else{
-            $('.chat-box').hide();
-        }
-    });
+
     </script>
     
 </body>

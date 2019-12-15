@@ -15,6 +15,7 @@ import com.mongodb.MongoClient;
 import com.sesame.salab.common.FileList;
 /*import com.sesame.salab.page.model.vo.Memo;*/
 import com.sesame.salab.library.model.vo.PrivateLibrary;
+import com.sesame.salab.message.model.vo.Message;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
 
@@ -32,7 +33,6 @@ public class MongoService {
 		mongo = new MongoClient(MONGO_HOST, MONGO_PORT);
 		mongoOps = new  MongoTemplate(mongo, DB_NAME);
 	}
-	
 	
 	//연결 끊기
 	public void close() {
@@ -266,6 +266,13 @@ public class MongoService {
 		));
 		
 		mongoOps.remove(query, collectionName);
+	}
+
+	public List<Message> getMessageList(String collectionName, Message msg) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("prfileno").is(msg.getPrfileno())
+		)).with(new Sort(Sort.Direction.ASC, "date"));
+		return mongoOps.find(query, Message.class, collectionName);
 	}
 	
 }

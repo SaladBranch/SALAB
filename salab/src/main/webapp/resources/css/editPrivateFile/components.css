@@ -1,3 +1,4 @@
+
 /*마우스 선택영역*/
 .focus {
     position:fixed; 
@@ -36,18 +37,10 @@
     width: 100%;
 }
 .obj-comp span{
-    font : inherit;
-    font-size : inherit;
-    font-weight : inherit;
     text-decoration : inherit;
-    background : inherit;
 }
-.obj-comp span.text-dragged {
-    font : none;
-    font-size : none;
-    font-weight : none;
-    text-decoration : none;
-    background : none;
+::selection {
+	background : #27ad79;
 }
 
 #multiselect{
@@ -156,4 +149,3 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
-

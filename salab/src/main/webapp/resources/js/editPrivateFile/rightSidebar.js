@@ -590,6 +590,11 @@ var lastChanged = "";
 				case "strikethrough" : str = "line-through"; break;
 			}
 			if ($(".text-dragged").length > 0) {
+				$(".text-dragged span").each(function() {
+					console.log($(this));
+					console.log($(this).css("text-decoration"));
+					console.log($(this).css("text-decoration").includes(str));
+				});
 				value = "";
 				var $checkParent = $(".text-dragged").parent();
 				while(true) {

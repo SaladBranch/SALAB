@@ -154,7 +154,6 @@ function computeGuidesForElement(elem, pos, w, h) {
 	    w = $t.outerWidth() - 1;
 	    h = $t.outerHeight() - 1;
 	  }
-	  console.log("scale: " + __scale + ", left : " + (pos.left - 230));
 	  return [
 	        { type: "h", left: pos.left - 230, top: pos.top - 40 }, 
 	        { type: "h", left: pos.left - 230, top: pos.top - 40 + h }, 
@@ -240,8 +239,6 @@ function addControl(){
                 var scLeft = $('.canvas-container').scrollLeft();
                 var pageHeight = $('.canvas-container').prop("scrollHeight");
                 var pageWidth = $('.canvas-container').prop("scrollWidth");
-                console.log("scLeft: " + scLeft);
-                console.log("pageWidth: " + pageWidth);
                 if( chosenGuides.top.dist <= MIN_DISTANCE ){
                     $( "#guide-h" ).css({
                     	"top": chosenGuides.top.guide.top + scHeight,
@@ -897,36 +894,27 @@ function deleteFromLib(index){
 }
 function resizeLibImg(){
 	setTimeout(function(){
-		$('.plib-item-thumb img').each(function(){
-			var index = $('.plib-item-thumb img').index($(this));
-			var code = privateLibrary[index].code.split("rotate(")[1].split(")")[0];
+		$('.plib-item-thumb img').each(function(i, img){
+			var rcode = privateLibrary[i].code.split("rotate(")[1].split(")")[0];
 			
-			var w = $(this).width();
-			var h = $(this).height();
+			var w = Number(privateLibrary[i].code.split("width: ")[1].split("px;")[0]);
+			var h = Number(privateLibrary[i].code.split("height: ")[1].split("px;")[0]);
 			if(w >= h){
 				$(this).css({
-					width: "70px",
-					'margin-left': ($('.plib-item-thumb').width() - 70)/2 + 'px'
+					width: '70px',
+					'margin-left': '6px',
+					'margin-top': (70 - h*70/w)/2 + 'px'
 				});
-				if($(this).height() < 70){
-					$(this).css({
-						'margin-top': (70-$(this).height())/2 + "px"
-					});
-				}
 			}else{
 				$(this).css({
-					height: "70px",
-					'margin-top': ($('.plib-item-thumb').height() - 70)/2 + 'px'
-				});
-				if($(this).width() < 70){
-					$(this).css({
-						'margin-left': ($('.plib-item-thumb').width()-$(this).width())/2 + "px"
-					});
-				}
+					height: '70px',
+					'margin-left': (84 - w*70/h)/2 + 'px' 
+				})
 			}
-			var degree = code.replace(code.substr(-3),'');
+			
+			var degree = rcode.replace(rcode.substr(-3),'');
 			if(degree != 0){
-				if(code.substr(-3) === 'rad'){
+				if(rcode.substr(-3) === 'rad'){
 					degree = Number(degree)*(180/Math.PI);
 				}
 				$(this).css({

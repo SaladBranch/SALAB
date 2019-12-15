@@ -639,23 +639,24 @@
     	$.ajax({
     		url: 'getPlibList.do',
     		type: 'post',
+    		cache: false,
     		data: JSON.stringify(plib),
     		contentType: "application/json; charset=UTF-8",
     		dataType: 'json',
     		success: function(data){
-    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
+    			/* $('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>") */
     			privateLibrary = new Array();
     			for(var i = 0; i<data.plib.length; i++){
 					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
 							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
-						_id: data.plib[i]._id,
-	    				code: data.plib[i].code	
+						code: data.plib[i].code,
+						_id: data.plib[i]._id
 	    			}
 					privateLibrary.push(pl);
 				}
-    			resizeLibImg();
+   				resizeLibImg();
     		},
     		error: function(){
     			console.log("plib list 가져오기 실패");

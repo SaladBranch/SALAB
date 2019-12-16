@@ -6,6 +6,7 @@ import java.util.Map;
 import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 public interface PrivateFileService {
 
@@ -46,5 +47,5 @@ public interface PrivateFileService {
 	int teamFilePermanentDelete(FileList pfile);
 
 	List<FileList> searchKeyword(Map map);
-	
+
 }

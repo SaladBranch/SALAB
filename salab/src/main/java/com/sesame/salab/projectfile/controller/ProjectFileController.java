@@ -109,7 +109,8 @@ public class ProjectFileController {
 		page.setPageno(1);
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
-				"</div>");
+				"</div>"+
+				"<div id=\"clone-canvas\"></div>");
 		page.setPagename("Untitled");
 		String sbase64 = encodeToString(request.getSession().getServletContext().getRealPath("/resources/thumbnail.txt"));
 		page.setThumbnail("<img src='"+sbase64+"'>");

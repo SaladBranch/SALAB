@@ -20,5 +20,7 @@ public interface ProjectFileService {
 	int fileCopy(ProjectFile file);
 
 	ProjectFile createPage(int projectno);
+
+	int changeLastModified(ProjectFile pfile);
 	
 }

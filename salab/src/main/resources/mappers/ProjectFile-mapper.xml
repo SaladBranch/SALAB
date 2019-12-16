@@ -41,4 +41,8 @@
 	<select id="createPage" parameterType="int" resultType="PrivateFile">
 		SELECT * FROM (SELECT PRFILENO FROM PROJECTFILE WHERE USERNO = #{userno} order by PRFILELASTMODIFIED DESC) WHERE ROWNUM = 1
 	</select>
+	
+	<update id="changeLastModified" parameterType="ProjectFile">
+		UPDATE PROJECTFILE SET PRFILELASTMODIFIED = TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI') WHERE PROJECTNO = #{projectno} AND PRFILENO = #{prfileno}
+	</update>
 </mapper>

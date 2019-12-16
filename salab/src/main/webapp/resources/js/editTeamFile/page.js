@@ -56,7 +56,7 @@
         cancel: '.newpage',
         start: function(event, ui){
             beforepindex = ui.item.index();
-            /*pageMoveTempStorage.pageno = list[beforepindex].pageno;*/
+
             pageMoveTempStorage = {
             		content: list[beforepindex].content,
             		userno: list[beforepindex].userno,
@@ -403,7 +403,7 @@
     		dataType: 'json',
     		data: {
     			projectno: list[0].projectno,
-    			fileno: list[0].filenof
+    			fileno: list[0].fileno
     		},
     		success: function(data){
     			console.log("ok");

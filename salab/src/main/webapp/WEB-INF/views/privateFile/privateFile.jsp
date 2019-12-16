@@ -45,7 +45,7 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="add-btn add-btn-cursor">&#43;</div>
+                <div class="add-btn add-btn-cursor" onclick="showModal('newFile')">&#43;</div>
                 <div class="user-profile">
                     <div class="profile-img">
                         <c:if test="${empty sessionScope.loginMember.userprofile_r}">
@@ -190,7 +190,7 @@
         	
             
             <div class="file-grid">
-                <div class="new-file" onclick="showModal();">
+                <div class="new-file" onclick="showModal('newFile');">
                     &#43; 새 파일
                 </div>
             </div>

@@ -30,5 +30,20 @@ public class ProjectFileDao {
 	public ProjectFile selectOne(Page page) {
 		return sqlSession.selectOne("ProjectfileMapper.selectOne", page);
 	}
+
+	public ProjectFile selectFile(ProjectFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("ProjectfileMapper.selectFile", pfile);
+	}
+
+	public int fileCopy(ProjectFile file) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("ProjectfileMapper.fileCopy", file);
+	}
+
+	public ProjectFile createPage(int projectno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("ProjectfileMapper.createPage", projectno);
+	}
 	
 }

@@ -60,7 +60,7 @@ var obj_heading = {
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_heading.insertY}px; left: ${obj_heading.insertX}px; width: 200px;">
           <div class="obj-comp textarea obj-heading" contenteditable="false">
-            <h1 style="font-size: 35px;">Heading</h1>
+            <span style="font-size: 35px;"><span style="font-weight: 600;">Heading</span></span>
           </div>
         </div>`
         return code;
@@ -78,7 +78,7 @@ var obj_paragraph = {
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 200px;">
           <div class="obj-comp textarea obj-paragraph" contenteditable="false">
-            <h1 style="font-size: 35px;">Heading</h1>
+            <span style="font-size: 35px;"><span style="font-weight: 600">Heading</span></span>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
           </div>
         </div>`
@@ -133,6 +133,151 @@ var obj_circle = {
         return code;
     }
 };
+var obj_textInput = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 200px; height: 30px;">
+	        	<div class="obj-comp textarea obj-textInput" contenteditable="false">
+	        		<input class="obj-comp textarea obj-textInput" type="text" placeholder="내용 입력">
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Normal_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Normal_A">Button<div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Normal_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_B.insertY}px; left: ${obj_buttonInput_Normal_B.insertX}px; width: 100px; height: 45px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Normal_B">Button</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Long_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_A.insertY}px; left: ${obj_buttonInput_Long_A.insertX}px; width: 210px; height: 40px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Long_A">Button<div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_buttonInput_Long_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 50px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Long_B">Button</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_plusBtn = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_plusBtn.insertY}px; left: ${obj_plusBtn.insertX}px; width: 28px; height: 28px;">
+	        	<div class="obj-comp textarea obj_plusBtn" contenteditable="false">
+	        		<div class="obj-comp obj_plusBtn">+</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_minusBtn = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_minusBtn.insertY}px; left: ${obj_minusBtn.insertX}px; width: 28px; height: 28px;">
+	        	<div class="obj-comp textarea obj_minusBtn" contenteditable="false">
+	        		<div class="obj-comp obj_minusBtn">-</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_messageForm = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm.insertY}px; left: ${obj_messageForm.insertX}px; width: 150px; height: 50px;">
+	        	<div class="obj-comp textarea" contenteditable="false">
+					<div class="obj-comp obj_messageForm">Message</div>
+	        	</div>
+	        	<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
+	        </div>`;
+	        return code;
+	    }
+}
 
 var getModule = function(id){
     switch(id){
@@ -150,6 +295,22 @@ var getModule = function(id){
             return obj_square;
         case 'obj_circle':
             return obj_circle;
+        case 'obj_textInput':
+    		return obj_textInput;
+        case 'obj_buttonInput_Normal_A':
+        	return obj_buttonInput_Normal_A;
+        case 'obj_buttonInput_Normal_B':
+        	return obj_buttonInput_Normal_B;
+        case 'obj_buttonInput_Long_A':
+        	return obj_buttonInput_Long_A;
+        case 'obj_buttonInput_Long_B':
+        	return obj_buttonInput_Long_B;
+        case 'obj_plusBtn':
+        	return obj_plusBtn;
+        case 'obj_minusBtn':
+        	return obj_minusBtn;
+        case 'obj_messageForm':
+        	return obj_messageForm;
     }
 };
 
@@ -161,7 +322,7 @@ var contextmenu = {
         <a href="#" class="changeCanvas-size">화면 사이즈 변경</a>
         <a href="#" class="changeCanvas-color">페이지 배경색</a>
         <a href="#" class="changeCanvas-color-all">모든 페이지에 이 배경색 적용</a>
-        <a href="#" class="webtest">웹테스트</a>    
+        <a href="javascript:popup();" class="webtest">웹테스트</a>    
     `
     },
     single: function(){
@@ -183,7 +344,14 @@ var contextmenu = {
         </li>
         </ul>   
         <div class="boundary"></div>
-        <a href="">보내기</a>
+        <ul>
+        	<li class="sendObj">보내기<span><i class="fas fa-caret-right"></i></span>
+        	<ul class="sendObj-sub">
+        		<li><a href="">이미지 파일</a></li>
+        		<li><a href="javascript:savetoLibrary();">개인 라이브러리</a></li>
+        	</ul>
+        </li>
+        </ul>
         `
     },
     multi: function(){
@@ -208,6 +376,12 @@ var contextmenu = {
         </li>
         </ul>
         `
+    },
+    library: function(target){
+    	return `
+        <a href="javascript:deleteFromLib(`+target+`);" class="deleteFromLib">삭제</a>
+        <a href="javascript:saveLibAsImg(`+target+`);" class="saveAsImg">이미지로 내보내기</a>
+    	`
     }
 }
 

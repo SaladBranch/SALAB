@@ -143,7 +143,6 @@
         rightMouseListner();
         leftMouseListner();
         
-        
         //페이지별 color 다르게 적용
         toggleCanvasColor();
         
@@ -212,7 +211,11 @@
         		contentType: "application/json; charset=UTF-8",
         		type: 'post',
         		success: function(data){
-        			console.log('delete success');
+        			if(index != 0){
+        				$('.page-item:eq(0)').click();
+        			}else{
+        				$('.page-item:eq(1)').click();
+        			}
         			$('.page-item:eq('+index+')').remove();
         			for(var i = index; i < list.length; i++){
         				if(i != list.length-1){
@@ -222,7 +225,7 @@
         					list.pop();
         				}
         			}
-        			$('.page-item:eq(0)').addClass('ui-selected');
+        			console.log('delete success');
         		},
         		error: function(){
         			console.log("error");
@@ -238,40 +241,82 @@
     
     function pageCopy(){
     	var index = $('.ui-selected').index();
-    	console.log(list[index]);
+
+    	$($('.page-item:eq('+index+')').after('<li class="page-item">' +
+				'<div class="page">' +
+                '<div class="page-top">' +
+                    '<div class="page-thumbnail">' +
+                        $('.page-thumbnail:eq('+index+')').html() +
+                    '</div>'+
+                '</div>' +
+                '<div class="page-name">' + 
+                    '<input type="text" class="page-title" value="Copy of '+ $('.page-title:eq('+index+')').val() +'">' +
+                '</div>' +
+            '</div>'	+ 
+            '</li>'));
+    	
+    	list.splice(index+1, 0, {
+    		content: $('.canvas-container').html(),
+    		pageno: list[index].pageno,
+    		fileno: list[index].fileno,
+    		userno: list[index].userno,
+    		pagename: list[index].pagename,
+    		thumbnail: $('.page-thumbnail:eq('+index+')').html(),
+    		_id: null,
+    		undo: new Array(),
+    		redo: new Array()
+    	});
+    	
     	$.ajax({
     		url: 'pageCopy.do',
     		type: 'post',
-    		cache: false,
-    		data: JSON.stringify(list[index]),
+    		data: JSON.stringify(list[index+1]),
     		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
     		success: function(data){
-    			console.log('copy success');
-    			$($('.page-item:eq('+index+')').after('<li class="page-item">' +
-						'<div class="page">' +
-    	                '<div class="page-top">' +
-    	                    '<div class="page-thumbnail">' +
-    	                        list[index].thumbnail +
-    	                    '</div>'+
-    	                '</div>' +
-    	                '<div class="page-name">' + 
-    	                    '<input type="text" class="page-title" value="Copy of '+ list[index].pagename +'">' +
-    	                '</div>' +
-    	            '</div>'	+ 
-    	            '</li>'));
+    			for(var i =0; i < data.pageList.length; i++){
+	    			var dataSet = {
+	    					content: data.pageList[i].content, 
+	    					pageno: data.pageList[i].pageno,
+	    					fileno: data.pageList[i].fileno,
+	    					userno: data.pageList[i].userno,
+	    					pagename: data.pageList[i].pagename,
+	    					thumbnail: data.pageList[i].thumbnail,
+	    					_id: data.pageList[i]._id,
+	    					undo: new Array(),
+	    					redo: new Array()
+	    			}
+    				list[i] = dataSet;
+    			}
     			
-    			pageTab();
+    			$('.page-item').on('click', function(){
+    		    	//이전에 셀렉트된 페이지에 대한 인덱스
+    		    	var beforeIndex = $('.ui-selected').index();
+    		    	//현재 새로 셀렉트된 페이지 인덱스
+    		        var index = $('.page-item').index($(this));
+    		        
+    		        //현재 캔버스위에 태글들을 임시저장
+    		        tempStorage(beforeIndex);
+    		        
+    		        $('.page-item').each(function(){
+    		            $(this).removeClass('ui-selected');
+    		        });
+    		        pageContent(index);
+    		        $('.page-item').eq(index).addClass('ui-selected');
+    		        
+    		    });
+    			
+    			console.log('copy success');
+    			$('.page-item:eq('+(index + 1)+')').click();
+    			
     		},
-    		error: function(){
-    			console.log("error");
-    		}
+    		error : function( jqXHR, textStatus, errorThrown ) {
+				console.log( jqXHR.status );
+				console.log( jqXHR.statusText );
+				console.log( jqXHR.responseText );
+				console.log( jqXHR.readyState );
+			}
     	});
-    }
-    
-    function test(){
-    	for(var i=0; i < list.length; i++){
-    		console.log(list[i]);
-    	}
     }
     
     //page 탭 리스트 불러오는 ajax
@@ -295,7 +340,6 @@
     		dataType: 'json',
     		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
     		success: function(data){
-    			/*$('.page-tab-content').html('');*/
     			for(var i =0; i < data.page.length; i++){
     			
 	    			var dataSet = {
@@ -305,7 +349,9 @@
 	    					userno: data.page[i].userno,
 	    					pagename: data.page[i].pagename,
 	    					thumbnail: data.page[i].thumbnail,
-	    					_id: data.page[i]._id
+	    					_id: data.page[i]._id,
+	    					undo: new Array(),
+	    					redo: new Array()
 	    			}
     				list[i] = dataSet;
     			}
@@ -475,24 +521,24 @@
         	e.stopPropagation();
         	e.preventDefault();
         }).on('mouseup', '.memo-container', function(e){
-        	var x = e.offsetX - 10;
-        	var y = e.offsetY - 30;
+        	var x = e.offsetX -8;
+        	var y = e.offsetY -18;
         	
         	var div = '<div class="memo" style="position: absolute; left: '+x+'px; top: '+y+'px" display: flex">' + 
-        		'<img src="/salab/resources/img/coordinatess.png" class="memo-icon" style="width: 20px; height: 30px;" >' +
+        		'<i class="fas fa-map-marker-alt memo-icon"></i>' +
         		'<div class="memo-content">'+
         		'<div class="memo-userThumb">'+
                 '<div class="memo-info">'+
                 '<div class="user">'+
-                '<span style="width: 40px; height: 40px;"></span>'+
-                '<span> 오세준</span>'+
+                '<span style="width: 40px; height: 40px;"><image src="/salab/resources/img/default_profile.png" style="width:100%; height:100%;"></span>'+
+                '<span style="font-size: 15px; font-weight: bold; padding-left: 5px">ashashasasgarga</span>'+
                 '</div>'+
                 '<div class="button">'+
                 '<button class="btn-ghost cancel">cancel</button>'+
                 '<button class="btn-ghost done" disabled="true">done</button>'+
                 '</div>'+
                 '</div>'+
-                '<input type="text" class="memo-cnt" value="">'+
+                '<input type="text" class="memo-cnt" value="" placeholder="Comment..">'+
 		        '</div>'+
 		        '</div>'+
         		'</div>'+
@@ -540,20 +586,20 @@
     	$(document).on('click', '.btn-ghost.done', function(){
     		var $memo = $(this).closest('.memo-info').siblings('.memo-cnt');
     		var $button = $(this).closest('.button');
+    		var $user = $(this).closest('.user');
     		
     		$($memo).attr('readOnly', true);
     		$($memo).addClass('disabled');
     		$($button).html(
-    				'<div class="file-options">'+
-	                '<div class="file-options-btn">⋮</div>'+
-	                '<div class="file-options-menu">'+
-	                '<ul>'+
-	                '<li><a href="javascript:" class="memoEdit">메모 수정</a></li>'+
-	                '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
-	                '</ul>'+
-	                '</div>'+
-    				'</div>');
-    		
+    			'<div class="file-options">'+
+	            '<div class="file-options-btn">⋮</div>'+
+	            '<div class="file-options-menu">'+
+	            '<ul>'+
+	            '<li><a href="javascript:" class="memoEdit">메모 수정</a></li>'+
+	            '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
+	            '</ul>'+
+	            '</div>'+
+    			'</div>');
     	});
     	
     function preview(file, idx, x, y){
@@ -569,18 +615,53 @@
     	reader.readAsDataURL(file);
     }
     
+    function exportPdf(){
+    	var index = $('.page-item.ui-selected').index();
+    	pdf = new jsPDF('l', 'mm', 'a4', true);
+    	
+    	var image = new Image();
+    	image.src= $(list[index].thumbnail).attr('src');
+    	
+    	var imgWidth = pdf.internal.pageSize.width;
+    	var imgHeight = pdf.internal.pageSize.height;
+    	
+    		if(image.width > image.height){
+        		pdf.addImage(image.src, 'PNG', 0, 0, imgWidth, imgHeight);
+        	}else{
+        		imgWidth = (pdf.internal.pageSize.width / (image.width / pdf.internal.pageSize.width)) * 2;
+        		pdf.addImage(image.src, 'PNG', (imgWidth / 2) - 20, 0, imgWidth, imgHeight);
+        	}
+    		pdf.save($('.page-title:eq('+index+')').val() + '.pdf');
+    }
+    
     function exportAllPdf(){
-    	pdf = new jsPDF('landscape', 'mm', 'a4', true);
+    	pdf = new jsPDF('l', 'mm', 'a4', true);
     	
     	for(var i = 0; i < list.length; i++){
     		var image = new Image();
         	image.src= $(list[i].thumbnail).attr('src');
-    		
-        		pdf.addImage(image.src, 'PNG', 0, 0, (image.width * 0.186), (image.height * 0.179));
-        		pdf.addPage();
+        	
+        	var imgWidth = pdf.internal.pageSize.width;
+        	var imgHeight = pdf.internal.pageSize.height;
+        		if(i < list.length -1){
+        			if(image.width > image.height){
+            			pdf.addImage(image.src, 'PNG', 0, 0, imgWidth, imgHeight);
+            		}else{
+            			imgWidth = (pdf.internal.pageSize.width / (image.width / pdf.internal.pageSize.width)) * 2;
+            			pdf.addImage(image.src, 'PNG',(imgWidth / 2) - 20, 0, imgWidth, imgHeight);
+            		}
+            		pdf.addPage();
+        		}else{
+        			if(image.width > image.height){
+            			pdf.addImage(image.src, 'PNG', 0, 0, imgWidth, imgHeight);
+            		}else{
+            			imgWidth = (pdf.internal.pageSize.width / (image.width / pdf.internal.pageSize.width)) * 2;
+            			pdf.addImage(image.src, 'PNG', (imgWidth / 2) - 20, 0, imgWidth, imgHeight);
+            		}
+        		}
     	}
     	
-    	pdf.save('test.pdf');
+    	pdf.save($('#file-title').val() + '.pdf');
     }
     
     $(document).on('dblclick','.page-title', function(e){
@@ -728,15 +809,11 @@
     //component search
     function searchComp(){
     	var keyword = $('#search-comp').val();
-    	//승진 say : a태그의 아이디를 다 검색해와서 값으로 만들고 하나씩 비교해서 
-    	
-    	console.log($('.common-shape-comps').find('a').length);
     	
     	if(keyword == ''){
     		$('.comp-searchResult').html('');
     	}else{
     		$('.common-shape-comps').find('a').each(function() {
-        		//console.log($(this).attr("id").split("_")[1]);
             	if($(this).attr("id").split("_")[1].includes(keyword)){
             		$('.comp-searchResult').append($(this).clone());
             	}

@@ -134,8 +134,8 @@
     </div>
     <div id="multi-right-click-menu" class="multi-right-click-menu">
         <ul>
-            <li><a href="#"><span></span>개 파일 사본만들기</a></li>
-            <li><a href="#"><span></span>개 파일 삭제</a></li>
+            <li><a href="javascript:" onclick="multiCopy();"><span></span>개 파일 사본만들기</a></li>
+            <li><a href="javascript:" onclick="multiDelete();"><span></span>개 파일 삭제</a></li>
         </ul>
     </div>
     <div class="right-main-side">
@@ -194,8 +194,8 @@
 	                                    <li><a href="javascript:">파일열기</a></li>
 	                                    <li><a href="javascript:" onclick="showModal('renameFile');;">파일 정보 설정</a></li>
 	                                    <li><a href="javascript:" onclick="fileCopy();">사본만들기</a></li>
-	                                    <li><a href="javascript:">웹테스트</a></li>
-	                                    <li><a href="javascript:">삭제</a></li>
+	                                    <li><a href="javascript:" onclick="popup();">웹테스트</a></li>
+	                                    <li><a href="javascript:" onclick="fileDelete();">삭제</a></li>
 	                                </ul>
 	                            </div>
 	                        </div>

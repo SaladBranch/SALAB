@@ -1,3 +1,4 @@
+
 var rotate_handler = {
     code: function(){ return `<div class="ui-rotatable-handle ui-draggable">`;}
 }
@@ -60,7 +61,7 @@ var obj_heading = {
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_heading.insertY}px; left: ${obj_heading.insertX}px; width: 200px;">
           <div class="obj-comp textarea obj-heading" contenteditable="false">
-            <h1 style="font-size: 35px;">Heading</h1>
+            <span style="font-size: 35px;"><span style="font-weight: 600;">Heading</span></span>
           </div>
         </div>`
         return code;
@@ -78,7 +79,7 @@ var obj_paragraph = {
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 200px;">
           <div class="obj-comp textarea obj-paragraph" contenteditable="false">
-            <h1 style="font-size: 35px;">Heading</h1>
+            <span style="font-size: 35px;"><span style="font-weight: 600">Heading</span></span>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
           </div>
         </div>`
@@ -151,7 +152,135 @@ var obj_textInput = {
 
         return code;
     }
-}
+};
+var obj_buttonInput_Normal_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Normal_A">Button<div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+};
+var obj_buttonInput_Normal_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_B.insertY}px; left: ${obj_buttonInput_Normal_B.insertX}px; width: 100px; height: 45px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Normal_B">Button</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+};
+var obj_buttonInput_Long_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_A.insertY}px; left: ${obj_buttonInput_Long_A.insertX}px; width: 210px; height: 40px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Long_A">Button<div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+};
+var obj_buttonInput_Long_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 50px;">
+	        	<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">
+	        		<div class="obj-comp obj-buttonInput_Long_B">Button</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+};
+var obj_plusBtn = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_plusBtn.insertY}px; left: ${obj_plusBtn.insertX}px; width: 28px; height: 28px;">
+	        	<div class="obj-comp textarea obj_plusBtn" contenteditable="false">
+	        		<div class="obj-comp obj_plusBtn">+</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+};
+var obj_minusBtn = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_minusBtn.insertY}px; left: ${obj_minusBtn.insertX}px; width: 28px; height: 28px;">
+	        	<div class="obj-comp textarea obj_minusBtn" contenteditable="false">
+	        		<div class="obj-comp obj_minusBtn">-</div>
+	        	</div>
+	        </div>`;
+	        return code;
+	    }
+};
+var obj_messageForm = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm.insertY}px; left: ${obj_messageForm.insertX}px; width: 150px; height: 50px;">
+	        	<div class="obj-comp textarea" contenteditable="false">
+					<div class="obj-comp obj_messageForm">Message</div>
+	        	</div>
+	        	<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
+	        </div>`;
+	        return code;
+	    }
+};
+
 var obj_radioInput = {
     insertX: 200,
     insertY: 100,
@@ -169,7 +298,7 @@ var obj_radioInput = {
         `
         return code;
     }
-}
+};
 var obj_checkbox = {
     insertX: 200,
     insertY: 100,
@@ -187,7 +316,7 @@ var obj_checkbox = {
         `
         return code;
     }
-}
+};
 var obj_file = {
     insertX: 200,
     insertY: 100,
@@ -205,7 +334,7 @@ var obj_file = {
         </div>`
         return code;
     }
-}
+};
 var obj_ul = {
     insertX: 200,
     insertY: 100,
@@ -226,7 +355,7 @@ var obj_ul = {
                    </div>`;
         return code;
     } 
-}
+};
 var obj_progressBar = {
     insertX: 0,
     insertY: 0,
@@ -240,9 +369,7 @@ var obj_progressBar = {
         var code = `<div class="group-obj obj ui-selected ui-resizable ui-selectee"  style="top: ${obj_progressBar.insertY}px; left: ${obj_progressBar.insertX}px; width: 120px; height: 30px; transform: rotate(0rad);"><div class="obj" style="left:0px; top: 0px; position: absolute; width: 100px;height:20px;"><div class="obj-comp obj_progressBar" contenteditable="false"><div class="obj_progressBar_outline"></div></div></div><div class="obj" style="left:0px; top:0px; position: absolute;  width: 70px;height:20px;"><div class="obj-comp obj_progressBar" contenteditable="false"><div class="obj_progressBar_inline"></div></div></div></div>`;
         return code;
     }
-}
-
-
+};
 var getModule = function(id){
     switch(id){
         case 'obj_rect':
@@ -260,20 +387,34 @@ var getModule = function(id){
         case 'obj_circle':
             return obj_circle;
         case 'obj_textInput':
-            return obj_textInput;
+    		return obj_textInput;
+        case 'obj_buttonInput_Normal_A':
+        	return obj_buttonInput_Normal_A;
+        case 'obj_buttonInput_Normal_B':
+        	return obj_buttonInput_Normal_B;
+        case 'obj_buttonInput_Long_A':
+        	return obj_buttonInput_Long_A;
+        case 'obj_buttonInput_Long_B':
+        	return obj_buttonInput_Long_B;
+        case 'obj_plusBtn':
+        	return obj_plusBtn;
+        case 'obj_minusBtn':
+        	return obj_minusBtn;
+        case 'obj_messageForm':
+        	return obj_messageForm;
         case 'obj_radioInput':
             return obj_radioInput;
-         case 'obj_checkbox':
+        case 'obj_checkbox':
             return obj_checkbox;
-          case 'obj_file':
+         case 'obj_file':
             return obj_file;
-          case 'obj_ul':
+         case 'obj_ul':
             return obj_ul;
-          case 'obj_progressBar':
+         case 'obj_progressBar':
             return obj_progressBar;
-         case 'obj_search':
+        case 'obj_search':
             return obj_search;
-         case 'obj_scroll_y':
+        case 'obj_scroll_y':
             return obj_scroll_y;
     }
 };
@@ -348,4 +489,3 @@ var contextmenu = {
     	`
     }
 }
-

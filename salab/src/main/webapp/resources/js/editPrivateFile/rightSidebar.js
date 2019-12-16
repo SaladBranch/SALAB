@@ -107,14 +107,16 @@ var lastChanged = "";
 		}
 		$(this).css("background", "white");
      }).on("click", function() {
-    	 if ($(this).is(".clicked")) {
-    		 $(this).removeClass("clicked");
-    		 $(this).css("border", "1px solid white");
-    		 $(this).css("background", "white");
-    	 } else {
-    		 $(this).addClass("clicked");
-    		 $(this).css("border", "1px solid black");
-    		 $(this).css("background", "white");
+    	 if ($(this).attr("id") == "bold" || $(this).attr("id") == "italic") {
+        	 if ($(this).is(".clicked")) {
+        		 $(this).removeClass("clicked");
+        		 $(this).css("border", "1px solid white");
+        		 $(this).css("background", "white");
+        	 } else {
+        		 $(this).addClass("clicked");
+        		 $(this).css("border", "1px solid black");
+        		 $(this).css("background", "white");
+        	 }
     	 }
     	 applyChange("text-effect-" + $(this).attr("id"));
      });
@@ -275,7 +277,7 @@ var lastChanged = "";
     		if ($(this).focus)
     			$(this).blur();
     	} else if (eventType == "focusout") {
-            clearEnterable();
+    		clearEnterable();
     		applyChange(applyType);
     	}
 		
@@ -320,13 +322,13 @@ var lastChanged = "";
 
 	document.addEventListener("mousedown", function(event) {
     	if(!$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *") && !$(event.target).is(".component")) {
-    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)" : false) {
-				$(".text-dragged").css("background", "");
+    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").is(".focusout") : false) {
+				$(".text-dragged").removeClass("focusout");
 				$(".text-dragged").selectText();
-    		} else {
-        		$(".text-dragged").contents().unwrap();
-            	window.getSelection().removeAllRanges();
-    		}
+    		} else if ($(".text-dragged").length > 0 || window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
+				$(".text-dragged").contents().unwrap();
+				window.getSelection().removeAllRanges();
+			}
     	}
 	}, true);
 	/*
@@ -361,6 +363,18 @@ var lastChanged = "";
     		}
     		if (isTextarea == "true") {
     			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
+    			var $dragCheckTarget = $(".text-dragged");
+    			while(true) {
+        			if (!$dragCheckTarget.is("span")) {
+        				break;
+        			} else if ($dragCheckTarget.text() == $dragCheckTarget.parent().text()) {
+        				$dragCheckTarget.parent().wrap("<span class='text-dragged'>");
+        				$dragCheckTarget.contents().unwrap();
+            			$dragCheckTarget = $(".text-dragged");
+        			} else {
+        				break;
+        			}
+        		}
     			clearDragged();
     			formatChange();
     			$(".text-dragged").selectText();
@@ -380,7 +394,7 @@ var lastChanged = "";
 	
 	// canvas div 클릭 시 서식 값 변화
     function formatChange() {
-
+    	
     	var targetMode;
     	var object = $("#droppable .ui-selected");
 		var target = $("#droppable .ui-selected .obj-comp");
@@ -571,13 +585,18 @@ var lastChanged = "";
     		return result;
 		}
 
-		if (type == "underline" || type == "strikethrough") {
+		/*if (type == "underline" || type == "strikethrough") {
 			var str;
 			switch(type) {
 				case "underline": str = "underline"; break;
 				case "strikethrough" : str = "line-through"; break;
 			}
 			if ($(".text-dragged").length > 0) {
+				$(".text-dragged span").each(function() {
+					console.log($(this));
+					console.log($(this).css("text-decoration"));
+					console.log($(this).css("text-decoration").includes(str));
+				});
 				value = "";
 				var $checkParent = $(".text-dragged").parent();
 				while(true) {
@@ -660,7 +679,7 @@ var lastChanged = "";
 				result = value;
 			}
 			return result;
-		}
+		}*/
 
 		if (type == "textgroundColor") {
 			if ($(".text-dragged").length > 0) {
@@ -877,54 +896,28 @@ var lastChanged = "";
                 	var fontColor1 = parseInt(fontColor.substring(0, 2), 16);
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
-
+                	
         			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    clearChanged("color");
         		}
 
         		if (type == "text-effect-bold") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", $(".text-effect[id=bold]").is(".clicked") ? "bold" : "");
+            		wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "700" ? 300 : 700);
         		    clearChanged("font-weight");
                 }
         		
         		if (type == "text-effect-italic") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "italic" ? "" : "italic");
         		    clearChanged("font-style");
         		}
             	
         		if (type == "text-effect-underline") {
-        		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=underline]").is(".clicked") ? "underline" : ""));
-        		    } else {
-                    	var textDecoration = "";
-                    	if ($(".text-effect[id=underline]").is(".clicked")){
-                    		textDecoration += "underline";
-                    	}
-                    	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-                    		if (textDecoration != "")
-                    				textDecoration += " ";
-                			textDecoration += "line-through";
-                    	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "underline");
     		    	clearChanged("textDecoration-underline");
         		}
         		
         		if (type == "text-effect-strikethrough") {
-        		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=strikethrough]").is(".clicked") ? "line-through" : ""));
-        		    } else {
-                    	var textDecoration = "";
-                    	if ($(".text-effect[id=underline]").is(".clicked")){
-                    		textDecoration += "underline";
-                    	}
-                    	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-                    		if (textDecoration != "")
-                    				textDecoration += " ";
-                			textDecoration += "line-through";
-                    	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "line-through");
         		    clearChanged("textDecoration-strikethrough");
         		}
 
@@ -964,7 +957,7 @@ var lastChanged = "";
     
     function changeCheckbox(type, object) {
     	var target = $(".figure-item.checkbox[id=" + type + "-ratioFix]");
-    	if (object.attr("class").split(" ").includes("." + type + "-ratiofixed")) {
+    	if (object.is("." + type + "-ratiofixed")) {
     		target.addClass("checked");
     		target.children("div.checkbox").css("border", "1px solid gray");
     		target.children("div.checkbox").children("img").css("display", "block");
@@ -1057,6 +1050,10 @@ var lastChanged = "";
 			else 
 				$(this).css(type, "");
 	    });
+
+	    $(".ui-selected .removed span").each(function() {
+			$(this).css(type, "");
+	    });
 	    
 	    $(".ui-selected span").each(function() {
 			var spanText = $(this).wrap("<div>").parent().html();
@@ -1066,7 +1063,7 @@ var lastChanged = "";
 			if ($(this).html() == "")
 				$(this).remove();
 	    });
-	    
+
 		$(".ui-selected .changed").removeAttr("class");
 		
 	}
@@ -1135,15 +1132,15 @@ var lastChanged = "";
 	
 	$(document).on("click", ".text-editing", function() {
 		if ($(".text-dragged").length > 0) {
-			if ($(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)")
-				$(".text-dragged").css("background", "");
+			if ($(".text-dragged").is("focusout"))
+				$(".text-dragged").removeClass("focusout");
 			$(".text-dragged").selectText();
 		}
 	});
 	
 	$("input").on("focusin", function() {
 		if ($(".text-dragged").length > 0) {
-			$(".text-dragged").css("background", "pink");
+			$(".text-dragged").addClass("focusout");
 	        window.getSelection().removeAllRanges();
 		}
 	});

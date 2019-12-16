@@ -23,7 +23,7 @@
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
+            <div class="top-bar-titleText"><a href="privateFile.do?sort=recent">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">
@@ -34,8 +34,8 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
-            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
-            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/img-icon.png"></button>
+            <button><i class="far fa-comment-alt" onclick="memo();" id="top-memo-btn"></i></button>
+            <button><i class="fas fa-image" onclick="upImage();" id="top-image-btn"></i></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
@@ -76,7 +76,7 @@
                     <li><a href="javascript:">페이지 이름 변경</a></li>
                     <li><a href="javascript:" onclick="pageSave();">저장</a></li>
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
-                    <li><a href="javascript:" onclick="test();">내보내기</a></li>
+                    <li><a href="javascript:" onclick="exportPdf();">내보내기</a></li>
                     <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
                 </ul>
             </li>
@@ -308,18 +308,107 @@
                             </g>
                         </svg>
                     </a>
+                    <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.25)">
+                          <foreignObject x="1" y="23" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
+                              <input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #3498db; border-radius: 4px;">
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
+                    <!-- Input button_Normal_B -->
+                    <a id="obj_buttonInput_Normal_B" class="geItem c_buttonInput_Normal_B" display="inline-block" title="버튼">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.25)">
+                          <foreignObject x="1" y="23" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
+                              <input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
+                    <!-- Input button_Long_A -->
+                    <a id="obj_buttonInput_Long_A" class="geItem c_buttonInput_Long_A" display="inline-block" title="긴 버튼">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.25)">
+                          <foreignObject x="1" y="40" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 5px;">
+                              <input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #3498db; border-radius: 4px;">
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
+                    <!-- Input button_Long_B -->
+                    <a id="obj_buttonInput_Long_B" class="geItem c_buttonInput_Long_B" display="inline-block" title="긴 버튼">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.25)">
+                          <foreignObject x="1" y="40" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 23px; margin-left: 5px;">
+                              <input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
+                    <!-- Plus Btn -->
+                    <a id="obj_plusBtn" class="geItem c_plusBtn" display="inline-block" title="항목 추가">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.3)">
+                          <foreignObject x="1" y="25" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
+                              <div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">+</div>
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
+                    <!-- Minus Btn -->
+                    <a id="obj_minusBtn" class="geItem c_minusBtn" display="inline-block" title="항목 삭제">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.3)">
+                          <foreignObject x="1" y="25" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
+                              <div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">-</div>
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
+                    <!-- Message -->
+                    <a id="obj_messageForm" class="geItem c_messageForm" display="inline-block" title="메세지">
+                      <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <g transform="scale(0.3)">
+                          <foreignObject x="1" y="23" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
+                              <div style="position: absolute;">
+                      <div style="color:#fff;background-color:rgb(46, 204, 113);padding:15px;border-radius:4px;text-align:center;">Message</div>
+                      <span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
+                    </div>
+                          </div>
+                          </foreignObject>
+                        </g>
+                      </svg>
+                    </a>
                 </div>
             </div>        
         </div>
-        
         <div class="tab-content lib-tab-content">
+            <div class="searchbox">
+                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+            </div>
         </div>
+        
     </div>
     
     <div class="canvas-container">
         ${pageList[0].content }
         <div id="guide-h" class="guide"></div>
-		    <div id="guide-v" class="guide"></div>
+	    <div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -506,8 +595,6 @@
         </div>
     </div>
     
-    
-    
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
@@ -526,9 +613,7 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-
     	var privateLibrary = new Array();
-    	
 
     	 async function Thumbnail(){
     			var image;
@@ -540,8 +625,8 @@
     			
         		var node = document.getElementById('clone-canvas');
             	var canvas = document.createElement('canvas');
-            	canvas.width = node.scrollWidth;
-            	canvas.height = node.scrollHeight;
+            	canvas.width = $(node).width();
+            	canvas.height = $(node).height();
             	
             		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
             	    image = new Image();
@@ -562,8 +647,6 @@
             }).catch(function (error) {
             	console.log(error);
             });
-            
-          
     }	
 
     $(function(){
@@ -612,23 +695,24 @@
     	$.ajax({
     		url: 'getPlibList.do',
     		type: 'post',
+    		cache: false,
     		data: JSON.stringify(plib),
     		contentType: "application/json; charset=UTF-8",
     		dataType: 'json',
     		success: function(data){
-    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
+    			/* $('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>") */
     			privateLibrary = new Array();
     			for(var i = 0; i<data.plib.length; i++){
 					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
 							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
-						_id: data.plib[i]._id,
-	    				code: data.plib[i].code	
+						code: data.plib[i].code,
+						_id: data.plib[i]._id
 	    			}
 					privateLibrary.push(pl);
 				}
-    			resizeLibImg();
+   				resizeLibImg();
     		},
     		error: function(){
     			console.log("plib list 가져오기 실패");
@@ -774,7 +858,9 @@
     }
 
 	$(document).on("mouseup", ".minicolors-grid", function() {
-       Thumbnail();
+       setTimeout(function(){
+    	   Thumbnail();
+       }, 500);
 	});
 	
     </script>

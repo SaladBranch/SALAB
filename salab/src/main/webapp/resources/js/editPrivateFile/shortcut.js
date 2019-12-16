@@ -38,17 +38,19 @@ $(document).on('keydown', function(e){
         else
         	$(".obj-comp[contenteditable=true]").selectText();
     }
-    if(e.keyCode == 38){
-    	moveUp();
-    }
-    if(e.keyCode == 37){
-    	moveLeft();
-    }
-    if(e.keyCode == 39){
-    	moveRight();
-    }
-    if(e.keyCode == 40){
-    	moveDown();
+    if (!$("input").is(":focus") && $(".text-editing").length == 0) {
+        if(e.keyCode == 38){
+        	moveUp();
+        }
+        if(e.keyCode == 37){
+        	moveLeft();
+        }
+        if(e.keyCode == 39){
+        	moveRight();
+        }
+        if(e.keyCode == 40){
+        	moveDown();
+        }
     }
 });
 function deleteObject(){

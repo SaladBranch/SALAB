@@ -7,8 +7,8 @@ var $all = $('#multiselect');
 var appendElement = "";
 
 function initSelect(){
-    var $lastone = $('#droppable .obj').last();
-    $('#droppable .obj').each(function(){
+    var $lastone = $('#droppable > .obj').last();
+    $('#droppable > .obj').each(function(){
         if($(this).is($lastone)){
             selectedObj = new Array();
             selectedObj.push($lastone);
@@ -46,7 +46,7 @@ function includeElement(X, Y, temp) {
     	comp = privateLibrary[index].code;
     }
     $("#droppable").append(comp);
-    $('#droppable .obj').last().css({
+    $('#droppable > .obj').last().css({
     	top: Y,
     	left: X
     });

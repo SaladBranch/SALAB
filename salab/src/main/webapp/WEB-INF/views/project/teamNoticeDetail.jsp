@@ -184,6 +184,15 @@
 
         <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
+	        $('.user-profile').click(function(){
+	            var drop = $('.profile-dropmenu');
+	            if(drop.css('display') == 'block'){
+	                drop.hide();
+	            }else{
+	                drop.show();
+	            }
+	        });
+        
             function modifiedNotice() {
                 var no = ${projectnotice.pnoticeno};
                 var title = $(".InputText").val();

@@ -21,7 +21,7 @@
 
 	 <script src="https://kit.fontawesome.com/08d0951667.js"></script>
 
-    <title>${project.projectname } | Salab</title>
+    <title>${sessionScope.project.projectname } | Salab</title>
 </head>
 
 <body>
@@ -154,8 +154,8 @@
                 	<label for="teamLogo">
 
                     <div class="teamLogo-box">
-                    	<c:if test="${project.projectimage_o eq null }"><img src="/salab/resources/img/default-project.png" alt=""></c:if>
-                    	<c:if test="${project.projectimage_o ne null }"><img src="/salab/resources/projectUpfiles/${project.projectimage_o} " alt=""></c:if>
+                    	<c:if test="${empty sessionScope.project.projectimage_o}"><img class="teamLogo-img"src="/salab/resources/img/default-project.png" alt=""></c:if>
+                    	<c:if test="${!empty sessionScope.project.projectimage_o}"><img class="teamLogo-img" src="/salab/resources/projectUpfiles/${sessionScope.project.projectimage_o} " alt=""></c:if>
                     	<c:if test="${userauth eq 'LEADER' }">
                     		<input type="file" id="teamLogo" accept="image/*">
                     		<input type="hidden" name="base64img" id="base64img">
@@ -181,7 +181,9 @@
 	                        <c:forEach var="pfile" items="${projectList}">
 	                            <div class="file-grid">
 	                                <div class="file-container">
-	                                    <div class="file-thumbnail"  onclick="location.href='etFile.do?projectno=${project.projectno}&fileno=${pfile.prfileno}'" ></div>
+	                                    <div class="file-thumbnail"  onclick="location.href='etFile.do?projectno=${project.projectno}&fileno=${pfile.prfileno}'" >
+	                                    	${pfile.prfilethumbnail }
+	                                    </div>
 	                                    <div class="file-info">
 	                                        <div class="about-file">
 	                                            <div class="file-name">

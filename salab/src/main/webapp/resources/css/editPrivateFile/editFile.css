@@ -1052,9 +1052,6 @@ ol.page-tab-content li{
     color: #797979 !important;
     cursor: default;
 }
-.disabled:hover{
-    background: #2c2c2c !important;
-}
 .show{
     display: block;
 }
@@ -1101,9 +1098,10 @@ ol.page-tab-content li{
 }
 
 .memo-content{
-	width: 300px;
+	width: auto;
+	min-width: 320px;
 	height: 125px;
-	border: 1.5px solid #00a8ff;
+	border: 1.5px solid black;
 	border-radius: 3px;
 	background: white;
 	padding: 16px;
@@ -1122,23 +1120,41 @@ ol.page-tab-content li{
 .memo-info{
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
+	align-items: center;
 }
 .user{
-	justify-content: flex-start;
-	
+    display: flex;
+	align-items: center;
+}
+
+.memo-user-profile{
+	display: block;
+	background-image : url("/salab/resources/img/default_profile.png");
 }
 .button{
 	display: flex;
-	justify-content: flex-end;
-	max-width: 150px;
+    max-width: 61%;
+    padding-left: 5%;
+}
+
+button.btn-ghost.cancel, button.btn-ghost.done{
+	margin-left: 10px;
+    width: 83px;
+    height: 35px;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.button .file-options-menu li a {
+    color: #fff;
+    font-size: 13px;
+    padding-right: 30px;
 }
 
 .memo-cnt{
 	width: 100%;
-}
-
-.memo-cnt.disabled{
 	border: none;
 }
 

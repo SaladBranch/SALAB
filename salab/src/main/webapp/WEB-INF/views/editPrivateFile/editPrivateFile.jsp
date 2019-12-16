@@ -34,8 +34,8 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
-            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
-            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/img-icon.png"></button>
+            <button><i class="far fa-comment-alt" onclick="memo();" id="top-memo-btn"></i></button>
+            <button><i class="fas fa-image" onclick="upImage();" id="top-image-btn"></i></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
@@ -567,8 +567,8 @@
     			
         		var node = document.getElementById('clone-canvas');
             	var canvas = document.createElement('canvas');
-            	canvas.width = node.scrollWidth;
-            	canvas.height = node.scrollHeight;
+            	canvas.width = $(node).width();
+            	canvas.height = $(node).height();
             	
             		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
             	    image = new Image();

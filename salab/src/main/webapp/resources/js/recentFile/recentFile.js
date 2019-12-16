@@ -80,8 +80,11 @@ $(document).on("mousedown", ".right-main-side", function(e) {
     	$(this).removeClass('highlight');
     	fileList = new Array();
     	if($('.far.fa-trash-alt.trash').length){
+    		
     		$('.far.fa-trash-alt.trash').css('pointer-events', 'none');
     		$('.fas.fa-sync-alt.recovery').css('pointer-events', 'none');
+    		$('.far.fa-trash-alt.trash').css('color', 'gray');
+    		$('.fas.fa-sync-alt.recovery').css('color', 'gray');
     		$('.far.fa-trash-alt.trash').attr('onclick', 'filePermanentDelete()');
     		$('.fas.fa-sync-alt.recovery').attr('onclick', 'fileDeleteUndo()');
     	}
@@ -573,9 +576,13 @@ $(document).on('classChange', '.file-container', function(){
 	if($('.file-container').hasClass('highlight')){
 		$('.far.fa-trash-alt.trash').css('pointer-events', 'auto');
 		$('.fas.fa-sync-alt.recovery').css('pointer-events', 'auto');
+		$('.far.fa-trash-alt.trash').css('color', 'white');
+		$('.fas.fa-sync-alt.recovery').css('color', 'white');
 	}else{
 		$('.far.fa-trash-alt.trash').css('pointer-events', 'none');
 		$('.fas.fa-sync-alt.recovery').css('pointer-events', 'none');
+		$('.far.fa-trash-alt.trash').css('color', 'gray');
+		$('.fas.fa-sync-alt.recovery').css('color', 'gray');
 	}
 	
 	
@@ -620,14 +627,11 @@ $(document).on('multiSelected', '.file-container', function(){
 		
 		$('.far.fa-trash-alt.trash').css('pointer-events', 'auto');
 		$('.fas.fa-sync-alt.recovery').css('pointer-events', 'auto');
+		$('.far.fa-trash-alt.trash').css('color', 'white');
+		$('.fas.fa-sync-alt.recovery').css('color', 'white');
 		$('.far.fa-trash-alt.trash').attr('onclick', 'multiPermanentDelete()');
 		$('.fas.fa-sync-alt.recovery').attr('onclick', 'multiDeleteUndo()');
 	}
-});
-
-$(document).on('cancel', '.file-container', function(){
-	console.log('cancel');
-	//fileList = new Array();
 });
 
 function multiCopy(){

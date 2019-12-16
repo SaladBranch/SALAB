@@ -40,7 +40,10 @@
     text-decoration : inherit;
 }
 ::selection {
-	background : #27ad79;
+	background : skyblue;
+}
+.focusout {
+	background : #3C79C9;
 }
 
 #multiselect{

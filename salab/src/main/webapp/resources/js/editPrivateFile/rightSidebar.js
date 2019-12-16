@@ -107,14 +107,16 @@ var lastChanged = "";
 		}
 		$(this).css("background", "white");
      }).on("click", function() {
-    	 if ($(this).is(".clicked")) {
-    		 $(this).removeClass("clicked");
-    		 $(this).css("border", "1px solid white");
-    		 $(this).css("background", "white");
-    	 } else {
-    		 $(this).addClass("clicked");
-    		 $(this).css("border", "1px solid black");
-    		 $(this).css("background", "white");
+    	 if ($(this).attr("id") == "bold" || $(this).attr("id") == "italic") {
+        	 if ($(this).is(".clicked")) {
+        		 $(this).removeClass("clicked");
+        		 $(this).css("border", "1px solid white");
+        		 $(this).css("background", "white");
+        	 } else {
+        		 $(this).addClass("clicked");
+        		 $(this).css("border", "1px solid black");
+        		 $(this).css("background", "white");
+        	 }
     	 }
     	 applyChange("text-effect-" + $(this).attr("id"));
      });
@@ -320,8 +322,8 @@ var lastChanged = "";
 
 	document.addEventListener("mousedown", function(event) {
     	if(!$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *") && !$(event.target).is(".component")) {
-    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)" : false) {
-				$(".text-dragged").css("background", "");
+    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").is(".focusout") : false) {
+				$(".text-dragged").removeClass("focusout");
 				$(".text-dragged").selectText();
     		} else if ($(".text-dragged").length > 0 || window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
 				$(".text-dragged").contents().unwrap();
@@ -583,7 +585,7 @@ var lastChanged = "";
     		return result;
 		}
 
-		if (type == "underline" || type == "strikethrough") {
+		/*if (type == "underline" || type == "strikethrough") {
 			var str;
 			switch(type) {
 				case "underline": str = "underline"; break;
@@ -677,7 +679,7 @@ var lastChanged = "";
 				result = value;
 			}
 			return result;
-		}
+		}*/
 
 		if (type == "textgroundColor") {
 			if ($(".text-dragged").length > 0) {
@@ -894,7 +896,7 @@ var lastChanged = "";
                 	var fontColor1 = parseInt(fontColor.substring(0, 2), 16);
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
-
+                	
         			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    clearChanged("color");
         		}
@@ -910,38 +912,12 @@ var lastChanged = "";
         		}
             	
         		if (type == "text-effect-underline") {
-        		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=underline]").is(".clicked") ? "underline" : ""));
-        		    } else {
-                    	var textDecoration = "";
-                    	if ($(".text-effect[id=underline]").is(".clicked")){
-                    		textDecoration += "underline";
-                    	}
-                    	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-                    		if (textDecoration != "")
-                    				textDecoration += " ";
-                			textDecoration += "line-through";
-                    	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "underline");
     		    	clearChanged("textDecoration-underline");
         		}
         		
         		if (type == "text-effect-strikethrough") {
-        		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=strikethrough]").is(".clicked") ? "line-through" : ""));
-        		    } else {
-                    	var textDecoration = "";
-                    	if ($(".text-effect[id=underline]").is(".clicked")){
-                    		textDecoration += "underline";
-                    	}
-                    	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-                    		if (textDecoration != "")
-                    				textDecoration += " ";
-                			textDecoration += "line-through";
-                    	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "line-through");
         		    clearChanged("textDecoration-strikethrough");
         		}
 
@@ -1156,15 +1132,15 @@ var lastChanged = "";
 	
 	$(document).on("click", ".text-editing", function() {
 		if ($(".text-dragged").length > 0) {
-			if ($(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)")
-				$(".text-dragged").css("background", "");
+			if ($(".text-dragged").is("focusout"))
+				$(".text-dragged").removeClass("focusout");
 			$(".text-dragged").selectText();
 		}
 	});
 	
 	$("input").on("focusin", function() {
 		if ($(".text-dragged").length > 0) {
-			$(".text-dragged").css("background", "pink");
+			$(".text-dragged").addClass("focusout");
 	        window.getSelection().removeAllRanges();
 		}
 	});

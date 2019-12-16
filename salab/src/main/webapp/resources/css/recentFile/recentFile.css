@@ -86,10 +86,17 @@ body{
 .add-btn.add-btn-cursor{
 	pointer-events: auto;
 }
-/* .top-bar-children .add-btn:hover{
-    background-color: #000;
-} */
-
+.add-btn.add-btn-cursor:hover{
+	background-color: rgba(0, 0, 0, 1);
+}
+.far.fa-trash-alt.trash{
+	color: gray;
+	cursor: pointer;
+}
+.fas.fa-sync-alt.recovery{
+	color: gray;
+	cursor: pointer;
+}
 .user-profile{
     display: flex;
     flex-direction: row;
@@ -461,7 +468,7 @@ body{
     color: #00a8ff;
     text-align: center;
     padding-top: 98px;
-    cursor: default;
+    cursor: pointer;
 }
 
 .file-thumbnail{

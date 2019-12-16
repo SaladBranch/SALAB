@@ -52,5 +52,11 @@ public class ProjectFileServiceImpl implements ProjectFileService{
 		// TODO Auto-generated method stub
 		return projectFileDao.createPage(projectno);
 	}
+
+	@Override
+	public int changeLastModified(ProjectFile pfile) {
+		// TODO Auto-generated method stub
+		return projectFileDao.changeLastModified(pfile);
+	}
 	
 }

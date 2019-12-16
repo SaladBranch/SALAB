@@ -45,5 +45,10 @@ public class ProjectFileDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("ProjectfileMapper.createPage", projectno);
 	}
+
+	public int changeLastModified(ProjectFile pfile) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("ProjectfileMapper.changeLastModified", pfile);
+	}
 	
 }

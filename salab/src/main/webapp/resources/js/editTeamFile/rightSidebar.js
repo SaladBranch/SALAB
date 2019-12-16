@@ -276,7 +276,7 @@ var lastChanged = "";
     		if ($(this).focus)
     			$(this).blur();
     	} else if (eventType == "focusout") {
-            clearEnterable();
+    		clearEnterable();
     		applyChange(applyType);
     	}
 		
@@ -324,10 +324,10 @@ var lastChanged = "";
     		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)" : false) {
 				$(".text-dragged").css("background", "");
 				$(".text-dragged").selectText();
-    		} else {
-        		$(".text-dragged").contents().unwrap();
-            	window.getSelection().removeAllRanges();
-    		}
+    		} else if ($(".text-dragged").length > 0 || window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
+				$(".text-dragged").contents().unwrap();
+				window.getSelection().removeAllRanges();
+			}
     	}
 	}, true);
 	/*
@@ -362,6 +362,18 @@ var lastChanged = "";
     		}
     		if (isTextarea == "true") {
     			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
+    			var $dragCheckTarget = $(".text-dragged");
+    			while(true) {
+        			if (!$dragCheckTarget.is("span")) {
+        				break;
+        			} else if ($dragCheckTarget.text() == $dragCheckTarget.parent().text()) {
+        				$dragCheckTarget.parent().wrap("<span class='text-dragged'>");
+        				$dragCheckTarget.contents().unwrap();
+            			$dragCheckTarget = $(".text-dragged");
+        			} else {
+        				break;
+        			}
+        		}
     			clearDragged();
     			formatChange();
     			$(".text-dragged").selectText();
@@ -381,7 +393,7 @@ var lastChanged = "";
 	
 	// canvas div 클릭 시 서식 값 변화
     function formatChange() {
-
+    	
     	var targetMode;
     	var object = $("#droppable .ui-selected");
 		var target = $("#droppable .ui-selected .obj-comp");
@@ -414,7 +426,7 @@ var lastChanged = "";
     	
     	// 배경색
     	var backgroundColor = checkAttr("backgroundColor", target);
-		/*$(".figure-shape-comps .figure-item[id=backgroundColor] .minicolors-swatch-color").css("background", (backgroundColor == "diffrent" ? "white" : backgroundColor));*/
+		$(".figure-shape-comps .figure-item[id=backgroundColor] .minicolors-swatch-color").eq(0).css("background", (backgroundColor == "diffrent" ? "white" : backgroundColor));
 		$(".figure-shape-comps .figure-item[id=backgroundColor] input").val(backgroundColor == "diffrent" ? "" : backgroundColor);
 
 		// 선 타입
@@ -425,7 +437,7 @@ var lastChanged = "";
     	
     	// 선 색상
 		var lineColor = checkAttr("lineColor", target);
-		/*$(".figure-line-comps .figure-item[id=lineColor] .minicolors-swatch-color").css("background", (lineColor == "diffrent" ? "white" : lineColor));*/
+		$(".figure-line-comps .figure-item[id=lineColor] .minicolors-swatch-color").eq(0).css("background", (lineColor == "diffrent" ? "white" : lineColor));
 		$(".figure-line-comps .figure-item[id=lineColor] input").val(lineColor == "diffrent" ? "" : lineColor);
 	
     	// 선 굵기
@@ -463,7 +475,7 @@ var lastChanged = "";
     	
     	// font 색상
 		var fontColor = checkAttr("fontColor", target);
-		/*$(".text-font-comps .text-item[id=textColor] .minicolors-swatch-color").css("background", (fontColor == "diffrent" ? "white" : fontColor));*/
+		$(".text-font-comps .text-item[id=textColor] .minicolors-swatch-color").eq(0).css("background", (fontColor == "diffrent" ? "white" : fontColor));
 		$(".text-font-comps .text-item[id=textColor] input").val(fontColor == "diffrent" ? "mixed" : fontColor);
 		
     	// text effect
@@ -579,6 +591,11 @@ var lastChanged = "";
 				case "strikethrough" : str = "line-through"; break;
 			}
 			if ($(".text-dragged").length > 0) {
+				$(".text-dragged span").each(function() {
+					console.log($(this));
+					console.log($(this).css("text-decoration"));
+					console.log($(this).css("text-decoration").includes(str));
+				});
 				value = "";
 				var $checkParent = $(".text-dragged").parent();
 				while(true) {
@@ -677,7 +694,6 @@ var lastChanged = "";
 	            			result = "diffrent";
 					}
 				});
-				console.log(result);
 				if (result != "diffrent") {
 					var $checkParent = $(".text-dragged").parent();
 					while(true) {
@@ -885,12 +901,12 @@ var lastChanged = "";
         		}
 
         		if (type == "text-effect-bold") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", $(".text-effect[id=bold]").is(".clicked") ? "bold" : "");
+            		wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "700" ? 300 : 700);
         		    clearChanged("font-weight");
                 }
         		
         		if (type == "text-effect-italic") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", $(".text-effect[id=italic]").is(".clicked") ? "italic" : "");
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "italic" ? "" : "italic");
         		    clearChanged("font-style");
         		}
             	
@@ -966,7 +982,7 @@ var lastChanged = "";
     
     function changeCheckbox(type, object) {
     	var target = $(".figure-item.checkbox[id=" + type + "-ratioFix]");
-    	if (object.attr("class").split(" ").includes("." + type + "-ratiofixed")) {
+    	if (object.is("." + type + "-ratiofixed")) {
     		target.addClass("checked");
     		target.children("div.checkbox").css("border", "1px solid gray");
     		target.children("div.checkbox").children("img").css("display", "block");
@@ -1059,6 +1075,10 @@ var lastChanged = "";
 			else 
 				$(this).css(type, "");
 	    });
+
+	    $(".ui-selected .removed span").each(function() {
+			$(this).css(type, "");
+	    });
 	    
 	    $(".ui-selected span").each(function() {
 			var spanText = $(this).wrap("<div>").parent().html();
@@ -1068,7 +1088,7 @@ var lastChanged = "";
 			if ($(this).html() == "")
 				$(this).remove();
 	    });
-	    
+
 		$(".ui-selected .changed").removeAttr("class");
 		
 	}
@@ -1176,7 +1196,7 @@ var lastChanged = "";
     		target = $(".text-item#textColor");
     	
     	if (target != "") {
-        	var str = pad(target.children("input[type=text]").val().replace(/[#]/g, ""), 6);
+        	var str = pad(target.children("input").val().replace(/[#]/g, ""), 6);
         	if (str.length > 0 && str.length <= 6) {
             	var str1 = parseInt(str.substring(0, 2), 16).toString();
             	var str2 = parseInt(str.substring(2, 4), 16).toString();

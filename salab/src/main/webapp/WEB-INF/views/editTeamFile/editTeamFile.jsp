@@ -23,7 +23,7 @@
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do?sort=recent">${project.projectname}</a> / <input id="file-title" type="text" value="${pfile.prfiletitle }"></div>
+            <div class="top-bar-titleText"><a href="gotoProjectFile.do?projectno=${projectno }&sort=recent">팀 파일</a> / <input id="file-title" type="text" value="${pfile.prfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">
@@ -34,7 +34,9 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
-            <button><i class="far fa-play-circle"></i></button>
+            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
+            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/img-icon.png"></button>
+            <button><i class="far fa-play-circle" onclick="popup();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
             <div></div>
@@ -74,7 +76,7 @@
                     <li><a href="javascript:">페이지 이름 변경</a></li>
                     <li><a href="javascript:" onclick="pageSave();">저장</a></li>
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
-                    <li><a href="javascript:" onclick="Thumbnail();">내보내기</a></li>
+                    <li><a href="javascript:" onclick="exportPdf();">내보내기</a></li>
                     <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
                 </ul>
             </li>
@@ -82,27 +84,27 @@
             <li id="toggle-edit">
                 편집<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-edit-menu">
-                    <li><a href="#">실행취소</a></li>
-                    <li><a href="#">다시실행</a></li>
-                    <li><a href="#">삭제하기</a></li>
-                    <li><a href="#">잘라내기</a></li>
-                    <li><a href="#">복사</a></li>
-                    <li><a href="#">붙여넣기</a></li>
-                    <li><a href="#">개인 라이브러리</a></li>
+                    <li><a href="javascript:undoPage();">실행취소</a></li>
+                    <li><a href="javascript:redoPage();">다시실행</a></li>
+                    <li><a href="javascript:deleteObject();">삭제하기</a></li>
+                    <li><a href="javascript:cutObject();">잘라내기</a></li>
+                    <li><a href="javascript:copyObject();">복사</a></li>
+                    <li><a href="javascript:pasteObject();">붙여넣기</a></li>
+                    <li><a href="javascript:savetoLibrary();">개인 라이브러리</a></li>
                 </ul>
             </li>
             <li id="toggle-sort">
                 정렬<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-sort-menu">
-                    <li><a href="#">그룹</a></li>
-                    <li><a href="#">그룹해제</a></li>
+                    <li><a href="javascript:groupObject();">그룹</a></li>
+                    <li><a href="javascript:ungroupObject();">그룹해제</a></li>
                     <li id="toggle-sort-order">
                     순서<span><i class="fas fa-caret-right"></i></span>
                         <ul class="toggle-sort-order">
-                            <li><a href="#">맨 앞으로</a></li>
-                            <li><a href="#">앞으로</a></li>
-                            <li><a href="#">맨 뒤로</a></li>
-                            <li><a href="#">뒤로</a></li>
+                            <li><a href="javascript:send_forward();">맨 앞으로</a></li>
+                            <li><a href="javascript:send_front();">앞으로</a></li>
+                            <li><a href="javascript:send_backward();">맨 뒤로</a></li>
+                            <li><a href="javascript:send_back();">뒤로</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -110,16 +112,16 @@
             <li id="toggle-insert">
                 삽입<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-insert-menu">
-                    <li><a href="#">이미지</a></li>
+                    <li><a href="javascript:" onclick="upImage();">이미지</a></li>
                     <li><a href="#">테이블</a></li>
-                    <li><a href="#">메모</a></li>
+                    <li><a href="javascript:" onclick="memo();">메모</a></li>
                 </ul>
             </li>
             <li id="toggle-look">
                  보기<span><i class="fas fa-caret-right"></i></span>
                 <ul class="toggle-look-menu">
                     <li><a href="#">격자무늬 보이기</a></li>
-                    <li><a href="#">웹 테스트</a></li>
+                    <li><a href="javascript:" onclick="popup();">웹 테스트</a></li>
                 </ul>
             </li>
         </ul>
@@ -161,11 +163,12 @@
             <div class="searchbox">
                 <i class="fas fa-search"></i><input type="text" placeholder="검색">
             </div>
+            <div class="comp-searchResult"></div>
             <div class="comp-category common-shape" onclick="toggleComps(this, '.common-shape-comps');">
                 <p>&#9660;</p>기본도형(common shape)
             </div>
               <div class="common-shape-comps">
-                <div style="padding:5px;">
+                <div style="padding:4px;">
                     <!--직사각형-->
                     <a id="obj_rect" class="geItem c_rectangle" display="inline-block">
                     <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -223,9 +226,112 @@
                     </a>
                 </div>
             </div>
-            <div class="comp-category form-control">
+            <div class="comp-category form-control" onclick="toggleComps(this, '.form-control-comps');">
                 <p>&#9654;</p>폼(form)
             </div>
+            <div class="form-control-comps">
+               <div style="padding: 4px;">
+                  <!-- Input text -->
+                  <a id="obj_textInput" class="geItem c_textInput" display="inline-block" title="텍스트 input">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="45" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                  					<input type="text" placeholder="내용 입력">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Normal_A -->
+                  <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
+                  					<input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #3498db; border-radius: 4px;">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Normal_B -->
+                  <a id="obj_buttonInput_Normal_B" class="geItem c_buttonInput_Normal_B" display="inline-block" title="버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
+                  					<input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Long_A -->
+                  <a id="obj_buttonInput_Long_A" class="geItem c_buttonInput_Long_A" display="inline-block" title="긴 버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="40" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 5px;">
+                  					<input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #3498db; border-radius: 4px;">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Long_B -->
+                  <a id="obj_buttonInput_Long_B" class="geItem c_buttonInput_Long_B" display="inline-block" title="긴 버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="40" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 23px; margin-left: 5px;">
+                  					<input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Plus Btn -->
+                  <a id="obj_plusBtn" class="geItem c_plusBtn" display="inline-block" title="항목 추가">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="25" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
+                  					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">+</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Minus Btn -->
+                  <a id="obj_minusBtn" class="geItem c_minusBtn" display="inline-block" title="항목 삭제">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="25" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
+                  					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">-</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Message -->
+                  <a id="obj_messageForm" class="geItem c_messageForm" display="inline-block" title="메세지">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
+                  					<div style="position: absolute;">
+										<div style="color:#fff;background-color:rgb(46, 204, 113);padding:15px;border-radius:4px;text-align:center;">Message</div>
+										<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
+									</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+               </div>
+            </div>  
         </div>
         
         <div class="tab-content lib-tab-content">
@@ -237,6 +343,8 @@
     
     <div class="canvas-container">
         ${pageList[0].content }
+        <div id="guide-h" class="guide"></div>
+	    <div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -423,9 +531,9 @@
         </div>
     </div>
     
-    <div id="render" style="display: none;">왜 이러는걸까요</div>
-    
+    <input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">
     <div class="context-menu"></div>
+    
     <div class="team-chat">
         <i class="far fa-comment-dots"></i>
         <div id="chat-alert"></div>
@@ -456,6 +564,7 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.ui.rotatable.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/html2canvas.min.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/canvas2image.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
     <script src="/salab/resources/js/editTeamFile/teamFile.js"></script>
@@ -468,47 +577,40 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
+    	var privateLibrary = new Array();
     	
-    	async function Thumbnail(){
-    		console.log('start');
-    		var image;
-        		var node = document.getElementById('droppable');
-            	
-            	var canvas = document.createElement('canvas');
-            	canvas.width = node.scrollWidth;
-            	canvas.height = node.scrollHeight;
-            	
-            		await domtoimage.toPng(node).then(function (pngDataUrl) {
-            	    var img = new Image();
-            	    img.onload = function () {
-            	        var context = canvas.getContext('2d');
-
-            	        context.translate(canvas.width, 0);
-            	        context.scale(-1, 1);
-            	        context.drawImage(img, 0, 0);
-
-            	        //list[$('.ui-selected').index()].thumbnail = $('.ui-selected .page-thumbnail').html();
-            	        console.log('domtoimage end');
-            	    };
-            		img.src = pngDataUrl;
-            		$('.ui-selected .page-thumbnail').html('');
-        	        $('.ui-selected .page-thumbnail').append(img);
-            }).catch(function(error) {
-            	console.error('oops, something went wrong!', error);
-            });
-    	    /* await html2canvas($('#droppable')[0], {
-    	    	width: $('#droppable').width(),
-    	    	height: $('#droppable').height()
-    	    }).then(function (canvas) { 
-    	    	var image = new Image();
-    	    	console.log(canvas);
-    	        image.src = canvas.toDataURL('image/png');
-    	        
-    	        $('.ui-selected .page-thumbnail').html('');
-    	        $('.ui-selected .page-thumbnail').append(image);
-    	        
-    	      }); */
-        	
+		async function Thumbnail(){
+			var image;
+			
+			var clone = $('#droppable').clone();
+		  	$('#clone-canvas').html(clone);
+		  	$('#clone-canvas').find('.canvas').removeClass('grid-canvas');
+		  	$('#clone-canvas').find('.obj').removeClass('ui-selected');
+			
+			var node = document.getElementById('clone-canvas');
+		  	var canvas = document.createElement('canvas');
+		  	canvas.width = node.scrollWidth;
+		  	canvas.height = node.scrollHeight;
+		  	
+		  		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
+		  	    image = new Image();
+		  	    $(image).attr('object-fit', 'contain');
+		  	    $(image).addClass('centered');
+		  	    image.onload = function () {
+		  	        var context = canvas.getContext('2d');
+		
+		  	        context.translate(canvas.width, 0);
+		  	        context.scale(-1, 1);
+		  	        context.drawImage(image, 0, 0);
+		
+		  	    };
+		  		image.src = pngDataUrl;
+		  		$('.ui-selected .page-thumbnail').html('');
+		       $('.ui-selected .page-thumbnail').append(image);
+		       $('#clone-canvas').html('');
+		}).catch(function (error) {
+		  	console.log(error);
+		});
     }	
     $(function(){
     	
@@ -518,7 +620,7 @@
     			content: `${item.content}`,
     			pageno: "${item.pageno}",
     			fileno: "${item.fileno}",
-    			userno: "${item.userno}",
+    			projectno: "${item.projectno}",
     			pagename: "${item.pagename}",
     			thumbnail: `${item.thumbnail}`,
     			_id: "${item._id }",
@@ -548,20 +650,37 @@
                 
         });
         
-		$('.colorView').minicolors({
-            control: 'hue',
-            position : "bottom right",
-            defaultValue: "#FFFFFF",
-            letterCase : "uppercase",
-            change: function(hex, opacity){
-                switch ($(this).attr("id")) {
-                	case "background" : applyChange("backgroundColor"); break;
-                	case "line" : applyChange("lineColor"); break;
-                	case "text" : applyChange("textColor"); break;
-                	case "textground" : applyChange("textgroundColor"); break;
-                }
-            }
-        });
+		//page onload시 lib-tab에 내용 추가
+    	var plib = {
+   			fileno: list[0].fileno,
+   			userno: list[0].userno
+    	}
+    	$.ajax({
+    		url: 'getPlibList.do',
+    		type: 'post',
+    		cache: false,
+    		data: JSON.stringify(plib),
+    		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
+    		success: function(data){
+    			/* $('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>") */
+    			privateLibrary = new Array();
+    			for(var i = 0; i<data.plib.length; i++){
+					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
+							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
+					$('.lib-tab-content').append($libItem);
+					var pl = {
+						code: data.plib[i].code,
+						_id: data.plib[i]._id
+	    			}
+					privateLibrary.push(pl);
+				}
+   				resizeLibImg();
+    		},
+    		error: function(){
+    			console.log("plib list 가져오기 실패");
+    		}
+    	});
     });
     $('.page-tab').click(function(){
     	
@@ -586,30 +705,6 @@
        
     });
     $('.lib-tab').click(function(){
-    	var plib = {
-    			fileno: list[0].fileno,
-    			userno: list[0].userno
-    	}
-    	$.ajax({
-    		url: 'getPlibList.do',
-    		type: 'post',
-    		data: JSON.stringify(plib),
-    		contentType: "application/json; charset=UTF-8",
-    		dataType: 'json',
-    		success: function(data){
-    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
-    			for(var i = 0; i<data.plib.length; i++){
-					$libItem = $("<div class='plib-item'><div class='plib-item-thumb'><img src='" 
-							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
-					$('.lib-tab-content').append($libItem);
-				}
-    			
-    		},
-    		error: function(){
-    			console.log("plib list 가져오기 실패");
-    		}
-    	});
-    	
         $('.left-side-bar .tab').each(function(){
             $(this).removeClass('active-tab'); 
         });
@@ -722,13 +817,14 @@
         	var scroll_zoom = new ScrollZoom($('.canvas-container'),5,0.1);
     		
         	var changedWidth = $('#droppable').width() * scale/100;
-            if(changedWidth > $('.canvas-container').width())
-            	$('#droppable').css('margin', '5% 5%');
-            else{
-            	$('#droppable').css('margin-left', ($('.canvas-container').width() - changedWidth)/2);
-            }
     	}
     }
+    
+	$(document).on("mouseup", ".minicolors-grid", function() {
+       setTimeout(function(){
+    	   Thumbnail();
+       }, 500);
+	});
     
 
     </script>

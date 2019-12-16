@@ -143,7 +143,6 @@
         rightMouseListner();
         leftMouseListner();
         
-        
         //페이지별 color 다르게 적용
         toggleCanvasColor();
         
@@ -316,14 +315,8 @@
 				console.log( jqXHR.statusText );
 				console.log( jqXHR.responseText );
 				console.log( jqXHR.readyState );
-				}
+			}
     	});
-    }
-    
-    function test(){
-    	for(var i=0; i < list.length; i++){
-    		console.log(list[i]);
-    	}
     }
     
     //page 탭 리스트 불러오는 ajax

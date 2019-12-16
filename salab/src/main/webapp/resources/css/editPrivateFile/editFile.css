@@ -321,7 +321,7 @@ svg{
 .tab-content::-webkit-scrollbar,
 .canvas-container::-webkit-scrollbar,
 .text-font-droplist::-webkit-scrollbar{
-    width: 10px;
+    width: 7px;
     background-color: #f5f5f5;
 }
 .tab-content::-webkit-scrollbar-thumb,
@@ -434,17 +434,28 @@ ol.page-tab-content li{
 /*    background: #eaeaea;*/
     background: #e6f7ff;
 }
-.common-shape-comps{
+.common-shape-comps,
+.form-control-comps {
     border-bottom: 1px solid #c6c6c6;
     user-select: none;
 }
-.common-shape-comps a{
+.common-shape-comps a,
+.form-control-comps  a{
 	width: 40px;
 }
 
-.comp-tab-content svg:hover{
+.comp-tab-content svg:hover,
+.form-control-comps  svg:hover{
     background: #eaeaea;
     border-radius: 3px;
+    cursor : pointer;
+}
+.form-control-comps{
+    display: none;
+}
+.form-control-comps a:nth-child(2n+1) svg{
+    margin-left:5px;
+    margin-right: 10px;
 }
 
 /*.rectangle{

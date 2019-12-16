@@ -8,8 +8,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,6 +37,7 @@ import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.member_project.model.service.Member_ProjectService;
 import com.sesame.salab.member_project.model.vo.Member_Project;
 import com.sesame.salab.page.model.dao.MongoService;
+import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.project.model.service.ProjectService;
 import com.sesame.salab.project.model.vo.Project;
 import com.sesame.salab.project.model.vo.ProjectMember;
@@ -144,6 +143,7 @@ public class ProjectController {
 	//프로젝트페이지로 이동
 	@RequestMapping(value="gotoProject.do")
 	public ModelAndView gotoProjectMethod(ModelAndView mv, Project project,HttpSession session ) throws MessagingException, UnsupportedEncodingException {
+	MongoService mgService = new MongoService();
 	logger.info("gotoTeamProject.do 진입");
 	Member member = (Member) session.getAttribute("loginMember");
 	//프로젝트 데이터조회
@@ -165,7 +165,21 @@ public class ProjectController {
 	
 	//페이지메인에 표시될 프로젝트 확인 (최대4개)
 	List<ProjectFile> teamProjectList = pService.selectMainFileList(project.getProjectno());
-
+	System.out.println("확인 : "+teamProjectList.toString());
+	if(teamProjectList != null) {
+		for(ProjectFile pf : teamProjectList) {
+			Page p = new Page();
+			p.setFileno(pf.getPrfileno());
+			p.setPageno(1);
+			p.setProjectno(pf.getProjectno());
+			Page page = mgService.findTeamOne("page", p);
+			pf.setPrfilethumbnail(page.getThumbnail());
+		}
+		mgService.close();
+		mv.addObject("fileList", teamProjectList);
+		mv.setViewName("project/projectFile");
+	}
+	
 	//현재 유저의 유저권한 확인
 	HashMap<String, Object> mapForAuth = new HashMap<String, Object>();
 	mapForAuth.put("userno", member.getUserno());

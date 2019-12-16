@@ -40,7 +40,6 @@
                             response($.map(result.list, function(item) {
                                 console.log(item);
                                 return {
-
                                     label: item.username + "  " + item.usermail,
                                     value: item.username,
                                     userno: item.userno,
@@ -55,10 +54,11 @@
                 select: function(event, ui) {
                     console.log(ui.item.userno);
                     $('form').append('<input type="hidden" name="invest" value="' + ui.item.userno + '">');
-                    $('#log').prepend('<div class="invite-email">' + ui.item.value + '<em>' + ui.item.usermail + '</em></div>');
+                    $('#log').prepend('<div class="invite-email">' + ui.item.value + '<em>  ' + ui.item.usermail +' <div class="deleteEmail" onclick="deleteEmail()"><i class="fas fa-times"></i></div>'+ '</em></div>');
                 }
             });
         });
+        
     </script>
 </head>
 
@@ -172,7 +172,7 @@
                 <div class="middle">
                     <!-- 멤버추가 -->
                     <div class="create-upside-div">
-                        <div class="upside-title-div">PROJECT를 함께 할 팀원을 추가합니다</div>
+                        <div class="upside-title-div create-team-p">PROJECT를 함께 할 팀원을 추가합니다</div>
                         <p>
                             함께 하고자 하는 유저의 닉네임을 설정해주세요<br>
                             닉네임이 한글일 시 검색 안되벌임
@@ -182,7 +182,7 @@
                     </div>
                     <div class="create-middleside-div">
                         <div>
-                            <input id="invite-username-input" class="invite-username-input" type="text" name="invest1" list="autocomp" placeholder=" : 함께할 유저의 이름을 입력하세요">
+                            <input id="invite-username-input" class="invite-username-input" type="text" name="invest1" list="autocomp" placeholder="  함께할 유저의 이름을 입력하세요">
                             <div class="btn-zone">
                                 <div class="none-Invite">
                                     <a href="createProject.do?userno=${loginMember.userno}&projectname=${projectname}">나중에 초대할게요.</a>
@@ -235,6 +235,12 @@
             drop.show();
         }
     });
+
+    function deleteEmail(){
+        console.log(event.target.parentElement.parentElement.parentElement);
+      var deleteOb = event.target.parentElement.parentElement.parentElement;
+    deleteOb.style.display = "none";
+    }
 </script>
 
 </html>

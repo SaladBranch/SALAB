@@ -14,6 +14,15 @@ $(document).ready(function () {
        console.log("ddd");
        noticeListPrint(1);
        console.log("ddd");*/
+	
+});
+$('.user-profile').click(function(){
+    var drop = $('.profile-dropmenu');
+    if(drop.css('display') == 'block'){
+        drop.hide();
+    }else{
+        drop.show();
+    }
 });
 
 function readNotice(project,notice) {

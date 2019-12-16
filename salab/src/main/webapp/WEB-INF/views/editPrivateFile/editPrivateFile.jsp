@@ -23,7 +23,7 @@
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
+            <div class="top-bar-titleText"><a href="privateFile.do?sort=recent">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">
@@ -533,8 +533,6 @@
         </div>
     </div>
     
-    
-    
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
@@ -553,9 +551,7 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-
     	var privateLibrary = new Array();
-    	
 
     	 async function Thumbnail(){
     			var image;
@@ -589,8 +585,6 @@
             }).catch(function (error) {
             	console.log(error);
             });
-            
-          
     }	
 
     $(function(){

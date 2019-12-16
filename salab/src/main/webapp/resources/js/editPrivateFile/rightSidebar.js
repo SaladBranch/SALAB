@@ -566,21 +566,42 @@ var lastChanged = "";
 	            			result = "diffrent";
 					}
 				});
+				var cssString = ""
+				switch(type) {
+					case "fontType" : cssString = "<span style=\"font-family"; break;
+					case "fontSize" : cssString = "<span style=\"font-size"; break; break;
+					case "fontColor" : cssString = "<span style=\"color"; break; break;
+					case "bold" : cssString = "<span style=\"font-weight"; break;
+					case "italic" : cssString = "<span style=\"font-style"; break; break;
+				}
 	    		$("div.ui-selected span").each(function() {
 	    			if (result != "diffrent") {
-						switch(type) {
-							case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
-							case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
-							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
-							case "bold" : value = $(this).css("font-weight"); break;
-							case "italic" : value = $(this).css("font-style"); break;
+	    				var innerHTML = $(this).wrap("<div>").parent().html();
+						$(this).unwrap();
+						if (innerHTML.startsWith(cssString)) {
+							switch(type) {
+								case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+								case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+								case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+								case "bold" : value = $(this).css("font-weight"); break;
+								case "italic" : value = $(this).css("font-style"); break;
+							}
+		            		if (result == "start")
+		            			result = value;
+		            		else if (result != value)
+		            			result = "diffrent";
 						}
-	            		if (result == "start")
-	            			result = value;
-	            		else if (result != value)
-	            			result = "diffrent";
 	    			}
 	        	});
+			}
+			if (result == "start") {
+				switch(type) {
+					case "fontType" : result = "Roboto"; break;
+					case "fontSize" : result = 20; break; break;
+					case "fontColor" : result = "#343434"; break;
+					case "bold" : result = 300; break;
+					case "italic" : result = "none"; break;
+				}
 			}
     		return result;
 		}
@@ -1019,7 +1040,16 @@ var lastChanged = "";
 
     function wrapSpan(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
-    		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    		if (target.is(".obj-ul")) {
+    			target.find("li").each(function() {
+    	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    			})
+    		} else if (!target.is(".textarea")) {
+    			target.find(".textarea").each(function() {
+    	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    			})
+    		} else
+        		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
     	}
     	else {
     		console.log("wrapTag 에러 발생 !!");
@@ -1028,15 +1058,18 @@ var lastChanged = "";
 
 	function clearChanged(type) {
 		
-		var $checkParent = $(".ui-selected .changed").parent();
-		while(true) {
-			if ($checkParent.is(".textarea"))
-				break;
-			else if ($checkParent.text() == $(".ui-selected .changed").text()) {
-				$checkParent.css(type, "");
+		$(".ui-selected .changed").each(function() {
+			var $checkParent = $(this).parent();
+			while(true) {
+				if ($checkParent.is("div"))
+					break;
+				else if ($checkParent.text() == $(this).text()) {
+					$checkParent.css(type, "");
+				}
+				$checkParent = $checkParent.parent();
 			}
-			$checkParent = $checkParent.parent();
-		}
+		})
+		
 
 	    $(".ui-selected .changed span").each(function() {
 			if (type.startsWith("textDecoration")) {
@@ -1064,7 +1097,9 @@ var lastChanged = "";
 				$(this).remove();
 	    });
 
-		$(".ui-selected .changed").removeAttr("class");
+		$(".ui-selected .changed").each(function() {
+			$(this).removeAttr("class");
+		});
 		
 	}
 

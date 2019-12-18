@@ -112,7 +112,8 @@ svg{
     margin-top: 5px;
     border-radius: 50%;
 }
-#my-profile:hover ~ .team-members{
+#my-profile:hover ~ .team-members,
+#my-profile:hover ~ .team-members:before{
     display: block;
 }
 .team-members{
@@ -131,7 +132,7 @@ svg{
     content: "";
     width: 0;
     height: 0;
-    display: block;
+    display: none;
     position: absolute;
     top: -5px;
     right: 13px;

@@ -1,14 +1,46 @@
-$(document).ready(function(){
 	var socket = io("http://localhost:8889");
 	
 	//채팅파트
 	var msgAlert = 0; //msg 알림용 변수
 	//방에 들어왔을때
-	socket.emit("joinRoom", "prfile"+$('#prfileno').val());
-	socket.on("joinRoom", function(msg){
-		console.log(msg);
+	var userProfile = {
+		userno: $('#userno').val(),
+		username: $('#username').val(),
+		userprofile_r: $('#userprofile_r').val() === 'empty'? 'empty' : $('#userprofile_r').val()
+	}
+	socket.emit("joinRoom", "prfile"+$('#prfileno').val(), userProfile);
+	socket.on("joinRoom", function(userProfiles){
+		console.log("누군가 들어왓군요!");
+		$('.team-members').html("");
+		for(var i = 0; i < userProfiles.length; i++){
+			userProfile = userProfiles[i];
+			$img = $('<img class="member-profile">');
+			userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
+			var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
+			$('.team-members').append(member);
+		}
 	});
-	//방에서 나갈때
+	//방에서 나갈때	
+	socket.on("leaveRoom", function(userProfiles){
+		console.log("누군가 나갔군요!");
+		$('.team-members').html("");
+		for(var i = 0; i < userProfiles.length; i++){
+			userProfile = userProfiles[i];
+			$img = $('<img class="member-profile">');
+			userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
+			var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
+			$('.team-members').append(member);
+		}
+	});
+	
+	//Object삽입
+	function TeamInsertObject(obj_code){
+		socket.emit("InsertObject", obj_code);
+	}
+	socket.on("InsertObject", function(obj_code){
+		console.log("오브젝트 삽입!");
+		$('#droppable').append(obj_code);
+	});
 	
     //채팅창 토글 
     $('.team-chat').on('click', function(){
@@ -170,4 +202,3 @@ $(document).ready(function(){
 			}
 		}
 	});
-});

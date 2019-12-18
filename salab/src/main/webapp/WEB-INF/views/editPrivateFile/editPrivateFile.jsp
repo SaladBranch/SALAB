@@ -862,7 +862,11 @@
     	   Thumbnail();
        }, 500);
 	});
-	
+	 
+    $(document).on("click", ".obj", function(e){
+    	console.log($(e.target));
+    });
+    
     </script>
     
 </body>

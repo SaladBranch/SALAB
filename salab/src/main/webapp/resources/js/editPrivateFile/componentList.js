@@ -145,9 +145,7 @@ var obj_textInput = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 300px; height:100;">
-          <div class="obj-comp textarea obj_textInput" contenteditable="false">
-           <input class="obj-textInput" type="text" placeholder="내용 입력">
-          </div>
+        	<input class="obj-comp obj-textInput" type="text" placeholder="내용 입력" readOnly>
         </div>`
 
         return code;
@@ -164,8 +162,8 @@ var obj_buttonInput_Normal_A = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
-	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
-	        		<div class="obj-comp obj-buttonInput_Normal_A">Button<div>
+	        	<div class="obj-comp obj-buttonInput_Normal_A">
+	        		<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">Button<div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -182,8 +180,8 @@ var obj_buttonInput_Normal_B = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_B.insertY}px; left: ${obj_buttonInput_Normal_B.insertX}px; width: 100px; height: 45px;">
-	        	<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">
-	        		<div class="obj-comp obj-buttonInput_Normal_B">Button</div>
+	        	<div class="obj-comp obj-buttonInput_Normal_B">
+	        		<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">Button</div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -200,8 +198,8 @@ var obj_buttonInput_Long_A = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_A.insertY}px; left: ${obj_buttonInput_Long_A.insertX}px; width: 210px; height: 40px;">
-	        	<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">
-	        		<div class="obj-comp obj-buttonInput_Long_A">Button<div>
+	        	<div class="obj-comp obj-buttonInput_Long_A">
+	        		<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">Button<div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -218,8 +216,8 @@ var obj_buttonInput_Long_B = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 50px;">
-	        	<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">
-	        		<div class="obj-comp obj-buttonInput_Long_B">Button</div>
+	        	<div class="obj-comp obj-buttonInput_Long_B">
+	        		<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">Button</div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -236,8 +234,8 @@ var obj_plusBtn = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_plusBtn.insertY}px; left: ${obj_plusBtn.insertX}px; width: 28px; height: 28px;">
-	        	<div class="obj-comp textarea obj_plusBtn" contenteditable="false">
-	        		<div class="obj-comp obj_plusBtn">+</div>
+	        	<div class="obj-comp obj_plusBtn">
+	        		<div class="obj-comp textarea obj_plusBtn" contenteditable="false">+</div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -254,8 +252,8 @@ var obj_minusBtn = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_minusBtn.insertY}px; left: ${obj_minusBtn.insertX}px; width: 28px; height: 28px;">
-	        	<div class="obj-comp textarea obj_minusBtn" contenteditable="false">
-	        		<div class="obj-comp obj_minusBtn">-</div>
+	        	<div class="obj-comp obj_minusBtn">
+	        		<div class="obj-comp textarea obj_minusBtn" contenteditable="false">-</div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -272,8 +270,8 @@ var obj_messageForm = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm.insertY}px; left: ${obj_messageForm.insertX}px; width: 150px; height: 50px;">
-	        	<div class="obj-comp textarea" contenteditable="false">
-					<div class="obj-comp obj_messageForm">Message</div>
+	        	<div class="obj-comp obj_messageForm">
+	        		<div class="obj-comp textarea" contenteditable="false"> Message</div>
 	        	</div>
 	        	<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
 	        </div>`;
@@ -328,8 +326,8 @@ var obj_file = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 240px;min-height:24px;font-size:14px;">
-          <div class="obj-comp textarea obj_file">
-           <input class="obj_file" type="file">
+          <div class="obj-comp obj_file">
+        	<input class="obj_file" type="file" disabled>
           </div>
         </div>`
         return code;

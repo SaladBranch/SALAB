@@ -34,5 +34,29 @@ public class ProjectFileServiceImpl implements ProjectFileService{
 	public ProjectFile selectOne(Page page) {
 		return projectFileDao.selectOne(page);
 	}
+
+	@Override
+	public ProjectFile selectFile(ProjectFile pfile) {
+		// TODO Auto-generated method stub
+		return projectFileDao.selectFile(pfile);
+	}
+
+	@Override
+	public int fileCopy(ProjectFile file) {
+		// TODO Auto-generated method stub
+		return projectFileDao.fileCopy(file);
+	}
+
+	@Override
+	public ProjectFile createPage(int projectno) {
+		// TODO Auto-generated method stub
+		return projectFileDao.createPage(projectno);
+	}
+
+	@Override
+	public int changeLastModified(ProjectFile pfile) {
+		// TODO Auto-generated method stub
+		return projectFileDao.changeLastModified(pfile);
+	}
 	
 }

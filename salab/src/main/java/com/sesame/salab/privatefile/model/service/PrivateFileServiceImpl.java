@@ -10,6 +10,7 @@ import com.sesame.salab.common.FileList;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.dao.PrivateFileDao;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 @Service("PrivateFileService")
 public class PrivateFileServiceImpl implements PrivateFileService {

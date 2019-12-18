@@ -1,3 +1,4 @@
+
 var rotate_handler = {
     code: function(){ return `<div class="ui-rotatable-handle ui-draggable">`;}
 }
@@ -134,23 +135,22 @@ var obj_circle = {
     }
 };
 var obj_textInput = {
-		insertX: 200,
-	    insertY: 100,
-	    setX: function(x){
-	        this.insertX = x;
-	    },
-	    setY: function(y){
-	        this.insertY = y;
-	    },
-	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 200px; height: 30px;">
-	        	<div class="obj-comp textarea obj-textInput" contenteditable="false">
-	        		<input class="obj-comp textarea obj-textInput" type="text" placeholder="내용 입력">
-	        	</div>
-	        </div>`;
-	        return code;
-	    }
-}
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 300px; height:100;">
+        	<input class="obj-comp obj-textInput" type="text" placeholder="내용 입력" readOnly>
+        </div>`
+
+        return code;
+    }
+};
 var obj_buttonInput_Normal_A = {
 		insertX: 200,
 	    insertY: 100,
@@ -168,7 +168,7 @@ var obj_buttonInput_Normal_A = {
 	        </div>`;
 	        return code;
 	    }
-}
+};
 var obj_buttonInput_Normal_B = {
 		insertX: 200,
 	    insertY: 100,
@@ -184,7 +184,7 @@ var obj_buttonInput_Normal_B = {
 	        </div>`;
 	        return code;
 	    }
-}
+};
 var obj_buttonInput_Long_A = {
 		insertX: 200,
 	    insertY: 100,
@@ -200,7 +200,7 @@ var obj_buttonInput_Long_A = {
 	        </div>`;
 	        return code;
 	    }
-}
+};
 var obj_buttonInput_Long_B = {
 		insertX: 200,
 	    insertY: 100,
@@ -216,7 +216,7 @@ var obj_buttonInput_Long_B = {
 	        </div>`;
 	        return code;
 	    }
-}
+};
 var obj_plusBtn = {
 		insertX: 200,
 	    insertY: 100,
@@ -232,7 +232,7 @@ var obj_plusBtn = {
 	        </div>`;
 	        return code;
 	    }
-}
+};
 var obj_minusBtn = {
 		insertX: 200,
 	    insertY: 100,
@@ -410,6 +410,186 @@ var obj_profile_B = {
 	        </div>`;
 	        return code;
 	    }
+};
+
+var obj_radioInput = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+        <div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 50px; height: 50px;text-align:left;padding:0px;  vertical-align: middle;">
+        <input type="radio" class="obj-comp obj_radioInput  " style="width: 40%;    height: 40%; opacity: 1; margin: 33%; height: 40%; opacity: 1; margin: 33%;">
+        </div>
+        `
+        return code;
+    }
+};
+var obj_checkbox = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+        <div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 50px; height: 50px;text-align:left;padding:0px;  vertical-align: middle;">
+        <input type="checkbox" class="obj-comp obj_checkbox" style="width: 40%; height: 40%; opacity: 1; margin: 33%;">
+        </div>
+        `
+        return code;
+    }
+};
+var obj_file = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 240px;min-height:24px;font-size:14px;">
+        	<input class="obj-comp obj_file" type="file" disabled>
+        </div>`
+        return code;
+    }
+};
+var obj_ul = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj" style="position: absolute; top: ${obj_ul.insertY}px; left: ${obj_ul.insertX}px; width: 200px;">
+                      <ul class="obj-comp obj_ul" style='width : auto; list-style-type : disc; text-align:left;'>
+                         <li style='width:80%; margin-left:20%; float:left;' contenteditable='false'>list</li>
+                         <li style='width:80%; margin-left:20%; float:left;' contenteditable='false'>list</li>
+                      </ul>
+                   </div>`;
+        return code;
+    } 
+};
+var obj_progressBar = {
+    insertX: 0,
+    insertY: 0,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="group-obj obj ui-selected ui-resizable ui-selectee"  style="top: ${obj_progressBar.insertY}px; left: ${obj_progressBar.insertX}px; width: 120px; height: 30px; transform: rotate(0rad);"><div class="obj" style="left:0px; top: 0px; position: absolute; width: 100px;height:20px;transform: rotate(0rad); cursor: default;"><div class="obj-comp obj_progressBar" contenteditable="false" ><div class="obj_progressBar_outline"></div></div></div><div class="obj" style="left:0px; top:0px; position: absolute;  width: 70px;height:20px; transform: rotate(0rad);"><div class="obj-comp obj_progressBar" contenteditable="false" ><div class="obj_progressBar_inline"></div></div></div></div>`;
+        return code;
+    }
+};
+var obj_search = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj" style="position: absolute; top: ${obj_search.insertY}px; left: ${obj_search.insertX}px; width: 200px;height:31px;">
+          <div class="obj-comp  obj_search textarea"><div class="obj_search_left" contenteditable="false"><img src="/salab/resources/svg/search-solid.svg" alt=""></div><div class="obj_search_right "></div></div></div>`
+        return code;
+    }
+}
+var obj_scroll_y = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_y.insertY}px; left: ${obj_scroll_y.insertX}px;  width: 22px;height:205px; transform: rotate(0rad);">
+        <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 20px;height:200px;transform: rotate(0rad);">
+          <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px; transform: rotate(0rad);">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+        </div>
+    </div>`
+        return code;
+    }
+}
+var obj_scroll_x = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 203px;height:22px; transform: rotate(0rad);">
+        <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 200px;height:25px; transform: rotate(0rad);
+">
+          <div class="obj-comp obj_scroll_x" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
+               <div class="obj_scroll_x_outline">
+                    <div class="obj_scroll_x_leftside"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></div>
+                    <div class="obj_scroll_x_rightside"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 0px; left: 20px; width: 40px;height:25px;transform: rotate(0rad);
+">
+                <div class="obj-comp obj_scroll_x_inline">
+                    <div class=""></div>
+                </div>
+        </div>
+    </div>`
+        return code;
+    }
+}
+var obj_dropdown = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_dropdown.insertY}px; left: ${obj_dropdown.insertX}px;  width: 200px;height:40px;">
+          <div class="obj-comp obj_dropdown" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down"></input></div>
+                            <div class="obj_dropdown_right" contenteditable="false">
+                                <div><i class="fas fa-angle-up"></i></div>
+                                <div><i class="fas fa-angle-down"></i></div>
+                            </div>
+        </div>
+        </div>`
+        return code;
+    }
 }
 var getModule = function(id){
     switch(id){
@@ -461,6 +641,24 @@ var getModule = function(id){
         	return obj_profile_A;
         case 'obj_profile_B':
         	return obj_profile_B;
+        case 'obj_radioInput':
+            return obj_radioInput;
+        case 'obj_checkbox':
+            return obj_checkbox;
+         case 'obj_file':
+            return obj_file;
+         case 'obj_ul':
+            return obj_ul;
+         case 'obj_progressBar':
+            return obj_progressBar;
+        case 'obj_search':
+            return obj_search;
+        case 'obj_scroll_y':
+            return obj_scroll_y;
+        case 'obj_scroll_x':
+            return obj_scroll_x;
+        case 'obj_dropdown':
+            return obj_dropdown;
     }
 };
 
@@ -534,4 +732,3 @@ var contextmenu = {
     	`
     }
 }
-

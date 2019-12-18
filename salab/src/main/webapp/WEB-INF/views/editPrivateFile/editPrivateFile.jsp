@@ -23,7 +23,7 @@
     <header>
     <nav class="top-bar">
         <div class="top-bar-title">
-            <div class="top-bar-titleText"><a href="privateFile.do">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
+            <div class="top-bar-titleText"><a href="privateFile.do?sort=recent">개인 파일</a> / <input id="file-title" type="text" value="${pfile.pfiletitle }"></div>
         </div>
         <div class="top-left-menus">
             <div class="top-bar-menu">
@@ -34,8 +34,8 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
-            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-icon.png"></button>
-            <button onclick="upImage();" id="top-image-btn"><img src="/salab/resources/img/img-icon.png"></button>
+            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-image.png"></button>
+            <button onclick="upImage();"><img src="/salab/resources/img/upimage.png"></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">
@@ -206,6 +206,7 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
                             </div>
                         </foreignObject>
+                        </g>
                     </svg>
                     </a>
                     <!--타원-->
@@ -228,24 +229,160 @@
                     </a>
                 </div>
             </div>
-            <div class="comp-category form-control" onclick="toggleComps(this, '.form-control-comps');">
-                <p>&#9654;</p>폼(form)
+            <div class="comp-category form-control"  onclick="toggleComps(this, '.form-control-comps');">
+                <p>▶</p>폼(form)
             </div>
             <div class="form-control-comps">
-               <div style="padding: 4px;">
-                  <!-- Input text -->
-                  <a id="obj_textInput" class="geItem c_textInput" display="inline-block" title="텍스트 input">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="45" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
-                  					<input type="text" placeholder="내용 입력">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- Input button_Normal_A -->
+               <div style="padding: 5px 20px;">
+                    <!--Input text-->
+                    <a id="obj_textInput" class="geItem c_textInput" display="inline-block" title="텍스트 input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="text" placeholder="내용 입력">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input radio--> <!-- ERROR 드래그시 좌표 튐,resizable 가로 크기 키울시 세로역시 커짐.-->
+                    <a id="obj_radioInput" class="geItem c_textInput" display="inline-block" title="radio input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="radio" style="width:30px; height: 30px;opacity:1;margin-left: 30%; ">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input checkbox--> <!-- ERROR 드래그시 좌표 튐,resizable 가로 크기 키울시 세로역시 커짐.-->
+                    <a id="obj_checkbox" class="geItem c_textInput" display="inline-block" title="checkbox input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="checkbox" style="width:30px; height: 30px;opacity:1;margin-left: 30%; ">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input file--> <!--ERROR 색깔변경안됨. -->
+                    <a id="obj_file" class="geItem c_fileInput" display="inline-block" title="file input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="file" style="width:190px; height: 30px;opacity:1;">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input ul--> <!--ERROR 색깔변경안됨. -->
+                    <a id="obj_ul" class="geItem" display="inline-block" title="list input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <span class="obj_ul_span" style="margin-left:20px;" ><input class="obj_ul_text" type="List" placeholder="List"></span>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input progress-bar--> <!--ERROR 배경색, 색깔변경안됨. -->
+                    <a id="obj_progressBar" class="geItem" display="inline-block" title="progress bar input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj_progressBar_outline" style="width:60%;margin-left: 3%;">
+                                    <div class="obj_progressBar_inline" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input obj_search--> 
+                    <a id="obj_search" class="geItem" display="inline-block" title="search input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj_search_box" style="width:60%;margin-left:3%;">
+                                    <div class="obj_search_icon" ><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input scroll--> <!--ERROR 배경색, 색깔변경안됨. -->
+                    <a id="obj_scroll_y" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="90" y="-20" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; width: 10%; height: 100%;text-align: center;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px;">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input scroll x--> 
+                    <a id="obj_scroll_x" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="30" y="40" width="160" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                            <div class="obj_scroll_x_outline" style="position: absolute;height: 20px;width: 140px; ">
+                    <div class="obj_scroll_x_leftside" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></div>
+                    <div class="obj_scroll_x_rightside" style="margin-right: 5%;"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></div>
+                </div>
+                               </div>
+                                <div class=" obj_scroll_x_inline" style="position: absolute;height: 20px; width: 40px;left: 20%;">
+                    <div class=""></div>
+                </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input dropdown--> 
+                    <a id="obj_dropdown" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="90" y="-20" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; width: 10%; height: 100%;text-align: center;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px;">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--연영-->
+                    
+                    <!-- Input button_Normal_A -->
                   <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.25)">
@@ -447,8 +584,8 @@
                   		</g>
                   	</svg>
                   </a>
-               </div>
-            </div>  
+                </div>
+            </div>        
         </div>
         <div class="tab-content lib-tab-content">
             <div class="searchbox">
@@ -648,8 +785,6 @@
         </div>
     </div>
     
-    
-    
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
@@ -668,9 +803,7 @@
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
-
     	var privateLibrary = new Array();
-    	
 
     	 async function Thumbnail(){
     			var image;
@@ -682,8 +815,8 @@
     			
         		var node = document.getElementById('clone-canvas');
             	var canvas = document.createElement('canvas');
-            	canvas.width = node.scrollWidth;
-            	canvas.height = node.scrollHeight;
+            	canvas.width = $(node).width();
+            	canvas.height = $(node).height();
             	
             		await domtoimage.toPng(node, {filter: filter}).then(function (pngDataUrl) {
             	    image = new Image();
@@ -704,8 +837,6 @@
             }).catch(function (error) {
             	console.log(error);
             });
-            
-          
     }	
 
     $(function(){
@@ -754,23 +885,24 @@
     	$.ajax({
     		url: 'getPlibList.do',
     		type: 'post',
+    		cache: false,
     		data: JSON.stringify(plib),
     		contentType: "application/json; charset=UTF-8",
     		dataType: 'json',
     		success: function(data){
-    			$('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>")
+    			/* $('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>") */
     			privateLibrary = new Array();
     			for(var i = 0; i<data.plib.length; i++){
 					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
 							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
-						_id: data.plib[i]._id,
-	    				code: data.plib[i].code	
+						code: data.plib[i].code,
+						_id: data.plib[i]._id
 	    			}
 					privateLibrary.push(pl);
 				}
-    			resizeLibImg();
+   				resizeLibImg();
     		},
     		error: function(){
     			console.log("plib list 가져오기 실패");
@@ -920,7 +1052,20 @@
     	   Thumbnail();
        }, 500);
 	});
-	
+	 
+    $(document).on("keydown", ".obj-comp li", function(e) {
+    	if (event.shiftKey && e.keyCode == 13) {
+		    event.preventDefault();
+    		var $insertli = $("<li>list</li>");
+    		$insertli.css("width", "80%");
+    		$insertli.css("margin-left", "20%");
+    		$insertli.css("float", "left");
+    		$insertli.attr("contenteditable", "true");
+    		$(this).after($insertli);
+    		$insertli.focus();
+    	}
+    });
+    
     </script>
     
 </body>

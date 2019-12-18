@@ -29,4 +29,20 @@
 	<select id="selectOne" parameterType="Page" resultType="ProjectFile">
 		SELECT * FROM PROJECTFILE WHERE PROJECTNO = #{projectno} AND PRFILENO = #{fileno}
 	</select>
+	
+	<select id="selectFile" parameterType="ProjectFile" resultType="ProjectFile">
+		SELECT * FROM PROJECTFILE WHERE PRFILENO = #{prfileno} AND PROJECTNO = #{projectno}
+	</select>
+	
+	<insert id="fileCopy" parameterType="ProjectFile">
+		INSERT INTO PROJECTFILE VALUES(SEQ_PRFILENO.NEXTVAL, #{projectno }, NULL, #{prfiletitle}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<select id="createPage" parameterType="int" resultType="ProjectFile">
+		SELECT * FROM (SELECT PRFILENO FROM PROJECTFILE WHERE PROJECTNO = #{projectno} ORDER BY PRFILELASTMODIFIED DESC) WHERE ROWNUM = 1
+	</select>
+	
+	<update id="changeLastModified" parameterType="ProjectFile">
+		UPDATE PROJECTFILE SET PRFILELASTMODIFIED = TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI') WHERE PROJECTNO = #{projectno} AND PRFILENO = #{prfileno}
+	</update>
 </mapper>

@@ -19,10 +19,13 @@
     width: 100%;
     height: 100%;
     background: transparent;
-    padding-top : 2px;
     word-break : break-all;
 /*    overflow: hidden;*/
 }
+.textarea {
+    padding-top : 2px;
+}
+
 .obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{
     border: 1px solid #000;
 }
@@ -35,19 +38,215 @@
 .obj-comp *{
     width: 100%;
 }
-.obj-comp span{
-    font : inherit;
-    font-size : inherit;
-    font-weight : inherit;
-    text-decoration : inherit;
-    background : inherit;
+.obj-comp ul, .obj-comp input {
+    all : inherit;
 }
-.obj-comp span.text-dragged {
-    font : none;
-    font-size : none;
-    font-weight : none;
-    text-decoration : none;
-    background : none;
+
+/*-건우-*/
+
+.obj-textInput input{
+    border: 1px solid #2f2f2f;
+    border-radius: 5px;
+    padding: 10px;
+    background: inherit;
+    height: inherit;
+    color: inherit;
+    width: inherit;
+    background-color: inherit;
+
+}
+
+.obj_ul_text{
+    display: inline;
+    font-size: 25px;
+    margin-left: 0px;
+
+    border: none;
+    height: inherit;
+    color: inherit;
+    width: 80%;
+    background-color: inherit;
+}
+.obj_ul_span{
+    display: inline;
+    margin-left: 0px;
+    height: inherit;
+    color: inherit;
+    width: inherit;
+    background-color: inherit;
+    font-size: inherit;
+}
+.obj_ul_span::before{
+    content: "●";
+    color: black;
+    font-size: 10px;
+    line-height: inherit;
+    vertical-align: middle;
+}
+
+.obj_progressBar_outline{
+    background-color: #4F4F4F;
+    min-height: 20px;
+    height: inherit;
+    color: inherit;
+    width: 100%;
+    font-size: inherit;
+    border-radius: 10px;
+}
+.obj_progressBar_inline{
+     background-color: #1976D2;
+    min-height: 20px;
+    height: inherit;
+    color: inherit;
+    width: 100%;
+    font-size: inherit;
+    border-radius: 10px;
+}
+.obj_search{
+    line-height: inherit;
+    padding: 0px;
+}
+.obj_search_left,
+.obj_search_right{
+    display: inline-block;
+    margin-top: 0px;
+     height: inherit;
+    font-size: inherit;
+    min-height: 30px;
+    border: 0.5px solid gray;
+    overflow: hidden;
+    vertical-align: middle;
+    line-height: 30px;
+    float: left;
+}
+.obj_search_left{
+    width: 30%;
+    height: 100%;
+    background-color: #afafaf;
+    padding: 20% auto;
+}
+.obj_search_left img{
+    width: inherit;
+    height: inherit;
+}
+.obj_search_right{
+    display: inline-block;
+    width: 70%;
+    text-align: left;
+    padding-left: 5px;
+    background: inherit;
+}
+.obj_search_box{
+    background-color: white;
+    height: 40%;
+    border:0.5px solid gray;
+}
+.obj_search_icon{
+    background-color: #BFBFBF;
+    width: 30%;
+    border-right: 0.5px solid gray;
+    text-align: center;
+    font-size: 30px;
+}
+.obj_scroll_outline{
+     background-color:#eee;
+    height: inherit;
+    position: absolute;
+}
+.obj_scroll_inline{
+    position: absolute;
+    width: 100%;
+    background-color: #ccc;
+}
+.obj_scroll_downside,
+.obj_scroll_upside{
+    width: inherit;
+    height: 20px;
+}
+.obj_scroll_upside{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.obj-comp.obj_scroll_y,.obj-comp.obj_scroll_x{
+    padding-top: 0px;
+ }
+.obj_scroll_outline i{
+    color:#bbb;
+}
+.obj_scroll_downside{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+/*scroll-x*/
+.obj_scroll_x_outline{
+    background-color:#eee;
+    height: inherit;
+    position: absolute;
+    color: #ccc;
+}
+.obj_scroll_x_outline svg{
+    width: inherit;
+    height: inherit;
+     width: 80%;
+}
+.obj_scroll_x_leftside,
+.obj_scroll_x_rightside{
+    width: 10px;
+    height: inherit;
+    background-color:#eee;
+}
+.obj_scroll_x_leftside{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.obj_scroll_x_rightside{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.obj_scroll_x_inline{
+    position: absolute;
+    height: 100%;
+    background-color: #ccc;
+}
+.obj-comp.obj_dropdown{
+    padding: 0px;
+}
+.obj_dropdown{
+    display: block;
+    border: 0.5px solid gray;
+    background-color: inherit;
+}
+.obj_dropdown_left{
+    display: inline-block;
+    width: 80%;
+    height:100%;
+    overflow: hidden;
+    line-height: 100%;
+    padding-top: 3%;
+}
+.obj_dropdown_left input{
+    border: none;
+}
+.obj_dropdown_left textarea{
+}
+.obj_dropdown_right{
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+}
+.obj_dropdown_right div{
+    height: 50%;
+    width: 100%;
+}
+::selection {
+	background : skyblue;
+}
+.focusout {
+	background : #3C79C9;
 }
 
 #multiselect{
@@ -213,4 +412,3 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
-

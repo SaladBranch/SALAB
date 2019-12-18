@@ -14,5 +14,13 @@ public interface ProjectFileService {
 	ProjectFile getFileNo(int projectno);
 
 	ProjectFile selectOne(Page page);
+
+	ProjectFile selectFile(ProjectFile pfile);
+
+	int fileCopy(ProjectFile file);
+
+	ProjectFile createPage(int projectno);
+
+	int changeLastModified(ProjectFile pfile);
 	
 }

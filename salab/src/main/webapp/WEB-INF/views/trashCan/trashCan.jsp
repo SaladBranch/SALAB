@@ -127,8 +127,8 @@
     </div>
     <div id="multi-right-click-menu" class="multi-right-click-menu">
         <ul>
-            <li><a href="#"><span></span>개 파일 복구</a></li>
-            <li><a href="#"><span></span>개 파일 영구 삭제</a></li>
+            <li><a href="javascript:" onclick="multiDeleteUndo();"><span></span>개 파일 복구</a></li>
+            <li><a href="javascript:" onclick="multiPermanentDelete();"><span></span>개 파일 영구 삭제</a></li>
         </ul>
     </div>
     <div class="right-main-side">
@@ -182,6 +182,7 @@
            		</div>
         	</c:forEach>
         	</c:if>
+        </div>
     </div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>

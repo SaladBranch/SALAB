@@ -7,8 +7,8 @@ var $all = $('#multiselect');
 var appendElement = "";
 
 function initSelect(){
-    var $lastone = $('#droppable .obj').last();
-    $('#droppable .obj').each(function(){
+    var $lastone = $('#droppable > .obj').last();
+    $('#droppable > .obj').each(function(){
         if($(this).is($lastone)){
             selectedObj = new Array();
             selectedObj.push($lastone);
@@ -46,7 +46,7 @@ function includeElement(X, Y, temp) {
     	comp = privateLibrary[index].code;
     }
     $("#droppable").append(comp);
-    $('#droppable .obj').last().css({
+    $('#droppable > .obj').last().css({
     	top: Y,
     	left: X
     });
@@ -91,10 +91,21 @@ function leftMouseListner(){
 		$(this).addClass("text-editing");
 		$(this).addClass("ui-selected");
 		
-		$(this).children(".textarea").attr("contenteditable", "true");
+		// text 전채선택 수정 필요
+		if ($(this).find(".obj-comp").is(".obj_ul")) {
+			$(this).find("li").attr("contenteditable", "true");
+			if ($(event.target).is("li"))
+				$(event.target).selectText();
+		}
+		if ($(this).find(".textarea").length > 0) {
+			$(this).find(".textarea").attr("contenteditable", "true");
+	    	$(this).find(".textarea").selectText();
+		}
+		if ($(this).find("input[type=text]").length > 0) {
+			$(this).find("input[type=text]").removeAttr("readOnly");
+		}
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
-    	$(this).children(".textarea").selectText();
 		
         $('.right-side-bar .canvas-menu').hide();
         $('.right-side-bar .tab-menu').show();
@@ -154,7 +165,6 @@ function computeGuidesForElement(elem, pos, w, h) {
 	    w = $t.outerWidth() - 1;
 	    h = $t.outerHeight() - 1;
 	  }
-	  console.log("scale: " + __scale + ", left : " + (pos.left - 230));
 	  return [
 	        { type: "h", left: pos.left - 230, top: pos.top - 40 }, 
 	        { type: "h", left: pos.left - 230, top: pos.top - 40 + h }, 
@@ -240,8 +250,6 @@ function addControl(){
                 var scLeft = $('.canvas-container').scrollLeft();
                 var pageHeight = $('.canvas-container').prop("scrollHeight");
                 var pageWidth = $('.canvas-container').prop("scrollWidth");
-                console.log("scLeft: " + scLeft);
-                console.log("pageWidth: " + pageWidth);
                 if( chosenGuides.top.dist <= MIN_DISTANCE ){
                     $( "#guide-h" ).css({
                     	"top": chosenGuides.top.guide.top + scHeight,
@@ -472,9 +480,10 @@ $(function(){
     			$checkTarget = $checkTarget.parent();
     		}
     		if (isTextarea != "true") {
-        		$("#droppable .obj-comp[contenteditable=true]").each(function() {
+        		$("#droppable [contenteditable=true]").each(function() {
         	        $(this).attr("contenteditable", "false");
-        		})
+        		});
+    			$("#droppable .obj").find("input").prop("readOnly", true);
     		}
     	}
     }).on('mousemove', function(e){
@@ -690,26 +699,30 @@ $(document).on('mousedown', '#droppable', function(){
 	            $('.canvas-colorpic').attr('data-swatches', addUsedColor());
 	        }
 		});
+		minicolorsAddMenu($('#canvas-background'));
 	}
-	/*$('.colorView').minicolors('settings', {
-        control: 'hue',
-        position : "bottom right",
-        defaultValue: "#FFFFFF",
-        letterCase : "uppercase",
-        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
-        change: function(hex, opacity){
-            switch ($(this).attr("id")) {
-            	case "background" : applyChange("backgroundColor"); break;
-            	case "line" : applyChange("lineColor"); break;
-            	case "text" : applyChange("textColor"); break;
-            	case "textground" : applyChange("textgroundColor"); break;
-            }
-        }
-    });*/
-    minicolorsAddMenu($('#canvas-background'));
-    $('.colorView').each(function(){
-    	minicolorsAddMenu($(this).parent('.minicolors'));
-    });
+	if($('.colorView').is(':visible')){
+		$('.colorView').minicolors('settings', {
+	        control: 'hue',
+	        position : "bottom right",
+	        defaultValue: "#FFFFFF",
+	        letterCase : "uppercase",
+	        swatches: $('.colorView').attr('data-swatches', addUsedColor()) ? $('.colorView').attr('data-swatches').split('|') : [],
+	        change: function(hex, opacity){
+	            switch ($(this).attr("id")) {
+	            	case "background" : applyChange("backgroundColor"); break;
+	            	case "line" : applyChange("lineColor"); break;
+	            	case "text" : applyChange("textColor"); break;
+	            	case "textground" : applyChange("textgroundColor"); break;
+	            }
+	        }
+	    });
+	    
+	    $('.colorView').each(function(){
+	    	minicolorsAddMenu($(this).parent('.minicolors'));
+	    });
+	}
+	
 });
 $(function(){
     $('.right-side-bar .tab-menu').hide();
@@ -897,36 +910,27 @@ function deleteFromLib(index){
 }
 function resizeLibImg(){
 	setTimeout(function(){
-		$('.plib-item-thumb img').each(function(){
-			var index = $('.plib-item-thumb img').index($(this));
-			var code = privateLibrary[index].code.split("rotate(")[1].split(")")[0];
+		$('.plib-item-thumb img').each(function(i, img){
+			var rcode = privateLibrary[i].code.split("rotate(")[1].split(")")[0];
 			
-			var w = $(this).width();
-			var h = $(this).height();
+			var w = Number(privateLibrary[i].code.split("width: ")[1].split("px;")[0]);
+			var h = Number(privateLibrary[i].code.split("height: ")[1].split("px;")[0]);
 			if(w >= h){
 				$(this).css({
-					width: "70px",
-					'margin-left': ($('.plib-item-thumb').width() - 70)/2 + 'px'
+					width: '70px',
+					'margin-left': '6px',
+					'margin-top': (70 - h*70/w)/2 + 'px'
 				});
-				if($(this).height() < 70){
-					$(this).css({
-						'margin-top': (70-$(this).height())/2 + "px"
-					});
-				}
 			}else{
 				$(this).css({
-					height: "70px",
-					'margin-top': ($('.plib-item-thumb').height() - 70)/2 + 'px'
-				});
-				if($(this).width() < 70){
-					$(this).css({
-						'margin-left': ($('.plib-item-thumb').width()-$(this).width())/2 + "px"
-					});
-				}
+					height: '70px',
+					'margin-left': (84 - w*70/h)/2 + 'px' 
+				})
 			}
-			var degree = code.replace(code.substr(-3),'');
+			
+			var degree = rcode.replace(rcode.substr(-3),'');
 			if(degree != 0){
-				if(code.substr(-3) === 'rad'){
+				if(rcode.substr(-3) === 'rad'){
 					degree = Number(degree)*(180/Math.PI);
 				}
 				$(this).css({

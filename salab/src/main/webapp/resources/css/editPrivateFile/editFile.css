@@ -105,7 +105,63 @@ svg{
     margin-right: 15px;
     padding-right: 5px;
 }
+/*TeamFile Profile*/
+#my-profile, .member-profile{
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    border-radius: 50%;
+}
+#my-profile:hover ~ .team-members{
+    display: block;
+}
+.team-members{
+    display: none;
+    position: absolute;
+    top: 43px;
+    right: 110px;
+    background: #272727;
+    font-size: 13px;
+    padding: 7px 0;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.3);
+    border-radius: 5px;
+}
 
+.team-members:before{
+    content: "";
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    top: -5px;
+    right: 13px;
+    border-bottom: 5px solid #272727;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+.each-member{
+    height: 30px;
+    margin-bottom: 5px;
+    clear: both;
+}
+.each-member:last-of-type{
+    margin-bottom: 0;
+}
+.each-member img{
+    display: inline-block;
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin: 2px 0 0 7px;
+}
+.each-member span{
+    display: inline-block;
+    float: left;
+    line-height: 30px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+/* 캔버스 사이징 */
 .canvas-size{
     width: 60px;
     height: 40px;
@@ -321,7 +377,7 @@ svg{
 .tab-content::-webkit-scrollbar,
 .canvas-container::-webkit-scrollbar,
 .text-font-droplist::-webkit-scrollbar{
-    width: 10px;
+    width: 7px;
     background-color: #f5f5f5;
 }
 .tab-content::-webkit-scrollbar-thumb,
@@ -438,18 +494,28 @@ ol.page-tab-content li{
 /*    background: #eaeaea;*/
     background: #e6f7ff;
 }
-.common-shape-comps{
+.common-shape-comps,
+.form-control-comps {
     border-bottom: 1px solid #c6c6c6;
     user-select: none;
 }
-.common-shape-comps a{
+.common-shape-comps a,
+.form-control-comps  a{
 	width: 40px;
 }
 
-.comp-tab-content svg:hover{
+.comp-tab-content svg:hover,
+.form-control-comps  svg:hover{
     background: #eaeaea;
     border-radius: 3px;
     cursor : pointer;
+}
+.form-control-comps{
+    display: none;
+}
+.form-control-comps a:nth-child(2n+1) svg{
+    margin-left:5px;
+    margin-right: 10px;
 }
 
 /*.rectangle{
@@ -468,13 +534,13 @@ ol.page-tab-content li{
     padding: 5px;
 }
 .plib-item-thumb{
-    width: 90%;
+    width: 94px;
     height: 80px;
     padding: 5px;
     margin: 0 5%;
 }
 .plib-item-thumb img{
-    /* width: 70px;
+/*     width: 70px;
     height: 70px;
     margin: 0 10px; */
 }
@@ -1052,9 +1118,6 @@ ol.page-tab-content li{
     color: #797979 !important;
     cursor: default;
 }
-.disabled:hover{
-    background: #2c2c2c !important;
-}
 .show{
     display: block;
 }
@@ -1101,9 +1164,10 @@ ol.page-tab-content li{
 }
 
 .memo-content{
-	width: 300px;
+	width: auto;
+	min-width: 320px;
 	height: 125px;
-	border: 1.5px solid #00a8ff;
+	border: 1.5px solid black;
 	border-radius: 3px;
 	background: white;
 	padding: 16px;
@@ -1122,23 +1186,41 @@ ol.page-tab-content li{
 .memo-info{
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
+	align-items: center;
 }
 .user{
-	justify-content: flex-start;
-	
+    display: flex;
+	align-items: center;
+}
+
+.memo-user-profile{
+	display: block;
+	background-image : url("/salab/resources/img/default_profile.png");
 }
 .button{
 	display: flex;
-	justify-content: flex-end;
-	max-width: 150px;
+    max-width: 61%;
+    padding-left: 5%;
+}
+
+button.btn-ghost.cancel, button.btn-ghost.done{
+	margin-left: 10px;
+    width: 83px;
+    height: 35px;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.button .file-options-menu li a {
+    color: #fff;
+    font-size: 13px;
+    padding-right: 30px;
 }
 
 .memo-cnt{
 	width: 100%;
-}
-
-.memo-cnt.disabled{
 	border: none;
 }
 
@@ -1257,7 +1339,20 @@ ol.page-tab-content li{
     color: #fff;
     line-height: 50px;
 }
-
+#chat-alert{
+    display: none;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50%;
+    line-height: 25px;
+    font-size: 12px;
+}
 .chat-box{
     display: none;
     position: absolute;

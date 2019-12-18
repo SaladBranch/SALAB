@@ -30,6 +30,8 @@ import com.sesame.salab.page.model.dao.MongoService;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.service.PrivateFileService;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
+import com.sesame.salab.projectfile.model.service.ProjectFileService;
+import com.sesame.salab.projectfile.model.vo.ProjectFile;
 
 @Controller
 public class PrivateFileController {
@@ -38,6 +40,9 @@ public class PrivateFileController {
 	
 	@Autowired
 	private PrivateFileService pfService;
+	
+	@Autowired
+	private ProjectFileService prfService;
 	
 	@RequestMapping(value="insert_newprivateFile.do", method=RequestMethod.POST)
 	public ModelAndView insertNewPage(PrivateFile pfile, ModelAndView mv, HttpServletRequest request) {
@@ -82,7 +87,6 @@ public class PrivateFileController {
 		
 		MongoService mgService = new MongoService();
 		ArrayList<Page> pageList = (ArrayList<Page>)mgService.findPage(collection, page);
-		logger.info(pageList.size()+"");
 		Gson gson = new Gson();
 		String result = gson.toJson(pageList);
 		mv.addObject("page", pageList);
@@ -111,7 +115,11 @@ public class PrivateFileController {
 		mgService.close();
 		
 		//새페이지 생성 후 최근변경일 업데이트
-		changeLastModified(page.getUserno(), page.getFileno());
+		if(page.getUserno() == 0) {
+			changeLastModified(page.getProjectno(), page.getFileno(), "team");
+		}else {
+			changeLastModified(page.getUserno(), page.getFileno(), "private");
+		}
 		
 		return mv;
 	}
@@ -130,7 +138,11 @@ public class PrivateFileController {
 		mgService.close();
 		
 		//페이지 삭제 후 최근변경일 업데이트
-		changeLastModified(page.getUserno(), page.getFileno());
+		if(page.getUserno() == 0) {
+			changeLastModified(page.getProjectno(), page.getFileno(), "team");
+		}else {
+			changeLastModified(page.getUserno(), page.getFileno(), "private");
+		}
 	}
 	
 	@RequestMapping(value="pageCopy.do", method=RequestMethod.POST)
@@ -155,7 +167,11 @@ public class PrivateFileController {
 		
 		
 		//페이지 복사 후 최근변경일 업데이트
-		changeLastModified(page.getUserno(), page.getFileno());
+		if(page.getUserno() == 0) {
+			changeLastModified(page.getProjectno(), page.getFileno(), "team");
+		}else {
+			changeLastModified(page.getUserno(), page.getFileno(), "private");
+		}
 		return mv;
 	}
 	
@@ -165,14 +181,18 @@ public class PrivateFileController {
 		MongoService mgService = new MongoService();
 		
 		for(Page p : page) {
-			logger.info(p.getThumbnail());
 			mgService.saveDoc(collection, p);
 		}
 		
 		mgService.close();
 		
 		//페이지무브 후 최근변경일 업데이트
-		changeLastModified(page.get(0).getUserno(), page.get(0).getFileno());
+		if(page.get(0).getUserno() == 0) {
+			changeLastModified(page.get(0).getProjectno(), page.get(0).getFileno(), "team");
+		}else {
+			changeLastModified(page.get(0).getUserno(), page.get(0).getFileno(), "private");
+		}
+		
 		
 	}
 	
@@ -185,7 +205,11 @@ public class PrivateFileController {
 		mgService.close();
 		
 		//저장 후 최근변경일 업데이트
-		changeLastModified(page.getUserno(), page.getFileno());
+		if(page.getUserno() == 0) {
+			changeLastModified(page.getProjectno(), page.getFileno(), "team");
+		}else {
+			changeLastModified(page.getUserno(), page.getFileno(), "private");
+		}
 	}
 	
 	@RequestMapping(value="pageAllSave.do", method=RequestMethod.POST)
@@ -198,16 +222,29 @@ public class PrivateFileController {
 		mgService.close();
 		
 		//저장 후 마지막 변경일 업데이트
-		changeLastModified(list.get(0).getUserno(), list.get(0).getFileno());
+		for(Page page : list) {
+			if(page.getUserno() == 0) {
+				changeLastModified(page.getProjectno(), page.getFileno(), "team");
+			}else {
+				changeLastModified(page.getUserno(), page.getFileno(), "private");
+			}
+		}
 		
 	}
 	
 	//페이지 안에서 변경이 일어나면 최근변경일 수정용 메소드
-	public int changeLastModified(int userno, int pfileno) {
-		PrivateFile pfile = new PrivateFile();
-		pfile.setUserno(userno);
-		pfile.setPfileno(pfileno);
-		return pfService.changeLastModified(pfile);
+	public int changeLastModified(int userno, int pfileno, String pt) {
+		if(pt.equals("private")) {
+			PrivateFile pfile = new PrivateFile();
+			pfile.setUserno(userno);
+			pfile.setPfileno(pfileno);
+			return pfService.changeLastModified(pfile);
+		}else {
+			ProjectFile pfile = new ProjectFile();
+			pfile.setProjectno(userno);
+			pfile.setPrfileno(pfileno);
+			return prfService.changeLastModified(pfile);
+		}
 	}
 	
 	public String encodeToString(String path) {
@@ -238,14 +275,14 @@ public class PrivateFileController {
 		if(pfile.getPt().equals("private")) {
 			int result = pfService.pfRename(pfile);
 			if(result > 0) {
-				changeLastModified(pfile.getUserno(), pfile.getPfileno());
+				changeLastModified(pfile.getUserno(), pfile.getPfileno(), "private");
 			}else {
 				success = "fail";
 			}
 		}else {
 			int result = pfService.prRename(pfile);
 			if(result > 0) {
-				changeLastModified(pfile.getUserno(), pfile.getPfileno());
+				changeLastModified(pfile.getUserno(), pfile.getPfileno(), "team");
 			}else {
 				success = "fail";
 			}
@@ -262,42 +299,74 @@ public class PrivateFileController {
 		
 		mgService.pageRename(page, collection);
 		
+		if(page.getUserno() == 0) {
+			changeLastModified(page.getProjectno(), page.getFileno(), "team");
+		}else {
+			changeLastModified(page.getUserno(), page.getFileno(), "private");
+		}
+		
 		return success;
 	}
 	
 	@RequestMapping(value="fileCopy.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView fileCopy(ModelAndView mv, PrivateFile pfile) {
+	public ModelAndView fileCopy(ModelAndView mv, FileList fileList) {
 		MongoService mgService = new MongoService();
 		mv.setViewName( "jsonView" );
-		//뷰에서 넘겨준 파일넘버와 유저넘버로 파일의 모든 정보 검색
-		PrivateFile file = pfService.selectFile(pfile);
-		file.setPfiletitle("Copy of "+ file.getPfiletitle());
-		//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
-		int result = pfService.fileCopy(file);
 		
-		//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
-		Page p = new Page();
-		p.setUserno(file.getUserno());
-		p.setFileno(file.getPfileno());
-		List<Page> list = mgService.findPage(collection, p);
-		
-		//페이지만들기위해 방금생성한 파일 넘버조회
-		PrivateFile file2 = pfService.createPage(file.getUserno());
-		
-		//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
-		for(Page page : list) {
-			page.set_id(null);
-			page.setFileno(file2.getPfileno());
-			mgService.insertNewPage(page, collection);
+		if(fileList.getPt().equals("private")) {
+			//뷰에서 넘겨준 파일넘버와 유저넘버로 파일의 모든 정보 검색
+			PrivateFile pfile = new PrivateFile();
+			pfile.setUserno(fileList.getUserno());
+			pfile.setPfileno(fileList.getPfileno());
+			PrivateFile file = pfService.selectFile(pfile);
+			file.setPfiletitle("Copy of "+ file.getPfiletitle());
+			//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
+			int result = pfService.fileCopy(file);
+			
+			//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
+			Page p = new Page();
+			p.setUserno(file.getUserno());
+			p.setFileno(file.getPfileno());
+			List<Page> list = mgService.findPage(collection, p);
+			
+			//페이지만들기위해 방금생성한 파일 넘버조회
+			PrivateFile file2 = pfService.createPage(file.getUserno());
+			
+			//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
+			for(Page page : list) {
+				page.set_id(null);
+				page.setFileno(file2.getPfileno());
+				mgService.insertNewPage(page, collection);
+			}
+		}else {
+			ProjectFile pfile = new ProjectFile();
+			pfile.setProjectno(fileList.getUserno());
+			pfile.setPrfileno(fileList.getPfileno());
+			
+			ProjectFile file = prfService.selectFile(pfile);
+			logger.info(file.toString());
+			file.setPrfiletitle("Copy of "+ file.getPrfiletitle());
+			//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
+			int result = prfService.fileCopy(file);
+			
+			//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
+			Page p = new Page();
+			p.setProjectno(file.getProjectno());
+			p.setFileno(file.getPrfileno());
+			List<Page> list = mgService.findTeamPage(collection, p);
+			
+			//페이지만들기위해 방금생성한 파일 넘버조회
+			ProjectFile file2 = prfService.createPage(file.getProjectno());
+
+			//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
+			for(Page page : list) {
+				page.set_id(null);
+				page.setFileno(file2.getPrfileno());
+				mgService.insertNewPage(page, collection);
+			}
 		}
-		
-		//뷰에 보여줄 파일검색
-		List<FileList> pfileList = pfService.selectListAll(pfile.getUserno());
-		
-		if(pfileList != null) {
-			mv.addObject("pfileList", pfileList);
-		}
+		mgService.close();
 		return mv;
 	}
 	
@@ -423,6 +492,134 @@ public class PrivateFileController {
 		return mv;
 	}
 	
+	@RequestMapping(value="multiCopy.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView multiCopy(@RequestBody List<FileList> fileList, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		mv.setViewName( "jsonView" );
+		//뷰에서 넘겨준 파일넘버와 유저넘버로 파일의 모든 정보 검색
+		for(FileList f : fileList) {
+			if(f.getPt().equals("private")) {
+				PrivateFile pfile = new PrivateFile();
+				pfile.setUserno(f.getUserno());
+				pfile.setPfileno(f.getPfileno());
+				PrivateFile file = pfService.selectFile(pfile);
+				file.setPfiletitle("Copy of "+ file.getPfiletitle());
+				//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
+				int result = pfService.fileCopy(file);
+				
+				//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
+				Page p = new Page();
+				p.setUserno(file.getUserno());
+				p.setFileno(file.getPfileno());
+				List<Page> list = mgService.findPage(collection, p);
+				
+				//페이지만들기위해 방금생성한 파일 넘버조회
+				PrivateFile file2 = pfService.createPage(file.getUserno());
+				
+				//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
+				for(Page page : list) {
+					page.set_id(null);
+					page.setFileno(file2.getPfileno());
+					mgService.insertNewPage(page, collection);
+				}
+			}else {
+				ProjectFile pfile = new ProjectFile();
+				pfile.setProjectno(f.getUserno());
+				pfile.setPrfileno(f.getPfileno());
+				ProjectFile file = prfService.selectFile(pfile);
+				file.setPrfiletitle("Copy of "+ file.getPrfiletitle());
+				//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
+				int result = prfService.fileCopy(file);
+				
+				//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
+				Page p = new Page();
+				p.setProjectno(file.getProjectno());
+				p.setFileno(file.getPrfileno());
+				List<Page> list = mgService.findTeamPage(collection, p);
+				
+				//페이지만들기위해 방금생성한 파일 넘버조회
+				ProjectFile file2 = prfService.createPage(file.getProjectno());
+				
+				//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
+				for(Page page : list) {
+					page.set_id(null);
+					page.setFileno(file2.getPrfileno());
+					mgService.insertNewPage(page, collection);
+				}
+			}
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="multiDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView multiDelete(@RequestBody List<FileList> fileList, ModelAndView mv) {
+		mv.setViewName("jsonView");
+		
+		for(FileList pfile : fileList) {
+			if(pfile.getPt().equals("private")) {
+				int res = pfService.fileDelete(pfile);
+			}else {
+				int res = pfService.teamfileDelete(pfile);
+			}
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="multiPermanentDelete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView multiPermanentDelete(@RequestBody List<FileList> fileList, ModelAndView mv) {
+		mv.setViewName("jsonView");
+		
+		MongoService mgService = new MongoService();
+		
+		for(FileList pfile : fileList) {
+			if(pfile.getPt().equals("private")) {
+				int res = pfService.filePermanentDelete(pfile);
+				if(res > 0) {
+					mgService.removeData(collection, pfile);
+				}else {
+					mv.setViewName("error/error");
+				}
+			}else {
+				int res = pfService.teamFilePermanentDelete(pfile);
+				if(res > 0) {
+					mgService.removeTeamData(collection, pfile);
+					
+				}else {
+					mv.setViewName("error/error");
+				}
+			}
+		}
+		mgService.close();
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="multiDeleteUndo.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView multiDeleteUndo(@RequestBody List<FileList> fileList, ModelAndView mv) {
+		mv.setViewName("jsonView");
+		
+		for(FileList pfile : fileList) {
+			if(pfile.getPt().equals("private")) {
+				int res = pfService.fileDeleteUndo(pfile);
+				if(res < 0) {
+					mv.setViewName("error/error");
+				}
+			}else {
+				int res = pfService.teamFileDeleteUndo(pfile);
+				if(res < 0) {
+					mv.setViewName("error/error");
+				}
+			}
+		}
+		
+		return mv;
+	}
 }
 
 

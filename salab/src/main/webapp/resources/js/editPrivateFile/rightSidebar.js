@@ -107,14 +107,16 @@ var lastChanged = "";
 		}
 		$(this).css("background", "white");
      }).on("click", function() {
-    	 if ($(this).is(".clicked")) {
-    		 $(this).removeClass("clicked");
-    		 $(this).css("border", "1px solid white");
-    		 $(this).css("background", "white");
-    	 } else {
-    		 $(this).addClass("clicked");
-    		 $(this).css("border", "1px solid black");
-    		 $(this).css("background", "white");
+    	 if ($(this).attr("id") == "bold" || $(this).attr("id") == "italic") {
+        	 if ($(this).is(".clicked")) {
+        		 $(this).removeClass("clicked");
+        		 $(this).css("border", "1px solid white");
+        		 $(this).css("background", "white");
+        	 } else {
+        		 $(this).addClass("clicked");
+        		 $(this).css("border", "1px solid black");
+        		 $(this).css("background", "white");
+        	 }
     	 }
     	 applyChange("text-effect-" + $(this).attr("id"));
      });
@@ -320,8 +322,8 @@ var lastChanged = "";
 
 	document.addEventListener("mousedown", function(event) {
     	if(!$(event.target).is(".tab-menu *") && !$(event.target).is(".text-item *") && !$(event.target).is(".figure-item *") && !$(event.target).is(".minicolors-panel *") && !$(event.target).is(".component")) {
-    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)" : false) {
-				$(".text-dragged").css("background", "");
+    		if ($(event.target).is(".obj-comp") || $(event.target).is(".obj-comp *") ? $(".text-dragged").length > 0 && $(".text-dragged").is(".focusout") : false) {
+				$(".text-dragged").removeClass("focusout");
 				$(".text-dragged").selectText();
     		} else if ($(".text-dragged").length > 0 || window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
 				$(".text-dragged").contents().unwrap();
@@ -564,32 +566,58 @@ var lastChanged = "";
 	            			result = "diffrent";
 					}
 				});
+				var cssString = ""
+				switch(type) {
+					case "fontType" : cssString = "<span style=\"font-family"; break;
+					case "fontSize" : cssString = "<span style=\"font-size"; break; break;
+					case "fontColor" : cssString = "<span style=\"color"; break; break;
+					case "bold" : cssString = "<span style=\"font-weight"; break;
+					case "italic" : cssString = "<span style=\"font-style"; break; break;
+				}
 	    		$("div.ui-selected span").each(function() {
 	    			if (result != "diffrent") {
-						switch(type) {
-							case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
-							case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
-							case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
-							case "bold" : value = $(this).css("font-weight"); break;
-							case "italic" : value = $(this).css("font-style"); break;
+	    				var innerHTML = $(this).wrap("<div>").parent().html();
+						$(this).unwrap();
+						if (innerHTML.startsWith(cssString)) {
+							switch(type) {
+								case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+								case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+								case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+								case "bold" : value = $(this).css("font-weight"); break;
+								case "italic" : value = $(this).css("font-style"); break;
+							}
+		            		if (result == "start")
+		            			result = value;
+		            		else if (result != value)
+		            			result = "diffrent";
 						}
-	            		if (result == "start")
-	            			result = value;
-	            		else if (result != value)
-	            			result = "diffrent";
 	    			}
 	        	});
+			}
+			if (result == "start") {
+				switch(type) {
+					case "fontType" : result = "Roboto"; break;
+					case "fontSize" : result = 20; break; break;
+					case "fontColor" : result = "#343434"; break;
+					case "bold" : result = 300; break;
+					case "italic" : result = "none"; break;
+				}
 			}
     		return result;
 		}
 
-		if (type == "underline" || type == "strikethrough") {
+		/*if (type == "underline" || type == "strikethrough") {
 			var str;
 			switch(type) {
 				case "underline": str = "underline"; break;
 				case "strikethrough" : str = "line-through"; break;
 			}
 			if ($(".text-dragged").length > 0) {
+				$(".text-dragged span").each(function() {
+					console.log($(this));
+					console.log($(this).css("text-decoration"));
+					console.log($(this).css("text-decoration").includes(str));
+				});
 				value = "";
 				var $checkParent = $(".text-dragged").parent();
 				while(true) {
@@ -672,7 +700,7 @@ var lastChanged = "";
 				result = value;
 			}
 			return result;
-		}
+		}*/
 
 		if (type == "textgroundColor") {
 			if ($(".text-dragged").length > 0) {
@@ -889,7 +917,7 @@ var lastChanged = "";
                 	var fontColor1 = parseInt(fontColor.substring(0, 2), 16);
                 	var fontColor2 = parseInt(fontColor.substring(2, 4), 16);
                 	var fontColor3 = parseInt(fontColor.substring(4, 6), 16);
-
+                	
         			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    clearChanged("color");
         		}
@@ -905,38 +933,12 @@ var lastChanged = "";
         		}
             	
         		if (type == "text-effect-underline") {
-        		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=underline]").is(".clicked") ? "underline" : ""));
-        		    } else {
-                    	var textDecoration = "";
-                    	if ($(".text-effect[id=underline]").is(".clicked")){
-                    		textDecoration += "underline";
-                    	}
-                    	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-                    		if (textDecoration != "")
-                    				textDecoration += " ";
-                			textDecoration += "line-through";
-                    	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "underline");
     		    	clearChanged("textDecoration-underline");
         		}
         		
         		if (type == "text-effect-strikethrough") {
-        		    if (window.getSelection().rangeCount > 0) {
-        		    	wrapTag(window.getSelection().getRangeAt(0), "span", "changed", "textDecoration", ($(".text-effect[id=strikethrough]").is(".clicked") ? "line-through" : ""));
-        		    } else {
-                    	var textDecoration = "";
-                    	if ($(".text-effect[id=underline]").is(".clicked")){
-                    		textDecoration += "underline";
-                    	}
-                    	if ($(".text-effect[id=strikethrough]").is(".clicked")) {
-                    		if (textDecoration != "")
-                    				textDecoration += " ";
-                			textDecoration += "line-through";
-                    	}
-        		    	wrapSpanToText($(this), "changed", "text-decoration", (textDecoration != "" ? textDecoration : "none"));
-        		    }
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "line-through");
         		    clearChanged("textDecoration-strikethrough");
         		}
 
@@ -1038,7 +1040,24 @@ var lastChanged = "";
 
     function wrapSpan(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
-    		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    		console.log(target);
+    		if (target.is(".text-dragged")) {
+    			console.log("함1");
+        		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>"); 
+    		} else if (!target.is(".textarea")) {
+    			if (target.find(".textarea").length > 0) {
+        			console.log("함2");
+        			target.find(".textarea").each(function() {
+        	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + $(this).html() + "</span>");
+        			});
+    			} else {
+	    			console.log("함3");
+	    			target.css(cssType, cssProperty);
+    			}
+    		} else {
+    			console.log("함4");
+    			target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    		}
     	}
     	else {
     		console.log("wrapTag 에러 발생 !!");
@@ -1047,15 +1066,18 @@ var lastChanged = "";
 
 	function clearChanged(type) {
 		
-		var $checkParent = $(".ui-selected .changed").parent();
-		while(true) {
-			if ($checkParent.is(".textarea"))
-				break;
-			else if ($checkParent.text() == $(".ui-selected .changed").text()) {
-				$checkParent.css(type, "");
+		$(".ui-selected .changed").each(function() {
+			var $checkParent = $(this).parent();
+			while(true) {
+				if ($checkParent.is("div"))
+					break;
+				else if ($checkParent.text() == $(this).text()) {
+					$checkParent.css(type, "");
+				}
+				$checkParent = $checkParent.parent();
 			}
-			$checkParent = $checkParent.parent();
-		}
+		})
+		
 
 	    $(".ui-selected .changed span").each(function() {
 			if (type.startsWith("textDecoration")) {
@@ -1074,7 +1096,7 @@ var lastChanged = "";
 			$(this).css(type, "");
 	    });
 	    
-	    $(".ui-selected span").each(function() {
+	    $(".ui-selected .textarea span").each(function() {
 			var spanText = $(this).wrap("<div>").parent().html();
 			$(this).unwrap();
 			if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">") || spanText.startsWith("<span style>")) 
@@ -1083,7 +1105,9 @@ var lastChanged = "";
 				$(this).remove();
 	    });
 
-		$(".ui-selected .changed").removeAttr("class");
+		$(".ui-selected .changed").each(function() {
+			$(this).removeAttr("class");
+		});
 		
 	}
 
@@ -1151,15 +1175,15 @@ var lastChanged = "";
 	
 	$(document).on("click", ".text-editing", function() {
 		if ($(".text-dragged").length > 0) {
-			if ($(".text-dragged").css("background-color") != "rgba(0, 0, 0, 0)")
-				$(".text-dragged").css("background", "");
+			if ($(".text-dragged").is("focusout"))
+				$(".text-dragged").removeClass("focusout");
 			$(".text-dragged").selectText();
 		}
 	});
 	
 	$("input").on("focusin", function() {
 		if ($(".text-dragged").length > 0) {
-			$(".text-dragged").css("background", "pink");
+			$(".text-dragged").addClass("focusout");
 	        window.getSelection().removeAllRanges();
 		}
 	});
@@ -1221,7 +1245,7 @@ var lastChanged = "";
     function figurelineClicked() {
     	if ($(".figure-line-droplist").css("display") == "none") {
         	$(".figure-line-droplist").css({
-        		top : $(".figure-item .line").position().top + 31,
+        		top : $(".figure-item .line").position().top + 31 + $(".right-side-bar .tab-content").scrollTop(),
         		left : $(".figure-item .line").position().left + 11
         	});
         	$(".figure-line-droplist").slideDown(100);

@@ -147,10 +147,11 @@ Team-grid .active{
 .teamLogo-box:hover{
 
 }
-.teamLogo-box img{
-    width: inherit;
-    height: inherit;
+.teamLogo-img{
+    width: 100px;
+    height: 100px;
     border-radius: 100%;
+    z-index: 10;
 }
 label{
     cursor: pointer;

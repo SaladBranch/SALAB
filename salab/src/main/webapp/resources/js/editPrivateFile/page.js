@@ -143,7 +143,6 @@
         rightMouseListner();
         leftMouseListner();
         
-        
         //페이지별 color 다르게 적용
         toggleCanvasColor();
         
@@ -316,14 +315,8 @@
 				console.log( jqXHR.statusText );
 				console.log( jqXHR.responseText );
 				console.log( jqXHR.readyState );
-				}
+			}
     	});
-    }
-    
-    function test(){
-    	for(var i=0; i < list.length; i++){
-    		console.log(list[i]);
-    	}
     }
     
     //page 탭 리스트 불러오는 ajax
@@ -528,24 +521,24 @@
         	e.stopPropagation();
         	e.preventDefault();
         }).on('mouseup', '.memo-container', function(e){
-        	var x = e.offsetX - 10;
-        	var y = e.offsetY - 30;
+        	var x = e.offsetX -8;
+        	var y = e.offsetY -18;
         	
         	var div = '<div class="memo" style="position: absolute; left: '+x+'px; top: '+y+'px" display: flex">' + 
-        		'<img src="/salab/resources/img/coordinatess.png" class="memo-icon" style="width: 20px; height: 30px;" >' +
+        		'<i class="fas fa-map-marker-alt memo-icon"></i>' +
         		'<div class="memo-content">'+
         		'<div class="memo-userThumb">'+
                 '<div class="memo-info">'+
                 '<div class="user">'+
-                '<span style="width: 40px; height: 40px;"></span>'+
-                '<span> 오세준</span>'+
+                '<span style="width: 40px; height: 40px;"><image src="/salab/resources/img/default_profile.png" style="width:100%; height:100%;"></span>'+
+                '<span style="font-size: 15px; font-weight: bold; padding-left: 5px">ashashasasgarga</span>'+
                 '</div>'+
                 '<div class="button">'+
                 '<button class="btn-ghost cancel">cancel</button>'+
                 '<button class="btn-ghost done" disabled="true">done</button>'+
                 '</div>'+
                 '</div>'+
-                '<input type="text" class="memo-cnt" value="">'+
+                '<input type="text" class="memo-cnt" value="" placeholder="Comment..">'+
 		        '</div>'+
 		        '</div>'+
         		'</div>'+
@@ -593,20 +586,20 @@
     	$(document).on('click', '.btn-ghost.done', function(){
     		var $memo = $(this).closest('.memo-info').siblings('.memo-cnt');
     		var $button = $(this).closest('.button');
+    		var $user = $(this).closest('.user');
     		
     		$($memo).attr('readOnly', true);
     		$($memo).addClass('disabled');
     		$($button).html(
-    				'<div class="file-options">'+
-	                '<div class="file-options-btn">⋮</div>'+
-	                '<div class="file-options-menu">'+
-	                '<ul>'+
-	                '<li><a href="javascript:" class="memoEdit">메모 수정</a></li>'+
-	                '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
-	                '</ul>'+
-	                '</div>'+
-    				'</div>');
-    		
+    			'<div class="file-options">'+
+	            '<div class="file-options-btn">⋮</div>'+
+	            '<div class="file-options-menu">'+
+	            '<ul>'+
+	            '<li><a href="javascript:" class="memoEdit">메모 수정</a></li>'+
+	            '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
+	            '</ul>'+
+	            '</div>'+
+    			'</div>');
     	});
     	
     function preview(file, idx, x, y){

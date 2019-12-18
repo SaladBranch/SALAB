@@ -127,7 +127,7 @@
                     <!--생성 섹션 -->
                     <div class="middle">
                         <div class="create-upside-div">
-                            <div class="upside-title-div">PROJECT에 사용될 이름을 입력해주세요</div>
+                            <div class="upside-title-div create-team-p">PROJECT에 사용될 이름을 입력해주세요</div>
                             <p>
                                 함께 하고자 하는 유저의 닉네임을 설정해주세요<br>
                                 닉네임이 한글일 시 검색 안되벌임

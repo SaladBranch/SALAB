@@ -91,6 +91,7 @@ function leftMouseListner(){
 		$(this).addClass("text-editing");
 		$(this).addClass("ui-selected");
 		
+		// text 전채선택 수정 필요
 		if ($(this).find(".obj-comp").is(".obj_ul")) {
 			$(this).find("li").attr("contenteditable", "true");
 			if ($(event.target).is("li"))
@@ -98,8 +99,10 @@ function leftMouseListner(){
 		} else if ($(this).find(".obj-comp").is(".obj-textInput")) {
 			$(this).find("input[type=text]").removeAttr("readOnly");
 		} else {
-			$(this).find(".textarea").attr("contenteditable", "true");
-	    	$(this).find(".textarea").selectText();
+			if ($(this).find(".textarea").length > 0) {
+				$(this).find(".textarea").attr("contenteditable", "true");
+		    	$(this).find(".textarea").selectText();
+			}
 		}
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();

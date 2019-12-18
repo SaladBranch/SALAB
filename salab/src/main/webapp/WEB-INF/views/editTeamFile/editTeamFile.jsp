@@ -41,6 +41,15 @@
         <div class="top-bar-children" id="top-bar-right">
             <div></div>
             <div class="top-right-menus">
+            	<div class="enter-members">
+	            	<c:if test="${!empty sessionScope.loginMember.userprofile_r }">
+	            		<img id="my-profile" src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r }">
+	            	</c:if>
+	            	<c:if test="${empty sessionScope.loginMember.userprofile_r }">
+	            		<img id="my-profile" src="/salab/resources/img/default_profile.png">
+	            	</c:if>
+	            	<div class="team-members"></div>
+            	</div>
                 <div class="canvas-size">
                     <p><span>100%</span><i class="fas fa-chevron-down"></i></p>
                     <div class="top-canvas-opts">

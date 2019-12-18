@@ -448,7 +448,7 @@ var obj_dropdown = {
         var code = `
             <div class="obj" style="position: absolute; top: ${obj_dropdown.insertY}px; left: ${obj_dropdown.insertX}px;  width: 200px;height:40px;">
           <div class="obj-comp obj_dropdown" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
-                            <div class="obj_dropdown_left "contenteditable="false" ><input placeholder="Drop down" class="textarea"></input></div>
+                            <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down"></input></div>
                             <div class="obj_dropdown_right" contenteditable="false">
                                 <div><i class="fas fa-angle-up"></i></div>
                                 <div><i class="fas fa-angle-down"></i></div>

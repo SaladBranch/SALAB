@@ -581,10 +581,11 @@ var obj_dropdown = {
         var code = `
             <div class="obj" style="position: absolute; top: ${obj_dropdown.insertY}px; left: ${obj_dropdown.insertX}px;  width: 200px;height:40px;">
           <div class="obj-comp obj_dropdown" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
-                            <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down"></input></div>
+                            <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
+                            </div>
                             <div class="obj_dropdown_right" contenteditable="false">
-                                <div><i class="fas fa-angle-up"></i></div>
-                                <div><i class="fas fa-angle-down"></i></div>
+                                    <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg></div>
+                                    <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" class="svg-inline--fa fa-angle-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg></div>
                             </div>
         </div>
         </div>`

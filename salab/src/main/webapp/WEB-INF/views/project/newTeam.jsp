@@ -127,17 +127,16 @@
                     <!--생성 섹션 -->
                     <div class="middle">
                         <div class="create-upside-div">
-                            <div class="upside-title-div create-team-p">PROJECT에 사용될 이름을 입력해주세요</div>
+                            <div class="upside-title-div create-team-p">새로운 프로젝트를 생성합니다.</div>
                             <p>
-                                함께 하고자 하는 유저의 닉네임을 설정해주세요<br>
-                                닉네임이 한글일 시 검색 안되벌임
-                                <br>
-                                해당 이메일에서 수락하여야만 프로젝트에 참여할 수 있습니다.
+                                프로젝트의 이름을 입력해 주세요.<br>
+                                적절한 프로젝트의 이름은, 프로젝트의 방향성을 보다 뚜렸하게 합니다.<br>
+                                최대 30글자의 한글, 영어 , 숫자를 입력할 수 있습니다.
                             </p>
                         </div>
                         <form action="investCreateProject.do" method="post">
-                            <input type="text" class="create-projectname-input" name="projectname" placeholder="프로젝트 이름">
-                            <button class="create-action btn btn-full">Create PROJECT</button>
+                            <input type="text" class="create-projectname-input" name="projectname" placeholder="Please write the name of the project here." maxlength="30" >
+                            <button id="project_create_btn" class="create-action btn btn-full" onclick="checkName()">Create PROJECT</button>
                         </form>
                     </div>
                 </div>
@@ -154,5 +153,16 @@
             drop.show();
         }
     });
+    function checkName(){
+        console.log("진입");
+        console.log($(".create-projectname-input").val());
+        console.log($(".create-projectname-input").html());
+        
+        if($(".create-projectname-input").val().length >0){
+            
+        }else{
+            $(".create-projectname-input").val("Project With SALAB");
+        }
+    }
 </script>
 </html>

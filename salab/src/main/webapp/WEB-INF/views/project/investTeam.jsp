@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <script type="text/javascript">
         function inviteAction() {
-            if (!($('.invite-email').length)) {
+            if (!($("input[name=invest]").length)) {
                 alert('초대할 팀원을 입력해주세요');
                 return false;
             }
@@ -40,8 +40,8 @@
                             response($.map(result.list, function(item) {
                                 console.log(item);
                                 return {
-                                    label: item.username + "  " + item.usermail,
-                                    value: item.username,
+                                    label:  decodeURIComponent(item.username, "utf-8").replace(/\+/gi, " ") + "  " + item.usermail,
+                                    value: decodeURIComponent(item.username, "utf-8").replace(/\+/gi, " "),
                                     userno: item.userno,
                                     usermail: item.usermail
                                 }
@@ -53,8 +53,8 @@
                 //구현없으면 단순 text태그내에 값이 들어간다. 
                 select: function(event, ui) {
                     console.log(ui.item.userno);
-                    $('form').append('<input type="hidden" name="invest" value="' + ui.item.userno + '">');
-                    $('#log').prepend('<div class="invite-email">' + ui.item.value + '<em>  ' + ui.item.usermail +' <div class="deleteEmail" onclick="deleteEmail()"><i class="fas fa-times"></i></div>'+ '</em></div>');
+                    $('form').append();
+                    $('#log').prepend('<div class="invite-email">' + ui.item.value + '<em>  ' + ui.item.usermail +' <div class="deleteEmail" onclick="deleteEmail()"><i class="fas fa-times"></i></div>'+ '</em><input type="hidden" name="invest" value="' + ui.item.userno + '"></div>');
                 }
             });
         });
@@ -172,11 +172,10 @@
                 <div class="middle">
                     <!-- 멤버추가 -->
                     <div class="create-upside-div">
-                        <div class="upside-title-div create-team-p">PROJECT를 함께 할 팀원을 추가합니다</div>
+                        <div class="upside-title-div create-team-p">PROJECT를 함께 수행할 팀원을 추가할 수 있습니다.</div>
                         <p>
-                            함께 하고자 하는 유저의 닉네임을 설정해주세요<br>
-                            닉네임이 한글일 시 검색 안되벌임
-                            <br>
+                            함께 하고자 하는 유저의 닉네임으로 검색합니다.<br>
+                            email을 확인하고 선택해 주세요.<br>
                             해당 이메일에서 수락하여야만 프로젝트에 참여할 수 있습니다.
                         </p>
                     </div>
@@ -197,7 +196,12 @@
                         </div>
                     </div>
                     <div>
-                        <div id="log" class="invite-emailList scrollbar"> </div>
+                        <form action="investCreateProject.do" method="post" name="inviteList">
+                            <input type="hidden" name="userno" value="${loginMember.userno }">
+                            <input type="hidden" name="projectname" value="${projectname }">
+                            <div id="log" class="invite-emailList scrollbar">
+                            </div>    
+                        </form>
                     </div>
                     <!-- <input id="invite-username-input" class="invite-username-input" type="text" name="invest1" list="autocomp">
 
@@ -216,13 +220,6 @@
 
                 </div>
             </div>
-            <div>
-                <form action="investCreateProject.do" method="post">
-                    <input type="hidden" name="userno" value="${loginMember.userno }">
-                    <input type="hidden" name="projectname" value="${projectname }">
-
-                </form>
-            </div>
         </section>
     </div>
 </body>
@@ -239,7 +236,7 @@
     function deleteEmail(){
         console.log(event.target.parentElement.parentElement.parentElement);
       var deleteOb = event.target.parentElement.parentElement.parentElement;
-    deleteOb.style.display = "none";
+        deleteOb.innerHTML="";
     }
 </script>
 

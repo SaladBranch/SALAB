@@ -131,6 +131,7 @@ public class ProjectController {
 				sendMail.setFrom("saladbranch@gmail.com", "SALAB");
 				sendMail.setTo(uemail);
 				sendMail.send();
+				mv.setViewName("redirect:/gotoProject.do?projectno="+projectno);
 			}
 		}else {
 			//프로젝트 생성실패하면 에러페이지로 이동

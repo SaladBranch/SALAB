@@ -1040,16 +1040,24 @@ var lastChanged = "";
 
     function wrapSpan(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
-    		if (target.is(".obj-ul")) {
-    			target.find("li").each(function() {
-    	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
-    			})
+    		console.log(target);
+    		if (target.is(".text-dragged")) {
+    			console.log("함1");
+        		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>"); 
     		} else if (!target.is(".textarea")) {
-    			target.find(".textarea").each(function() {
-    	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
-    			})
-    		} else
-        		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    			if (target.find(".textarea").length > 0) {
+        			console.log("함2");
+        			target.find(".textarea").each(function() {
+        	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + $(this).html() + "</span>");
+        			});
+    			} else {
+	    			console.log("함3");
+	    			target.css(cssType, cssProperty);
+    			}
+    		} else {
+    			console.log("함4");
+    			target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
+    		}
     	}
     	else {
     		console.log("wrapTag 에러 발생 !!");
@@ -1088,7 +1096,7 @@ var lastChanged = "";
 			$(this).css(type, "");
 	    });
 	    
-	    $(".ui-selected span").each(function() {
+	    $(".ui-selected .textarea span").each(function() {
 			var spanText = $(this).wrap("<div>").parent().html();
 			$(this).unwrap();
 			if (spanText.startsWith("<span>") || spanText.startsWith("<span style=\"\">") || spanText.startsWith("<span style>")) 
@@ -1237,7 +1245,7 @@ var lastChanged = "";
     function figurelineClicked() {
     	if ($(".figure-line-droplist").css("display") == "none") {
         	$(".figure-line-droplist").css({
-        		top : $(".figure-item .line").position().top + 31,
+        		top : $(".figure-item .line").position().top + 31 + $(".right-side-bar .tab-content").scrollTop(),
         		left : $(".figure-item .line").position().left + 11
         	});
         	$(".figure-line-droplist").slideDown(100);

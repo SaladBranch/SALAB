@@ -91,10 +91,18 @@ function leftMouseListner(){
 		$(this).addClass("text-editing");
 		$(this).addClass("ui-selected");
 		
-		$(this).children(".textarea").attr("contenteditable", "true");
+		if ($(this).find(".obj-comp").is(".obj_ul")) {
+			$(this).find("li").attr("contenteditable", "true");
+			if ($(event.target).is("li"))
+				$(event.target).selectText();
+		} else if ($(this).find(".obj-comp").is(".obj-textInput")) {
+			$(this).find("input[type=text]").removeAttr("readOnly");
+		} else {
+			$(this).find(".textarea").attr("contenteditable", "true");
+	    	$(this).find(".textarea").selectText();
+		}
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
-    	$(this).children(".textarea").selectText();
 		
         $('.right-side-bar .canvas-menu').hide();
         $('.right-side-bar .tab-menu').show();
@@ -469,9 +477,10 @@ $(function(){
     			$checkTarget = $checkTarget.parent();
     		}
     		if (isTextarea != "true") {
-        		$("#droppable .obj-comp[contenteditable=true]").each(function() {
+        		$("#droppable [contenteditable=true]").each(function() {
         	        $(this).attr("contenteditable", "false");
-        		})
+        		});
+    			$("#droppable .obj").find("input").prop("readOnly", true);
     		}
     	}
     }).on('mousemove', function(e){

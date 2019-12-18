@@ -5,7 +5,10 @@
     background-color: rgba(0, 168, 255, 0.19);
     z-index: 100;
 }
-
+/*form tab-content open*/
+.form-control-comps{
+    display: block;
+}
 /*--------------------------*/
 /*Object CSS*/
 /*--------------------------*/
@@ -30,7 +33,7 @@
     border: 1px solid #000;
 }
 .obj-brect{
-    border-radius: 10px;
+    border-radius: 3px;
 }
 .obj-ellipse, .obj-circle{
     border-radius: 50%;
@@ -125,6 +128,7 @@
     background-color: #afafaf;
     padding: 20% auto;
 }
+
 .obj_search_left img{
     width: inherit;
     height: inherit;
@@ -219,6 +223,7 @@
 .obj_dropdown{
     display: block;
     border: 0.5px solid gray;
+    border-radius: 3px;
     background-color: inherit;
 }
 .obj_dropdown_left{

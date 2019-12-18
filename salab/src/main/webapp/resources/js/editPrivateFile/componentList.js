@@ -366,10 +366,104 @@ var obj_progressBar = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="group-obj obj ui-selected ui-resizable ui-selectee"  style="top: ${obj_progressBar.insertY}px; left: ${obj_progressBar.insertX}px; width: 120px; height: 30px; transform: rotate(0rad);"><div class="obj" style="left:0px; top: 0px; position: absolute; width: 100px;height:20px;"><div class="obj-comp obj_progressBar" contenteditable="false"><div class="obj_progressBar_outline"></div></div></div><div class="obj" style="left:0px; top:0px; position: absolute;  width: 70px;height:20px;"><div class="obj-comp obj_progressBar" contenteditable="false"><div class="obj_progressBar_inline"></div></div></div></div>`;
+        var code = `<div class="group-obj obj ui-selected ui-resizable ui-selectee"  style="top: ${obj_progressBar.insertY}px; left: ${obj_progressBar.insertX}px; width: 120px; height: 30px; transform: rotate(0rad);"><div class="obj" style="left:0px; top: 0px; position: absolute; width: 100px;height:20px;transform: rotate(0rad); cursor: default;"><div class="obj-comp obj_progressBar" contenteditable="false" ><div class="obj_progressBar_outline"></div></div></div><div class="obj" style="left:0px; top:0px; position: absolute;  width: 70px;height:20px; transform: rotate(0rad);"><div class="obj-comp obj_progressBar" contenteditable="false" ><div class="obj_progressBar_inline"></div></div></div></div>`;
         return code;
     }
 };
+var obj_search = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="obj" style="position: absolute; top: ${obj_search.insertY}px; left: ${obj_search.insertX}px; width: 200px;height:31px;">
+          <div class="obj-comp  obj_search textarea"><div class="obj_search_left" contenteditable="false"><img src="/salab/resources/svg/search-solid.svg" alt=""></div><div class="obj_search_right "></div></div></div>`
+        return code;
+    }
+}
+var obj_scroll_y = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_y.insertY}px; left: ${obj_scroll_y.insertX}px;  width: 22px;height:205px; transform: rotate(0rad);">
+        <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 20px;height:200px;transform: rotate(0rad);">
+          <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px; transform: rotate(0rad);">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+        </div>
+    </div>`
+        return code;
+    }
+}
+var obj_scroll_x = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 203px;height:22px; transform: rotate(0rad);">
+        <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 200px;height:25px; transform: rotate(0rad);
+">
+          <div class="obj-comp obj_scroll_x" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
+               <div class="obj_scroll_x_outline">
+                    <div class="obj_scroll_x_leftside"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></div>
+                    <div class="obj_scroll_x_rightside"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 0px; left: 20px; width: 40px;height:25px;transform: rotate(0rad);
+">
+                <div class="obj-comp obj_scroll_x_inline">
+                    <div class=""></div>
+                </div>
+        </div>
+    </div>`
+        return code;
+    }
+}
+var obj_dropdown = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_dropdown.insertY}px; left: ${obj_dropdown.insertX}px;  width: 200px;height:40px;">
+          <div class="obj-comp obj_dropdown" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            <div class="obj_dropdown_left "contenteditable="false" ><input placeholder="Drop down" class="textarea"></input></div>
+                            <div class="obj_dropdown_right" contenteditable="false">
+                                <div><i class="fas fa-angle-up"></i></div>
+                                <div><i class="fas fa-angle-down"></i></div>
+                            </div>
+        </div>
+        </div>`
+        return code;
+    }
+}
 var getModule = function(id){
     switch(id){
         case 'obj_rect':
@@ -416,6 +510,10 @@ var getModule = function(id){
             return obj_search;
         case 'obj_scroll_y':
             return obj_scroll_y;
+        case 'obj_scroll_x':
+            return obj_scroll_x;
+        case 'obj_dropdown':
+            return obj_dropdown;
     }
 };
 

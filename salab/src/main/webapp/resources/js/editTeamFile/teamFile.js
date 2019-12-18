@@ -3,6 +3,13 @@ $(document).ready(function(){
 	
 	//채팅파트
 	var msgAlert = 0; //msg 알림용 변수
+	//방에 들어왔을때
+	socket.emit("joinRoom", "prfile"+$('#prfileno').val());
+	socket.on("joinRoom", function(msg){
+		console.log(msg);
+	});
+	//방에서 나갈때
+	
     //채팅창 토글 
     $('.team-chat').on('click', function(){
         if($('.chat-box').css("display") == "none"){
@@ -35,21 +42,19 @@ $(document).ready(function(){
 	});
 	
 	socket.on("send_msg", function(message){
-		if($('#prfileno').val() === message.prfileno){ //같은 프로젝트 파일일 경우
-			if($('.chat-box').css("display") == "none"){
-				msgAlert++;
-				$('#chat-alert').text(msgAlert).show();
-			}else{
-				msgAlert == 0;
-				$('#chat-alert').hide();
-			}
-			if($('#userno').val() === message.userno){
-				addMyMessage(message);
-			}else{
-				addYourMessage(message);
-			}
-			$('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
+		if($('.chat-box').css("display") == "none"){
+			msgAlert++;
+			$('#chat-alert').text(msgAlert).show();
+		}else{
+			msgAlert == 0;
+			$('#chat-alert').hide();
 		}
+		if($('#userno').val() === message.userno){
+			addMyMessage(message);
+		}else{
+			addYourMessage(message);
+		}
+		$('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 	});
 	
 	//onload시, chat 20개 불러오기 

@@ -863,8 +863,17 @@
        }, 500);
 	});
 	 
-    $(document).on("click", ".obj", function(e){
-    	console.log($(e.target));
+    $(document).on("keydown", ".obj-comp li", function(e) {
+    	if (event.shiftKey && e.keyCode == 13) {
+		    event.preventDefault();
+    		var $insertli = $("<li>list</li>");
+    		$insertli.css("width", "80%");
+    		$insertli.css("margin-left", "20%");
+    		$insertli.css("float", "left");
+    		$insertli.attr("contenteditable", "true");
+    		$(this).after($insertli);
+    		$insertli.focus();
+    	}
     });
     
     </script>

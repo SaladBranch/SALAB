@@ -96,13 +96,13 @@ function leftMouseListner(){
 			$(this).find("li").attr("contenteditable", "true");
 			if ($(event.target).is("li"))
 				$(event.target).selectText();
-		} else if ($(this).find(".obj-comp").is(".obj-textInput")) {
+		}
+		if ($(this).find(".textarea").length > 0) {
+			$(this).find(".textarea").attr("contenteditable", "true");
+	    	$(this).find(".textarea").selectText();
+		}
+		if ($(this).find("input[type=text]").length > 0) {
 			$(this).find("input[type=text]").removeAttr("readOnly");
-		} else {
-			if ($(this).find(".textarea").length > 0) {
-				$(this).find(".textarea").attr("contenteditable", "true");
-		    	$(this).find(".textarea").selectText();
-			}
 		}
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();

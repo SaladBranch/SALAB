@@ -258,7 +258,7 @@
 	cursor : text;
 }
 /*연영*/
-.obj-buttonInput_Normal_A, .obj-buttonInput_Normal_B, .obj-buttonInput_Long_A, .obj-buttonInput_Long_B{
+.obj_buttonInput_Normal_A, .obj_buttonInput_Normal_B, .obj_buttonInput_Long_A, .obj_buttonInput_Long_B{
 	color: #fff;
 	padding: 2px;
 	font-size: 15px;
@@ -267,10 +267,10 @@
     border-radius: 4px;
     border: none;
 }
-.obj-buttonInput_Normal_A, .obj-buttonInput_Long_A{
+.obj_buttonInput_Normal_A, .obj_buttonInput_Long_A{
     background-color: #3498db;
 }
-.obj-buttonInput_Normal_B, .obj-buttonInput_Long_B{
+.obj_buttonInput_Normal_B, .obj_buttonInput_Long_B{
     background-color: #c9c9c9;
 }
 .obj_plusBtn, .obj_minusBtn{
@@ -282,10 +282,67 @@
 	font-size: 13pt;
 	font-weight: bold;
 }
-
-.obj_messageForm{
-	font-size: 11pt;
-	color:#fff;background-color:rgb(46, 204, 113);padding:15px;border-radius:4px;
+.obj_messageForm_A, .obj_messageForm_B{
+	font-size: 10pt;
+	padding-top:15px;
+	border-radius:4px;
+}
+.obj_messageForm_A{
+	color:#fff;
+	background-color:rgb(46, 204, 113);
+}
+.obj_messageForm_B{
+	color:#212121;
+	background-color:#bbb;
+	font_weight: 400;
+}
+.obj_memo_A, .obj_memo_B{
+	padding: 10px; 
+	box-shadow: rgba(0, 0, 0, 0.290196) 4px 4px 8px 0px; 
+	background-color: rgb(157, 232, 217);
+	font-style: italic;
+	font-size: 12px;
+	text-align: left;
+}
+.obj_memo_A{
+	background-color: rgb(157, 232, 217);
+}
+.obj_memo_B{
+	background-color: rgb(255, 235, 152);
+}
+.obj_label{
+	font-size: 12px;
+	padding:2px; 
+	border-top-left-radius: 30px; 
+	border-top-right-radius: 30px; 
+	border-bottom-right-radius: 30px; 
+	border-bottom-left-radius: 30px; 
+	text-align: center; 
+	color: rgb(255, 255, 255); 
+	box-shadow: none; 
+	background-color: rgb(26, 188, 156);
+}
+.obj_marker{
+	border-radius:50%;
+	text-align: center; 
+	color: rgb(255, 255, 255); 
+	background-color: rgba(255, 6, 6, 0.85);
+}
+.obj_prev, .obj_next{
+	font-size: 13px;
+	font-weight: 400;
+	color: rgb(131, 131, 131); 
+	text-align: center; 
+	border-top-left-radius: 20px; 
+	border-top-right-radius: 20px; 
+	border-bottom-right-radius: 20px; 
+	border-bottom-left-radius: 20px; 
+	background-color: #c9c9c9;
+	padding-top: 4px;
+}
+.obj_profile_A, .obj_profile_B{
+	border-radius: 50%;
+	padding: none;
 }
 /*연영*/
 

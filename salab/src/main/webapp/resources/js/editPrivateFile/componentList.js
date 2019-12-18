@@ -162,8 +162,8 @@ var obj_buttonInput_Normal_A = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
-	        	<div class="obj-comp obj-buttonInput_Normal_A">
-	        		<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">Button<div>
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
+	        		<div class="obj-comp obj_buttonInput_Normal_A">Button<div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -180,9 +180,7 @@ var obj_buttonInput_Normal_B = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_B.insertY}px; left: ${obj_buttonInput_Normal_B.insertX}px; width: 100px; height: 45px;">
-	        	<div class="obj-comp obj-buttonInput_Normal_B">
-	        		<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">Button</div>
-	        	</div>
+	        	<div class="obj-comp textarea obj_buttonInput_Normal_B" contenteditable="false">Button</div>
 	        </div>`;
 	        return code;
 	    }
@@ -198,9 +196,7 @@ var obj_buttonInput_Long_A = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_A.insertY}px; left: ${obj_buttonInput_Long_A.insertX}px; width: 210px; height: 40px;">
-	        	<div class="obj-comp obj-buttonInput_Long_A">
-	        		<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">Button<div>
-	        	</div>
+	        	<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">Button</div>
 	        </div>`;
 	        return code;
 	    }
@@ -216,9 +212,7 @@ var obj_buttonInput_Long_B = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 50px;">
-	        	<div class="obj-comp obj-buttonInput_Long_B">
-	        		<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">Button</div>
-	        	</div>
+	        	<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">Button</div>
 	        </div>`;
 	        return code;
 	    }
@@ -234,9 +228,7 @@ var obj_plusBtn = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_plusBtn.insertY}px; left: ${obj_plusBtn.insertX}px; width: 28px; height: 28px;">
-	        	<div class="obj-comp obj_plusBtn">
-	        		<div class="obj-comp textarea obj_plusBtn" contenteditable="false">+</div>
-	        	</div>
+	        	<div class="obj-comp textarea obj_plusBtn" contenteditable="false">+</div>
 	        </div>`;
 	        return code;
 	    }
@@ -252,14 +244,12 @@ var obj_minusBtn = {
 	    },
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_minusBtn.insertY}px; left: ${obj_minusBtn.insertX}px; width: 28px; height: 28px;">
-	        	<div class="obj-comp obj_minusBtn">
-	        		<div class="obj-comp textarea obj_minusBtn" contenteditable="false">-</div>
-	        	</div>
+	        	<div class="obj-comp textarea obj_minusBtn" contenteditable="false">-</div>
 	        </div>`;
 	        return code;
 	    }
-};
-var obj_messageForm = {
+}
+var obj_messageForm_A = {
 		insertX: 200,
 	    insertY: 100,
 	    setX: function(x){
@@ -269,11 +259,154 @@ var obj_messageForm = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm.insertY}px; left: ${obj_messageForm.insertX}px; width: 150px; height: 50px;">
-	        	<div class="obj-comp obj_messageForm">
-	        		<div class="obj-comp textarea" contenteditable="false"> Message</div>
-	        	</div>
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm_A.insertY}px; left: ${obj_messageForm_A.insertX}px; width: 130px; height: 50px; min-width: 41px; min-height: 41px;">
+	        	<div class="obj-comp textarea obj_messageForm_A" contenteditable="false">Message</div>
 	        	<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_messageForm_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm_B.insertY}px; left: ${obj_messageForm_B.insertX}px; width: 130px; height: 50px; min-width: 41px; min-height: 41px;">
+	        	<div class="obj-comp textarea obj_messageForm_B" contenteditable="false">Message</div>
+				<span style="position:absolute;width:0;height:0;left:0;top:50%;margin-left:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:16px solid #bbb"></span>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_memo_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_memo_A.insertY}px; left: ${obj_memo_A.insertX}px; width: 160px; height: 70px;">
+				<div class="obj-comp textarea obj_memo_A" contenteditable="false">Memo..</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_memo_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_memo_B.insertY}px; left: ${obj_memo_B.insertX}px; width: 160px; height: 70px;">
+				<div class="obj-comp textarea obj_memo_B" contenteditable="false">Memo..</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_label = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_label.insertY}px; left: ${obj_label.insertX}px; width: 75px; height: 20px;">
+				<div class="obj-comp textarea obj_label">LABEL</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_marker = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_marker.insertY}px; left: ${obj_marker.insertX}px; width: 33px; height: 33px;">
+				<div class="obj-comp textarea obj_marker">5</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_prev = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_prev.insertY}px; left: ${obj_prev.insertX}px; width: 75px; height: 25px;">
+				<div class="obj-comp textarea obj_prev">< prev</div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_next = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_next.insertY}px; left: ${obj_next.insertX}px; width: 75px; height: 25px;">
+				<div class="obj-comp textarea obj_next">next ></div>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_profile_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_profile_A.insertY}px; left: ${obj_profile_A.insertX}px; width: 100px; height: 100px;">
+					<img class="obj-comp obj_profile_A" src="/salab/resources/img/default_profile2.png">
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_profile_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_profile_B.insertY}px; left: ${obj_profile_B.insertX}px; width: 100px; height: 100px;">
+					<img class="obj-comp obj_profile_B" src="/salab/resources/img/default_profile3.png">
 	        </div>`;
 	        return code;
 	    }
@@ -488,8 +621,26 @@ var getModule = function(id){
         	return obj_plusBtn;
         case 'obj_minusBtn':
         	return obj_minusBtn;
-        case 'obj_messageForm':
-        	return obj_messageForm;
+        case 'obj_messageForm_A':
+        	return obj_messageForm_A;
+        case 'obj_messageForm_B':
+        	return obj_messageForm_B;
+        case 'obj_memo_A':
+        	return obj_memo_A;
+        case 'obj_memo_B':
+        	return obj_memo_B;
+        case 'obj_label':
+        	return obj_label;
+        case 'obj_marker':
+        	return obj_marker;
+        case 'obj_prev':
+        	return obj_prev;
+        case 'obj_next':
+        	return obj_next;
+        case 'obj_profile_A':
+        	return obj_profile_A;
+        case 'obj_profile_B':
+        	return obj_profile_B;
         case 'obj_radioInput':
             return obj_radioInput;
         case 'obj_checkbox':

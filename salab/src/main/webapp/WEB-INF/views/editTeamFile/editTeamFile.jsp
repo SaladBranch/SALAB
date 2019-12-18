@@ -34,8 +34,8 @@
             </div>
             <button onclick="undoPage();" id="top-undo-btn"><img src="/salab/resources/img/leftarrow_disabled.png"></button>
             <button onclick="redoPage();" id="top-redo-btn"><img src="/salab/resources/img/rightarrow_disabled.png"></button>
-            <button><i class="far fa-comment-alt" onclick="memo();" id="top-memo-btn"></i></button>
-            <button><i class="fas fa-image" onclick="upImage();" id="top-image-btn"></i></button>
+            <button onclick="memo();" id="top-memo-btn"><img src="/salab/resources/img/memo-image.png"></button>
+            <button onclick="upImage();"><img src="/salab/resources/img/upimage.png"></button>
             <button><i class="far fa-play-circle" onclick="popup();"></i></button>
         </div>
         <div class="top-bar-children" id="top-bar-right">

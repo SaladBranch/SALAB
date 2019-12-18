@@ -308,6 +308,80 @@
                             </g>
                         </svg>
                     </a>
+                    <!--input obj_search--> 
+                    <a id="obj_search" class="geItem" display="inline-block" title="search input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj_search_box" style="width:60%;margin-left:3%;">
+                                    <div class="obj_search_icon" ><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input scroll--> <!--ERROR 배경색, 색깔변경안됨. -->
+                    <a id="obj_scroll_y" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="90" y="-20" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; width: 10%; height: 100%;text-align: center;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px;">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input scroll x--> 
+                    <a id="obj_scroll_x" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="30" y="40" width="160" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                            <div class="obj_scroll_x_outline" style="position: absolute;height: 20px;width: 140px; ">
+                    <div class="obj_scroll_x_leftside" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></div>
+                    <div class="obj_scroll_x_rightside" style="margin-right: 5%;"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></div>
+                </div>
+                               </div>
+                                <div class=" obj_scroll_x_inline" style="position: absolute;height: 20px; width: 40px;left: 20%;">
+                    <div class=""></div>
+                </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input dropdown--> 
+                    <a id="obj_dropdown" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="90" y="-20" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; width: 10%; height: 100%;text-align: center;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px;">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--연영-->
+                    
                     <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
                       <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.25)">

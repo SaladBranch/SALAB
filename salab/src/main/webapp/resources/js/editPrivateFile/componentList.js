@@ -326,9 +326,7 @@ var obj_file = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 240px;min-height:24px;font-size:14px;">
-          <div class="obj-comp obj_file">
-        	<input class="obj_file" type="file" disabled>
-          </div>
+        	<input class="obj-comp obj_file" type="file" disabled>
         </div>`
         return code;
     }
@@ -344,12 +342,10 @@ var obj_ul = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_ul.insertY}px; left: ${obj_ul.insertX}px; width: 200px;">
-                      <div class="obj-comp obj_ul" style="text-align:left">
-                      <ul style='width : auto; list-style-type : disc;'>
-                         <li style='width:80%; margin-left:20%; float:left;' contenteditable='false'>list1</li>
-                         <li style='width:80%; margin-left:20%; float:left;' contenteditable='false'>list2</li>
+                      <ul class="obj-comp obj_ul" style='width : auto; list-style-type : disc; text-align:left;'>
+                         <li style='width:80%; margin-left:20%; float:left;' contenteditable='false'>list</li>
+                         <li style='width:80%; margin-left:20%; float:left;' contenteditable='false'>list</li>
                       </ul>
-                      </div>
                    </div>`;
         return code;
     } 

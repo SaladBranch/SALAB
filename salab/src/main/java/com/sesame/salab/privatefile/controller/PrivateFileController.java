@@ -343,20 +343,22 @@ public class PrivateFileController {
 			ProjectFile pfile = new ProjectFile();
 			pfile.setProjectno(fileList.getUserno());
 			pfile.setPrfileno(fileList.getPfileno());
+			
 			ProjectFile file = prfService.selectFile(pfile);
+			logger.info(file.toString());
 			file.setPrfiletitle("Copy of "+ file.getPrfiletitle());
 			//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
 			int result = prfService.fileCopy(file);
 			
 			//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
 			Page p = new Page();
-			p.setUserno(file.getProjectno());
+			p.setProjectno(file.getProjectno());
 			p.setFileno(file.getPrfileno());
 			List<Page> list = mgService.findTeamPage(collection, p);
 			
 			//페이지만들기위해 방금생성한 파일 넘버조회
 			ProjectFile file2 = prfService.createPage(file.getProjectno());
-			
+
 			//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
 			for(Page page : list) {
 				page.set_id(null);
@@ -364,7 +366,7 @@ public class PrivateFileController {
 				mgService.insertNewPage(page, collection);
 			}
 		}
-		
+		mgService.close();
 		return mv;
 	}
 	
@@ -532,7 +534,7 @@ public class PrivateFileController {
 				
 				//파일넘버와 유저넘버로 객체생성한다음 해당되는 페이지 검색
 				Page p = new Page();
-				p.setUserno(file.getProjectno());
+				p.setProjectno(file.getProjectno());
 				p.setFileno(file.getPrfileno());
 				List<Page> list = mgService.findTeamPage(collection, p);
 				

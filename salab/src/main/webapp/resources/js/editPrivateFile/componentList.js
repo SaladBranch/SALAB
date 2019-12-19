@@ -341,8 +341,8 @@ var obj_marker = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_marker.insertY}px; left: ${obj_marker.insertX}px; width: 33px; height: 33px;">
-				<div class="obj-comp textarea obj_marker">5</div>
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_marker.insertY}px; left: ${obj_marker.insertX}px; width: 31px; height: 31px;">
+				<div class="obj-comp textarea obj_marker">1</div>
 	        </div>`;
 	        return code;
 	    }
@@ -411,7 +411,39 @@ var obj_profile_B = {
 	        return code;
 	    }
 };
-
+var obj_paging = {
+	    insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_paging.insertY}px; left: ${obj_paging.insertX}px;  width: 205px;height:30px; transform: rotate(0rad);">
+	        <div class="obj" style="position: absolute; top: 0px; left: 0px;  width: 30px;height:30px;transform: rotate(0rad);">
+	        	<div class="obj-comp textarea obj_paging"><</div>
+	        </div>
+	        <div class="obj" style="position: absolute; top: 0px; left: 35px;  width: 30px;height:30px;transform: rotate(0rad);">
+	        	<div class="obj-comp textarea obj_paging" style="background:rgb(52, 152, 219); color:#fff;">1</div>
+	        </div>
+	        <div class="obj" style="position: absolute; top: 0px; left: 70px;  width: 30px;height:30px;transform: rotate(0rad);">
+	        	<div class="obj-comp textarea obj_paging">2</div>
+	        </div>
+	        <div class="obj" style="position: absolute; top: 0px; left: 105px;  width: 30px;height:30px;transform: rotate(0rad);">
+	        	<div class="obj-comp textarea obj_paging">3</div>
+	        </div>
+	        <div class="obj" style="position: absolute; top: 0px; left: 140px;  width: 30px;height:30px;transform: rotate(0rad);">
+	        	<div class="obj-comp textarea obj_paging">4</div>
+	        </div>
+	        <div class="obj" style="position: absolute; top: 0px; left: 175px;  width: 30px;height:30px;transform: rotate(0rad);">
+	        	<div class="obj-comp textarea obj_paging">></div>
+	        </div>
+	</div>`
+	        return code;
+	    }
+	}
 var obj_radioInput = {
     insertX: 200,
     insertY: 100,
@@ -673,6 +705,8 @@ var getModule = function(id){
         	return obj_profile_A;
         case 'obj_profile_B':
         	return obj_profile_B;
+        case 'obj_paging':
+        	return obj_paging;
         case 'obj_radioInput':
             return obj_radioInput;
         case 'obj_checkbox':

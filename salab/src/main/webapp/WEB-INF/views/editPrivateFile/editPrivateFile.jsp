@@ -284,9 +284,9 @@
                   <a id="obj_marker" class="geItem c_marker" display="inline-block" title="알림 표시">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.35)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
+                  			<foreignObject x="4" y="23" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 32px; margin-left: 45px;">
-                  					<div style="width:45px;height:45px;padding:8px;border-radius:50%;text-align: center; line-height: 30px; color: rgb(255, 255, 255); background-color: rgba(255, 6, 6, 0.85);">5</div>
+                  					<div style="width:45px;height:45px;padding:8px;border-radius:50%;text-align: center; line-height: 30px; color: rgb(255, 255, 255); background-color: rgba(255, 6, 6, 0.85);">1</div>
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -297,9 +297,9 @@
                   <a id="obj_profile_A" class="geItem c_profile_A" display="inline-block" title="프로필">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="1" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 28px;">
-                  					<img style="border-radius:50%; width:110px; height:110px;" src="/salab/resources/img/default_profile2.png">
+                  			<foreignObject x="1" y="7" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 38px;">
+                  					<img style="border-radius:50%; width:90px; height:90px;" src="/salab/resources/img/default_profile2.png">
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -309,9 +309,9 @@
                   <a id="obj_profile_B" class="geItem c_profile_B" display="inline-block" title="프로필">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="1" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 28px;">
-                  					<img style="border-radius:50%; width:110px; height:110px;" src="/salab/resources/img/default_profile3.png">
+                  			<foreignObject x="1" y="7" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 38px;">
+                  					<img style="border-radius:50%; width:90px; height:90px;" src="/salab/resources/img/default_profile3.png">
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -492,7 +492,7 @@
                   <a id="obj_plusBtn" class="geItem c_plusBtn" display="inline-block" title="항목 추가">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="25" width="300" height="160">
+                  			<foreignObject x="4" y="24" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
                   					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">+</div>
                 				</div>
@@ -504,7 +504,7 @@
                   <a id="obj_minusBtn" class="geItem c_minusBtn" display="inline-block" title="항목 삭제">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="25" width="300" height="160">
+                  			<foreignObject x="4" y="24" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
                   					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">-</div>
                 				</div>
@@ -590,7 +590,7 @@
                   <a id="obj_prev" class="geItem c_prev" display="inline-block" title="이전으로">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
+                  			<foreignObject x="7" y="30" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 15px;">
                   					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">< prev</div>
                 				</div>
@@ -602,9 +602,26 @@
                   <a id="obj_next" class="geItem c_next" display="inline-block" title="다음으로">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
+                  			<foreignObject x="7" y="30" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 15px;">
                   					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">next ></div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Paging -->
+                  <a id="obj_paging" class="geItem c_paging" display="inline-block" title="페이징">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="6" y="50" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 3px;">
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;"><</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: rgb(52, 152, 219); color:#fff; float:left; margin-left: 5px;">1</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">2</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">3</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">4</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">></div>
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -640,78 +657,6 @@
                   					<div style="width: 160px; height:80px; padding: 10px; box-shadow: rgba(0, 0, 0, 0.290196) 4px 4px 8px 0px; background-color: rgb(255, 235, 152);">
                   						<span style="font-style: italic;">Memo..</span>
                   					</div>
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- LABLE -->
-                  <a id="obj_label" class="geItem c_label" display="inline-block" title="레이블">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.35)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 18px; margin-left: 13px;">
-                  					<div style="width: 110px; height:28px; padding-top:4px; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); box-shadow: none; background-color: rgb(26, 188, 156);">LABEL</div>
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- marker -->
-                  <a id="obj_marker" class="geItem c_marker" display="inline-block" title="알림 표시">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.35)">
-                  			<foreignObject x="1" y="24" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 32px; margin-left: 50px;">
-                  					<div style="width:45px;height:45px;padding:8px;border-radius:50%;text-align: center; line-height: 30px; color: rgb(255, 255, 255); background-color: rgba(255, 6, 6, 0.85);">5</div>
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- prev -->
-                  <a id="obj_prev" class="geItem c_prev" display="inline-block" title="이전으로">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 23px;">
-                  					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">< prev</div>
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- next -->
-                  <a id="obj_next" class="geItem c_next" display="inline-block" title="다음으로">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 23px;">
-                  					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">next ></div>
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- profile_A -->
-                  <a id="obj_profile_A" class="geItem c_profile_A" display="inline-block" title="프로필">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="1" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 28px;">
-                  					<img style="border-radius:50%; width:110px; height:110px;" src="/salab/resources/img/default_profile2.png">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- profile_B -->
-                  <a id="obj_profile_B" class="geItem c_profile_B" display="inline-block" title="프로필">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="1" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 28px;">
-                  					<img style="border-radius:50%; width:110px; height:110px;" src="/salab/resources/img/default_profile3.png">
                 				</div>
                   			</foreignObject>
                   		</g>

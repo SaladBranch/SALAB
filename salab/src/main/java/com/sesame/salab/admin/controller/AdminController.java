@@ -63,7 +63,7 @@ public class AdminController {
 			session.invalidate();
 		}
 		
-		return "redirect:main.do";
+		return "redirect:adminMain.do";
 	}
 
 }

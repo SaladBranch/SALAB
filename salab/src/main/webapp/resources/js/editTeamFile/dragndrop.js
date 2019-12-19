@@ -210,9 +210,6 @@ function addControl(){
                     top: event.originalEvent.pageY - innerOffsetY, 
                     left: event.originalEvent.pageX - innerOffsetX
                 };
-                var calcPos = {
-                	
-                };
                 var templeft = $('#droppable').offset().left;
                 var temptop = $('#droppable').offset().top;
                 //guideline의 위치는 항상 230/40 을 빼줘야함
@@ -280,7 +277,7 @@ function addControl(){
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
-                
+                TeamDragObject($(this), ui.position);
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -519,7 +516,6 @@ $(function(){
             list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
             $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
         	TeamInsertObject(module.obj_code());
-            
             initSelect();
             clicks = 0;
         }else{

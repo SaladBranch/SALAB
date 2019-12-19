@@ -857,6 +857,8 @@ function savetoLibrary(){
 				content: data,
 				fileno: list[0].fileno,
 				userno: list[0].userno,
+				itemname: 'Untitled',
+				date: new Date()
 			};
 			
 			$.ajax({
@@ -868,11 +870,12 @@ function savetoLibrary(){
 				dataType: 'json',
 				success: function(data){
 					$libItem = $("<div class='plib-item' data-order='"+(privateLibrary.length)+"'><div class='plib-item-thumb'><img src='" 
-							+ plib.content + "'></div><div class='plib-item-name'>untitled</div></div>");
+							+ plib.content + "'></div><div class='plib-item-name'>"+ data.plib.itemname +"</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
 						code: data.plib.code,
-						_id: data.plib._id
+						_id: data.plib._id,
+						itemname: data.plib.itemname
 					}
 					privateLibrary.push(pl);
 					resizeLibImg();
@@ -943,4 +946,49 @@ function resizeLibImg(){
 //라이브러리 이미지로 내보내기
 function saveLibAsImg(target){
 	
+}
+
+function showModal(index) {
+	$('#id-change-btn').attr('disabled', false);
+		$("#modal-rename").show();
+		$('#rename').val($('.plib-item-name:eq('+index+')').html());
+		$('.rename-btn').attr('onclick', 'renameLib('+index+')');
+}
+
+$(function(){
+	$(".modalOutline").click(function () {
+		$(".modalOutline").hide();
+    });
+    
+    //모달창 클릭 시, 부모로 이벤트 전송 block
+    $(".modalContent, .modalOutline").click(function () {
+        event.stopImmediatePropagation();
+        
+    });
+});
+
+function renameLib(index){
+	$(".modalOutline").hide();
+	var pl = {
+			code: privateLibrary[index].code,
+			_id: privateLibrary[index]._id,
+			itemname: $('#rename').val(),
+			userno: list[0].userno,
+			fileno: list[0].fileno,
+			date: privateLibrary[index].date
+	}
+	console.log(pl);
+	$.ajax({
+		url: 'renameLib.do',
+		type: 'post',
+		data: JSON.stringify(pl),
+		dataType: 'json',
+		contentType: "application/json; charset=UTF-8",
+		success: function(data){
+			$('.plib-item-name:eq('+index+')').html(pl.itemname);
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	});
 }

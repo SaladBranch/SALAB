@@ -78,6 +78,7 @@
                     <li><a href="javascript:" onclick="pageAllSave();">전체 저장</a></li>
                     <li><a href="javascript:" onclick="exportPdf();">내보내기</a></li>
                     <li><a href="javascript:" onclick="exportAllPdf();">전체 내보내기</a></li>
+
                 </ul>
             </li>
             
@@ -916,6 +917,14 @@
         </div>
         <div class="canvas-content">
         </div>
+        <div id="modal-rename" class="modalOutline disable ">
+    	<div id="renameLib" class="modalContent z-index1">
+        	<div class="titleConfigure">Lib Rename</div>
+           	<input id="userNo2" type="hidden" value="${loginMember.userno}">
+            <input id="rename" class="text-box block littleGap" type="text" value=" " maxlength="20" onkeydown="activeEnter('atName')">
+            <input class="rename-btn" type="button"  value="Lib Rename">
+    	</div>
+	</div>
     </div>
     
 	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
@@ -927,13 +936,13 @@
     <script type="text/javascript" src="/salab/vendors/js/canvas2image.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
-    <script type="text/javascript" src="/salab/vendors/js/dom-to-image.js"></script>
+    <!-- <script type="text/javascript" src="/salab/vendors/js/dom-to-image.js"></script> -->
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/page.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editPrivateFile/shortcut.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script>
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
@@ -1028,11 +1037,12 @@
     			privateLibrary = new Array();
     			for(var i = 0; i<data.plib.length; i++){
 					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
-							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
+							+ data.plib[i].content + "'></div><div class='plib-item-name'>"+ data.plib[i].itemname +"</div></div>");
 					$('.lib-tab-content').append($libItem);
 					var pl = {
 						code: data.plib[i].code,
-						_id: data.plib[i]._id
+						_id: data.plib[i]._id,
+						itemaname: data.plib[i].itemname
 	    			}
 					privateLibrary.push(pl);
 				}

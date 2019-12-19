@@ -125,10 +125,17 @@ public class MongoService {
 	}
 	
 	public void removeTeamData(String deleteCollection, FileList pfile) {
-		Query query = new Query(new Criteria().andOperator(
-				Criteria.where("fileno").is(pfile.getPfileno()),
-				Criteria.where("projectno").is(pfile.getUserno())
-				));
+		Query query;
+		if(!deleteCollection.equals("message")) {
+			query = new Query(new Criteria().andOperator(
+					Criteria.where("fileno").is(pfile.getPfileno()),
+					Criteria.where("projectno").is(pfile.getUserno())
+					));
+		}else {
+			query = new Query(new Criteria().andOperator(
+					Criteria.where("prfileno").is(pfile.getPfileno())
+					));
+		}
 		mongoOps.remove(query, deleteCollection);
 	}
 
@@ -255,7 +262,7 @@ public class MongoService {
 				Criteria.where("userno").is(plib.getUserno()),
 				Criteria.where("fileno").is(plib.getFileno()),
 				Criteria.where("content").is(plib.getContent())
-		));
+		)).with(new Sort(Sort.Direction.DESC, "date"));
 		
 		return mongoOps.findOne(query, PrivateLibrary.class, collectionName);
 	}
@@ -273,6 +280,15 @@ public class MongoService {
 				Criteria.where("prfileno").is(msg.getPrfileno())
 		)).with(new Sort(Sort.Direction.ASC, "date"));
 		return mongoOps.find(query, Message.class, collectionName);
+	}
+
+	public void renameLib(PrivateLibrary pl) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("_id").is(pl.get_id())
+		));
+		Update update = new Update().set("itemname", pl.getItemname());
+		
+		mongoOps.updateFirst(query, update, "privateLibrary");
 	}
 	
 }

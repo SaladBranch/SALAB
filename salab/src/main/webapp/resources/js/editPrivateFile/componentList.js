@@ -763,6 +763,6 @@ var contextmenu = {
     	return `
         <a href="javascript:deleteFromLib(`+target+`);" class="deleteFromLib">삭제</a>
         <a href="javascript:saveLibAsImg(`+target+`);" class="saveAsImg">이미지로 내보내기</a>
-    	`
+    	<a href="javascript:showModal(`+target+`);" class="renameLib">이름바꾸기</a>`
     }
 }

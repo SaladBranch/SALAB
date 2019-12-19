@@ -112,6 +112,7 @@ section {
 .create-projectname-input, 
 .invite-username-input{
     margin-top: 40px;
+    padding-left: 20px !important;
 }
 
 /**/

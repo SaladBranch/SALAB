@@ -518,7 +518,8 @@ $(function(){
             module.setY(100);
             list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
             $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
-            $(target).append(module.obj_code);
+        	TeamInsertObject(module.obj_code());
+            
             initSelect();
             clicks = 0;
         }else{

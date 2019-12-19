@@ -5,7 +5,10 @@
     background-color: rgba(0, 168, 255, 0.19);
     z-index: 100;
 }
-
+/*form tab-content open*/
+.form-control-comps{
+    display: block;
+}
 /*--------------------------*/
 /*Object CSS*/
 /*--------------------------*/
@@ -30,7 +33,7 @@
     border: 1px solid #000;
 }
 .obj-brect{
-    border-radius: 10px;
+    border-radius: 3px;
 }
 .obj-ellipse, .obj-circle{
     border-radius: 50%;
@@ -44,7 +47,7 @@
 
 /*-건우-*/
 
-.obj-textInput input{
+.obj-textInput{
     border: 1px solid #2f2f2f;
     border-radius: 5px;
     padding: 10px;
@@ -125,6 +128,7 @@
     background-color: #afafaf;
     padding: 20% auto;
 }
+
 .obj_search_left img{
     width: inherit;
     height: inherit;
@@ -215,9 +219,11 @@
 .obj-comp.obj_dropdown{
     padding: 0px;
 }
+/*drop down*/
 .obj_dropdown{
     display: block;
     border: 0.5px solid gray;
+    border-radius: 3px;
     background-color: inherit;
 }
 .obj_dropdown_left{
@@ -226,10 +232,10 @@
     height:100%;
     overflow: hidden;
     line-height: 100%;
-    padding-top: 3%;
 }
 .obj_dropdown_left input{
     border: none;
+    width: 85%;
 }
 .obj_dropdown_left textarea{
 }
@@ -237,10 +243,15 @@
     display: inline-block;
     width: 10%;
     height: 100%;
+    overflow: hidden;
 }
 .obj_dropdown_right div{
-    height: 50%;
-    width: 100%;
+    width: 60%;
+    font-size: 10px;
+       color: #aaa;
+}
+.obj_dropdown_right svg{
+    height: 100%;
 }
 ::selection {
 	background : skyblue;

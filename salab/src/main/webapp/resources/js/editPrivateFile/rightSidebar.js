@@ -1182,22 +1182,17 @@ var lastChanged = "";
 
     function wrapSpan(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
-    		console.log(target);
     		if (target.is(".text-dragged")) {
-    			console.log("함1");
         		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>"); 
     		} else if (!target.is(".textarea")) {
     			if (target.find(".textarea").length > 0) {
-        			console.log("함2");
         			target.find(".textarea").each(function() {
         	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + $(this).html() + "</span>");
         			});
     			} else {
-	    			console.log("함3");
 	    			target.css(cssType, cssProperty);
     			}
     		} else {
-    			console.log("함4");
     			target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
     		}
     	}

@@ -528,8 +528,8 @@
                   <a id="obj_marker" class="geItem c_marker" display="inline-block" title="알림 표시">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.35)">
-                  			<foreignObject x="1" y="30" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 32px; margin-left: 45px;">
+                  			<foreignObject x="1" y="24" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 32px; margin-left: 50px;">
                   					<div style="width:45px;height:45px;padding:8px;border-radius:50%;text-align: center; line-height: 30px; color: rgb(255, 255, 255); background-color: rgba(255, 6, 6, 0.85);">5</div>
                 				</div>
                   			</foreignObject>
@@ -541,7 +541,7 @@
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.25)">
                   			<foreignObject x="1" y="30" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 15px;">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 23px;">
                   					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">< prev</div>
                 				</div>
                   			</foreignObject>
@@ -553,7 +553,7 @@
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.25)">
                   			<foreignObject x="1" y="30" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 15px;">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 23px;">
                   					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">next ></div>
                 				</div>
                   			</foreignObject>

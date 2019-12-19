@@ -28,9 +28,9 @@
             </div>
             <div class="top-bar-logo">
                 <div class="top-bar-logoimg">
-                    <a href="main.do"><img src="/salab/resources/img/logo.png"></a>
+                    <a href="adminMain.do"><img src="/salab/resources/img/logo.png"></a>
                 </div>
-                <div class="top-bar-logotext"><a href="main.do">SALAB</a></div>
+                <div class="top-bar-logotext"><a href="adminMain.do">SALAB</a></div>
             </div>
             <div class="top-bar-children" id="top-bar-right">
                 <div class="mobile-top-bar-left">

@@ -577,13 +577,15 @@
     <script type="text/javascript" src="/salab/vendors/js/canvas2image.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jspdf.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery.minicolors.js"></script>
+    <script type="text/javascript" src="/salab/vendors/js/dom-to-image.js"></script>
     <script src="/salab/resources/js/editTeamFile/teamFile.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/dragndrop.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/page.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/componentList.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/rightSidebar.js"></script>
     <script type="text/javascript" src="/salab/resources/js/editTeamFile/shortcut.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script>
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js" integrity="sha256-Tw0/gX6aFDMese6GHQJFL/ZjF+f7edyF9okFVY/B9oU=" crossorigin="anonymous"></script> -->
     <script type="text/javascript">
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();

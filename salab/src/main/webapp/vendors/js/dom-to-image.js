@@ -9,9 +9,10 @@
     // Default impl options
     var defaultOptions = {
         // Default is to fail on error, no placeholder
-        imagePlaceholder: undefined,
+    	placeholder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY7h79y4ABTICmGnXPbMAAAAASUVORK5CYII=",
+        /*imagePlaceholder: undefined,*/
         // Default cache bust is false, it will use the cache
-        cacheBust: false
+        cacheBust: true
     };
 
     var domtoimage = {
@@ -463,7 +464,7 @@
         }
 
         function getAndEncode(url) {
-        	return makeImage(url)
+/*        	return makeImage(url)
             .then(img => {
                 let canvas = document.createElement('canvas');
                 canvas.width = img.width;
@@ -473,15 +474,15 @@
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0);
                 return canvas.toDataURL();
-            });
-           /* var TIMEOUT = 30000;
-            if(domtoimage.impl.options.cacheBust) {*/
+            });*/
+            var TIMEOUT = 30000;
+            if(domtoimage.impl.options.cacheBust) {
                 // Cache bypass so we dont have CORS issues with cached images
                 // Source: https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
-                /*url += ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
-            }*/
+                url += ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
+            }
             
-/*            return new Promise(function (resolve) {
+            return new Promise(function (resolve) {
                 var request = new XMLHttpRequest();
 
                 request.onreadystatechange = done;
@@ -533,7 +534,7 @@
                     console.error(message);
                     resolve('');
                 }
-            });*/
+            });
         }
 
         function dataAsUrl(content, type) {

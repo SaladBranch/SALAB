@@ -389,7 +389,7 @@ var obj_profile_A = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_profile_A.insertY}px; left: ${obj_profile_A.insertX}px; width: 100px; height: 100px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_profile_A.insertY}px; left: ${obj_profile_A.insertX}px; width: 60px; height: 60px;">
 					<img class="obj-comp obj_profile_A" src="/salab/resources/img/default_profile2.png">
 	        </div>`;
 	        return code;
@@ -405,7 +405,7 @@ var obj_profile_B = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_profile_B.insertY}px; left: ${obj_profile_B.insertX}px; width: 100px; height: 100px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_profile_B.insertY}px; left: ${obj_profile_B.insertX}px; width: 60px; height: 60px;">
 					<img class="obj-comp obj_profile_B" src="/salab/resources/img/default_profile3.png">
 	        </div>`;
 	        return code;

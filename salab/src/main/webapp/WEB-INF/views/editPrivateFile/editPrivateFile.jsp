@@ -221,7 +221,7 @@
                     </a>
                     <!--정사각형-->
                     <a id="obj_square" class="geItem c_square" display="inline-block">
-                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30" >
                             <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
                         </svg>
                     </a>
@@ -233,11 +233,11 @@
                     </a>
                 </div>
             </div>
-            <div class="comp-category Component" onclick="toggleComps(this, '.Component-control-comps');">
+            <div class="comp-category Component" onclick="toggleComps(this, '.Component-control-comps');" >
                 <p>&#9660;</p>Component
             </div>
              <div class="Component-control-comps">
-                 <div style="padding:4px;">
+                 <div style="padding: 5px 20px;">
                     <!-- Message_A -->
                   <a id="obj_messageForm_A" class="geItem c_messageForm_A" display="inline-block" title="메세지">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -367,14 +367,14 @@
                         </svg>
                     </a>
                     <!--scroll x--> 
-                    <a id="obj_scroll_x" class="geItem" display="inline-block" title="scroll_y input">
+                    <a id="obj_scroll_x" class="geItem" display="inline-block" title="scroll_x input">
                         <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                             <g transform="scale(0.25)">    
                             <foreignObject  x="30" y="40" width="160" height="200">
                             <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
-                            <div class="obj_scroll_x_outline" style="position: absolute;height: 20px;width: 140px; ">
-                    <div class="obj_scroll_x_leftside" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></div>
-                    <div class="obj_scroll_x_rightside" style="margin-right: 5%;"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></div>
+                                     <div class="obj_scroll_x_outline">
+                    <div class="obj_scroll_x_leftside"><img src="/salab/resources/img/leftangle.png" alt=""></div>
+                    <div class="obj_scroll_x_rightside" style="right: 0px;"><img src="/salab/resources/img/rightangle.png" alt=""></div>
                 </div>
                                </div>
                                 <div class=" obj_scroll_x_inline" style="position: absolute;height: 20px; width: 40px;left: 20%;">
@@ -450,12 +450,8 @@
                                 <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
                             </div>
                             <div class="obj_dropdown_right" contenteditable="false">
-                                <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path>
-                                    </svg></div>
-                                <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" class="svg-inline--fa fa-angle-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                                    </svg></div>
+                                    <img src="/salab/resources/img/upangle.png" alt="">
+                                    <img src="/salab/resources/img/downangle.png" alt="">
                             </div>
                             </div>
                             </foreignObject>
@@ -471,12 +467,8 @@
                                 <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
                             </div>
                             <div class="obj_dropdown_right" contenteditable="false">
-                                <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path>
-                                    </svg></div>
-                                <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" class="svg-inline--fa fa-angle-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                                    </svg></div>
+                                    <img src="/salab/resources/img/upangle.png" alt="">
+                                    <img src="/salab/resources/img/downangle.png" alt="">
                             </div>
                             <div class="obj " style="position: absolute; top: 40px; left: 0px;  width: 90%;height:70%;transform: rotate(0rad);">
           <div class="obj-comp obj-brect textarea" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:#fff;"></div></div>
@@ -531,7 +523,7 @@
                 <p>&#9660;</p>버튼(Button)
             </div>
              <div class="Button-control-comps">
-                 <div style="padding:4px;">
+                 <div style="padding: 5px 20px;">
                      <!-- Input button_Normal_A -->
                   <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -586,7 +578,7 @@
                 <p>&#9660;</p>페이지(paging)
             </div>
              <div class="paging-control-comps">
-                 <div style="padding:4px;">
+                 <div style="padding: 5px 20px;">
                      <!-- prev -->
                   <a id="obj_prev" class="geItem c_prev" display="inline-block" title="이전으로">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -630,11 +622,11 @@
                   </a>
                  </div>
             </div><!--페이징-->
-            <div class="comp-category Memo" onclick="toggleComps(this, '.Button-control-comps');">
+            <div class="comp-category Memo" onclick="toggleComps(this, '.Memo-control-comps');">
                 <p>&#9660;</p>메모(Memo)
             </div>
-             <div class="Button-control-comps">
-                 <div style="padding:4px;">
+             <div class="Memo-control-comps">
+                 <div style="padding: 5px 20px;">
                      <!-- Memo_A -->
                   <a id="obj_memo_A" class="geItem c_memo_A" display="inline-block" title="메모">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
@@ -1146,7 +1138,7 @@
     	if (event.shiftKey && e.keyCode == 13) {
 		    event.preventDefault();
     		var $insertli = $("<li>list</li>");
-    		$insertli.css("width", "80%");
+    		$insertli.css("width",     "80%");
     		$insertli.css("margin-left", "20%");
     		$insertli.css("float", "left");
     		$insertli.attr("contenteditable", "true");
@@ -1154,7 +1146,6 @@
     		$insertli.focus();
     	}
     });
-    
     </script>
     
 </body>

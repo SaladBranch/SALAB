@@ -5,10 +5,7 @@
     background-color: rgba(0, 168, 255, 0.19);
     z-index: 100;
 }
-/*form tab-content open*/
-.form-control-comps{
-    display: block;
-}
+
 /*--------------------------*/
 /*Object CSS*/
 /*--------------------------*/
@@ -25,12 +22,20 @@
     word-break : break-all;
 /*    overflow: hidden;*/
 }
+/*svg파일에서 color변경시 오류안생기게*/
+svg{
+    color: inherit;
+    background-color: inherit;
+}
+
 .textarea {
     padding-top : 2px;
 }
 
 .obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{
     border: 1px solid #000;
+    background: inherit;
+    color: inherit;
 }
 .obj-brect{
     border-radius: 3px;
@@ -109,6 +114,10 @@
     line-height: inherit;
     padding: 0px;
 }
+.obj_search img{
+    color: inherit;
+    background-color: inherit;
+}
 .obj_search_left,
 .obj_search_right{
     display: inline-block;
@@ -116,7 +125,6 @@
      height: inherit;
     font-size: inherit;
     min-height: 30px;
-    border: 0.5px solid gray;
     overflow: hidden;
     vertical-align: middle;
     line-height: 30px;
@@ -125,12 +133,12 @@
 .obj_search_left{
     width: 30%;
     height: 100%;
-    background-color: #afafaf;
-    padding: 20% auto;
+    background-color: #cfcfcf;
+    padding: 15% auto;
 }
 
 .obj_search_left img{
-    width: inherit;
+    width: auto;
     height: inherit;
 }
 .obj_search_right{
@@ -190,25 +198,25 @@
     position: absolute;
     color: #ccc;
 }
-.obj_scroll_x_outline svg{
-    width: inherit;
-    height: inherit;
-     width: 80%;
+.obj_scroll_x_outline img{
+    width: auto%;
+    height: 100%;
 }
 .obj_scroll_x_leftside,
 .obj_scroll_x_rightside{
     width: 10px;
-    height: inherit;
+    height: 10px;
     background-color:#eee;
+    font-size: auto;
+    vertical-align: middle;
 }
 .obj_scroll_x_leftside{
     position: absolute;
-    top: 0px;
     left: 0px;
+    top:auto;
 }
 .obj_scroll_x_rightside{
     position: absolute;
-    top: 0px;
     right: 0px;
 }
 .obj_scroll_x_inline{
@@ -225,6 +233,7 @@
     border: 0.5px solid gray;
     border-radius: 3px;
     background-color: inherit;
+    min-height: 30px;
 }
 .obj_dropdown_left{
     display: inline-block;
@@ -246,12 +255,20 @@
     overflow: hidden;
 }
 .obj_dropdown_right div{
-    width: 60%;
-    font-size: 10px;
-       color: #aaa;
+    width: 100%;
+    height: 50%;
+    color: #aaa;
 }
-.obj_dropdown_right svg{
-    height: 100%;
+.obj_dropdown_right img{
+    width: 100% !important;
+    height: 40% !important;
+    margin: 0px;
+}
+.dropdown_right_up {
+    height: 50%;
+}
+.dropdown_right_down {
+    height: 50%;
 }
 ::selection {
 	background : skyblue;
@@ -353,6 +370,8 @@
 .obj_profile_A, .obj_profile_B{
 	border-radius: 50%;
 	padding: none;
+    background: inherit;
+    color: inherit;
 }
 .obj_paging{
 	float:left; 

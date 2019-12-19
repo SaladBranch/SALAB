@@ -201,7 +201,7 @@
     	<div id="newFile" class="modalContent z-index1">
         	<div class="titleConfigure">Create PrivateFile</div>
            	<input id="userNo" type="hidden" value="${loginMember.userno}">
-            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
+            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter()">
             <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
     	</div>
 	</div>
@@ -210,4 +210,11 @@
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/resources/js/recentFile/recentFile.js"></script>
 </body>
+	<script  type="text/javascript">
+		function activeEnter(){
+			if (window.event.keyCode == 13) {
+				document.getElementById("id-change-btn").click();
+			}
+		}
+	</script>
 </html>

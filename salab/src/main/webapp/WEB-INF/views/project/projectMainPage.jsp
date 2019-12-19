@@ -254,8 +254,8 @@
                       	  <c:forEach var="memberList" items="${requestScope.memberList}" varStatus="i">
 	                      	  	<div class="member-line">
 	                                <div class="member-icon inline">
-	                                    <c:if test="${memberList.userprofile_o ==null }"><img width="18" height="18" src="/salab/resources/img/default_profile.png" alt=""></c:if>
-	                                    <c:if test="${memberList.userprofile_o !=null }">dd</c:if>
+	                                    <c:if test="${memberList.userprofile_r ==null }"><img width="18" height="18" src="/salab/resources/img/default_profile.png" alt=""></c:if>
+	                                    <c:if test="${memberList.userprofile_r !=null }"><img  width="18" height="18" src="/salab/resources/userUpfiles/${memberList.userprofile_r}" alt=""></c:if>
 	                                </div>
 	                                <div class="member-name inline">${memberList.username}</div>
 	                                <div class="member-setup-grid inline">

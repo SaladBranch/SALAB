@@ -28,7 +28,7 @@
 	</select>
 	<!-- 프로젝트에 멤버 띄우기 (Leader,Cand-Edit,Only-Read 정렬 -->
 	<select id="selectProjectMemeber" parameterType="ProjectMember" resultType="ProjectMember">
-		select USERNO, USERNAME, PROJECTJOINDATE, USERAUTH ,USERPROFILE_O  from MEMBER_PROJECT inner join member using (userno) where projectno=#{projectno} order by case WHEN userauth IN ('LEADER') THEN 0 ELSE 1 END, userauth asc
+		select USERNO, USERNAME, PROJECTJOINDATE, USERAUTH ,USERPROFILE_R  from MEMBER_PROJECT inner join member using (userno) where projectno=#{projectno} order by case WHEN userauth IN ('LEADER') THEN 0 ELSE 1 END, userauth asc
 	</select>
 	<select id="enrolledEmailCheck" parameterType="String" resultType="int">
 		select userno from member where useremail = #{useremail}

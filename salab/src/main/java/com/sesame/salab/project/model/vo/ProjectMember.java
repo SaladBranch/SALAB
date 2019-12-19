@@ -10,25 +10,25 @@ public class ProjectMember implements java.io.Serializable{
 	private String username;
 	private Date projectjoindate;
 	private String userauth;
-	private String userprofile_o;
+	private String userprofile_r;
 	
 	public ProjectMember() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public ProjectMember(int userno, String username, Date projectjoindate, String userauth, String userprofile_o) {
+
+	public ProjectMember(int userno, String username, Date projectjoindate, String userauth, String userprofile_r) {
 		super();
 		this.userno = userno;
 		this.username = username;
 		this.projectjoindate = projectjoindate;
 		this.userauth = userauth;
-		this.userprofile_o = userprofile_o;
+		this.userprofile_r = userprofile_r;
 	}
 
 	@Override
 	public String toString() {
 		return "ProjectMember [userno=" + userno + ", username=" + username + ", projectjoindate=" + projectjoindate
-				+ ", userauth=" + userauth + ", userprofile_o=" + userprofile_o + "]";
+				+ ", userauth=" + userauth + ", userprofile_r=" + userprofile_r + "]";
 	}
 
 	public int getUserno() {
@@ -63,17 +63,17 @@ public class ProjectMember implements java.io.Serializable{
 		this.userauth = userauth;
 	}
 
-	public String getUserprofile_o() {
-		return userprofile_o;
+	public String getUserprofile_r() {
+		return userprofile_r;
 	}
 
-	public void setUserprofile_o(String userprofile_o) {
-		this.userprofile_o = userprofile_o;
+	public void setUserprofile_r(String userprofile_r) {
+		this.userprofile_r = userprofile_r;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
 
 }

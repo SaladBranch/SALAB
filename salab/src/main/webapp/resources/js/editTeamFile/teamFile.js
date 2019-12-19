@@ -56,8 +56,23 @@
 		socket.emit("InsertObject", obj_code);
 	}
 	socket.on("InsertObject", function(obj_code){
-		console.log("오브젝트 삽입!");
 		$('#droppable').append(obj_code);
+	});
+	//Object 이동
+	function TeamDragObject(ui, position){
+		var index = $('#droppable > .obj').index(ui);;
+		var dragobj = {
+			objIndex: index,
+			objPos: position
+		}
+		socket.emit("DragObject", dragobj);
+	}
+	socket.on("DragObject", function(dragobj){
+		var target = $('#droppable > .obj').eq(dragobj.objIndex);
+		target.css({
+			left: dragobj.objPos.left,
+			top: dragobj.objPos.top
+		});
 	});
 	
     //채팅창 토글 

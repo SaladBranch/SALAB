@@ -163,7 +163,7 @@ var obj_buttonInput_Normal_A = {
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
 	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
-	        		<div class="obj-comp obj_buttonInput_Normal_A">Button<div>
+	        		<div class="obj-comp obj_buttonInput_Normal_A">Button</div>
 	        	</div>
 	        </div>`;
 	        return code;

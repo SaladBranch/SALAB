@@ -42,6 +42,7 @@
             <div></div>
             <div class="top-right-menus">
             	<div class="enter-members">
+            		<div id="more-members"></div>
 	            	<c:if test="${!empty sessionScope.loginMember.userprofile_r }">
 	            		<img id="my-profile" src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r }">
 	            	</c:if>

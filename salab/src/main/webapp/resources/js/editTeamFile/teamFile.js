@@ -12,24 +12,42 @@
 	socket.on("joinRoom", function(userProfiles){
 		console.log("누군가 들어왓군요!");
 		$('.team-members').html("");
+		if(userProfiles.length > 1){
+			$('#more-members').show();
+			$('.team-members').removeClass('hidden');
+		}else{
+			$('.team-members').addClass('hidden');
+			$('#more-members').hide();
+		}
 		for(var i = 0; i < userProfiles.length; i++){
 			userProfile = userProfiles[i];
-			$img = $('<img class="member-profile">');
-			userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
-			var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
-			$('.team-members').append(member);
+			if(userProfiles.length != 1 && userProfile.userno != $('#userno').val()){
+				$img = $('<img class="member-profile">');
+				userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
+				var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
+				$('.team-members').append(member);
+			}
 		}
 	});
 	//방에서 나갈때	
 	socket.on("leaveRoom", function(userProfiles){
 		console.log("누군가 나갔군요!");
 		$('.team-members').html("");
+		if(userProfiles.length > 1){
+			$('#more-members').show();
+			$('.team-members').removeClass('hidden');
+		}else{
+			$('.team-members').addClass('hidden');
+			$('#more-members').hide();
+		}
 		for(var i = 0; i < userProfiles.length; i++){
 			userProfile = userProfiles[i];
-			$img = $('<img class="member-profile">');
-			userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
-			var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
-			$('.team-members').append(member);
+			if(userProfiles.length != 1 && userProfile.userno != $('#userno').val()){
+				$img = $('<img class="member-profile">');
+				userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
+				var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
+				$('.team-members').append(member);
+			}
 		}
 	});
 	

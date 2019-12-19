@@ -116,6 +116,16 @@ svg{
 #my-profile:hover ~ .team-members:before{
     display: block;
 }
+#more-members{
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 145px;
+    width: 8px;
+    height: 8px;
+    background: rgb(255, 0, 0);
+    border-radius: 50%;
+}
 .team-members{
     display: none;
     position: absolute;
@@ -126,6 +136,12 @@ svg{
     padding: 7px 0;
     box-shadow: 0 3px 3px rgba(0,0,0,0.3);
     border-radius: 5px;
+}
+#my-profile:hover ~ .team-members.hidden:before{
+	display: none;
+}
+.team-members.hidden:before{
+	display: none;
 }
 
 .team-members:before{

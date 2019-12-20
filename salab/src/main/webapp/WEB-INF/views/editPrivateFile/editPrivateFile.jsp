@@ -268,8 +268,7 @@
                   		</g>
                   	</svg>
                   </a>
-                 <div style="padding: 5px 20px;">
-                    <!-- Message_A -->
+                  <!-- Message_A -->
                   <a id="obj_messageForm_A" class="geItem c_messageForm_A" display="inline-block" title="메세지">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">

@@ -94,6 +94,7 @@
 			left: dragobj.objPos.left,
 			top: dragobj.objPos.top
 		});
+		Thumbnail();
 	});
 	//Object 사이즈
 	function TeamResizeObject(obj, ui){
@@ -114,6 +115,7 @@
 			height: resizeobj.objSize.height
 		});
 		formatChange();
+		Thumbnail();
 	});
 	//Object 회전
 	function TeamRotateObject(obj, ui){
@@ -130,7 +132,23 @@
 			transform: 'rotate('+ rotateobj.objDegree + 'rad)'
 		});
 		formatChange();
+		Thumbnail();
 	})
+	//Object 삭제
+	function TeamDeleteObject(selectedObj){
+		var indexArr = new Array();
+		for(var i = 0; i<selectedObj.length; i++){
+			var index = $('#droppable .obj').index(selectedObj[i]);
+			indexArr.push(index);
+		}
+		socket.emit("DeleteObject", indexArr);
+	}
+	socket.on("DeleteObject", function(indexArr){
+	    for(var i = 0; i<indexArr.length; i++){
+	    	$('#droppable .obj').eq(indexArr[i]).remove();
+	    }
+		Thumbnail();
+	});
 	
     //채팅창 토글 
     $('.team-chat').on('click', function(){

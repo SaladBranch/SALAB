@@ -58,10 +58,11 @@ function deleteObject(){
 	list[index].undo.push($('.canvas-container').html());
 	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
 	
+	TeamDeleteObject(selectedObj);
     for(i = 0; i<selectedObj.length; i++){
         selectedObj[i].remove();
     }
-    selectedObj = new Array();   
+    selectedObj = new Array();
     Thumbnail();
 }
 

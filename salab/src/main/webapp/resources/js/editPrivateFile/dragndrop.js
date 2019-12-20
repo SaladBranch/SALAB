@@ -82,31 +82,55 @@ function leftMouseListner(){
                 $(this).appendTo($('#droppable')); 
             });
         }
+    	
+    	if (!$(this).is(".group-obj")) {
 
-		if ($("#droppable").is(".ui-selectable"))
-			$("#droppable").selectable("destroy");
-		if ($(this).is(".ui-draggable"))
-			$(this).draggable("destroy");
-		
-		$(this).addClass("text-editing");
-		$(this).addClass("ui-selected");
-		
-		// text 전채선택 수정 필요
-		if ($(this).find(".obj-comp").is(".obj_ul")) {
-			$(this).find("li").attr("contenteditable", "true");
-			if ($(event.target).is("li"))
-				$(event.target).selectText();
-		}
-		if ($(this).find(".textarea").length > 0) {
-			$(this).find(".textarea").attr("contenteditable", "true");
-	    	$(this).find(".textarea").selectText();
-		}
-		if ($(this).find("input[type=text]").length > 0) {
-			$(this).find("input[type=text]").removeAttr("readOnly");
-		}
+            var textEdit = "false";
+    		// text 전체선택 수정 필요
+    		if ($(this).find(".obj-comp").is(".obj_ul")) {
+    			$(this).find("li").attr("contenteditable", "true");
+    			if ($(event.target).is("li"))
+    				$(event.target).selectText();
+    			textEdit = "true";
+    		}
+    		if ($(this).find(".textarea").length > 0) {
+    			$(this).find(".textarea").attr("contenteditable", "true");
+    	    	$(this).find(".textarea").selectText();
+    			textEdit = "true";
+    		}
+    		if ($(this).find("input[type=text]").length > 0) {
+    			$(this).find("input[type=text]").removeAttr("readOnly");
+    			textEdit = "true";
+    		}
+    		
+    		if (textEdit = "true") {
+
+    			if ($("#droppable").is(".ui-selectable"))
+    				$("#droppable").selectable("destroy");
+    			if ($(this).is(".ui-draggable"))
+    				$(this).draggable("destroy");
+
+		    	for(i = 0; i<selectedObj.length; i++){
+		    		$obj = selectedObj[i];
+		    		$obj.children().remove('.ui-resizable-handle');
+		            if($obj.hasClass('ui-draggable'))
+		            	$obj.draggable('destroy');
+		            $obj.children('.ui-rotatable-handle').hide();
+		            if($obj.hasClass('ui-selected'))
+		            	$obj.removeClass('ui-selected');
+		    	}
+	            selectedObj = new Array();
+    			$(this).addClass("text-editing");
+    			$(this).addClass("ui-selected");
+    	        selectedObj.push($(this));
+
+    		}
+
+    	}
+
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
-		
+        
         $('.right-side-bar .canvas-menu').hide();
         $('.right-side-bar .tab-menu').show();
         $('.right-side-bar .tab-content').show();
@@ -434,10 +458,19 @@ $(function(){
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){
-            selectedObj = new Array();
 	    	$(".text-editing").blur();
 	    	window.getSelection().removeAllRanges();
 	    	$(".text-editing").removeClass("text-editing");
+	    	for(i = 0; i<selectedObj.length; i++){
+	    		$obj = selectedObj[i];
+	    		$obj.children().remove('.ui-resizable-handle');
+	            if($obj.hasClass('ui-draggable'))
+	            	$obj.draggable('destroy');
+	            $obj.children('.ui-rotatable-handle').hide();
+	            if($obj.hasClass('ui-selected'))
+	            	$obj.removeClass('ui-selected');
+	    	}
+            selectedObj = new Array();
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -458,7 +491,6 @@ $(function(){
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
     	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts *") || $(e.target).is(".text-dragged")){
-
             mode = false;
     	}
         else {

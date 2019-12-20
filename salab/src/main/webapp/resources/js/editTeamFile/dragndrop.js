@@ -168,7 +168,8 @@ function addControl(){
         $all.children().each(function(){
             $(this).css({
                 left: Number($(this).css('left').replace('px', '')) + Number($all.css('left').replace('px', '')) + 'px',
-                top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px'
+                top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px',
+                border: '1.5px solid transparent'
             });
             $(this).removeClass('ui-selected');
             $(this).appendTo($('#droppable')); 
@@ -178,6 +179,7 @@ function addControl(){
         $obj = selectedObj[0];
         $obj.append(resize_handler.code);
         $obj.children('.ui-rotatable-handle').show();
+        $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'));
         var __dx;
         var __dy;
         var __scale=1;
@@ -295,7 +297,8 @@ function addControl(){
             rotate : function() {
             	formatChange();
             },
-            stop: function() {
+            stop: function(event, ui) {
+            	TeamRotateObject($(this), ui);
             	formatChange();
             	setTimeout(function(){
             		Thumbnail();
@@ -360,9 +363,9 @@ function addControl(){
                 	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
                 	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 },
-                stop: function(){
+                stop: function(event, ui){
                     formatChange();
-
+                    TeamResizeObject($(this), ui);
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -375,6 +378,7 @@ function addControl(){
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
+            $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'))
             $obj.children().remove('.ui-resizable-handle');
             $obj.children('.ui-rotatable-handle').hide();
             if($obj.hasClass('ui-draggable'))
@@ -435,6 +439,11 @@ $(function(){
             $(ui.unselected).children('.ui-rotatable-handle').hide();
         },
         stop: function(){
+        	$('#droppable > .obj').each(function(){
+        		if(!$(this).hasClass('ui-selected'))
+        			$(this).css('border', '1.5px solid transparent');
+        	})
+        	TeamSelectObject();
             addControl();
         }
     });

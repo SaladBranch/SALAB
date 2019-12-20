@@ -401,6 +401,31 @@ var lastChanged = "";
     	var object = $("#droppable .ui-selected");
 		var target = $("#droppable .ui-selected .obj-comp");
 		
+		if (object.find("input").length > 0) {
+    		$(".text-item#effect-list .text-effect#underline").fadeOut(100);
+    		$(".text-item#effect-list .text-effect#strikethrough").fadeOut(100);
+    		if (object.find("input[type=radio]").length > 0 || object.find("input[type=checkbox]").length) {
+    			$(".text-category.text-shape").removeAttr("onclick");
+                $(".text-font-comps").slideUp(200);
+                $(".text-shape-comps").slideUp(200);
+                $(".text-category.text-shape").children("p").text("▶");
+    		} else {
+    			$(".text-category.text-shape").eq(0).attr("onclick", "toggleComps(this, '.text-font-comps');");
+    			$(".text-category.text-shape").eq(1).attr("onclick", "toggleComps(this, '.text-shape-comps');");
+                $(".text-font-comps").slideDown(200);
+                $(".text-shape-comps").slideDown(200);
+                $(".text-category.text-shape").children("p").text("▼");
+    		}
+		} else {
+    		$(".text-item#effect-list .text-effect#underline").fadeIn(100);
+    		$(".text-item#effect-list .text-effect#strikethrough").fadeIn(100);
+			$(".text-category.text-shape").eq(0).attr("onclick", "toggleComps(this, '.text-font-comps');");
+			$(".text-category.text-shape").eq(1).attr("onclick", "toggleComps(this, '.text-shape-comps');");
+            $(".text-font-comps").slideDown(200);
+            $(".text-shape-comps").slideDown(200);
+            $(".text-category.text-shape").children("p").text("▼");
+		}
+		
     	if (object.length == 1 && !object.is(".group-obj")) {
     		$(".figure-shape-comps .figure-item[id=width]").fadeIn(100);
     		$(".figure-shape-comps .figure-item[id=height]").fadeIn(100);

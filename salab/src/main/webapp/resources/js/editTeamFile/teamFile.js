@@ -10,7 +10,6 @@
 	}
 	socket.emit("joinRoom", "prfile"+$('#prfileno').val(), userProfile);
 	socket.on("joinRoom", function(userProfiles){
-		console.log("누군가 들어왓군요!");
 		$('.team-members').html("");
 		if(userProfiles.length > 1){
 			$('#more-members').show();
@@ -22,16 +21,24 @@
 		for(var i = 0; i < userProfiles.length; i++){
 			userProfile = userProfiles[i];
 			if(userProfiles.length != 1 && userProfile.userno != $('#userno').val()){
-				$img = $('<img class="member-profile">');
+				$img = $('<img class="member-profile">').attr('data-usercolor', userProfile.usercolor);
+				$img.css({
+					border: '2px solid ' + $img.attr('data-usercolor')
+				})
 				userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
 				var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
 				$('.team-members').append(member);
+			}
+			if(userProfile.userno == $('#userno').val()){
+				$('#my-profile').attr('data-usercolor', userProfile.usercolor);
+				$('#my-profile').css({
+					border: '2px solid ' + $('#my-profile').attr('data-usercolor')
+				});
 			}
 		}
 	});
 	//방에서 나갈때	
 	socket.on("leaveRoom", function(userProfiles){
-		console.log("누군가 나갔군요!");
 		$('.team-members').html("");
 		if(userProfiles.length > 1){
 			$('#more-members').show();
@@ -43,13 +50,27 @@
 		for(var i = 0; i < userProfiles.length; i++){
 			userProfile = userProfiles[i];
 			if(userProfiles.length != 1 && userProfile.userno != $('#userno').val()){
-				$img = $('<img class="member-profile">');
+				$img = $('<img class="member-profile">').attr('data-usercolor', userProfile.usercolor);
+				$img.css({
+					border: '2px solid ' + $img.attr('data-usercolor')
+				})
 				userProfile.userprofile_r === 'empty' ? $img.attr('src', '/salab/resources/img/default_profile.png') :  $img.attr('src', '/salab/resources/userUpfiles/' + userProfile.userprofile_r);
 				var member = $('<div class="each-member"></div>').append($img).append($('<span></span').text(userProfile.username));
 				$('.team-members').append(member);
 			}
+			if(userProfile.userno == $('#userno').val()){
+				console.log("내꺼다!");
+				$('#my-profile').attr('data-usercolor', userProfile.usercolor);
+				$('#my-profile').css({
+					border: '2px solid ' + $('#my-profile').attr('data-usercolor')
+				})
+			}
 		}
 	});
+	//Object 선택
+	function TeamSelectObject(){
+		
+	}
 	
 	//Object삽입
 	function TeamInsertObject(obj_code){
@@ -60,7 +81,7 @@
 	});
 	//Object 이동
 	function TeamDragObject(ui, position){
-		var index = $('#droppable > .obj').index(ui);;
+		var index = $('#droppable > .obj').index(ui);
 		var dragobj = {
 			objIndex: index,
 			objPos: position
@@ -74,6 +95,42 @@
 			top: dragobj.objPos.top
 		});
 	});
+	//Object 사이즈
+	function TeamResizeObject(obj, ui){
+		var index = $('#droppable > .obj').index(obj);
+		var resizeobj = {
+			objIndex: index,
+			objPos: ui.position,
+			objSize: ui.size
+		}
+		socket.emit("ResizeObject", resizeobj);
+	}
+	socket.on("ResizeObject", function(resizeobj){
+		var target = $('#droppable > .obj').eq(resizeobj.objIndex);
+		target.css({
+			left: resizeobj.objPos.left,
+			top: resizeobj.objPos.top,
+			width: resizeobj.objSize.width,
+			height: resizeobj.objSize.height
+		});
+		formatChange();
+	});
+	//Object 회전
+	function TeamRotateObject(obj, ui){
+		var index = $('#droppable > .obj').index(obj);
+		var rotateobj = {
+			objIndex: index,
+			objDegree: ui.angle.stop
+		}
+		socket.emit("RotateObject", rotateobj);
+	}
+	socket.on("RotateObject", function(rotateobj){
+		var target = $('#droppable > .obj').eq(rotateobj.objIndex);
+		target.css({
+			transform: 'rotate('+ rotateobj.objDegree + 'rad)'
+		});
+		formatChange();
+	})
 	
     //채팅창 토글 
     $('.team-chat').on('click', function(){

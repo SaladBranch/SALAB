@@ -310,6 +310,9 @@ table tr:hover {
     width: 7%;
     height: 18px;
 }
+.member-icon img{
+    border-radius: 100%;
+}
 .memberimg{
     float: right;
     margin-right: 10px;

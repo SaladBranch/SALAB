@@ -144,7 +144,7 @@ var obj_textInput = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 300px; height:100;">
+        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 300px; height:35px;">
         	<input class="obj-comp obj-textInput" type="text" placeholder="내용 입력" readOnly>
         </div>`
 
@@ -525,7 +525,7 @@ var obj_file = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 240px;min-height:24px;font-size:14px;">
-        	<input class="obj-comp obj_file" type="file" disabled>
+        	   <div><input class="obj-comp obj_file" type="file"></div>
         </div>`
         return code;
     }
@@ -573,8 +573,8 @@ var obj_search = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj" style="position: absolute; top: ${obj_search.insertY}px; left: ${obj_search.insertX}px; width: 200px;height:31px;">
-          <div class="obj-comp  obj_search textarea"><div class="obj_search_left" contenteditable="false"><img src="/salab/resources/svg/search-solid.svg" alt=""></div><div class="obj_search_right "></div></div></div>`
+        var code = `<div class="obj" style="position: absolute; top: ${obj_search.insertY}px; left: ${obj_search.insertX}px; width: 200px;height:36px;min-width:100px;min-height:32px;">
+          <div class="obj-comp  obj_search textarea" style="border:1px solid gray;"><div class="obj_search_left" contenteditable="false" styles="min-width:30px;min-height:32px;"><img src="/salab/resources/img/search.png" alt=""></div><div class="obj_search_right textarea "styles="min-width:70px;min-height:32px;"></div></div></div>`
         return code;
     }
 }
@@ -588,7 +588,7 @@ var obj_scroll_y = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_y.insertY}px; left: ${obj_scroll_y.insertX}px;  width: 22px;height:205px; transform: rotate(0rad);">
+        var code = `<div  class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_y.insertY}px; left: ${obj_scroll_y.insertX}px;  width: 22px;height:205px; transform: rotate(0rad);">
         <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 20px;height:200px;transform: rotate(0rad);">
           <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
                <div class="obj_scroll_outline">
@@ -619,8 +619,8 @@ var obj_scroll_x = {
 ">
           <div class="obj-comp obj_scroll_x" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
                <div class="obj_scroll_x_outline">
-                    <div class="obj_scroll_x_leftside"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></div>
-                    <div class="obj_scroll_x_rightside"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></div>
+                    <div class="obj_scroll_x_leftside"><img src="/salab/resources/img/leftangle.png" alt=""></div>
+                    <div class="obj_scroll_x_rightside"><img src="/salab/resources/img/rightangle.png" alt=""></div>
                 </div>
             </div>
         </div>
@@ -650,8 +650,8 @@ var obj_dropdown = {
                             <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
                             </div>
                             <div class="obj_dropdown_right" contenteditable="false">
-                                    <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg></div>
-                                    <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" class="svg-inline--fa fa-angle-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg></div>
+                                    <img src="/salab/resources/img/upangle.png" alt="">
+                                    <img src="/salab/resources/img/downangle.png" alt="">
                             </div>
         </div>
         </div>`
@@ -668,23 +668,23 @@ var obj_dropdownList = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 205px;height:150px; transform: rotate(0rad);">
+        var code = `<div onchange="test()" class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 205px;min-height:150px; transform: rotate(0rad);"contenteditable="false" >
             <div class="obj" style="position: absolute; top: 0px; left: 0px;  width: 200px;height:40px;transform: rotate(0rad)">
           <div class="obj-comp obj_dropdown" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
-                            <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
+                            <div class="obj_dropdown_left textarea "contenteditable="false" ><input type="text" placeholder="Drop down">
                             </div>
                             <div class="obj_dropdown_right" contenteditable="false">
-                                    <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg></div>
-                                    <div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" class="svg-inline--fa fa-angle-down fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg></div>
+                                    <img src="/salab/resources/img/upangle.png" alt="">
+                                    <img src="/salab/resources/img/downangle.png" alt="">
                             </div>
         </div>
         </div>
-        <div class="obj " style="position: absolute; top: 45px; left: 0px;  width: 200px;height:80px;transform: rotate(0rad);">
-          <div class="obj-comp obj-brect textarea" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:#fff;"></div></div>
-        <div class="obj" style="position: absolute; top: 53px; left: 20px;  width: 200px;height:30px;transform: rotate(0rad);">
-          <div class="obj-comp obj-rect textarea" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
-        <div class="obj" style="position: absolute; top: 86px; left: 20px;  width: 200px;height:30px;transform: rotate(0rad);">
-          <div class="obj-comp obj-rect textarea" style="position: absolute; top: 0px; left: 0px;width: inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
+        <div class="obj " style="position: absolute;margin-top:-100px; top: 100%; left: 0px;  width: 200px;height:80px;min-height:60px;transform: rotate(0rad);">
+          <div class="obj-comp obj-brect textarea ui-selectee" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:#fff;"></div></div>
+        <div class="obj" style="position: absolute;margin-top:-100px; top: 100%; left: 10%;  width: 170px;height:30px;transform: rotate(0rad);">
+          <div class="obj-comp obj-rect textarea ui-selectee" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
+        <div class="obj" style="position: absolute;margin-top:-70px; top: 100%; left: 10%;  width: 170px;height:30px;transform: rotate(0rad);">
+          <div class="obj-comp obj-rect textarea ui-selectee" style="position: absolute; top: 0px; left: 0px;width: inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
 </div>`
         return code;
     }
@@ -835,6 +835,6 @@ var contextmenu = {
     	return `
         <a href="javascript:deleteFromLib(`+target+`);" class="deleteFromLib">삭제</a>
         <a href="javascript:saveLibAsImg(`+target+`);" class="saveAsImg">이미지로 내보내기</a>
-    	`
+    	<a href="javascript:showModal(`+target+`);" class="renameLib">이름바꾸기</a>`
     }
 }

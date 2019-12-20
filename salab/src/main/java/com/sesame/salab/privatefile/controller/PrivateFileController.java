@@ -429,6 +429,7 @@ public class PrivateFileController {
 			int res = pfService.teamFilePermanentDelete(pfile);
 			if(res > 0) {
 				mgService.removeTeamData(collection, pfile);
+				mgService.removeTeamData("message", pfile);
 				mgService.close();
 			}else {
 				result = "error/error";
@@ -446,7 +447,7 @@ public class PrivateFileController {
 		
 		mgService.addToPrivateFileLib(collectionName, plib);
 		PrivateLibrary plibItem = (PrivateLibrary)mgService.getPlibId(collectionName, plib);
-		
+		logger.info(plibItem.get_id());
 		mv.setViewName("jsonView");
 		Gson gson = new Gson();
 		String result = gson.toJson(plibItem);
@@ -588,7 +589,7 @@ public class PrivateFileController {
 				int res = pfService.teamFilePermanentDelete(pfile);
 				if(res > 0) {
 					mgService.removeTeamData(collection, pfile);
-					
+					mgService.removeTeamData("message", pfile);
 				}else {
 					mv.setViewName("error/error");
 				}
@@ -618,6 +619,17 @@ public class PrivateFileController {
 			}
 		}
 		
+		return mv;
+	}
+	
+	@RequestMapping(value="renameLib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView renameLib(@RequestBody PrivateLibrary pl, ModelAndView mv) {
+		mv.setViewName("jsonView");
+		logger.info(pl.get_id());
+		MongoService mgService = new MongoService();
+		mgService.renameLib(pl);
+		mgService.close();
 		return mv;
 	}
 }

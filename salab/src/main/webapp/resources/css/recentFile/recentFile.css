@@ -597,7 +597,7 @@ body{
 
 }
 
-input[type="button"] {
+#newFile input[type="button"], #renameFile input[type="button"] {
     position: relative;
     float: right;
     margin-right: 30px;

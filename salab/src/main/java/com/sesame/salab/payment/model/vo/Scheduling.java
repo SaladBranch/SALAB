@@ -18,12 +18,12 @@ public class Scheduling {
 	@Autowired
 	private PaymentController payController;
 	
-	@Scheduled(cron=" 0 3 * * * *")
+	@Scheduled(cron=" 0 0 3 * * *")
 	public void send() throws IOException {
 		logger.info("정기결제 시작.");
 		payController.dailyPayMethod();
 	}
-	@Scheduled(cron=" 0 2 * * * *")
+	@Scheduled(cron=" 0 0 2 * * *")
 	public void userlevelManageMethod() throws IOException {
 		logger.info("정기 유저레벨관리 시작.");
 		payController.dailyChangeLevelMethod();

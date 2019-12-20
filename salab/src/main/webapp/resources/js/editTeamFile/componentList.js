@@ -163,7 +163,7 @@ var obj_buttonInput_Normal_A = {
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Normal_A.insertY}px; left: ${obj_buttonInput_Normal_A.insertX}px; width: 100px; height: 45px;">
 	        	<div class="obj-comp textarea obj_buttonInput_Normal_A" contenteditable="false">
-	        		<div class="obj-comp obj-buttonInput_Normal_A">Button<div>
+	        		<div class="obj-comp obj-buttonInput_Normal_A">Button</div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -199,7 +199,7 @@ var obj_buttonInput_Long_A = {
 	    obj_code: function(){
 	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_A.insertY}px; left: ${obj_buttonInput_Long_A.insertX}px; width: 210px; height: 40px;">
 	        	<div class="obj-comp textarea obj_buttonInput_Long_A" contenteditable="false">
-	        		<div class="obj-comp obj-buttonInput_Long_A">Button<div>
+	        		<div class="obj-comp obj-buttonInput_Long_A">Button</div>
 	        	</div>
 	        </div>`;
 	        return code;
@@ -349,6 +349,7 @@ var contextmenu = {
         	<ul class="sendObj-sub">
         		<li><a href="">이미지 파일</a></li>
         		<li><a href="javascript:savetoLibrary();">개인 라이브러리</a></li>
+        		<li><a href="javascript:savetoTeamLibrary();">팀 라이브러리</a></li>
         	</ul>
         </li>
         </ul>
@@ -381,6 +382,14 @@ var contextmenu = {
     	return `
         <a href="javascript:deleteFromLib(`+target+`);" class="deleteFromLib">삭제</a>
         <a href="javascript:saveLibAsImg(`+target+`);" class="saveAsImg">이미지로 내보내기</a>
+        <a href="javascript:showModal(`+target+`);" class="renameLib">이름 바꾸기</a>
+    	`
+    },
+    teamLibrary: function(target){
+    	return `
+        <a href="javascript:deleteFromTeamLib(`+target+`);" class="deleteFromLib">삭제</a>
+        <a href="javascript:saveLibAsImg(`+target+`);" class="saveAsImg">이미지로 내보내기</a>
+        <a href="javascript:showTeamModal(`+target+`);" class="renameTeamLib">이름 바꾸기</a>
     	`
     }
 }

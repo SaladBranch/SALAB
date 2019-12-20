@@ -44,22 +44,22 @@ function HideOnBush() {
 }
 
 //엔터키 입력 시 , button이랑 연동.
-/*
 	function activeEnter(findKey) {
 		
 		if (window.event.keyCode == 13) {
 			alert("엔터키감지");
 			
 			if (findKey == "atName") {
-				
+				document.getElementById("id-change-btn").click();
 			} else if (findKey == "atPassword") {
-				
+				document.getElementById("pw-change-btn").click();
 			} else if (findKey == "atDelete") {
-				
+				document.getElementById("delete-btn").click();
+			} else if (findKey == "atNumber") {
+			document.getElementById("phone-change-btn").click();
 			}
 		}
 	}
-*/
 //이름변경 , 페이지 이동
 function nameChangedo() {
     var form = document.createElement("form");

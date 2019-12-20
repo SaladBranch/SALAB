@@ -20,7 +20,9 @@ public class PrivateLibrary extends Library{
 
 	@Override
 	public String toString() {
-		return "PrivateLibrary [userno=" + userno + "]";
+		return "PrivateLibrary [userno=" + userno + ", get_id()=" + get_id() + ", getFileno()=" + getFileno()
+				+ ", getCode()=" + getCode() + ", getContent()=" + getContent() + ", getItemname()=" + getItemname()
+				+ "]";
 	}
-	
+
 }

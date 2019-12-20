@@ -82,31 +82,55 @@ function leftMouseListner(){
                 $(this).appendTo($('#droppable')); 
             });
         }
+    	
+    	if (!$(this).is(".group-obj")) {
 
-		if ($("#droppable").is(".ui-selectable"))
-			$("#droppable").selectable("destroy");
-		if ($(this).is(".ui-draggable"))
-			$(this).draggable("destroy");
-		
-		$(this).addClass("text-editing");
-		$(this).addClass("ui-selected");
-		
-		// text 전채선택 수정 필요
-		if ($(this).find(".obj-comp").is(".obj_ul")) {
-			$(this).find("li").attr("contenteditable", "true");
-			if ($(event.target).is("li"))
-				$(event.target).selectText();
-		}
-		if ($(this).find(".textarea").length > 0) {
-			$(this).find(".textarea").attr("contenteditable", "true");
-	    	$(this).find(".textarea").selectText();
-		}
-		if ($(this).find("input[type=text]").length > 0) {
-			$(this).find("input[type=text]").removeAttr("readOnly");
-		}
+            var textEdit = "false";
+    		// text 전체선택 수정 필요
+    		if ($(this).find(".obj-comp").is(".obj_ul")) {
+    			$(this).find("li").attr("contenteditable", "true");
+    			if ($(event.target).is("li"))
+    				$(event.target).selectText();
+    			textEdit = "true";
+    		}
+    		if ($(this).find(".textarea").length > 0) {
+    			$(this).find(".textarea").attr("contenteditable", "true");
+    	    	$(this).find(".textarea").selectText();
+    			textEdit = "true";
+    		}
+    		if ($(this).find("input[type=text]").length > 0) {
+    			$(this).find("input[type=text]").removeAttr("readOnly");
+    			textEdit = "true";
+    		}
+    		
+    		if (textEdit = "true") {
+
+    			if ($("#droppable").is(".ui-selectable"))
+    				$("#droppable").selectable("destroy");
+    			if ($(this).is(".ui-draggable"))
+    				$(this).draggable("destroy");
+
+		    	for(i = 0; i<selectedObj.length; i++){
+		    		$obj = selectedObj[i];
+		    		$obj.children().remove('.ui-resizable-handle');
+		            if($obj.hasClass('ui-draggable'))
+		            	$obj.draggable('destroy');
+		            $obj.children('.ui-rotatable-handle').hide();
+		            if($obj.hasClass('ui-selected'))
+		            	$obj.removeClass('ui-selected');
+		    	}
+	            selectedObj = new Array();
+    			$(this).addClass("text-editing");
+    			$(this).addClass("ui-selected");
+    	        selectedObj.push($(this));
+
+    		}
+
+    	}
+
         $(this).children().remove('.ui-resizable-handle');
         $(this).children('.ui-rotatable-handle').hide();
-		
+        
         $('.right-side-bar .canvas-menu').hide();
         $('.right-side-bar .tab-menu').show();
         $('.right-side-bar .tab-content').show();
@@ -434,10 +458,19 @@ $(function(){
     $('#droppable').selectable({
         filter: " > .obj",
         start: function(){
-            selectedObj = new Array();
 	    	$(".text-editing").blur();
 	    	window.getSelection().removeAllRanges();
 	    	$(".text-editing").removeClass("text-editing");
+	    	for(i = 0; i<selectedObj.length; i++){
+	    		$obj = selectedObj[i];
+	    		$obj.children().remove('.ui-resizable-handle');
+	            if($obj.hasClass('ui-draggable'))
+	            	$obj.draggable('destroy');
+	            $obj.children('.ui-rotatable-handle').hide();
+	            if($obj.hasClass('ui-selected'))
+	            	$obj.removeClass('ui-selected');
+	    	}
+            selectedObj = new Array();
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
@@ -458,7 +491,6 @@ $(function(){
     var startX = 0, startY = 0, left, top, width, height; //드래그 영역 위치지정 변수
     $(document).on('mousedown', function(e){ //canvas 마우스 이벤트
     	if($(e.target).is("#droppable .obj *") || $(e.target).is(".ui-resizable-handle") || $(e.target).is(".ui-rotatable-handle") || $(e.target).is(".left-side-bar *") || $(e.target).is(".right-side-bar *") || $(e.target).is(".top-canvas-opts *") || $(e.target).is(".text-dragged")){
-
             mode = false;
     	}
         else {
@@ -856,7 +888,9 @@ function savetoLibrary(){
 				code: code,
 				content: data,
 				fileno: list[0].fileno,
-				userno: list[0].userno,
+				userno: $('#userno').val(),
+				itemname: 'Untitled',
+				date: new Date()
 			};
 			
 			$.ajax({
@@ -868,11 +902,13 @@ function savetoLibrary(){
 				dataType: 'json',
 				success: function(data){
 					$libItem = $("<div class='plib-item' data-order='"+(privateLibrary.length)+"'><div class='plib-item-thumb'><img src='" 
-							+ plib.content + "'></div><div class='plib-item-name'>untitled</div></div>");
-					$('.lib-tab-content').append($libItem);
+							+ plib.content + "'></div><div class='plib-item-name'>"+ data.plib.itemname +"</div></div>");
+					
+					$('.private-lib-content').append($libItem);
 					var pl = {
 						code: data.plib.code,
-						_id: data.plib._id
+						_id: data.plib._id,
+						itemname: data.plib.itemname
 					}
 					privateLibrary.push(pl);
 					resizeLibImg();
@@ -943,4 +979,48 @@ function resizeLibImg(){
 //라이브러리 이미지로 내보내기
 function saveLibAsImg(target){
 	
+}
+
+function showModal(index) {
+	$('#id-change-btn').attr('disabled', false);
+		$("#modal-rename").show();
+		$('#rename').val($('.plib-item-name:eq('+index+')').html());
+		$('.rename-btn').attr('onclick', 'renameLib('+index+')');
+}
+
+$(function(){
+	$(".modalOutline").click(function () {
+		$(".modalOutline").hide();
+    });
+    
+    //모달창 클릭 시, 부모로 이벤트 전송 block
+    $(".modalContent, .modalOutline").click(function () {
+        event.stopImmediatePropagation();
+        
+    });
+});
+
+function renameLib(index){
+	$(".modalOutline").hide();
+	var pl = {
+			code: privateLibrary[index].code,
+			_id: privateLibrary[index]._id,
+			itemname: $('#rename').val(),
+			userno: $('#userno').val(),
+			fileno: list[0].fileno,
+			date: privateLibrary[index].date
+	}
+	$.ajax({
+		url: 'renameLib.do',
+		type: 'post',
+		data: JSON.stringify(pl),
+		dataType: 'json',
+		contentType: "application/json; charset=UTF-8",
+		success: function(data){
+			$('.plib-item-name:eq('+index+')').html(pl.itemname);
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	});
 }

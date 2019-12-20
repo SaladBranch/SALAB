@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.sesame.salab.library.model.vo.PrivateLibrary;
+import com.sesame.salab.library.model.vo.TeamLibrary;
 import com.sesame.salab.member.model.vo.Member;
 import com.sesame.salab.message.model.vo.Message;
 import com.sesame.salab.page.model.dao.MongoService;
@@ -150,9 +153,6 @@ public class ProjectFileController {
 		for (String font : fonts) {
 			fontList.add(font);
 		}
-		for(Page p : pageList) {
-			System.out.println(p.toString());
-		}
 		req.setAttribute("pfile", prfile);
 		req.setAttribute("pageList", pageList);
 		req.setAttribute("projectno", page.getProjectno());
@@ -193,6 +193,61 @@ public class ProjectFileController {
 		mv.addObject("messageList", messageList);
 		mgService.close();
 		System.out.println(messageList.size());
+		return mv;
+	}
+	
+	@RequestMapping(value="getTlibList.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getTeamLibList(@RequestBody TeamLibrary tlib, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		String collectionName = "teamLibrary";
+		logger.info(tlib.toString());
+		List<TeamLibrary> tlibItems = (List<TeamLibrary>)mgService.getTlibItems(collectionName, tlib);
+		mv.setViewName("jsonView");
+		mv.addObject("tlib", tlibItems);
+		mgService.close();
+		return mv;
+	}
+	
+	@RequestMapping(value="toTeamLib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView addToTeamFileLib(@RequestBody TeamLibrary tlib, ModelAndView mv) {
+		MongoService mgService = new MongoService();
+		String collectionName = "teamLibrary";
+		
+		mgService.addToTeamFileLib(collectionName, tlib);
+		TeamLibrary tlibItem = (TeamLibrary)mgService.getTlibId(collectionName, tlib);
+		
+		mv.setViewName("jsonView");
+		Gson gson = new Gson();
+		String result = gson.toJson(tlibItem);
+		mv.addObject("tlib", tlibItem);
+		mgService.close();
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="deleteTlib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteFromTeamLibrary(@RequestBody TeamLibrary tlib) {
+		MongoService mgService = new MongoService();
+		String collectionName = "teamLibrary";
+		
+		mgService.deleteFromTeamLibrary(collectionName, tlib);
+		mgService.close();
+	}
+	
+	@RequestMapping(value="renameTeamLib.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView renameTeamLib(@RequestBody TeamLibrary tlib, ModelAndView mv) {
+		mv.setViewName("jsonView");
+		logger.info("tlib :: "+tlib.toString());
+		MongoService mgService = new MongoService();
+		mgService.renameTeamLib(tlib);
+		TeamLibrary tlibItem = mgService.getTlibId("teamLibrary", tlib);
+		logger.info(tlibItem.toString());
+		mgService.close();
+		mv.addObject("tlib", tlibItem);
 		return mv;
 	}
 }

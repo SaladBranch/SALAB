@@ -107,7 +107,7 @@ var lastChanged = "";
 		}
 		$(this).css("background", "white");
      }).on("click", function() {
-    	 if ($(this).attr("id") == "bold" || $(this).attr("id") == "italic") {
+    	 if ($(this).attr("id") == "bold" || $(this).attr("id") == "italic" || $(this).attr("id") == "underline" || $(this).attr("id") == "strikethrough") {
         	 if ($(this).is(".clicked")) {
         		 $(this).removeClass("clicked");
         		 $(this).css("border", "1px solid white");
@@ -353,19 +353,21 @@ var lastChanged = "";
 		if ($(".text-dragged").length == 0 && window.getSelection().rangeCount > 0 && window.getSelection().toString().length > 0) {
     		var isTextarea = "false";
     		var $checkTarget = $(window.getSelection().anchorNode).parent();
-    		while(true) {
+    		if ($(window.getSelection().anchorNode).closest(".textarea").length > 0)
+				isTextarea = "true";
+    		/*while(true) {
     			if (!$checkTarget.is("span")) {
     				if ($checkTarget.is(".textarea"))
     					isTextarea = "true";
     				break;
     			}
     			$checkTarget = $checkTarget.parent();
-    		}
+    		}*/
     		if (isTextarea == "true") {
     			wrapTag(window.getSelection().getRangeAt(0), "span", "text-dragged");
     			var $dragCheckTarget = $(".text-dragged");
     			while(true) {
-        			if (!$dragCheckTarget.is("span")) {
+        			if (!$dragCheckTarget.parent().is("span")) {
         				break;
         			} else if ($dragCheckTarget.text() == $dragCheckTarget.parent().text()) {
         				$dragCheckTarget.parent().wrap("<span class='text-dragged'>");
@@ -398,6 +400,31 @@ var lastChanged = "";
     	var targetMode;
     	var object = $("#droppable .ui-selected");
 		var target = $("#droppable .ui-selected .obj-comp");
+		
+		if (object.find("input").length > 0) {
+    		$(".text-item#effect-list .text-effect#underline").fadeOut(100);
+    		$(".text-item#effect-list .text-effect#strikethrough").fadeOut(100);
+    		if (object.find("input[type=radio]").length > 0 || object.find("input[type=checkbox]").length) {
+    			$(".text-category.text-shape").removeAttr("onclick");
+                $(".text-font-comps").slideUp(200);
+                $(".text-shape-comps").slideUp(200);
+                $(".text-category.text-shape").children("p").text("▶");
+    		} else {
+    			$(".text-category.text-shape").eq(0).attr("onclick", "toggleComps(this, '.text-font-comps');");
+    			$(".text-category.text-shape").eq(1).attr("onclick", "toggleComps(this, '.text-shape-comps');");
+                $(".text-font-comps").slideDown(200);
+                $(".text-shape-comps").slideDown(200);
+                $(".text-category.text-shape").children("p").text("▼");
+    		}
+		} else {
+    		$(".text-item#effect-list .text-effect#underline").fadeIn(100);
+    		$(".text-item#effect-list .text-effect#strikethrough").fadeIn(100);
+			$(".text-category.text-shape").eq(0).attr("onclick", "toggleComps(this, '.text-font-comps');");
+			$(".text-category.text-shape").eq(1).attr("onclick", "toggleComps(this, '.text-shape-comps');");
+            $(".text-font-comps").slideDown(200);
+            $(".text-shape-comps").slideDown(200);
+            $(".text-category.text-shape").children("p").text("▼");
+		}
 		
     	if (object.length == 1 && !object.is(".group-obj")) {
     		$(".figure-shape-comps .figure-item[id=width]").fadeIn(100);
@@ -491,7 +518,7 @@ var lastChanged = "";
 
     	// font 강조 색상
 		var textgroundColor = checkAttr("textgroundColor", target);
-		/*$(".text-shape-comps .text-item[id=textgroundColor] .minicolors-swatch-color").css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));*/
+		$(".text-shape-comps .text-item[id=textgroundColor] .minicolors-swatch-color").eq(0).css("background", (textgroundColor == "diffrent" ? "white" : textgroundColor));
 		$(".text-shape-comps .text-item[id=textgroundColor] input").val(textgroundColor == "diffrent" ? "mixed" : textgroundColor);
 		
     	// text sort
@@ -522,6 +549,50 @@ var lastChanged = "";
 		
 		if (type == "fontType" || type == "fontSize" || type == "fontColor" || type == "bold" || type == "italic") {
 			if ($(".text-dragged").length > 0) {
+				
+/*				$(".text-dragged").children().each(function() {
+					switch(type) {
+						case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+						case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+						case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+						case "bold" : value = $(this).css("font-weight"); break;
+						case "italic" : value = $(this).css("font-style"); break;
+					}
+					if (result == "start" || result == "")
+						result = value;
+					else if (result != value)
+						result = "diffrent";
+				});
+				
+				if (result != "diffrent") {
+
+					var cssString = ""
+					switch(type) {
+						case "fontType" : cssString = "<span style=\"font-family"; break;
+						case "fontSize" : cssString = "<span style=\"font-size"; break; break;
+						case "fontColor" : cssString = "<span style=\"color"; break; break;
+						case "bold" : cssString = "<span style=\"font-weight"; break;
+						case "italic" : cssString = "<span style=\"font-style"; break; break;
+					}
+		    		$(".text-dragged").children().find("span").each(function() {
+	    				var innerHTML = $(this).wrap("<div>").parent().html();
+						$(this).unwrap();
+						if (innerHTML.startsWith(cssString)) {
+							switch(type) {
+								case "fontType" : value = $(this).css("fontFamily").split(", ")[0]; break;
+								case "fontSize" : value = $(this).css("font-size").split("px")[0] * 1; break;
+								case "fontColor" : value = $(this).css("color").split("(")[1].split(")")[0].split(", "); value = "#" + (pad((value[0] * 1).toString(16), 2) + pad((value[1] * 1).toString(16), 2) + pad((value[2] * 1).toString(16), 2)).toUpperCase(); break;
+								case "bold" : value = $(this).css("font-weight"); break;
+								case "italic" : value = $(this).css("font-style"); break;
+							}
+		            		if (result == "start")
+		            			result = value;
+		            		else if (result != value)
+		            			result = "diffrent";
+						}
+		        	});
+				}*/
+				
 				if (result != "diffrent" && ($(".text-dragged").text() != $(".text-dragged").children().text() ? true : $(".text-dragged").text() == "")) {
 					switch(type) {
 						case "fontType" : value = $(".text-dragged").css("fontFamily").split(", ")[0]; break;
@@ -606,6 +677,37 @@ var lastChanged = "";
     		return result;
 		}
 
+		if (type == "underline" || type == "strikethrough") {
+			if ($(".text-dragged").length > 0) {
+				$(".text-dragged span").each(function() {
+					var cssString = ""
+					switch(type) {
+						case "underline" : cssString = "<span style=\"text-decoration:underline"; break;
+						case "strikethrough" : cssString = "<span style=\"text-decoration:line-through"; break;
+					}
+    				var innerHTML = $(this).wrap("<div>").parent().html();
+					$(this).unwrap();
+					if (innerHTML.startsWith(cssString)) {
+						result = type == "underline" ? "underline" : "line-through";
+					}
+				});
+			} else {
+				$(".ui-selected span").each(function() {
+					var cssString = ""
+					switch(type) {
+						case "underline" : cssString = "<span style=\"text-decoration:underline"; break;
+						case "strikethrough" : cssString = "<span style=\"text-decoration:line-through"; break;
+					}
+    				var innerHTML = $(this).wrap("<div>").parent().html();
+					$(this).unwrap();
+					if (innerHTML.startsWith(cssString)) {
+						result = type == "underline" ? "underline" : "line-through";
+					}
+				});
+			}
+			return result;
+		}
+		
 		/*if (type == "underline" || type == "strikethrough") {
 			var str;
 			switch(type) {
@@ -921,25 +1023,90 @@ var lastChanged = "";
         			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "color", "rgb(" + fontColor1 + ", " + fontColor2 + ", " + fontColor3 + ")");
         		    clearChanged("color");
         		}
-
+        			
         		if (type == "text-effect-bold") {
             		wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "700" ? 300 : 700);
         		    clearChanged("font-weight");
+        		    
+/*        			if (checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "700") {
+        				if ($(".text-dragged").length > 0) {
+        					$(".text-dragged span").each(function() {
+        						var cssString = "<span style=\"font-weight";
+			    				var innerHTML = $(this).wrap("<div>").parent().html();
+								$(this).unwrap();
+								if (innerHTML.startsWith(cssString)) {
+									$(this).contents().unwrap();
+								}
+        					});
+        				} else {
+        					$(this).find("span").each(function() {
+        						var cssString = "<span style=\"font-weight";
+			    				var innerHTML = $(this).wrap("<div>").parent().html();
+								$(this).unwrap();
+								if (innerHTML.startsWith(cssString)) {
+									$(this).contents().unwrap();
+								}
+        					});
+        				}
+        			} else {
+                		wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-weight", 700);
+            		    clearChanged("font-weight");
+        			}*/
                 }
         		
         		if (type == "text-effect-italic") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", checkAttr("bold", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "italic" ? "" : "italic");
+        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "font-style", checkAttr("italic", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "italic" ? "" : "italic");
         		    clearChanged("font-style");
         		}
             	
         		if (type == "text-effect-underline") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "underline");
-    		    	clearChanged("textDecoration-underline");
+        			if (checkAttr("underline", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "underline") {
+        				if ($(".text-dragged").length > 0) {
+        					$(".text-dragged span").each(function() {
+        	    				var innerHTML = $(this).wrap("<div>").parent().html();
+        						$(this).unwrap();
+        						if (innerHTML.startsWith("<span style=\"text-decoration:underline")) {
+        							$(this).contents().unwrap();
+        						}
+        					});
+        				} else {
+        					$(".ui-selected span").each(function() {
+        	    				var innerHTML = $(this).wrap("<div>").parent().html();
+        						$(this).unwrap();
+        						if (innerHTML.startsWith("<span style=\"text-decoration:underline")) {
+        							$(this).contents().unwrap();
+        						}
+        					});
+        				}
+        			} else {
+            			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "underline");
+        		    	clearChanged("textDecoration-underline");
+        			}
         		}
         		
         		if (type == "text-effect-strikethrough") {
-        			wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "line-through");
-        		    clearChanged("textDecoration-strikethrough");
+        			if (checkAttr("strikethrough", $(".text-dragged").length > 0 ? $(".text-dragged") : $(this)) == "line-through") {
+        				if ($(".text-dragged").length > 0) {
+        					$(".text-dragged span").each(function() {
+        	    				var innerHTML = $(this).wrap("<div>").parent().html();
+        						$(this).unwrap();
+        						if (innerHTML.startsWith("<span style=\"text-decoration:line-through")) {
+        							$(this).contents().unwrap();
+        						}
+        					});
+        				} else {
+        					$(".ui-selected span").each(function() {
+        	    				var innerHTML = $(this).wrap("<div>").parent().html();
+        						$(this).unwrap();
+        						if (innerHTML.startsWith("<span style=\"text-decoration:line-through")) {
+        							$(this).contents().unwrap();
+        						}
+        					});
+        				}
+        			} else {
+        				wrapSpan($(".text-dragged").length > 0 ? $(".text-dragged") : $(this), "changed", "text-decoration", "line-through");
+        				clearChanged("textDecoration-strikethrough");
+        			}
         		}
 
             	// text 강조 색
@@ -1040,22 +1207,17 @@ var lastChanged = "";
 
     function wrapSpan(target, className, cssType, cssProperty) {
     	if (target.length > 0) {
-    		console.log(target);
     		if (target.is(".text-dragged")) {
-    			console.log("함1");
         		target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>"); 
     		} else if (!target.is(".textarea")) {
     			if (target.find(".textarea").length > 0) {
-        			console.log("함2");
         			target.find(".textarea").each(function() {
         	    		$(this).html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + $(this).html() + "</span>");
         			});
     			} else {
-	    			console.log("함3");
 	    			target.css(cssType, cssProperty);
     			}
     		} else {
-    			console.log("함4");
     			target.html("<span class='" + className + "' style='" + cssType + ":" + cssProperty + ";'>" + target.html() + "</span>");
     		}
     	}
@@ -1113,7 +1275,7 @@ var lastChanged = "";
 
 	function clearDragged() {
 		$(".ui-selected span").each(function() {
-			if ($(this).html() == "") {
+			if ($(this).html() == "" && $(this).find("br").length == 0) {
 				$(this).contents().unwrap();
 			}
 		});
@@ -1146,11 +1308,21 @@ var lastChanged = "";
 			$("#droppable").selectable({
 		        filter: " > .obj",
 		        start: function(){
-		            selectedObj = new Array();
+		        	// 수정중
 			    	$(".text-editing").blur();
 			    	window.getSelection().removeAllRanges();
-			    	$(".text-editing").children(".textarea").attr("contenteditable", "false");
+			    	$(".text-editing").find(".textarea").attr("contenteditable", "false");
 			    	$(".text-editing").removeClass("text-editing");
+			    	for(i = 0; i<selectedObj.length; i++){
+			    		$obj = selectedObj[i];
+			    		$obj.children().remove('.ui-resizable-handle');
+			            if($obj.hasClass('ui-draggable'))
+			            	$obj.draggable('destroy');
+			            $obj.children('.ui-rotatable-handle').hide();
+			            if($obj.hasClass('ui-selected'))
+			            	$obj.removeClass('ui-selected');
+			    	}
+		            selectedObj = new Array();
 		        },
 		        selected: function(e, ui){
 		            selectedObj.push($(ui.selected));

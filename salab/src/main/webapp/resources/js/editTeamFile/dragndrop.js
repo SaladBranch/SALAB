@@ -168,7 +168,8 @@ function addControl(){
         $all.children().each(function(){
             $(this).css({
                 left: Number($(this).css('left').replace('px', '')) + Number($all.css('left').replace('px', '')) + 'px',
-                top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px'
+                top: Number($(this).css('top').replace('px', '')) + Number($all.css('top').replace('px', '')) + 'px',
+                border: '1.5px solid transparent'
             });
             $(this).removeClass('ui-selected');
             $(this).appendTo($('#droppable')); 
@@ -178,6 +179,7 @@ function addControl(){
         $obj = selectedObj[0];
         $obj.append(resize_handler.code);
         $obj.children('.ui-rotatable-handle').show();
+        $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'));
         var __dx;
         var __dy;
         var __scale=1;
@@ -209,9 +211,6 @@ function addControl(){
                 var pos = {
                     top: event.originalEvent.pageY - innerOffsetY, 
                     left: event.originalEvent.pageX - innerOffsetX
-                };
-                var calcPos = {
-                	
                 };
                 var templeft = $('#droppable').offset().left;
                 var temptop = $('#droppable').offset().top;
@@ -280,7 +279,7 @@ function addControl(){
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
-                
+                TeamDragObject($(this), ui.position);
                 setTimeout(function(){
             		Thumbnail();
             	}, 100);
@@ -298,7 +297,8 @@ function addControl(){
             rotate : function() {
             	formatChange();
             },
-            stop: function() {
+            stop: function(event, ui) {
+            	TeamRotateObject($(this), ui);
             	formatChange();
             	setTimeout(function(){
             		Thumbnail();
@@ -363,9 +363,9 @@ function addControl(){
                 	list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
                 	$('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
                 },
-                stop: function(){
+                stop: function(event, ui){
                     formatChange();
-
+                    TeamResizeObject($(this), ui);
                     setTimeout(function(){
                 		Thumbnail();
                 	}, 100);
@@ -378,6 +378,7 @@ function addControl(){
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
+            $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'))
             $obj.children().remove('.ui-resizable-handle');
             $obj.children('.ui-rotatable-handle').hide();
             if($obj.hasClass('ui-draggable'))
@@ -438,6 +439,11 @@ $(function(){
             $(ui.unselected).children('.ui-rotatable-handle').hide();
         },
         stop: function(){
+        	$('#droppable > .obj').each(function(){
+        		if(!$(this).hasClass('ui-selected'))
+        			$(this).css('border', '1.5px solid transparent');
+        	})
+        	TeamSelectObject();
             addControl();
         }
     });
@@ -519,7 +525,6 @@ $(function(){
             list[$('.page-item').index($('.page-item.ui-selected'))].undo.push($('.canvas-container').html());
             $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
         	TeamInsertObject(module.obj_code());
-            
             initSelect();
             clicks = 0;
         }else{
@@ -548,6 +553,35 @@ $(function(){
         	var index = $('.lib-tab-content .plib-item').index($(this));
         	if(clicks == 2){
         		$(target).append(privateLibrary[index].code);
+        		initSelect();
+        		clicks = 0;
+        	}else{
+            	var $copyElement = $(this).clone();
+            	$copyElement.css({
+            		width : "100%"
+            	});
+                appendElement = $("<div class='dragging' style='width : 115px; height : 110px; position : absolute; background : white; z-index : 20000; border : 2px solid black; border-radius : 5px;'>" + $copyElement.wrap("<div/>").parent().html() + "</div>").appendTo("body");
+                moveDragging();
+        	}
+    	}
+    	
+    });
+    
+    $('.lib-tab-content').on('mousedown', '.tlib-item',function(e){
+    	event.preventDefault();
+    	if(e.button == 2){
+    	    $('.context-menu').html(contextmenu.teamLibrary($(this).attr('data-order')));
+    	    toggleContext(1);
+    	    menuActivation();
+    	    showContext(e.clientX, e.clientY);
+    	}else{
+    		clicks++;
+        	setTimeout(function(){
+        		clicks = 0;
+        	}, 400);
+        	var index = $('.lib-tab-content .tlib-item').index($(this));
+        	if(clicks == 2){
+        		TeamInsertObject(teamLibrary[index].code);
         		initSelect();
         		clicks = 0;
         	}else{
@@ -845,7 +879,9 @@ function savetoLibrary(){
 				code: code,
 				content: data,
 				fileno: list[0].fileno,
-				userno: list[0].userno,
+				userno: $('#userno').val(),
+				itemname: 'Untitled',
+				date: new Date()
 			};
 			
 			$.ajax({
@@ -857,11 +893,16 @@ function savetoLibrary(){
 				dataType: 'json',
 				success: function(data){
 					$libItem = $("<div class='plib-item' data-order='"+(privateLibrary.length)+"'><div class='plib-item-thumb'><img src='" 
-							+ plib.content + "'></div><div class='plib-item-name'>untitled</div></div>");
-					$('.lib-tab-content').append($libItem);
+							+ plib.content + "'></div><div class='plib-item-name'>"+ data.plib.itemname +"</div></div>");
+					
+					$('.lib-tab').click();
+					$('.private-lib').click();
+					
+					$('.private-lib-content').append($libItem);
 					var pl = {
 						code: data.plib.code,
-						_id: data.plib._id
+						_id: data.plib._id,
+						itemname: data.plib.itemname
 					}
 					privateLibrary.push(pl);
 					resizeLibImg();
@@ -876,6 +917,7 @@ function savetoLibrary(){
 	selectedObj[0].css('transform', 'rotate(' + rotateDegree + 'deg)').addClass('ui-selected');
 	selectedObj[0].children('.ui-resizable-handle').show();
 }
+
 
 
 //라이브러리에서 지우기
@@ -898,7 +940,6 @@ function deleteFromLib(index){
 	}
 }
 function resizeLibImg(){
-	setTimeout(function(){
 		$('.plib-item-thumb img').each(function(i, img){
 			var rcode = privateLibrary[i].code.split("rotate(")[1].split(")")[0];
 			
@@ -927,9 +968,146 @@ function resizeLibImg(){
 				})
 			}
 		});	
+}
+
+function resizeTeamLibImg(){
+	setTimeout(function(){
+		$('.tlib-item-thumb img').each(function(i, img){
+			var rcode = teamLibrary[i].code.split("rotate(")[1].split(")")[0];
+			
+			var w = Number(teamLibrary[i].code.split("width: ")[1].split("px;")[0]);
+			var h = Number(teamLibrary[i].code.split("height: ")[1].split("px;")[0]);
+			if(w >= h){
+				$(this).css({
+					width: '70px',
+					'margin-left': '6px',
+					'margin-top': (70 - h*70/w)/2 + 'px'
+				});
+			}else{
+				$(this).css({
+					height: '70px',
+					'margin-left': (84 - w*70/h)/2 + 'px' 
+				})
+			}
+			
+			var degree = rcode.replace(rcode.substr(-3),'');
+			if(degree != 0){
+				if(rcode.substr(-3) === 'rad'){
+					degree = Number(degree)*(180/Math.PI);
+				}
+				$(this).css({
+					transform: 'rotate(' + degree + 'deg)'
+				})
+			}
+		});	
 	}, 50);
 }
 //라이브러리 이미지로 내보내기
 function saveLibAsImg(target){
 	
+}
+
+function showModal(index) {
+	$('#id-change-btn').attr('disabled', false);
+		$("#modal-rename").show();
+		$('#rename').val($('.plib-item-name:eq('+index+')').html());
+		$('.rename-btn').attr('onclick', 'renameLib('+index+')');
+}
+
+function showTeamModal(index) {
+	$('#id-change-btn').attr('disabled', false);
+		$("#modal-rename").show();
+		$('#rename').val($('.tlib-item-name:eq('+index+')').html());
+		$('.rename-btn').attr('onclick', 'renameTeamLib('+index+')');
+}
+
+$(function(){
+	$(".modalOutline").click(function () {
+		$(".modalOutline").hide();
+    });
+    
+    //모달창 클릭 시, 부모로 이벤트 전송 block
+    $(".modalContent, .modalOutline").click(function () {
+        event.stopImmediatePropagation();
+        
+    });
+});
+
+function renameLib(index){
+	$(".modalOutline").hide();
+	var pl = {
+			code: privateLibrary[index].code,
+			_id: privateLibrary[index]._id,
+			itemname: $('#rename').val(),
+			userno: $('#userno').val(),
+			fileno: list[0].fileno,
+			date: privateLibrary[index].date
+	}
+	$.ajax({
+		url: 'renameLib.do',
+		type: 'post',
+		data: JSON.stringify(pl),
+		dataType: 'json',
+		contentType: "application/json; charset=UTF-8",
+		success: function(data){
+			$('.plib-item-name:eq('+index+')').html(pl.itemname);
+		},
+		error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	});
+}
+
+function searchComp(){
+	var keyword = $('#search-comp').val();
+	
+	if(keyword == ''){
+		$('.comp-searchResult').html('');
+	}else{
+		$('.common-shape-comps').find('a').each(function() {
+        	if($(this).attr("id").split("_")[1].includes(keyword)){
+        		$('.comp-searchResult').append($(this).clone());
+        	}
+    	});
+	}
+}
+
+function searchTeamLib(){
+	var keyword = $('#search-lib').val();
+	
+	if(keyword == ''){
+		$('.tlib-item').each(function() {
+        	if($(this).find('.tlib-item-name').html().includes(keyword)){
+        		$(this).show();
+        	}
+    	});
+	}else{
+		$('.tlib-item').hide();
+		$('.tlib-item').each(function() {
+			var $name = $.trim($(this).find('.tlib-item-name').html());
+        	if($name.includes(keyword)){
+        		$(this).show();
+        	}
+    	});
+	}
+}
+
+function searchPrivateLib(){
+	var keyword = $('#search-Plib').val();
+	
+	if(keyword == ''){
+		$('.plib-item').each(function() {
+        	if($(this).find($('.plib-item-name')).html().includes(keyword)){
+        		$(this).show();
+        	}
+    	});
+	}else{
+		$('.plib-item').hide();
+		$('.plib-item').each(function() {
+			var $name = $.trim($(this).find('.plib-item-name').html());
+        	if($name.includes(keyword)){
+        		$(this).show();
+        	}
+    	});
+	}
 }

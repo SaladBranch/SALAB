@@ -242,7 +242,7 @@
 
                     <input id="password2" type="password" class="input-grid" placeholder="Confirm Password" maxlength="20" onkeydown="activeEnter('atPassword')" onkeyup="validCheckPwd()">
                     <span id="validcheck-password" class="chekc-span"> </span>
-                    <input type="button" value="Password Change" onclick="passwordCheck(password.value , password1.value, password2.value)">
+                    <input id="pw-change-btn"type="button" value="Password Change" onclick="passwordCheck(password.value , password1.value, password2.value)">
                 </div>
             </div>
         </div>
@@ -251,7 +251,7 @@
                 <div class="titleConfigure">
                     Change Phone Number
                 </div>
-                <input id="input-userPhone" type="text" class="input-phone" value="${loginMember.userphone }" placeholder="'-' 를 제외한 휴대전화번호를 입력해주세요" onkeyup="validCheckPhone()" maxlength="11">
+                <input id="input-userPhone" type="text" class="input-phone" value="${loginMember.userphone }" placeholder="'-' 를 제외한 휴대전화번호를 입력해주세요" onkeydown="activeEnter('atNumber')" onkeyup="validCheckPhone()" maxlength="11">
                 <span id="validcheck-phone" class="chekc-span"> </span>
                 <input type="button" id="phone-change-btn" value="Change !" onclick="phoneChangedo()" disabled='ture'>
             </div>

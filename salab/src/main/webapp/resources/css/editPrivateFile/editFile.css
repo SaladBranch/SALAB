@@ -518,7 +518,6 @@ ol.page-tab-content li{
 }
 .common-shape-comps a,
 .form-control-comps  a{
-	width: 40px;
 }
 
 .comp-tab-content svg:hover,
@@ -527,10 +526,11 @@ ol.page-tab-content li{
     border-radius: 3px;
     cursor : pointer;
 }
-.form-control-comps{
-    display: none;
-}
-.form-control-comps a:nth-child(2n+1) svg{
+.Component-control-comps a:nth-child(2n+1) svg,
+.form-control-comps a:nth-child(2n+1) svg,
+.Button-control-comps a:nth-child(2n+1) svg,
+.paging-control-comps a:nth-child(2n+1) svg,
+.Memo-control-comps a:nth-child(2n+1) svg{
     margin-left:5px;
     margin-right: 10px;
 }

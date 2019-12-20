@@ -237,6 +237,37 @@
                 <p>&#9660;</p>Component
             </div>
              <div class="Component-control-comps">
+                 <div style="padding:4px;">
+                 <!-- Tooltip_A -->
+                  <a id="obj_tooltip_A" class="geItem c_tooltip_A" display="inline-block" title="툴팁">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
+                  					<div style="position: absolute;">
+										<div style="width:135px;color:#fff;background-color:#666;padding:15px;border-radius:4px;text-align:center;">Tooltip</div>
+										<span style="position:absolute;width:0;height:0;left:50%;bottom:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-top:12px solid #666"></span>
+									</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Tooltip_B -->
+                  <a id="obj_tooltip_B" class="geItem c_tooltip_B" display="inline-block" title="툴팁">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
+                  					<div style="position: absolute;">
+										<div style="width:135px;color:#fff;background-color:#666;padding:15px;border-radius:4px;text-align:center;">Tooltip</div>
+										<span style="position:absolute;width:0;height:0;left:50%;top:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:12px solid #666"></span>
+									</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
                  <div style="padding: 5px 20px;">
                     <!-- Message_A -->
                   <a id="obj_messageForm_A" class="geItem c_messageForm_A" display="inline-block" title="메세지">
@@ -530,7 +561,7 @@
                   		<g transform="scale(0.25)">
                   			<foreignObject x="1" y="23" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
-                  					<input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #3498db; border-radius: 4px;">
+                  					<div style="width: 150px; height: 80px; padding-top: 20px;text-align:center; color: #fff; background-color: #3498db; border-radius: 6px;">Button</div>
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -542,7 +573,7 @@
                   		<g transform="scale(0.25)">
                   			<foreignObject x="1" y="23" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
-                  					<input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
+                  					<div style="width: 150px; height: 80px; padding-top: 20px;text-align:center; color: #fff; background-color: #c9c9c9; border-radius: 6px;">Button</div>
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -554,7 +585,7 @@
                   		<g transform="scale(0.25)">
                   			<foreignObject x="1" y="40" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 5px;">
-                  					<input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #3498db; border-radius: 4px;">
+                  					<div style="width: 185px; height: 40px; padding-top: 7px;text-align:center; color: #fff; background-color: #3498db; border-radius: 6px;">Button</div>
                 				</div>
                   			</foreignObject>
                   		</g>
@@ -566,7 +597,7 @@
                   		<g transform="scale(0.25)">
                   			<foreignObject x="1" y="40" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 23px; margin-left: 5px;">
-                  					<input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
+                  					<div style="width: 185px; height: 40px; padding-top: 7px;text-align:center; color: #fff; background-color: #c9c9c9; border-radius: 6px;">Button</div>
                 				</div>
                   			</foreignObject>
                   		</g>

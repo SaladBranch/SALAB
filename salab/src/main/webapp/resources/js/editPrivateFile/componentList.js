@@ -211,7 +211,7 @@ var obj_buttonInput_Long_B = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 50px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_buttonInput_Long_B.insertY}px; left: ${obj_buttonInput_Long_B.insertX}px; width: 210px; height: 40px;">
 	        	<div class="obj-comp textarea obj_buttonInput_Long_B" contenteditable="false">Button</div>
 	        </div>`;
 	        return code;
@@ -444,6 +444,40 @@ var obj_paging = {
 	        return code;
 	    }
 	}
+var obj_tooltip_A = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_tooltip_A.insertY}px; left: ${obj_tooltip_A.insertX}px; width: 130px; height: 40px; min-width: 41px; min-height: 41px;">
+	        	<div class="obj-comp textarea obj_tooltip_A">Tooltip</div>
+				<span style="position:absolute;width:0;height:0;left:50%;bottom:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-top:12px solid #666"></span>
+	        </div>`;
+	        return code;
+	    }
+}
+var obj_tooltip_B = {
+		insertX: 200,
+	    insertY: 100,
+	    setX: function(x){
+	        this.insertX = x;
+	    },
+	    setY: function(y){
+	        this.insertY = y;
+	    },
+	    obj_code: function(){
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_tooltip_B.insertY}px; left: ${obj_tooltip_B.insertX}px; width: 130px; height: 40px; min-width: 41px; min-height: 41px;">
+	        	<div class="obj-comp textarea obj_tooltip_B">Tooltip</div>
+				<span style="position:absolute;width:0;height:0;left:50%;top:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:12px solid #666"></span>
+	        </div>`;
+	        return code;
+	    }
+}
 var obj_radioInput = {
     insertX: 200,
     insertY: 100,
@@ -707,6 +741,10 @@ var getModule = function(id){
         	return obj_profile_B;
         case 'obj_paging':
         	return obj_paging;
+        case 'obj_tooltip_A':
+        	return obj_tooltip_A;
+        case 'obj_tooltip_B':
+        	return obj_tooltip_B;
         case 'obj_radioInput':
             return obj_radioInput;
         case 'obj_checkbox':

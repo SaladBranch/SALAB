@@ -171,7 +171,7 @@
         
         <div class="tab-content comp-tab-content">
             <div class="searchbox">
-                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+                <i class="fas fa-search"></i><i class="fas fa-search"></i><input id="search-comp" type="text" placeholder="검색" onkeypress="if(event.keyCode==13) {searchComp(); return false;}">
             </div>
             <div class="comp-searchResult"></div>
             <div class="comp-category common-shape" onclick="toggleComps(this, '.common-shape-comps');">
@@ -346,9 +346,17 @@
         
         <div class="tab-content lib-tab-content">
             <div class="searchbox">
-                <i class="fas fa-search"></i><input type="text" placeholder="검색">
+                <i class="fas fa-search"></i><i class="fas fa-search"></i><input id="search-lib" type="text" placeholder="검색" onkeypress="if(event.keyCode==13) {searchTeamLib(); return false;}">
             </div>
+            <div class="lib-searchResult"></div>
+            <div class="tab-menu">
+            	<div class="tab team-lib">Team-Lib</div>
+            	<div class="tab private-lib">Private-Lib</div>
+            </div>
+            <div class="team-lib-content"></div>
+        	<div class="private-lib-content"></div>
         </div>
+        
     </div>
     
     <div class="canvas-container">
@@ -569,6 +577,14 @@
             <button id="chat_sendbtn">전송</button>
         </div>
     </div>
+    
+    <div id="modal-rename" class="modalOutline disable ">
+    	<div id="renameLib" class="modalContent z-index1">
+        	<div class="titleConfigure">Lib Rename</div>
+            <input id="rename" class="text-box block littleGap" type="text" value=" " maxlength="20" >
+            <input class="rename-btn" type="button"  value="Lib Rename">
+    	</div>
+	</div>
     <script src="http://localhost:8889/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>
@@ -590,6 +606,7 @@
     	//페이지컨텐츠를 담을 전역변수
     	var list = new Array();
     	var privateLibrary = new Array();
+    	var teamLibrary = new Array();
     	
 		async function Thumbnail(){
 			var image;
@@ -650,6 +667,8 @@
         $('.page-tab-content').show();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').hide();
+        $('.team-lib-content').hide();
+        $('.private-lib-content').hide();
         
         $('.grid-chk input').on('change', function(){
             if($(this).is(':checked')){
@@ -663,9 +682,43 @@
         });
         
 		//page onload시 lib-tab에 내용 추가
+		var tlib = {
+   			fileno: list[0].fileno,
+   			projectno: list[0].projectno
+    	}
+		$.ajax({
+    		url: 'getTlibList.do',
+    		type: 'post',
+    		cache: false,
+    		data: JSON.stringify(tlib),
+    		contentType: "application/json; charset=UTF-8",
+    		dataType: 'json',
+    		success: function(data){
+    			/* $('.lib-tab-content').html("<div class='searchbox'><i class='fas fa-search'></i><input type='text' placeholder='검색'></div>") */
+    			privateLibrary = new Array();
+    			for(var i = 0; i<data.tlib.length; i++){
+					$libItem = $("<div class='tlib-item' data-order='"+i+"'><div class='tlib-item-thumb'><img src='" 
+							+ data.tlib[i].content + "'></div><div class='tlib-item-name'>"+ data.tlib[i].itemname +"</div></div>");
+					$('.team-lib-content').append($libItem);
+					var tl = {
+						code: data.tlib[i].code,
+						_id: data.tlib[i]._id,
+						itemaname: data.tlib[i].itemname,
+						content: data.tlib[i].content,
+						date: data.tlib[i].date
+	    			}
+					teamLibrary.push(tl);
+				}
+    			resizeTeamLibImg();
+    		},
+    		error: function(){
+    			console.log("plib list 가져오기 실패");
+    		}
+    	});
+		
     	var plib = {
    			fileno: list[0].fileno,
-   			userno: list[0].userno
+   			userno: $('#userno').val()
     	}
     	$.ajax({
     		url: 'getPlibList.do',
@@ -679,11 +732,13 @@
     			privateLibrary = new Array();
     			for(var i = 0; i<data.plib.length; i++){
 					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
-							+ data.plib[i].content + "'></div><div class='plib-item-name'>untitled</div></div>");
-					$('.lib-tab-content').append($libItem);
+							+ data.plib[i].content + "'></div><div class='plib-item-name'>"+ data.plib[i].itemname +"</div></div>");
+					$('.private-lib-content').append($libItem);
 					var pl = {
 						code: data.plib[i].code,
-						_id: data.plib[i]._id
+						_id: data.plib[i]._id,
+						itemaname: data.plib[i].itemname,
+						content: data.plib[i].content
 	    			}
 					privateLibrary.push(pl);
 				}
@@ -721,12 +776,41 @@
             $(this).removeClass('active-tab'); 
         });
         $('.lib-tab').addClass('active-tab');
+        //lib탭 선택시 팀라이브러리 기본선택
+        $('.team-lib').addClass('active-tab');
         $('.page-tab-content').hide();
         $('.comp-tab-content').hide();
         $('.lib-tab-content').show();
+        $('.team-lib-content').show().trigger('teamLibContent');
         
     });
-        
+    
+    $('.team-lib').click(function(){
+    	$('.lib-tab-content input').attr('id', 'search-lib');
+    	$('.lib-tab-content input').attr('onkeypress', 'if(event.keyCode==13) {searchTeamLib(); return false;}')
+    	$('.private-lib').removeClass('active-tab');
+    	$('.team-lib').addClass('active-tab');
+    	$('.private-lib-content').hide();
+    	$('.team-lib-content').show().trigger('teamLibContent');
+    });
+    
+    $('.private-lib').click(function(){
+    	$('.lib-tab-content input').attr('id', 'search-Plib');
+    	$('.lib-tab-content input').attr('onkeypress', 'if(event.keyCode==13) {searchPrivateLib(); return false;}')
+    	$('.team-lib').removeClass('active-tab');
+    	$('.private-lib').addClass('active-tab');
+    	$('.team-lib-content').hide();
+    	$('.private-lib-content').show().trigger('privateLibContent');
+    });
+    
+    $(document).on('teamLibContent', function(){
+    	console.log('team');
+    });
+    
+    $(document).on('privateLibContent', function(){
+    	
+    });
+    
     function toggleComps(menu, comp){
         if($(comp).css("display") == "none"){
             $(comp).slideDown(200);

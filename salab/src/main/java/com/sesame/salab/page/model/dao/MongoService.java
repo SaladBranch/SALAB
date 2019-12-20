@@ -15,6 +15,7 @@ import com.mongodb.MongoClient;
 import com.sesame.salab.common.FileList;
 /*import com.sesame.salab.page.model.vo.Memo;*/
 import com.sesame.salab.library.model.vo.PrivateLibrary;
+import com.sesame.salab.library.model.vo.TeamLibrary;
 import com.sesame.salab.message.model.vo.Message;
 import com.sesame.salab.page.model.vo.Page;
 import com.sesame.salab.privatefile.model.vo.PrivateFile;
@@ -274,6 +275,14 @@ public class MongoService {
 		
 		mongoOps.remove(query, collectionName);
 	}
+	
+	public void deleteFromTeamLibrary(String collectionName, TeamLibrary tlib) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("_id").is(tlib.get_id())
+		));
+		
+		mongoOps.remove(query, collectionName);
+	}
 
 	public List<Message> getMessageList(String collectionName, Message msg) {
 		Query query = new Query(new Criteria().andOperator(
@@ -289,6 +298,34 @@ public class MongoService {
 		Update update = new Update().set("itemname", pl.getItemname());
 		
 		mongoOps.updateFirst(query, update, "privateLibrary");
+	}
+	
+	public void renameTeamLib(TeamLibrary tl) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("_id").is(tl.get_id())
+		));
+		Update update = new Update().set("itemname", tl.getItemname());
+		
+		mongoOps.updateFirst(query, update, "teamLibrary");
+	}
+
+	public List<TeamLibrary> getTlibItems(String collectionName, TeamLibrary tlib) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("projectno").is(tlib.getProjectno())
+				));
+		return mongoOps.find(query, TeamLibrary.class, collectionName);
+	}
+
+	public void addToTeamFileLib(String collectionName, TeamLibrary tlib) {
+		mongoOps.insert(tlib, collectionName);
+	}
+
+	public TeamLibrary getTlibId(String collectionName, TeamLibrary tlib) {
+		Query query = new Query(new Criteria().andOperator(
+				Criteria.where("_id").is(tlib.get_id())
+		));
+		
+		return mongoOps.findOne(query, TeamLibrary.class, collectionName);
 	}
 	
 }

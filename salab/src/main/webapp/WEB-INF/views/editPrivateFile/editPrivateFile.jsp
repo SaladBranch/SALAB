@@ -662,6 +662,7 @@
             <div class="searchbox">
                 <i class="fas fa-search"></i><input type="text" placeholder="검색">
             </div>
+            <div class="private-lib-content"></div>
         </div>
         
     </div>
@@ -857,8 +858,8 @@
         <div id="modal-rename" class="modalOutline disable ">
     	<div id="renameLib" class="modalContent z-index1">
         	<div class="titleConfigure">Lib Rename</div>
-           	<input id="userNo2" type="hidden" value="${loginMember.userno}">
-            <input id="rename" class="text-box block littleGap" type="text" value=" " maxlength="20" onkeydown="activeEnter('atName')">
+           	<input id="userno" type="hidden" value="${loginMember.userno}">
+            <input id="rename" class="text-box block littleGap" type="text" value=" " maxlength="20" >
             <input class="rename-btn" type="button"  value="Lib Rename">
     	</div>
 	</div>
@@ -975,7 +976,7 @@
     			for(var i = 0; i<data.plib.length; i++){
 					$libItem = $("<div class='plib-item' data-order='"+i+"'><div class='plib-item-thumb'><img src='" 
 							+ data.plib[i].content + "'></div><div class='plib-item-name'>"+ data.plib[i].itemname +"</div></div>");
-					$('.lib-tab-content').append($libItem);
+					$('.private-lib-content').append($libItem);
 					var pl = {
 						code: data.plib[i].code,
 						_id: data.plib[i]._id,

@@ -20,8 +20,11 @@ public class TeamLibrary extends Library{
 
 	@Override
 	public String toString() {
-		return "TeamLibrary [projectno=" + projectno + "]";
+		return "TeamLibrary [projectno=" + projectno + ", get_id()=" + get_id() + ", getFileno()=" + getFileno()
+				+ ", getCode()=" + getCode() + ", getContent()=" + getContent() + ", getItemname()=" + getItemname()
+				+ ", getDate()=" + getDate() + "]";
 	}
+
 	
 	
 }

@@ -310,3 +310,123 @@
 			}
 		}
 	});
+	
+	function savetoTeamLibrary(){
+		console.log('check');
+		var comp = selectedObj[0].clone();
+		comp.removeClass('ui-resizable ui-selected ui-selectee ui-draggable ui-draggable-handle');
+		comp.children().remove('.ui-resizable-handle');
+		comp.children().remove('.ui-rotatable-handle');
+		
+		//canvas위에 실제로 뿌려줄 저장된 object의 코드
+		var code = comp.wrap("<div/>").parent().html();
+		code = code.substr(0, code.indexOf('</div>') + 6) + code.substr(code.indexOf('</div>') + 6).trim();
+		
+		socket.emit('saveToTeamLibrary', code);
+	}
+	
+	socket.on('saveToTeamLibrary', function(code){
+		var rotateDegree = getRotateDegree(selectedObj[0]);
+		
+		selectedObj[0].css('transform', 'rotate(0)').removeClass('ui-selected');
+		selectedObj[0].children('.ui-resizable-handle').hide();
+		
+		html2canvas(selectedObj[0], { 
+		onrendered: function(canvas){
+			var data = canvas.toDataURL('image/png');
+			var tlib = {
+				code: code,
+				content: data,
+				fileno: list[0].fileno,
+				projectno: list[0].projectno,
+				itemname: 'Untitled',
+				date: new Date()
+			};
+			
+			$.ajax({
+				url: 'toTeamLib.do',
+				type: 'post',
+				cache: false,
+				data: JSON.stringify(tlib),
+				contentType: "application/json; charset=UTF-8",
+				dataType: 'json',
+				success: function(data){
+					$libItem = $("<div class='tlib-item' data-order='"+(teamLibrary.length)+"'><div class='tlib-item-thumb'><img src='" 
+							+ tlib.content + "'></div><div class='tlib-item-name'>"+ data.tlib.itemname +"</div></div>");
+					
+					$('.lib-tab').click();
+					$('.team-lib').click();
+					
+					$('.team-lib-content').append($libItem);
+					var tl = {
+						code: data.tlib.code,
+						_id: data.tlib._id,
+						itemname: data.tlib.itemname
+					}
+					teamLibrary.push(tl);
+					resizeTeamLibImg();
+				},
+				error: function(){
+					console.log("lib 추가 실패");
+				}
+			});
+		}
+	});
+	
+	selectedObj[0].css('transform', 'rotate(' + rotateDegree + 'deg)').addClass('ui-selected');
+	selectedObj[0].children('.ui-resizable-handle').show();
+	});
+	
+	function deleteFromTeamLib(index){
+		//privateLibrary에 현재 lib 코드들이 들어잇음
+		var chk = confirm("정말로 삭제하시겠습니까?\n삭제 후에는 복구되지 않습니다.");
+		if(chk){
+			socket.emit('deleteFromTeamLib', index);
+		}
+	}
+	
+	socket.on('deleteFromTeamLib', function(index){
+		$.ajax({
+			url: "deleteTlib.do",
+			data: JSON.stringify(teamLibrary[index]),
+			type: 'post',
+			cache: false,
+			contentType: "application/json; charset=UTF-8",
+			error: function(){
+				console.log("lib 삭제 실패");
+			}
+		});
+		$('.lib-tab-content .tlib-item').eq(index).remove();
+		teamLibrary.splice(index, 1);
+	});
+	
+	function renameTeamLib(index){
+		$(".modalOutline").hide();
+		var tl = {
+				code: teamLibrary[index].code,
+				_id: teamLibrary[index]._id,
+				itemname: $('#rename').val(),
+				content: teamLibrary[index].content,
+				projectno: list[0].projectno,
+				fileno: list[0].fileno,
+		}
+		$.ajax({
+			url: 'renameTeamLib.do',
+			type: 'post',
+			data: JSON.stringify(tl),
+			dataType: 'json',
+			contentType: "application/json; charset=UTF-8",
+			success: function(data){
+				socket.emit('renameTeamLib', index, data.tlib.itemname);
+			},
+			error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		});
+		
+	}
+
+	socket.on('renameTeamLib', function(index, itemname){
+		console.log(index, itemname);
+		$('.tlib-item-name:eq('+index+')').html(itemname);
+	});

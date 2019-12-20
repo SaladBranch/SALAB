@@ -629,7 +629,7 @@ public class PrivateFileController {
 		logger.info(pl.get_id());
 		MongoService mgService = new MongoService();
 		mgService.renameLib(pl);
-		
+		mgService.close();
 		return mv;
 	}
 }

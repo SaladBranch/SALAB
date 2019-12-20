@@ -856,7 +856,7 @@ function savetoLibrary(){
 				code: code,
 				content: data,
 				fileno: list[0].fileno,
-				userno: list[0].userno,
+				userno: $('#userno').val(),
 				itemname: 'Untitled',
 				date: new Date()
 			};
@@ -871,7 +871,8 @@ function savetoLibrary(){
 				success: function(data){
 					$libItem = $("<div class='plib-item' data-order='"+(privateLibrary.length)+"'><div class='plib-item-thumb'><img src='" 
 							+ plib.content + "'></div><div class='plib-item-name'>"+ data.plib.itemname +"</div></div>");
-					$('.lib-tab-content').append($libItem);
+					
+					$('.private-lib-content').append($libItem);
 					var pl = {
 						code: data.plib.code,
 						_id: data.plib._id,
@@ -973,11 +974,10 @@ function renameLib(index){
 			code: privateLibrary[index].code,
 			_id: privateLibrary[index]._id,
 			itemname: $('#rename').val(),
-			userno: list[0].userno,
+			userno: $('#userno').val(),
 			fileno: list[0].fileno,
 			date: privateLibrary[index].date
 	}
-	console.log(pl);
 	$.ajax({
 		url: 'renameLib.do',
 		type: 'post',

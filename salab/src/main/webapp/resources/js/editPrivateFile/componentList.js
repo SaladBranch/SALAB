@@ -144,7 +144,7 @@ var obj_textInput = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 300px; height:100;">
+        var code = `<div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 300px; height:35px;">
         	<input class="obj-comp obj-textInput" type="text" placeholder="내용 입력" readOnly>
         </div>`
 

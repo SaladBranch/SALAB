@@ -97,8 +97,8 @@
 					<c:forEach var="projectList" items="${sessionScope.myProjectList}">
 						<div class="each-team">
 							<c:if test="${projectList.projectimage_o eq null }">
-								<div class="icon-wrapper">
-									<i class="fas fa-sitemap"></i>       	
+								<div class="img-wrapper">
+									<img src="/salab/resources/img/default-project.png" alt="">     	
 								</div>
 							</c:if>   
 							<c:if test="${projectList.projectimage_o ne null }">
@@ -332,7 +332,7 @@
                     <!-- 새 파일 생성 모달 -->
                     <div id="modal-name" class="modalOutline disable ">
                         <div id="newFile" class="modalContent z-index1">
-                            <div class="titleConfigure">Create PrivateFile</div>
+                            <div class="titleConfigure">Create Poject File</div>
                             <input id="userNo" type="hidden" value="${loginMember.userno}">
                             <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
                             <input class="" type="button" id="id-change-btn" value="New file" onclick="newTeamFile();">

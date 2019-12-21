@@ -177,19 +177,19 @@
                 <div style="padding:4px;">
                     <!--직사각형-->
                     <a id="obj_rect" class="geItem c_rectangle" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--모서리가 둥근 직사각형-->
                     <a id="obj_brect" class="geItem c_brectangle" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60"xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" rx="5" ry="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--Heading-->
                     <a id="obj_heading" class="geItem c_heading" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.35)">
                         <foreignObject x="4" y="15" width="180" height="160">
                             <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
@@ -201,7 +201,7 @@
                     </a>
                     <!--글타래-->
                     <a id="obj_paragraph" class="geItem c_paragraph" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60"xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.3)">
 
                         <foreignObject x="1" y="-10" width="300" height="160">
@@ -215,20 +215,80 @@
                     </a>
                     <!--타원-->
                     <a id="obj_ellipse" class="geItem c_ellipse" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
                     </a>
                     <!--정사각형-->
                     <a id="obj_square" class="geItem c_square" display="inline-block">
-                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30" >
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30" >
                             <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
                         </svg>
                     </a>
                     <!--정원(x) perfect Circle -->
                     <a id="obj_circle" class="geItem c_circle" display="inline-block">
-                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                             <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
+                        </svg>
+                    </a>
+                    <!--대각선 -->
+                    <a id="obj_diagonal_R" class="geItem obj_diagonal_R" display="inline-block">
+                       <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="diagonal_R" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--대각선 -->
+                    <a id="obj_diagonal_L" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="diagonal_L" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--수평선 -->
+                    <a id="obj_line_horizontal" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="obj_line_horizontal line_horizontal" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--수직선 -->
+                    <a id="obj_line_vertical" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="obj_line_vertical line_vertical" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--와이어프레임 -->
+                    <a id="obj_wireframe" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="obj_wireframe wireframe" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
                         </svg>
                     </a>
                 </div>
@@ -372,13 +432,12 @@
                             <g transform="scale(0.25)">    
                             <foreignObject  x="30" y="40" width="160" height="200">
                             <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
-                                     <div class="obj_scroll_x_outline">
+                                     <div class="obj_scroll_x_outline" style="position: absolute; width: 60%;">
                     <div class="obj_scroll_x_leftside"><img src="/salab/resources/img/leftangle.png" alt=""></div>
-                    <div class="obj_scroll_x_rightside" style="right: 0px;"><img src="/salab/resources/img/rightangle.png" alt=""></div>
+                    <div class="obj_scroll_x_rightside" style="margin-left: 120%;"><img src="/salab/resources/img/rightangle.png" alt=""></div>
                 </div>
                                </div>
-                                <div class=" obj_scroll_x_inline" style="position: absolute;height: 20px; width: 40px;left: 20%;">
-                    <div class=""></div>
+                                <div class=" obj_scroll_x_inline" style="height: 20px; width: 40px;left: 20%;">
                 </div>
                             </foreignObject>
                             </g>

@@ -13,7 +13,8 @@
     
     <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/editFile.css" type="text/css">
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
-    <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/components.css" type="text/css">
+    <!-- <link rel="stylesheet" href="/salab/resources/css/editPrivateFile/components.css" type="text/css"> -->
+    <link rel="stylesheet" href="/salab/resources/css/editTeamFile/teamComponents.css" type="text/css">
     <link rel="stylesheet" href="/salab/vendors/css/jquery.minicolors.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js" crossorigin="anonymous"></script>

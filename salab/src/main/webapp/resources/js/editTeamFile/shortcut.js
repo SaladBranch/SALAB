@@ -250,17 +250,28 @@ function undoPage(){
         filter: " > .obj",
         start: function(){
             selectedObj = new Array();
+	    	$(".text-editing").blur();
+	    	window.getSelection().removeAllRanges();
+	    	$(".text-editing").removeClass("text-editing");
         },
         selected: function(e, ui){
             selectedObj.push($(ui.selected));
         },
         unselected: function(e, ui){
             $(ui.unselected).children().remove('.ui-resizable-handle');
-            $(ui.unselected).children('.ui-rotatable-handle').hide();
             if($(ui.unselected).hasClass('ui-draggable'))
                 $(ui.unselected).draggable('destroy');
+            $(ui.unselected).children('.ui-rotatable-handle').hide();
         },
         stop: function(){
+        	var selectedIndexes = new Array();
+        	$('#droppable > .obj').each(function(i){
+        		if(!$(this).hasClass('ui-selected'))
+        			$(this).css('border', '1.5px solid transparent');
+        		else
+        			selectedIndexes.push(i);
+        	});
+        	TeamSelectObject(selectedIndexes);
             addControl();
         }
     });

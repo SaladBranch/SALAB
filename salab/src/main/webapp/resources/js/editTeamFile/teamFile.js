@@ -68,9 +68,28 @@
 		}
 	});
 	//Object 선택
-	function TeamSelectObject(){
-		
+	function TeamSelectObject(selectedIndexes){
+		var usercolor = $('#my-profile').attr('data-usercolor');
+		var userSelect = {
+			indexes: selectedIndexes,
+			color: usercolor
+		}
+		socket.emit("SelectObject", userSelect);
 	}
+	socket.on("SelectObject", function(userSelect){
+		console.log("이벤트 넘어옴");
+		
+		for(var i = 0; i<userSelect.indexes.length; i++){
+			$('#droppable > .obj').each(function(index, item){
+				if(index === userSelect.indexes[i]){
+					$(this).css('border', '1.5px solid ' + userSelect.color);
+				}else if(!$(this).hasClass('ui-selected')){
+					$(this).css('border', '1.5px solid transparent');
+				}
+			});
+			/*$('#droppable > .obj').eq(userSelect.indexes[i]).css('border', '1.5px solid ' + userSelect.color);*/
+		}
+	});
 	
 	//Object삽입
 	function TeamInsertObject(obj_code){

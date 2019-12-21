@@ -449,3 +449,44 @@
 		console.log(index, itemname);
 		$('.tlib-item-name:eq('+index+')').html(itemname);
 	});
+	
+	$(document).on('click', '.btn-ghost.done', function(){
+		var $memo = $(this).closest('.memo-info').siblings('.memo-cnt');
+		var $button = $(this).closest('.button');
+		var $user = $(this).closest('.user');
+		var $con = $(this).closest('.memoCon').clone();
+		$($memo).attr('readOnly', true);
+		$($memo).addClass('disabled');
+		$($button).html(
+			'<div class="file-options">'+
+            '<div class="file-options-btn">⋮</div>'+
+            '<div class="file-options-menu">'+
+            '<ul>'+
+            '<li><a href="javascript:" class="memoEdit">메모 수정</a></li>'+
+            '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
+            '</ul>'+
+            '</div>'+
+			'</div>');
+		
+		$($con).find('.button').html(
+				'<div class="file-options">'+
+	            '<div class="file-options-btn">⋮</div>'+
+	            '<div class="file-options-menu multi">'+
+	            '<ul>'+
+	            '<li><a href="javascript:" class="memoRemove">메모 삭제</a></li>'+
+	            '</ul>'+
+	            '</div>'+
+				'</div>'	
+		);
+		var input = $($con).find('.memo-cnt').val();
+		$($con).find('.memo-cnt').attr('value', input);
+		$($con).find('.memo-cnt').attr('readOnly', true);
+		
+		socket.emit('memo', $con.html());
+	});
+
+	socket.on('memo', function(memo){
+		console.log(memo);
+		$('#droppable').append(memo);
+		
+	});

@@ -27,7 +27,8 @@
 	</select>
 	
 	<select id="createPage" parameterType="int" resultType="PrivateFile">
-		select * from (select pfileno from privatefile where userno = #{userno} order by PFILELASTMODIFIED desc) where rownum = 1
+		SELECT * FROM 
+		(SELECT PFILENO FROM PRIVATEFILE WHERE USERNO = #{userno} ORDER BY PFILELASTMODIFIED DESC) WHERE ROWNUM = 1
 	</select>
 	
 	<update id="changeLastModified" parameterType="PrivateFile">

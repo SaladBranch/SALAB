@@ -495,13 +495,13 @@
         	e.stopPropagation();
         	e.preventDefault();
         }).on('drop', function(e){
-        	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
+        	var files = e.originalEvent.dataTransfer.files;
         	var x = e.offsetX - 10;
         	var y = e.offsetY - 30;
         	
         	for(var i = 0; i < files.length; i++) {
         	var file = files[i];
-        	preview(file, size - 1, x, y); //미리보기 만들기
+        	preview(file, size - 1, x, y); 
         	}
         	e.preventDefault();
         		
@@ -813,7 +813,10 @@
     	if(keyword == ''){
     		$('.comp-searchResult').html('');
     	}else{
-    		$('.tab-content').find('a').each(function() {
+
+    		$('.comp-searchResult').html('');
+    		$('.common-shape-comps').find('a').each(function() {
+
             	if($(this).attr("id").split("_")[1].includes(keyword)){
             		$('.comp-searchResult').append($(this).clone());
             	}

@@ -68,7 +68,7 @@
                 <a href="noticelist.do">공지사항</a>
             </div>
             <div class="private-file">
-                <a href="faqlist.do">자주 찾는 질문</a>
+                <a href="faqlist.do">자주 하는 질문</a>
             </div>
             <div class="trashcan">
                 <a href="qnalist.do">1:1문의</a>

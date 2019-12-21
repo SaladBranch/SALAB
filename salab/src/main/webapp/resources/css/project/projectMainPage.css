@@ -239,13 +239,18 @@ table {
     width: 100%;
     table-layout: fixed;
 }
-
+table  tr{
+    height: 26px !important;
+    overflow: hidden;
+}
 table td {
     padding: 0px;
     text-align: center;
     font-size: 0.8em;
+   text-overflow: ellipsis;
     overflow: hidden;
-    height: 26px;
+    height: 26px !important;
+    white-space: nowrap;
 }
 
 table td:nth-child(2) {
@@ -257,8 +262,7 @@ table td:nth-child(3) {
     text-align: left;
     padding-left: 15px;
     width: 65%;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    
 }
 
 table td:nth-child(4) {

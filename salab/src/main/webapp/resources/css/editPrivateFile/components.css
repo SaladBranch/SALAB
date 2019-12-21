@@ -195,28 +195,32 @@ svg{
 .obj_scroll_x_outline{
     background-color:#eee;
     height: inherit;
-    position: absolute;
     color: #ccc;
+    align-items: center;
+    display: flex;
 }
 .obj_scroll_x_outline img{
-    width: auto%;
-    height: 100%;
+    width: 13px;
+    height: 13px;
 }
 .obj_scroll_x_leftside,
 .obj_scroll_x_rightside{
-    width: 10px;
-    height: 10px;
+    width:  auto;
+    height: auto;
     background-color:#eee;
     font-size: auto;
-    vertical-align: middle;
+}
+.obj_scroll_x_center{
+}
+.obj_scroll_x_leftside,
+obj_scroll_x_rightside{
+    align-items: center;
 }
 .obj_scroll_x_leftside{
-    position: absolute;
-    left: 0px;
-    top:auto;
+    float: left;
 }
 .obj_scroll_x_rightside{
-    position: absolute;
+    float: right;
     right: 0px;
 }
 .obj_scroll_x_inline{
@@ -270,6 +274,36 @@ svg{
 .dropdown_right_down {
     height: 50%;
 }
+.diagonal_R{
+    background-image: url(/salab/resources/svg/diagonal_R.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.diagonal_L{
+    background-image: url(/salab/resources/svg/diagonal_L.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.line_horizontal{
+    background-image: url(/salab/resources/svg/line-horizontal.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.line_vertical{
+    background-image: url(/salab/resources/svg/line-vertical.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.wireframe{
+    background-image: url(/salab/resources/svg/wireframe.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
 ::selection {
 	background : skyblue;
 }
@@ -322,7 +356,7 @@ svg{
 .obj_messageForm_B{
 	color:#212121;
 	background-color:#bbb;
-	font_weight: 400;
+	font-weight: 400;
 }
 .obj_memo_A, .obj_memo_B{
 	padding: 10px; 

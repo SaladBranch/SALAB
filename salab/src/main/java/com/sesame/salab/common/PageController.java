@@ -208,8 +208,6 @@ public class PageController {
 		int listCount = memberService.mlistCount(keyword); //DB에서 현재 총 Row수 가져옴 
 		
 		String lcount = String.valueOf(listCount);
-		logger.info(lcount);
-		logger.info(keyword);
 		
 		Paging paging = new Paging(); //현재 페이지 
 		paging.setLimit(10);
@@ -221,7 +219,6 @@ public class PageController {
 		map.put("keyword", keyword);
 		
 		List<Member> memberList = memberService.memberList(map);
-		logger.info(paging.toString());
 		
 		if(memberList != null) {
 			mv.addObject("memberList", memberList);

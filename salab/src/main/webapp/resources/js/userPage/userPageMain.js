@@ -45,10 +45,7 @@ function HideOnBush() {
 
 //엔터키 입력 시 , button이랑 연동.
 	function activeEnter(findKey) {
-		
 		if (window.event.keyCode == 13) {
-			alert("엔터키감지");
-			
 			if (findKey == "atName") {
 				document.getElementById("id-change-btn").click();
 			} else if (findKey == "atPassword") {

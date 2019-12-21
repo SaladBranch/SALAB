@@ -813,8 +813,10 @@
     	if(keyword == ''){
     		$('.comp-searchResult').html('');
     	}else{
+
     		$('.comp-searchResult').html('');
     		$('.common-shape-comps').find('a').each(function() {
+
             	if($(this).attr("id").split("_")[1].includes(keyword)){
             		$('.comp-searchResult').append($(this).clone());
             	}

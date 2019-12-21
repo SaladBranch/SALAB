@@ -260,8 +260,8 @@
                   			<foreignObject x="1" y="23" width="300" height="160">
                   				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
                   					<div style="position: absolute;">
-										<div style="width:135px;color:#fff;background-color:#666;padding:15px;border-radius:4px;text-align:center;">Tooltip</div>
-										<span style="position:absolute;width:0;height:0;left:50%;top:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:12px solid #666"></span>
+										<div style="position:absolute;top:12px;width:135px;color:#fff;background-color:#666;padding:15px;border-radius:4px;text-align:center;">Tooltip</div>
+										<span style="position:absolute;width:0;height:0;left:68px;top:0.5px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:12px solid #666"></span>
 									</div>
                 				</div>
                   			</foreignObject>

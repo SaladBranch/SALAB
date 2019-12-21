@@ -259,7 +259,7 @@ var obj_messageForm_A = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm_A.insertY}px; left: ${obj_messageForm_A.insertX}px; width: 130px; height: 50px; min-width: 41px; min-height: 41px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm_A.insertY}px; left: ${obj_messageForm_A.insertX}px; width: 130px; height: 45px; min-width: 41px; min-height: 41px;">
 	        	<div class="obj-comp textarea obj_messageForm_A" contenteditable="false">Message</div>
 	        	<span style="position:absolute;width:0;height:0;right:0;top:50%;margin-right:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:16px solid rgb(46, 204, 113);"></span>
 	        </div>`;
@@ -276,7 +276,7 @@ var obj_messageForm_B = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm_B.insertY}px; left: ${obj_messageForm_B.insertX}px; width: 130px; height: 50px; min-width: 41px; min-height: 41px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_messageForm_B.insertY}px; left: ${obj_messageForm_B.insertX}px; width: 130px; height: 45px; min-width: 41px; min-height: 41px;">
 	        	<div class="obj-comp textarea obj_messageForm_B" contenteditable="false">Message</div>
 				<span style="position:absolute;width:0;height:0;left:0;top:50%;margin-left:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:16px solid #bbb"></span>
 	        </div>`;
@@ -454,7 +454,7 @@ var obj_tooltip_A = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_tooltip_A.insertY}px; left: ${obj_tooltip_A.insertX}px; width: 130px; height: 40px; min-width: 41px; min-height: 41px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_tooltip_A.insertY}px; left: ${obj_tooltip_A.insertX}px; width: 130px; height: 35px; min-width: 41px; min-height: 41px;">
 	        	<div class="obj-comp textarea obj_tooltip_A">Tooltip</div>
 				<span style="position:absolute;width:0;height:0;left:50%;bottom:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-top:12px solid #666"></span>
 	        </div>`;
@@ -471,7 +471,7 @@ var obj_tooltip_B = {
 	        this.insertY = y;
 	    },
 	    obj_code: function(){
-	        var code = `<div class="obj" style="position: absolute; top: ${obj_tooltip_B.insertY}px; left: ${obj_tooltip_B.insertX}px; width: 130px; height: 40px; min-width: 41px; min-height: 41px;">
+	        var code = `<div class="obj" style="position: absolute; top: ${obj_tooltip_B.insertY}px; left: ${obj_tooltip_B.insertX}px; width: 130px; height: 35px; min-width: 41px; min-height: 41px;">
 	        	<div class="obj-comp textarea obj_tooltip_B">Tooltip</div>
 				<span style="position:absolute;width:0;height:0;left:50%;top:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:12px solid #666"></span>
 	        </div>`;

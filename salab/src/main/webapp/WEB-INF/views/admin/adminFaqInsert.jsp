@@ -69,7 +69,7 @@
                 <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq active-menu">
-                <a href="adminFaqList.do">자주 찾는 질문</a>
+                <a href="adminFaqList.do">자주 하는 질문</a>
             </div>
             <div class="ad-qna">
                 <a href="adminQnaList.do">1:1문의</a>
@@ -146,7 +146,7 @@ function insert_faq(){
 		alert("내용을 입력해 주세요.");
 		$("#faq_box_content").focus();
 	} else{
-		var check = confirm("취소 하시겠습니까?");
+		var check = confirm("등록 하시겠습니까?");
 		if(check){
 			$("#faqinsert").submit();
 		}

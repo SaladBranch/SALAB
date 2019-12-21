@@ -70,7 +70,7 @@
                 <a href="adminNoticeList.do">공지사항</a>
             </div>
             <div class="ad-faq">
-                <a href="adminFaqList.do">자주 찾는 질문</a>
+                <a href="adminFaqList.do">자주 하는 질문</a>
             </div>
             <div class="ad-qna">
                 <a href="adminQnaList.do">1:1문의</a>

@@ -1,0 +1,426 @@
+/*마우스 선택영역*/
+.focus {
+    position:fixed; 
+    border:1px solid #00a8ff; 
+    background-color: rgba(0, 168, 255, 0.19);
+    z-index: 100;
+}
+/*form tab-content open*/
+.form-control-comps{
+    display: block;
+}
+/*--------------------------*/
+/*Object CSS*/
+/*--------------------------*/
+.obj{
+    position: absolute;
+    border: 1.5px solid transparent;
+    cursor: default;
+}
+.obj-comp{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    word-break : break-all;
+/*    overflow: hidden;*/
+}
+.textarea {
+    padding-top : 2px;
+}
+
+.obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{
+    border: 1px solid #000;
+}
+.obj-brect{
+    border-radius: 3px;
+}
+.obj-ellipse, .obj-circle{
+    border-radius: 50%;
+}
+.obj-comp *{
+    width: 100%;
+}
+.obj-comp ul, .obj-comp input {
+    all : inherit;
+}
+
+/*-건우-*/
+
+.obj-textInput{
+    border: 1px solid #2f2f2f;
+    border-radius: 5px;
+    padding: 10px;
+    background: inherit;
+    height: inherit;
+    color: inherit;
+    width: inherit;
+    background-color: inherit;
+
+}
+
+.obj_ul_text{
+    display: inline;
+    font-size: 25px;
+    margin-left: 0px;
+
+    border: none;
+    height: inherit;
+    color: inherit;
+    width: 80%;
+    background-color: inherit;
+}
+.obj_ul_span{
+    display: inline;
+    margin-left: 0px;
+    height: inherit;
+    color: inherit;
+    width: inherit;
+    background-color: inherit;
+    font-size: inherit;
+}
+.obj_ul_span::before{
+    content: "●";
+    color: black;
+    font-size: 10px;
+    line-height: inherit;
+    vertical-align: middle;
+}
+
+.obj_progressBar_outline{
+    background-color: #4F4F4F;
+    min-height: 20px;
+    height: inherit;
+    color: inherit;
+    width: 100%;
+    font-size: inherit;
+    border-radius: 10px;
+}
+.obj_progressBar_inline{
+     background-color: #1976D2;
+    min-height: 20px;
+    height: inherit;
+    color: inherit;
+    width: 100%;
+    font-size: inherit;
+    border-radius: 10px;
+}
+.obj_search{
+    line-height: inherit;
+    padding: 0px;
+}
+.obj_search_left,
+.obj_search_right{
+    display: inline-block;
+    margin-top: 0px;
+     height: inherit;
+    font-size: inherit;
+    min-height: 30px;
+    border: 0.5px solid gray;
+    overflow: hidden;
+    vertical-align: middle;
+    line-height: 30px;
+    float: left;
+}
+.obj_search_left{
+    width: 30%;
+    height: 100%;
+    background-color: #afafaf;
+    padding: 20% auto;
+}
+
+.obj_search_left img{
+    width: inherit;
+    height: inherit;
+}
+.obj_search_right{
+    display: inline-block;
+    width: 70%;
+    text-align: left;
+    padding-left: 5px;
+    background: inherit;
+}
+.obj_search_box{
+    background-color: white;
+    height: 40%;
+    border:0.5px solid gray;
+}
+.obj_search_icon{
+    background-color: #BFBFBF;
+    width: 30%;
+    border-right: 0.5px solid gray;
+    text-align: center;
+    font-size: 30px;
+}
+.obj_scroll_outline{
+     background-color:#eee;
+    height: inherit;
+    position: absolute;
+}
+.obj_scroll_inline{
+    position: absolute;
+    width: 100%;
+    background-color: #ccc;
+}
+.obj_scroll_downside,
+.obj_scroll_upside{
+    width: inherit;
+    height: 20px;
+}
+.obj_scroll_upside{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.obj-comp.obj_scroll_y,.obj-comp.obj_scroll_x{
+    padding-top: 0px;
+ }
+.obj_scroll_outline i{
+    color:#bbb;
+}
+.obj_scroll_downside{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+/*scroll-x*/
+.obj_scroll_x_outline{
+    background-color:#eee;
+    height: inherit;
+    position: absolute;
+    color: #ccc;
+}
+.obj_scroll_x_outline svg{
+    width: inherit;
+    height: inherit;
+     width: 80%;
+}
+.obj_scroll_x_leftside,
+.obj_scroll_x_rightside{
+    width: 10px;
+    height: inherit;
+    background-color:#eee;
+}
+.obj_scroll_x_leftside{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.obj_scroll_x_rightside{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.obj_scroll_x_inline{
+    position: absolute;
+    height: 100%;
+    background-color: #ccc;
+}
+.obj-comp.obj_dropdown{
+    padding: 0px;
+}
+/*drop down*/
+.obj_dropdown{
+    display: block;
+    border: 0.5px solid gray;
+    border-radius: 3px;
+    background-color: inherit;
+}
+.obj_dropdown_left{
+    display: inline-block;
+    width: 80%;
+    height:100%;
+    overflow: hidden;
+    line-height: 100%;
+}
+.obj_dropdown_left input{
+    border: none;
+    width: 85%;
+}
+.obj_dropdown_left textarea{
+}
+.obj_dropdown_right{
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+    overflow: hidden;
+}
+.obj_dropdown_right div{
+    width: 60%;
+    font-size: 10px;
+       color: #aaa;
+}
+.obj_dropdown_right svg{
+    height: 100%;
+}
+::selection {
+	background : skyblue;
+}
+.focusout {
+	background : #3C79C9;
+}
+
+#multiselect{
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+[contenteditable=true] {
+	cursor : text;
+}
+/*연영*/
+.obj_buttonInput_Normal_A, .obj_buttonInput_Normal_B, .obj_buttonInput_Long_A, .obj_buttonInput_Long_B{
+	color: #fff;
+	padding: 2px;
+	font-size: 15px;
+	text-align: center;
+    line-height: 2.5em;
+    border-radius: 4px;
+    border: none;
+}
+.obj_buttonInput_Normal_A, .obj_buttonInput_Long_A{
+    background-color: #3498db;
+}
+.obj_buttonInput_Normal_B, .obj_buttonInput_Long_B{
+    background-color: #c9c9c9;
+}
+.obj_plusBtn, .obj_minusBtn{
+	color: #222;
+	background-color: #c9c9c9;
+	border-radius: 2px;
+	border: none;
+	padding: 1px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+.obj_messageForm_A, .obj_messageForm_B{
+	font-size: 10pt;
+	padding-top:15px;
+	border-radius:4px;
+}
+.obj_messageForm_A{
+	color:#fff;
+	background-color:rgb(46, 204, 113);
+}
+.obj_messageForm_B{
+	color:#212121;
+	background-color:#bbb;
+	font_weight: 400;
+}
+.obj_memo_A, .obj_memo_B{
+	padding: 10px; 
+	box-shadow: rgba(0, 0, 0, 0.290196) 4px 4px 8px 0px; 
+	background-color: rgb(157, 232, 217);
+	font-style: italic;
+	font-size: 12px;
+	text-align: left;
+}
+.obj_memo_A{
+	background-color: rgb(157, 232, 217);
+}
+.obj_memo_B{
+	background-color: rgb(255, 235, 152);
+}
+.obj_label{
+	font-size: 12px;
+	padding:2px; 
+	border-top-left-radius: 30px; 
+	border-top-right-radius: 30px; 
+	border-bottom-right-radius: 30px; 
+	border-bottom-left-radius: 30px; 
+	text-align: center; 
+	color: rgb(255, 255, 255); 
+	box-shadow: none; 
+	background-color: rgb(26, 188, 156);
+}
+.obj_marker{
+	border-radius:50%;
+	text-align: center; 
+	color: rgb(255, 255, 255); 
+	background-color: rgba(255, 6, 6, 0.85);
+}
+.obj_prev, .obj_next{
+	font-size: 13px;
+	font-weight: 400;
+	color: rgb(131, 131, 131); 
+	text-align: center; 
+	border-top-left-radius: 20px; 
+	border-top-right-radius: 20px; 
+	border-bottom-right-radius: 20px; 
+	border-bottom-left-radius: 20px; 
+	background-color: #c9c9c9;
+	padding-top: 4px;
+}
+.obj_profile_A, .obj_profile_B{
+	border-radius: 50%;
+	padding: none;
+}
+/*연영*/
+
+/*--------------------------*/
+/* Resizable */
+/*--------------------------*/
+.ui-resizable-handle{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #00a8ff;
+}
+.ui-resizable-helper { 
+    border: 1px dotted #00F;
+}
+.ui-resizable-n{
+    top: -9px;
+    left: calc(50% - 5px);
+}
+.ui-resizable-e{
+    right: -9px;
+    top: calc(50% - 5px);
+}
+.ui-resizable-s{
+    bottom: -9px;
+    left: calc(50% - 5px);
+}
+.ui-resizable-w{
+    top: calc(50% - 5px);
+    left: -9px;
+}
+.ui-resizable-ne{
+    top: -8px;
+    right: -8px;
+}
+.ui-resizable-se{
+    bottom: -8px;
+    right: -8px;
+}
+.ui-resizable-nw{
+    top: -8px;
+    left: -8px;
+}
+.ui-resizable-sw{
+    bottom: -8px;
+    left: -8px;
+}
+/*--------------------------*/
+/* Selectable */
+/*--------------------------*/
+.ui-selected{
+    border: 1.5px solid;
+    border-color: attr(data-userselect) !important;
+}
+/*--------------------------*/
+/* Rotatable */
+/*--------------------------*/
+.ui-rotatable-handle {
+    position: absolute;
+    top: -30px;
+    left: calc(50% - 8px);
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-image: url(../../../resources/img/rotate.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}

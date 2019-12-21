@@ -179,6 +179,7 @@ function addControl(){
         $obj = selectedObj[0];
         $obj.append(resize_handler.code);
         $obj.children('.ui-rotatable-handle').show();
+        /*$obj.attr('data-userselect', $('#my-profile').attr('data-usercolor'));*/
         $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'));
         var __dx;
         var __dy;
@@ -378,7 +379,7 @@ function addControl(){
     }else if(selectedObj.length > 1){ //선택된 개체가 복수일 때(크기 조절, 회전 x / 이동만 가능)
         for(i = 0; i<selectedObj.length; i++){
             $obj = selectedObj[i];
-            $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'))
+            $obj.css('border', '1.5px solid ' + $('#my-profile').attr('data-usercolor'));
             $obj.children().remove('.ui-resizable-handle');
             $obj.children('.ui-rotatable-handle').hide();
             if($obj.hasClass('ui-draggable'))
@@ -439,11 +440,14 @@ $(function(){
             $(ui.unselected).children('.ui-rotatable-handle').hide();
         },
         stop: function(){
-        	$('#droppable > .obj').each(function(){
+        	var selectedIndexes = new Array();
+        	$('#droppable > .obj').each(function(i){
         		if(!$(this).hasClass('ui-selected'))
         			$(this).css('border', '1.5px solid transparent');
-        	})
-        	TeamSelectObject();
+        		else
+        			selectedIndexes.push(i);
+        	});
+        	TeamSelectObject(selectedIndexes);
             addControl();
         }
     });

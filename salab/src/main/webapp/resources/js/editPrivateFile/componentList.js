@@ -489,7 +489,7 @@ var obj_radioInput = {
     },
     obj_code: function(){
         var code = `
-        <div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 50px; height: 50px;text-align:left;padding:0px;  vertical-align: middle;">
+        <div class="obj" style="position: absolute; top: ${obj_radioInput.insertY}px; left: ${obj_radioInput.insertX}px; width: 50px; height: 50px;text-align:left;padding:0px;  vertical-align: middle;">
         <input type="radio" class="obj-comp obj_radioInput  " style="width: 40%;    height: 40%; opacity: 1; margin: 33%; height: 40%; opacity: 1; margin: 33%;">
         </div>
         `
@@ -507,7 +507,7 @@ var obj_checkbox = {
     },
     obj_code: function(){
         var code = `
-        <div class="obj" style="position: absolute; top: ${obj_textInput.insertY}px; left: ${obj_textInput.insertX}px; width: 50px; height: 50px;text-align:left;padding:0px;  vertical-align: middle;">
+        <div class="obj" style="position: absolute; top: ${obj_checkbox.insertY}px; left: ${obj_checkbox.insertX}px; width: 50px; height: 50px;text-align:left;padding:0px;  vertical-align: middle;">
         <input type="checkbox" class="obj-comp obj_checkbox" style="width: 40%; height: 40%; opacity: 1; margin: 33%;">
         </div>
         `
@@ -525,7 +525,7 @@ var obj_file = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_paragraph.insertY}px; left: ${obj_paragraph.insertX}px; width: 240px;min-height:24px;font-size:14px;">
-        	   <div><input class="obj-comp obj_file" type="file"></div>
+        	   <input class="obj-comp obj_file" type="file">
         </div>`
         return code;
     }
@@ -574,7 +574,7 @@ var obj_search = {
     },
     obj_code: function(){
         var code = `<div class="obj" style="position: absolute; top: ${obj_search.insertY}px; left: ${obj_search.insertX}px; width: 200px;height:36px;min-width:100px;min-height:32px;">
-          <div class="obj-comp  obj_search textarea" style="border:1px solid gray;"><div class="obj_search_left" contenteditable="false" styles="min-width:30px;min-height:32px;"><img src="/salab/resources/img/search.png" alt=""></div><div class="obj_search_right textarea "styles="min-width:70px;min-height:32px;"></div></div></div>`
+          <div class="obj-comp  obj_search" style="border:1px solid gray;"><div class="obj_search_left" contenteditable="false" styles="min-width:30px;min-height:32px;"><img src="/salab/resources/img/search.png" alt=""></div><div class="obj_search_right textarea "styles="min-width:70px;min-height:32px;"></div></div></div>`
         return code;
     }
 }
@@ -614,17 +614,18 @@ var obj_scroll_x = {
         this.insertY = y;
     },
     obj_code: function(){
-        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 203px;height:22px; transform: rotate(0rad);">
-        <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 200px;height:25px; transform: rotate(0rad);
+        var code = `<div class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 203px;height:28px; min-height:26px; min-width:130; transform: rotate(0rad);">
+        <div class="obj" style="position: absolute; top: 0px; left: 0px; width: 200px;height:26px;min-height:25px; min-width:130; transform: rotate(0rad);
 ">
           <div class="obj-comp obj_scroll_x" contenteditable="false" style="position: absolute; top: 0px; left: 0px;">
                <div class="obj_scroll_x_outline">
                     <div class="obj_scroll_x_leftside"><img src="/salab/resources/img/leftangle.png" alt=""></div>
+                    <div class="obj_scroll_x_center"></div>
                     <div class="obj_scroll_x_rightside"><img src="/salab/resources/img/rightangle.png" alt=""></div>
                 </div>
             </div>
         </div>
-        <div class="obj" style="position: absolute; top: 0px; left: 20px; width: 40px;height:25px;transform: rotate(0rad);
+        <div class="obj" style="position: absolute; top: 0px; left: 20px; width: 40px;height:25px;min-height:26px;transform: rotate(0rad);
 ">
                 <div class="obj-comp obj_scroll_x_inline">
                     <div class=""></div>
@@ -671,7 +672,7 @@ var obj_dropdownList = {
         var code = `<div onchange="test()" class="group-obj obj ui-resizable ui-selected"  style="top: ${obj_scroll_x.insertY}px; left: ${obj_scroll_x.insertX}px;  width: 205px;min-height:150px; transform: rotate(0rad);"contenteditable="false" >
             <div class="obj" style="position: absolute; top: 0px; left: 0px;  width: 200px;height:40px;transform: rotate(0rad)">
           <div class="obj-comp obj_dropdown" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
-                            <div class="obj_dropdown_left textarea "contenteditable="false" ><input type="text" placeholder="Drop down">
+                            <div class="obj_dropdown_left"contenteditable="false" ><input type="text" placeholder="Drop down">
                             </div>
                             <div class="obj_dropdown_right" contenteditable="false">
                                     <img src="/salab/resources/img/upangle.png" alt="">
@@ -686,6 +687,106 @@ var obj_dropdownList = {
         <div class="obj" style="position: absolute;margin-top:-70px; top: 100%; left: 10%;  width: 170px;height:30px;transform: rotate(0rad);">
           <div class="obj-comp obj-rect textarea ui-selectee" style="position: absolute; top: 0px; left: 0px;width: inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
 </div>`
+        return code;
+    }
+}
+//대각선
+var obj_diagonal_R = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_diagonal_R.insertY}px; left: ${obj_diagonal_R.insertX}px;  width: 200px;height:200px;">
+          <div class="obj-comp obj_diagonal_R diagonal_R" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            
+        </div>
+        </div>`
+        return code;
+    }
+}
+//대각선
+var obj_diagonal_L = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_diagonal_L.insertY}px; left: ${obj_diagonal_L.insertX}px;  width: 200px;height:200px;">
+          <div class="obj-comp obj_diagonal_L diagonal_L" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            
+        </div>
+        </div>`
+        return code;
+    }
+}
+//수평선
+var obj_line_horizontal = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_line_horizontal.insertY}px; left: ${obj_line_horizontal.insertX}px;  width: 200px;height:30px;">
+          <div class="obj-comp obj_line_horizontal line_horizontal" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            
+        </div>
+        </div>`
+        return code;
+    }
+}
+//수직선
+var obj_line_vertical = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_line_vertical.insertY}px; left: ${obj_line_vertical.insertX}px;  width: 30px;height:200px;">
+          <div class="obj-comp obj_line_vertical line_vertical" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            
+        </div>
+        </div>`
+        return code;
+    }
+}
+//와이어프레임
+var obj_wireframe = {
+    insertX: 200,
+    insertY: 100,
+    setX: function(x){
+        this.insertX = x;
+    },
+    setY: function(y){
+        this.insertY = y;
+    },
+    obj_code: function(){
+        var code = `
+            <div class="obj" style="position: absolute; top: ${obj_wireframe.insertY}px; left: ${obj_wireframe.insertX}px;  width: 200px;height:100px;">
+          <div class="obj-comp obj_wireframe wireframe" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit;">
+                            
+        </div>
+        </div>`
         return code;
     }
 }
@@ -765,6 +866,16 @@ var getModule = function(id){
             return obj_dropdown;
        case 'obj_dropdownList':
             return obj_dropdownList;
+        case 'obj_diagonal_R':
+            return obj_diagonal_R;
+        case 'obj_diagonal_L':
+            return obj_diagonal_L;
+        case 'obj_line_horizontal':
+            return obj_line_horizontal;
+        case 'obj_line_vertical':
+            return obj_line_vertical;
+        case 'obj_wireframe':
+            return obj_wireframe;
     }
 };
 

@@ -123,3 +123,6 @@ table tr > td:nth-child(2n) {
     font-size: 14px;
     color: #AAAAAA;
 }
+.currentPageNum{
+    color: #1e90ff;
+}

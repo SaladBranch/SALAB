@@ -138,7 +138,9 @@
                 <div class="notice-header">공지사항</div>
                 <input type="hidden" value="${requestScope.projectno}" id="projectno">
                 <div class="notice-body">
-                        
+                        <c:if test="${empty requestScope.noticelist}">
+                            No posts have been registed.
+                        </c:if>
                      <c:forEach var="notice" items="${requestScope.noticelist}">
                       <div class="notice-body-box" value="${notice.pnoticeno}" onclick="readNotice(${requestScope.projectno},${notice.pnoticeno})">
                           <div class="notice-body-title">${notice.pnoticetitle}</div>
@@ -166,7 +168,8 @@
                         </c:if>
                      </c:if>
                      <c:forEach var="pageno" begin="${paging.startPage }" end="${paging.endPage }" step="1">
-                               <span onclick="moveListPage(${ pageno })">${ pageno }</span>
+                              <c:if test="${ pageno eq paging.currentPage}"><span class="currentPageNum" onclick="moveListPage(${ pageno })">${ pageno }</span></c:if>
+                               <c:if test="${ pageno ne paging.currentPage}"><span onclick="moveListPage(${ pageno })">${ pageno }</span></c:if>
                                </c:forEach>
                                     <c:if test="${paging.maxPage gt 5}">
                                          <c:if test="${paging.endPage eq paging.maxPage}">

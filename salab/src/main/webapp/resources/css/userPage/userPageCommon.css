@@ -5,7 +5,9 @@ body {
     user-select: none;
     overflow-x: hidden;
 }
-
+a:visited{
+    color: inherit;
+}
 /*------------------------*/
 /*Login Nav*/
 /*------------------------*/

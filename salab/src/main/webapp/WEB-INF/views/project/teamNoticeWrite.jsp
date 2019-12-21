@@ -72,7 +72,7 @@
     <div class="left-side-bar">
         <div class="left-top-side-bar">
             <div class="search-bar">
-                <i class="fas fa-search" id="search-icon" onclick="goBack()"></i>
+                <i class="fas fa-search" id="search-icon"></i>
                 <input type="text" id="search-text" placeholder="검색" maxlength="20">
             </div>
             <div class="recent-file ">
@@ -130,7 +130,7 @@
     <div class="right-main-side">
         <div class="focus"></div> <!-- 여백 -->
         <div class="sort-by  absolute icon-positioning">
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left" onclick="goBack()"></i>
         </div>
         <sector>
             <div class="notice-grid ">

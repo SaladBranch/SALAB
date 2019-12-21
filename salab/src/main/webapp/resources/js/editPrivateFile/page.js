@@ -813,7 +813,7 @@
     	if(keyword == ''){
     		$('.comp-searchResult').html('');
     	}else{
-    		$('.common-shape-comps').find('a').each(function() {
+    		$('.tab-content').find('a').each(function() {
             	if($(this).attr("id").split("_")[1].includes(keyword)){
             		$('.comp-searchResult').append($(this).clone());
             	}

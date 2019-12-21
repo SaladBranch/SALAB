@@ -1286,6 +1286,11 @@ button.btn-ghost.cancel, button.btn-ghost.done{
     right: 20px;
     padding: 3px 0;
 }
+
+.file-options-menu.multi{
+	bottom: 40px;
+}
+
 .file-options-menu li{
     cursor: pointer;
     padding: 3px 0;

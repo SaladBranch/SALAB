@@ -956,6 +956,14 @@ var lastChanged = "";
             	// 배경 색
         		if (type == "backgroundColor") {
                 	$(this).css("background", $(".figure-shape-comps .figure-item[id=backgroundColor] input").val());
+                	if ($(this).is(".obj_messageForm_A") || $(this).is(".obj_messageForm_B")) {
+                		$(this).parent().children("span").css("border-left-color", $(".figure-shape-comps .figure-item[id=backgroundColor] input").val());
+                		$(this).parent().children("span").css("color", $(".figure-shape-comps .figure-item[id=backgroundColor] input").val());
+                	}
+                	if ($(this).is(".obj_tooltip_A") || $(this).is(".obj_tooltip_B")) {
+                		$(this).parent().children("span").css("border-top-color", $(".figure-shape-comps .figure-item[id=backgroundColor] input").val());
+                		$(this).parent().children("span").css("color", $(".figure-shape-comps .figure-item[id=backgroundColor] input").val());
+                	}
         		}
 
             	// 선 종류

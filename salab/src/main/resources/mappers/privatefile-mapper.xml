@@ -9,7 +9,11 @@
 	</insert>
 	
 	<select id="selectList" parameterType="int" resultType="PrivateFile">
-		select * from privatefile where userno = #{userno} AND TRASHCAN = 'N'
+		SELECT * FROM PRIVATEFILE WHERE USERNO = #{userno} AND TRASHCAN = 'N'
+	</select>
+	
+	<select id="selectPrivateAll" parameterType="int" resultType="FileList">
+		SELECT * FROM PRIVATEFILE WHERE USERNO = #{userno} AND TRASHCAN = 'N'
 	</select>
 	
 	<select id="selectListAll" parameterType="int" resultType="FileList">

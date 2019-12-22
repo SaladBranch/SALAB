@@ -48,4 +48,6 @@ public interface PrivateFileService {
 
 	List<FileList> searchKeyword(Map map);
 
+	List<FileList> selectPrivateAll(int userno);
+
 }

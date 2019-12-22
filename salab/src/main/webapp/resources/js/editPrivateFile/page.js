@@ -818,7 +818,12 @@
     		$('.common-shape-comps').find('a').each(function() {
 
             	if($(this).attr("id").split("_")[1].includes(keyword)){
-            		$('.comp-searchResult').append($(this).clone());
+            		var clone = $(this).clone();
+            		$(clone).find('svg').css({
+            			'width' : '40px',
+            			'height' : '40px'
+            		});
+            		$('.comp-searchResult').append(clone);
             	}
         	});
     	}

@@ -131,4 +131,10 @@ public class PrivateFileServiceImpl implements PrivateFileService {
 		return pfDao.searchKeyword(map);
 	}
 
+	@Override
+	public List<FileList> selectPrivateAll(int userno) {
+		// TODO Auto-generated method stub
+		return pfDao.selectPrivateAll(userno);
+	}
+
 }

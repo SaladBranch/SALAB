@@ -123,17 +123,17 @@
     </div>
     <div id="right-click-menu" class="right-click-menu">
         <ul>
-            <li><a href="#">파일열기</a></li>
-            <li><a href="#">파일 정보 설정</a></li>
-            <li><a href="#">사본만들기</a></li>
-            <li><a href="#">웹테스트</a></li>
-            <li><a href="#">삭제</a></li>
+             <li><a href="javascript:">파일열기</a></li>
+            <li><a href="javascript:" onclick="showModal('renameFile');">파일 정보 설정</a></li>
+            <li><a href="javascript:" onclick="fileCopy();">사본만들기</a></li>
+            <li><a href="javascript:" onclick="popup();">웹테스트</a></li>
+            <li><a href="javascript:" onclick="fileDelete();">삭제</a></li>
         </ul>
     </div>
     <div id="multi-right-click-menu" class="multi-right-click-menu">
         <ul>
-            <li><a href="#"><span></span>개 파일 사본만들기</a></li>
-            <li><a href="#"><span></span>개 파일 삭제</a></li>
+            <li><a href="javascript:" onclick="multiCopy();"><span></span>개 파일 사본만들기</a></li>
+            <li><a href="javascript:" onclick="multiDelete();"><span></span>개 파일 삭제</a></li>
         </ul>
     </div>
     <div class="right-main-side">
@@ -154,11 +154,13 @@
         </div>
         
         <div class="row recent-files">
-            <c:if test="${!empty privateFile }">
-        		<c:forEach var="pfile" items="${privateFile }">
-        		<div class="file-grid" onclick="epFile(${pfile.pfileno});">
+            <c:if test="${!empty fileList }">
+              <c:forEach var="pfile" items="${fileList }">
+              <div class="file-grid">
+        		<input class="fileno" type="hidden" value="${pfile.pfileno }">
+        		<input class="pt" type="hidden" value="private">
 	                <div class="file-container">
-	                    <div class="file-thumbnail">
+	                    <div class="file-thumbnail" onclick="epFile(${pfile.pfileno});">
 	                        ${pfile.pfilethumbnail }
 	                    </div>
 	                    <div class="file-info">
@@ -167,27 +169,27 @@
 	                                <c:out value="${pfile.pfiletitle }"/>
 	                            </div>
 	                            <div class="file-edited">
-	                                <span>${pfile.pfilelastmodified }</span> in 개인파일
+	                                <span>${pfile.pfilelastmodified } in 개인파일</span>
 	                            </div>
 	                        </div>
 	                        <div class="file-options">
 	                            <div class="file-options-btn">&#8942;</div>
 	                            <div class="file-options-menu">
 	                                <ul>
-	                                    <li><a href="#">파일열기</a></li>
-	                                    <li><a href="#">파일 정보 설정</a></li>
-	                                    <li><a href="#">사본만들기</a></li>
-	                                    <li><a href="#">웹테스트</a></li>
-	                                    <li><a href="#">삭제</a></li>
+	                                    <li><a href="javascript:">파일열기</a></li>
+	                                    <li><a href="javascript:" onclick="showModal('renameFile');;">파일 정보 설정</a></li>
+	                                    <li><a href="javascript:" onclick="fileCopy();">사본만들기</a></li>
+	                                    <li><a href="javascript:" onclick="popup();">웹테스트</a></li>
+	                                    <li><a href="javascript:" onclick="fileDelete();">삭제</a></li>
 	                                </ul>
 	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
-           		</div>
-        	</c:forEach>
-        	</c:if>
-        	
+                 </div>
+           </c:forEach>
+           </c:if>
+           
             
             <div class="file-grid">
                 <div class="new-file" onclick="showModal('newFile');">

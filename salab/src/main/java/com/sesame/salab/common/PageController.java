@@ -105,31 +105,31 @@ public class PageController {
 		MongoService mgService = new MongoService();
 		Member member = (Member)session.getAttribute("loginMember");
 		
-		List<PrivateFile> privateFile = pfService.selectList(member.getUserno());
+		List<FileList> fileList = pfService.selectPrivateAll(member.getUserno());
 		if(sort.equals("recent")) {
-			Collections.sort(privateFile, new Comparator<PrivateFile>() {
+			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
-				public int compare(PrivateFile p1, PrivateFile p2) {
-					return p2.getPfilelastmodified().compareTo(p1.getPfilelastmodified());
+				public int compare(FileList f1, FileList f2) {
+					return f2.getPfilelastmodified().compareTo(f1.getPfilelastmodified());
 				}
 			});
 		}else if(sort.equals("name")) {
-			Collections.sort(privateFile, new Comparator<PrivateFile>() {
+			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
-				public int compare(PrivateFile p1, PrivateFile p2) {
-					return p1.getPfiletitle().compareTo(p2.getPfiletitle());
+				public int compare(FileList f1, FileList f2) {
+					return f1.getPfiletitle().compareTo(f2.getPfiletitle());
 				}
 			});
 		}else if(sort.equals("date")) {
-			Collections.sort(privateFile, new Comparator<PrivateFile>() {
+			Collections.sort(fileList, new Comparator<FileList>() {
 				@Override
-				public int compare(PrivateFile p1, PrivateFile p2) {
-					return p1.getPfilecreatedate().compareTo(p2.getPfilecreatedate());
+				public int compare(FileList f1, FileList f2) {
+					return f1.getPfilecreatedate().compareTo(f2.getPfilecreatedate());
 				}
 			});
 		}
-		if( privateFile != null) {
-			for(PrivateFile pf : privateFile) {
+		if( fileList != null) {
+			for(FileList pf : fileList) {
 				Page p = new Page();
 				p.setFileno(pf.getPfileno());
 				p.setUserno(pf.getUserno());
@@ -139,7 +139,7 @@ public class PageController {
 			}
 			mgService.close();
 		
-			request.setAttribute("privateFile", privateFile);
+			request.setAttribute("fileList", fileList);
 			request.setAttribute("sort", sort);
 		}else {
 			viewFileName = "common/error";

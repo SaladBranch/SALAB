@@ -111,4 +111,9 @@ public class PrivateFileDao {
 		return sqlSession.selectList("privatefileMapper.searchKeyword", map);
 	}
 
+	public List<FileList> selectPrivateAll(int userno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("privatefileMapper.selectPrivateAll", userno);
+	}
+
 }

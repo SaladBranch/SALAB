@@ -635,7 +635,6 @@ $(document).on('multiSelected', '.file-container', function(){
 });
 
 function multiCopy(){
-	console.log(fileList.length);
 	
 	$.ajax({
 		url: 'multiCopy.do',
@@ -657,7 +656,10 @@ function multiCopy(){
 };
 
 function multiDelete(){
-	console.log(fileList.length);
+	for(var i =0; i < fileList.length; i++){
+		console.log(fileList[i].pt);
+	}
+	
 	
 	$.ajax({
 		url: 'multiDelete.do',

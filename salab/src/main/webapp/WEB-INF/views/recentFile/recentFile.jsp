@@ -210,7 +210,6 @@
                 </div>
             </div>
         </div>
-    </div>
     
     <div id="modal-name" class="modalOutline disable ">
     	<div id="newFile" class="modalContent z-index1">

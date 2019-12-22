@@ -549,7 +549,7 @@ $(function(){
     //obj 삽입
     var clicks = 0; //더블클릭 판별용 변수
     var target = "#droppable"; //object append할 변수
-    $('.geItem').on('mousedown', function(e){
+    $(document).on('mousedown', '.geItem', function(e){
         event.preventDefault();
         clicks++;
         setTimeout(function(){

@@ -1219,6 +1219,7 @@
     }
 
 	$(document).on("mouseup", ".minicolors-grid", function() {
+        modified();
        setTimeout(function(){
     	   Thumbnail();
        }, 500);

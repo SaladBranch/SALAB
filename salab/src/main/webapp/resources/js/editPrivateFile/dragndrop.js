@@ -461,15 +461,6 @@ $(function(){
 	    	$(".text-editing").blur();
 	    	window.getSelection().removeAllRanges();
 	    	$(".text-editing").removeClass("text-editing");
-	    	for(i = 0; i<selectedObj.length; i++){
-	    		$obj = selectedObj[i];
-	    		$obj.children().remove('.ui-resizable-handle');
-	            if($obj.hasClass('ui-draggable'))
-	            	$obj.draggable('destroy');
-	            $obj.children('.ui-rotatable-handle').hide();
-	            if($obj.hasClass('ui-selected'))
-	            	$obj.removeClass('ui-selected');
-	    	}
             selectedObj = new Array();
         },
         selected: function(e, ui){
@@ -564,6 +555,7 @@ $(function(){
             $('#top-undo-btn img').attr('src', '/salab/resources/img/leftarrow.png').css('cursor', 'pointer');
             $(target).append(module.obj_code);
             initSelect();
+            modified();
             clicks = 0;
         }else{
         	var $copyElement = $(this).clone();

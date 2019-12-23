@@ -288,7 +288,8 @@ public class MemberController {
 		if(result <= 0) {
 	    	mv.setViewName("common/error");
 	    } else {
-	    	mv.setViewName("redirect:adminMemberList.do");
+	    	mv.addObject("userno", userno);
+	    	mv.setViewName("redirect:adminMemberDetail.do");
 	    }
 		
 		return mv;

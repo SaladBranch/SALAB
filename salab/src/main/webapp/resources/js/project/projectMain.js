@@ -125,6 +125,7 @@ $(".modalContent").click(function () {
 //팀원 초대
 $(".inviteBtn").click(function () {
     console.log("팀원초대 : " + inviteEmail);
+    $("#inviteModal").show();
     $.ajax({
         url: 'inviteEmailCheck.do',
         data: {
@@ -137,7 +138,6 @@ $(".inviteBtn").click(function () {
 
             if (data == 'inviteSuccess') {
                 $("#inviteEmail").val("");
-                $("#inviteModal").toggle();
                 $(".afterInvteModal").toggle();
             } else if (data == 'joinedMember') {
                 $(".joinedMember").toggle();

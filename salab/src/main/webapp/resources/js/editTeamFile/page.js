@@ -563,11 +563,13 @@
 	});
 	
 	$(document).on('mouseup', '.memoRemove', function(){
-		if($('.memoCon').length > 0){
-			$(this).closest('.memoCon').remove();
-		}else{
-			$(this).closest('.memo').remove();
+		if($(this).parents('.memoCon')){
+			$(this).parents('.memoCon').remove();
 		}
+		if($(this).parents('.memo')){
+			$(this).parents('.memo').remove();
+		}
+		
 	});
 	
 	$(document).on('mouseup', '.memoEdit', function(){

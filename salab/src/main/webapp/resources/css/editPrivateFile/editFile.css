@@ -1183,6 +1183,10 @@ ol.page-tab-content li{
     pointer-events: auto;
 }
 
+.memo-container{
+	cursor: pointer;
+}
+
 .memo-content{
 	width: auto;
 	min-width: 320px;
@@ -1196,7 +1200,6 @@ ol.page-tab-content li{
 
 .memo {
 	display: flex;
-	cursor: url('/salab/resources/');
 }
 
 .memo-icon{

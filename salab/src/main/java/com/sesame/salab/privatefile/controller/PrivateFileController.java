@@ -517,7 +517,6 @@ public class PrivateFileController {
 				
 				//페이지만들기위해 방금생성한 파일 넘버조회
 				PrivateFile file2 = pfService.createPage(file.getUserno());
-				
 				//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
 				for(Page page : list) {
 					page.set_id(null);

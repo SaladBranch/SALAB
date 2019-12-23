@@ -5,10 +5,7 @@
     background-color: rgba(0, 168, 255, 0.19);
     z-index: 100;
 }
-/*form tab-content open*/
-.form-control-comps{
-    display: block;
-}
+
 /*--------------------------*/
 /*Object CSS*/
 /*--------------------------*/
@@ -25,12 +22,20 @@
     word-break : break-all;
 /*    overflow: hidden;*/
 }
+/*svg파일에서 color변경시 오류안생기게*/
+svg{
+    color: inherit;
+    background-color: inherit;
+}
+
 .textarea {
     padding-top : 2px;
 }
 
 .obj-rect, .obj-brect, .obj-ellipse, .obj-circle, .obj-diamond, .obj-square{
     border: 1px solid #000;
+    background: inherit;
+    color: inherit;
 }
 .obj-brect{
     border-radius: 3px;
@@ -109,6 +114,10 @@
     line-height: inherit;
     padding: 0px;
 }
+.obj_search img{
+    color: inherit;
+    background-color: inherit;
+}
 .obj_search_left,
 .obj_search_right{
     display: inline-block;
@@ -116,7 +125,6 @@
      height: inherit;
     font-size: inherit;
     min-height: 30px;
-    border: 0.5px solid gray;
     overflow: hidden;
     vertical-align: middle;
     line-height: 30px;
@@ -125,12 +133,12 @@
 .obj_search_left{
     width: 30%;
     height: 100%;
-    background-color: #afafaf;
-    padding: 20% auto;
+    background-color: #cfcfcf;
+    padding: 15% auto;
 }
 
 .obj_search_left img{
-    width: inherit;
+    width: auto;
     height: inherit;
 }
 .obj_search_right{
@@ -187,28 +195,32 @@
 .obj_scroll_x_outline{
     background-color:#eee;
     height: inherit;
-    position: absolute;
     color: #ccc;
+    align-items: center;
+    display: flex;
 }
-.obj_scroll_x_outline svg{
-    width: inherit;
-    height: inherit;
-     width: 80%;
+.obj_scroll_x_outline img{
+    width: 13px;
+    height: 13px;
 }
 .obj_scroll_x_leftside,
 .obj_scroll_x_rightside{
-    width: 10px;
-    height: inherit;
+    width:  auto;
+    height: auto;
     background-color:#eee;
+    font-size: auto;
+}
+.obj_scroll_x_center{
+}
+.obj_scroll_x_leftside,
+obj_scroll_x_rightside{
+    align-items: center;
 }
 .obj_scroll_x_leftside{
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    float: left;
 }
 .obj_scroll_x_rightside{
-    position: absolute;
-    top: 0px;
+    float: right;
     right: 0px;
 }
 .obj_scroll_x_inline{
@@ -225,6 +237,7 @@
     border: 0.5px solid gray;
     border-radius: 3px;
     background-color: inherit;
+    min-height: 30px;
 }
 .obj_dropdown_left{
     display: inline-block;
@@ -246,12 +259,50 @@
     overflow: hidden;
 }
 .obj_dropdown_right div{
-    width: 60%;
-    font-size: 10px;
-       color: #aaa;
+    width: 100%;
+    height: 50%;
+    color: #aaa;
 }
-.obj_dropdown_right svg{
+.obj_dropdown_right img{
+    width: 100% !important;
+    height: 40% !important;
+    margin: 0px;
+}
+.dropdown_right_up {
+    height: 50%;
+}
+.dropdown_right_down {
+    height: 50%;
+}
+.diagonal_R{
+    background-image: url(/salab/resources/svg/diagonal_R.svg);
+    width: 100%;
     height: 100%;
+    background-repeat: no-repeat;
+}
+.diagonal_L{
+    background-image: url(/salab/resources/svg/diagonal_L.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.line_horizontal{
+    background-image: url(/salab/resources/svg/line-horizontal.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.line_vertical{
+    background-image: url(/salab/resources/svg/line-vertical.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.wireframe{
+    background-image: url(/salab/resources/svg/wireframe.svg);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
 }
 ::selection {
 	background : skyblue;
@@ -305,7 +356,7 @@
 .obj_messageForm_B{
 	color:#212121;
 	background-color:#bbb;
-	font_weight: 400;
+	font-weight: 400;
 }
 .obj_memo_A, .obj_memo_B{
 	padding: 10px; 
@@ -349,11 +400,26 @@
 	border-bottom-right-radius: 20px; 
 	border-bottom-left-radius: 20px; 
 	background-color: #c9c9c9;
-	padding-top: 4px;
 }
 .obj_profile_A, .obj_profile_B{
 	border-radius: 50%;
 	padding: none;
+    background: inherit;
+    color: inherit;
+}
+.obj_paging{
+	float:left; 
+	text-align: center; 
+	border-radius: 4px; 
+	background-color: #ccc;
+}
+.obj_tooltip_A, .obj_tooltip_B{
+	color:#fff;
+	background-color:#666;
+	font-size: 10pt;
+	padding:10px;
+	border-radius:4px;
+	text-align:center;
 }
 /*연영*/
 
@@ -407,8 +473,7 @@
 /* Selectable */
 /*--------------------------*/
 .ui-selected{
-    border: 1.5px solid;
-    border-color: attr(data-userselect) !important;
+    border: 1.5px solid #00a8ff;
 }
 /*--------------------------*/
 /* Rotatable */
@@ -424,3 +489,4 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+ 

@@ -172,9 +172,12 @@
         
         <div class="tab-content comp-tab-content">
             <div class="searchbox">
-                <i class="fas fa-search"></i><i class="fas fa-search"></i><input id="search-comp" type="text" placeholder="검색" onkeypress="if(event.keyCode==13) {searchComp(); return false;}">
+                <i class="fas fa-search"></i><input id="search-comp" type="text" placeholder="검색" onkeypress="if(event.keyCode==13) {searchComp(); return false;}">
             </div>
             <div class="comp-searchResult"></div>
+            
+            
+            
             <div class="comp-category common-shape" onclick="toggleComps(this, '.common-shape-comps');">
                 <p>&#9660;</p>기본도형(common shape)
             </div>
@@ -182,19 +185,19 @@
                 <div style="padding:4px;">
                     <!--직사각형-->
                     <a id="obj_rect" class="geItem c_rectangle" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--모서리가 둥근 직사각형-->
                     <a id="obj_brect" class="geItem c_brectangle" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60"xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <rect x="4" y="5" rx="5" ry="5" width="40" height="20" fill="transparent" stroke="#000" stroke-width="2"></rect>
                     </svg>
                     </a>
                     <!--Heading-->
                     <a id="obj_heading" class="geItem c_heading" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.35)">
                         <foreignObject x="4" y="15" width="180" height="160">
                             <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
@@ -206,7 +209,7 @@
                     </a>
                     <!--글타래-->
                     <a id="obj_paragraph" class="geItem c_paragraph" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60"xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <g transform="scale(0.3)">
 
                         <foreignObject x="1" y="-10" width="300" height="160">
@@ -215,119 +218,126 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et suscipit modi quaerat, porro.Lorem ipsum dolor sit amet.</p>
                             </div>
                         </foreignObject>
+                        </g>
                     </svg>
                     </a>
                     <!--타원-->
                     <a id="obj_ellipse" class="geItem c_ellipse" display="inline-block">
-                    <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                    <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                         <ellipse cx="24" cy="15" rx="20" ry="10" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
                     </svg>
                     </a>
                     <!--정사각형-->
                     <a id="obj_square" class="geItem c_square" display="inline-block">
-                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30" >
                             <rect x="7" y="-2" width="35" height="35" fill="transparent" stroke="#000" stroke-width="2"></rect>
                         </svg>
                     </a>
                     <!--정원(x) perfect Circle -->
                     <a id="obj_circle" class="geItem c_circle" display="inline-block">
-                        <svg width="40" height="40" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                             <ellipse cx="24" cy="15" rx="17" ry="17" stroke="#000" stroke-width="2" fill="transparent"></ellipse>
+                        </svg>
+                    </a>
+                    <!--대각선 -->
+                    <a id="obj_diagonal_R" class="geItem obj_diagonal_R" display="inline-block">
+                       <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="diagonal_R" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--대각선 -->
+                    <a id="obj_diagonal_L" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="diagonal_L" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--수평선 -->
+                    <a id="obj_line_horizontal" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="obj_line_horizontal line_horizontal" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--수직선 -->
+                    <a id="obj_line_vertical" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="obj_line_vertical line_vertical" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--와이어프레임 -->
+                    <a id="obj_wireframe" class="geItem obj_diagonal_L" display="diagonal_L">
+                        <svg width="60" height="60" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="0" y="-40" width="200" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;width: 100%; height: 100%; padding:20%; ">
+                                <div class="obj_wireframe wireframe" style="position: relative; width:100%;height:100%; " ></div>
+                            </div>
+                            </foreignObject>
+                            </g>
                         </svg>
                     </a>
                 </div>
             </div>
-            <div class="comp-category form-control" onclick="toggleComps(this, '.form-control-comps');">
-                <p>&#9654;</p>폼(form)
+            <div class="comp-category Component" onclick="toggleComps(this, '.Component-control-comps');" >
+                <p>&#9660;</p>Component
             </div>
-            <div class="form-control-comps">
-               <div style="padding: 4px;">
-                  <!-- Input text -->
-                  <a id="obj_textInput" class="geItem c_textInput" display="inline-block" title="텍스트 input">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="45" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
-                  					<input type="text" placeholder="내용 입력">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- Input button_Normal_A -->
-                  <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="23" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
-                  					<input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #3498db; border-radius: 4px;">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- Input button_Normal_B -->
-                  <a id="obj_buttonInput_Normal_B" class="geItem c_buttonInput_Normal_B" display="inline-block" title="버튼">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="23" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
-                  					<input type="button" value="Button" style="width: 150px; height: 80px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- Input button_Long_A -->
-                  <a id="obj_buttonInput_Long_A" class="geItem c_buttonInput_Long_A" display="inline-block" title="긴 버튼">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="40" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 5px;">
-                  					<input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #3498db; border-radius: 4px;">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- Input button_Long_B -->
-                  <a id="obj_buttonInput_Long_B" class="geItem c_buttonInput_Long_B" display="inline-block" title="긴 버튼">
-                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
-                  		<g transform="scale(0.25)">
-                  			<foreignObject x="1" y="40" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 23px; margin-left: 5px;">
-                  					<input type="button" value="Button" style="width: 185px; height: 40px; color: #fff; background-color: #c9c9c9; border-radius: 4px;">
-                				</div>
-                  			</foreignObject>
-                  		</g>
-                  	</svg>
-                  </a>
-                  <!-- Plus Btn -->
-                  <a id="obj_plusBtn" class="geItem c_plusBtn" display="inline-block" title="항목 추가">
+             <div class="Component-control-comps">
+                 <div style="padding:4px;">
+                 <!-- Tooltip_A -->
+                  <a id="obj_tooltip_A" class="geItem c_tooltip_A" display="inline-block" title="툴팁">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="25" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
-                  					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">+</div>
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
+                  					<div style="position: absolute;">
+										<div style="width:135px;color:#fff;background-color:#666;padding:15px;border-radius:4px;text-align:center;">Tooltip</div>
+										<span style="position:absolute;width:0;height:0;left:50%;bottom:-12px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-top:12px solid #666"></span>
+									</div>
                 				</div>
                   			</foreignObject>
                   		</g>
                   	</svg>
                   </a>
-                  <!-- Minus Btn -->
-                  <a id="obj_minusBtn" class="geItem c_minusBtn" display="inline-block" title="항목 삭제">
+                  <!-- Tooltip_B -->
+                  <a id="obj_tooltip_B" class="geItem c_tooltip_B" display="inline-block" title="툴팁">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
-                  			<foreignObject x="1" y="25" width="300" height="160">
-                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
-                  					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">-</div>
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 15px;">
+                  					<div style="position: absolute;">
+										<div style="position:absolute;top:12px;width:135px;color:#fff;background-color:#666;padding:15px;border-radius:4px;text-align:center;">Tooltip</div>
+										<span style="position:absolute;width:0;height:0;left:68px;top:0.5px;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:12px solid #666"></span>
+									</div>
                 				</div>
                   			</foreignObject>
                   		</g>
                   	</svg>
                   </a>
-                  <!-- Message -->
-                  <a id="obj_messageForm" class="geItem c_messageForm" display="inline-block" title="메세지">
+                  <!-- Message_A -->
+                  <a id="obj_messageForm_A" class="geItem c_messageForm_A" display="inline-block" title="메세지">
                   	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
                   		<g transform="scale(0.3)">
                   			<foreignObject x="1" y="23" width="300" height="160">
@@ -341,8 +351,409 @@
                   		</g>
                   	</svg>
                   </a>
-               </div>
-            </div>  
+                  <!-- Message_B -->
+                  <a id="obj_messageForm_B" class="geItem c_messageForm_B" display="inline-block" title="메세지">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 25px;">
+                  					<div style="position: absolute;">
+										<div style="color:#212121;background-color:#bbb;padding:15px;border-radius:4px;text-align:center;font-weight: bold;">Message</div>
+										<span style="position:absolute;width:0;height:0;left:0;top:50%;margin-left:-16px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:16px solid #bbb"></span>
+									</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  
+                  <!-- LABLE -->
+                  <a id="obj_label" class="geItem c_label" display="inline-block" title="레이블">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.35)">
+                  			<foreignObject x="1" y="30" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 18px; margin-left: 13px;">
+                  					<div style="width: 110px; height:28px; padding-top:4px; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; text-align: center; line-height: 20px; color: rgb(255, 255, 255); box-shadow: none; background-color: rgb(26, 188, 156);">LABEL</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- marker -->
+                  <a id="obj_marker" class="geItem c_marker" display="inline-block" title="알림 표시">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.35)">
+                  			<foreignObject x="4" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 32px; margin-left: 45px;">
+                  					<div style="width:45px;height:45px;padding:8px;border-radius:50%;text-align: center; line-height: 30px; color: rgb(255, 255, 255); background-color: rgba(255, 6, 6, 0.85);">1</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  
+                  <!-- profile_A -->
+                  <a id="obj_profile_A" class="geItem c_profile_A" display="inline-block" title="프로필">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="7" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 38px;">
+                  					<img style="border-radius:50%; width:90px; height:90px;" src="/salab/resources/img/default_profile2.png">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- profile_B -->
+                  <a id="obj_profile_B" class="geItem c_profile_B" display="inline-block" title="프로필">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="1" y="7" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 38px;">
+                  					<img style="border-radius:50%; width:90px; height:90px;" src="/salab/resources/img/default_profile3.png">
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                     <!-- progress-bar--> <!--ERROR 배경색, 색깔변경안됨. -->
+                    <a id="obj_progressBar" class="geItem" display="inline-block" title="progress bar input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj_progressBar_outline" style="width:60%;margin-left: 3%;">
+                                    <div class="obj_progressBar_inline" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--obj_search--> 
+                    <a id="obj_search" class="geItem" display="inline-block" title="search input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj_search_box" style="width:60%;margin-left:3%;">
+                                    <div class="obj_search_icon" ><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--scroll--> <!--ERROR 배경색, 색깔변경안됨. -->
+                    <a id="obj_scroll_y" class="geItem" display="inline-block" title="scroll_y input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="90" y="-20" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <div class="obj-comp obj_scroll_y" contenteditable="false" style="position: absolute; width: 10%; height: 100%;text-align: center;">
+               <div class="obj_scroll_outline">
+                    <div class="obj_scroll_upside"><i class="fas fa-angle-up"></i></div>
+                    <div class="obj_scroll_downside"><i class="fas fa-angle-down"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="obj" style="position: absolute; top: 20px; left: 0px; width: 20px;height:40px; height:80px;">
+                <div class="obj-comp obj_scroll_y obj_scroll_inline"></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--scroll x--> 
+                    <a id="obj_scroll_x" class="geItem" display="inline-block" title="scroll_x input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="30" y="40" width="160" height="200">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                     <div class="obj_scroll_x_outline" style="position: absolute; width: 60%;">
+                    <div class="obj_scroll_x_leftside"><img src="/salab/resources/img/leftangle.png" alt=""></div>
+                    <div class="obj_scroll_x_rightside" style="margin-left: 120%;"><img src="/salab/resources/img/rightangle.png" alt=""></div>
+                </div>
+                               </div>
+                                <div class=" obj_scroll_x_inline" style="height: 20px; width: 40px;left: 20%;">
+                </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                 </div>
+            </div><!--컴포넌트 -->
+            <div class="comp-category form-control"  onclick="toggleComps(this, '.form-control-comps');">
+                <p>&#9660;</p>폼(form)
+            </div>
+            <div class="form-control-comps">
+               <div style="padding: 5px 20px;">
+                    
+                    <!--input radio--> <!-- ERROR 드래그시 좌표 튐,resizable 가로 크기 키울시 세로역시 커짐.-->
+                    <a id="obj_radioInput" class="geItem c_textInput" display="inline-block" title="radio input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="radio" style="width:30px; height: 30px;opacity:1;margin-left: 30%; ">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input checkbox--> <!-- ERROR 드래그시 좌표 튐,resizable 가로 크기 키울시 세로역시 커짐.-->
+                    <a id="obj_checkbox" class="geItem c_textInput" display="inline-block" title="checkbox input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="checkbox" style="width:30px; height: 30px;opacity:1;margin-left: 30%; ">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input file--> <!--ERROR 색깔변경안됨. -->
+                    <a id="obj_file" class="geItem c_fileInput" display="inline-block" title="file input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="file" style="width:190px; height: 30px;opacity:1;">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input ul--> <!--ERROR 색깔변경안됨. -->
+                    <a id="obj_ul" class="geItem" display="inline-block" title="list input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <span class="obj_ul_span" style="margin-left:20px;" ><input class="obj_ul_text" type="List" placeholder="List"></span>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    
+                    <!--input dropdown--> 
+                    <a id="obj_dropdown" class="geItem" display="inline-block" title="Drop down">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="25" y="35" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px; width: 80%; height: 20%;background-color: #fff; border: 0.5px solid gray;">
+                                <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
+                            </div>
+                            <div class="obj_dropdown_right" contenteditable="false">
+                                    <img src="/salab/resources/img/upangle.png" alt="">
+                                    <img src="/salab/resources/img/downangle.png" alt="">
+                            </div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                    <!--input dropdownList--> 
+                    <a id="obj_dropdownList" class="geItem" display="inline-block" title="Dropdown List">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">    
+                            <foreignObject  x="25" y="5" width="200" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px; width: 80%; height: 20%;background-color: #fff; border: 0.5px solid gray;">
+                                <div class="obj_dropdown_left "contenteditable="false" ><input type="text" placeholder="Drop down">
+                            </div>
+                            <div class="obj_dropdown_right" contenteditable="false">
+                                    <img src="/salab/resources/img/upangle.png" alt="">
+                                    <img src="/salab/resources/img/downangle.png" alt="">
+                            </div>
+                            <div class="obj " style="position: absolute; top: 40px; left: 0px;  width: 90%;height:70%;transform: rotate(0rad);">
+          <div class="obj-comp obj-brect textarea" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:#fff;"></div></div>
+        <div class="obj" style="position: absolute; top: 53px; left: 20px;  width: 200px;height:30px;transform: rotate(0rad);">
+          <div class="obj-comp obj-rect textarea" style="position: absolute; top: 0px; left: 0px;width:inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
+        <div class="obj" style="position: absolute; top: 86px; left: 20px;  width: 200px;height:30px;transform: rotate(0rad);">
+          <div class="obj-comp obj-rect textarea" style="position: absolute; top: 0px; left: 0px;width: inherit;height:inherit; background-color:inherit;border:0px;text-align:left;">List</div></div>
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>                    
+                  <!-- Plus Btn -->
+                  <a id="obj_plusBtn" class="geItem c_plusBtn" display="inline-block" title="항목 추가">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="4" y="24" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
+                  					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">+</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Minus Btn -->
+                  <a id="obj_minusBtn" class="geItem c_minusBtn" display="inline-block" title="항목 삭제">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.3)">
+                  			<foreignObject x="4" y="24" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 50px; margin-left: 50px;">
+                  					<div style="width: 55px; height: 55px; color: #222; background-color: #c9c9c9; border-radius: 2px;text-align: center; font-weight: bold;">-</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!--Input text-->
+                    <a id="obj_textInput" class="geItem c_textInput" display="inline-block" title="텍스트 input">
+                        <svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                            <g transform="scale(0.25)">
+                            <foreignObject  x="1" y="45" width="300" height="160">
+                            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 15px;">
+                                <input type="text" placeholder="내용 입력">
+                            </div>
+                            </foreignObject>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </div><!-- 폼 -->
+            <div class="comp-category Button" onclick="toggleComps(this, '.Button-control-comps');">
+                <p>&#9660;</p>버튼(Button)
+            </div>
+             <div class="Button-control-comps">
+                 <div style="padding: 5px 20px;">
+                     <!-- Input button_Normal_A -->
+                  <a id="obj_buttonInput_Normal_A" class="geItem c_buttonInput_Normal_A" display="inline-block" title="버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
+                  					<div style="width: 150px; height: 80px; padding-top: 20px;text-align:center; color: #fff; background-color: #3498db; border-radius: 6px;">Button</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Normal_B -->
+                  <a id="obj_buttonInput_Normal_B" class="geItem c_buttonInput_Normal_B" display="inline-block" title="버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 35px; margin-left: 25px;">
+                  					<div style="width: 150px; height: 80px; padding-top: 20px;text-align:center; color: #fff; background-color: #c9c9c9; border-radius: 6px;">Button</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Long_A -->
+                  <a id="obj_buttonInput_Long_A" class="geItem c_buttonInput_Long_A" display="inline-block" title="긴 버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="40" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 5px;">
+                  					<div style="width: 185px; height: 40px; padding-top: 7px;text-align:center; color: #fff; background-color: #3498db; border-radius: 6px;">Button</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Input button_Long_B -->
+                  <a id="obj_buttonInput_Long_B" class="geItem c_buttonInput_Long_B" display="inline-block" title="긴 버튼">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="40" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 23px; margin-left: 5px;">
+                  					<div style="width: 185px; height: 40px; padding-top: 7px;text-align:center; color: #fff; background-color: #c9c9c9; border-radius: 6px;">Button</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                 </div>
+            </div><!--버튼-->
+            <div class="comp-category paging" onclick="toggleComps(this, '.paging-control-comps');">
+                <p>&#9660;</p>페이지(paging)
+            </div>
+             <div class="paging-control-comps">
+                 <div style="padding: 5px 20px;">
+                     <!-- prev -->
+                  <a id="obj_prev" class="geItem c_prev" display="inline-block" title="이전으로">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="7" y="30" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 15px;">
+                  					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">< prev</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- next -->
+                  <a id="obj_next" class="geItem c_next" display="inline-block" title="다음으로">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="7" y="30" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 30px; margin-left: 15px;">
+                  					<div style="width: 150px; color: rgb(131, 131, 131); font-weight:450; text-align: center; line-height: 2.2em; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: #c9c9c9;">next ></div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Paging -->
+                  <a id="obj_paging" class="geItem c_paging" display="inline-block" title="페이징">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="6" y="50" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 22px; margin-left: 3px;">
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;"><</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: rgb(52, 152, 219); color:#fff; float:left; margin-left: 5px;">1</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">2</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">3</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">4</div>
+                  					<div style="width:25px; height: 25px; text-align: center; border-radius: 4px; background-color: #ccc; float:left; margin-left: 5px;">></div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                 </div>
+            </div><!--페이징-->
+            <div class="comp-category Memo" onclick="toggleComps(this, '.Memo-control-comps');">
+                <p>&#9660;</p>메모(Memo)
+            </div>
+             <div class="Memo-control-comps">
+                 <div style="padding: 5px 20px;">
+                     <!-- Memo_A -->
+                  <a id="obj_memo_A" class="geItem c_memo_A" display="inline-block" title="메모">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 25px; margin-left: 15px;">
+                  					<div style="width: 160px; height:80px; padding: 10px; box-shadow: rgba(0, 0, 0, 0.290196) 4px 4px 8px 0px; background-color: rgb(157, 232, 217);">
+                  						<span style="font-style: italic;">Memo..</span>
+                  					</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                  <!-- Memo_B -->
+                  <a id="obj_memo_B" class="geItem c_memo_B" display="inline-block" title="메모">
+                  	<svg width="80" height="80" xmlns="http://w3.org/2000/svg" version="1.1" viewbox="0 0 50 30">
+                  		<g transform="scale(0.25)">
+                  			<foreignObject x="1" y="23" width="300" height="160">
+                  				<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 25px; margin-left: 15px;">
+                  					<div style="width: 160px; height:80px; padding: 10px; box-shadow: rgba(0, 0, 0, 0.290196) 4px 4px 8px 0px; background-color: rgb(255, 235, 152);">
+                  						<span style="font-style: italic;">Memo..</span>
+                  					</div>
+                				</div>
+                  			</foreignObject>
+                  		</g>
+                  	</svg>
+                  </a>
+                 </div>
+            </div>  <!-- 메모-->      
         </div>
         
         <div class="tab-content lib-tab-content">

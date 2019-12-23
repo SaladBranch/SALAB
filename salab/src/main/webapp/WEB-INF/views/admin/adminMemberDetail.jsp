@@ -153,7 +153,7 @@
 <!-- 목록으로 버튼 click -->
 <script type="text/javascript">
 function back_member(){
-	history.go(-1);
+	location.href = "adminMemberList.do";
 }
 </script>
 <!-- 목록으로 버튼 click -->

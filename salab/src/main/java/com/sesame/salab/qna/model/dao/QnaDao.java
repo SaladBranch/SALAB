@@ -44,4 +44,8 @@ public class QnaDao {
 		return sqlSession.update("qnaMapper.qnaUpdate", qna);
 	}
 
+	public int qnaDelete(int qnano) {
+		return sqlSession.delete("qnaMapper.qnaDelete", qnano);
+	}
+
 }

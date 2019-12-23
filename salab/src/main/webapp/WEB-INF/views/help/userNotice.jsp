@@ -43,7 +43,12 @@
                 <div class="add-btn"></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>

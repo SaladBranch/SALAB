@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/salab/resources/css/recentFile/recentFileMQ.css" type="text/css">
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
-    <title>USER | SALAB</title>
+    <title>ADMIN | SALAB</title>
 </head>
 
 <body>

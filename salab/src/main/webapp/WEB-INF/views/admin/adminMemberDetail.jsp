@@ -17,7 +17,7 @@
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
-    <title>USER | SALAB</title>
+    <title>ADMIN | SALAB</title>
 </head>
 
 <body>
@@ -106,7 +106,7 @@
 							<p class="member_info">${requestScope.member.userphone }</p>
 						</li>
 						<li class="member_line">
-							<p class="member_info">${requestScope.member.userenrolldate }</p>
+							<p class="member_info">가입날짜 : ${requestScope.member.userenrolldate }</p>
 						</li>
 						<li class="member_line">
 							<select name="userlevel" id="userlevel">
@@ -123,7 +123,7 @@
 						<li class="member_line">
 							<p class="member_info">
 								<c:if test="${!empty requestScope.member.paymentdate }">
-									${requestScope.member.paymentdate }
+									결제 예정일 : ${requestScope.member.paymentdate }
 								</c:if>
 								<c:if test="${empty requestScope.member.paymentdate }">
 									<span>결제예정일 정보 없음.</span>

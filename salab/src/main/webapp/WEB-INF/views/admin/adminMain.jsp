@@ -17,7 +17,7 @@
     
     <script src="https://kit.fontawesome.com/08d0951667.js"></script>
     <script src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
-    <title>USER | SALAB</title>
+    <title>ADMIN | SALAB</title>
 </head>
 
 <body>

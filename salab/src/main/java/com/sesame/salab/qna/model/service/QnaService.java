@@ -22,4 +22,6 @@ public interface QnaService {
 
 	int qnaUpdate(Qna qna);
 
+	int qnaDelete(int qnano);
+
 }

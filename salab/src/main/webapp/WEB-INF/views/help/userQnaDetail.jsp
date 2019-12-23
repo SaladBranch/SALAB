@@ -43,7 +43,12 @@
                 <div class="add-btn"></div>
                 <div class="user-profile">
                     <div class="profile-img">
-                        <img src="/salab/resources/img/default_profile.png" alt="">
+                        <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/img/default_profile.png" alt="">
+                        </c:if>
+                        <c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+                                <img src="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" alt="">
+                        </c:if>
                     </div>
                     <div class="profile-name">
                         <p>${loginMember.username }<i class="fas fa-chevron-down"></i></p>
@@ -84,33 +89,34 @@
     	
         <div class="qna_bottom">
 			<div class="qna_box">
-				<form action="qnaInsert.do" method="post" enctype="multipart/form-data">
-					<p class="qna_fromAdmin">From. SALAB</p>
-					<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
-					<p class="qna_info_faq"><a href="faqlist.do"><span class="go_faq"><u>FAQ바로가기</u></span></a></p>
-					<ul>
-						<li>
-							<p class="qna_title">제목</p>
-							<input type="text" id="qna_box_title" name="qna_box_title" value="${requestScope.qna.qnatitle }" readonly >
-						</li>
-						<li>
-							<p class="qna_content">내용</p>
-							<textarea id="qna_box_content" name="qna_box_content" readonly="readonly" >${requestScope.qna.qnacontent }</textarea>
-						</li>
-						<li>
-							<p class="qna_ans">답변</p>
-							<c:if test="${!empty requestScope.qna.qnareplycontent }">
-								<textarea id="qna_box_ans" name="qna_box_ans" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
-							</c:if>
-							<c:if test="${empty requestScope.qna.qnareplycontent }">
-								<textarea id="qna_box_ans" name="qna_box_ans" readonly="readonly" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
-							</c:if>
-						</li>
-						<li class="back_btn">
-							<button type="button" class="qna_back_btn btn btn-full" onclick="back_qna();">목록으로</button>
-						</li>
-					</ul>
-				</form>
+				<p class="qna_fromAdmin">From. SALAB</p>
+				<p class="qna_info">기본적인 문의의 경우 FAQ를 통해 관련 내용을 확인하실 수 있으니 참고 부탁드립니다.</p>
+				<p class="qna_info_faq"><a href="faqlist.do"><span class="go_faq"><u>FAQ바로가기</u></span></a></p>
+				<ul>
+					<li>
+						<p class="qna_title">제목</p>
+						<input type="text" id="qna_box_title" name="qna_box_title" value="${requestScope.qna.qnatitle }" readonly >
+					</li>
+					<li>
+						<p class="qna_content">내용</p>
+						<textarea id="qna_box_content" name="qna_box_content" readonly="readonly" >${requestScope.qna.qnacontent }</textarea>
+					</li>
+					<li>
+						<p class="qna_ans">답변</p>
+						<c:if test="${!empty requestScope.qna.qnareplycontent }">
+							<textarea id="qna_box_ans" name="qna_box_ans" readonly="readonly" >${requestScope.qna.qnareplycontent }</textarea>
+						</c:if>
+						<c:if test="${empty requestScope.qna.qnareplycontent }">
+							<textarea id="qna_box_ans" name="qna_box_ans" readonly="readonly" placeholder="아직 요청하신 문의가 작성되지 않았습니다. 빠른 시일 내로 답변드리겠습니다."></textarea>
+						</c:if>
+					</li>
+					<li class="back_btn">
+						<button type="button" class="qna_back_btn btn btn-full" onclick="back_qna();">목록으로</button>
+					</li>
+					<li class="success_btn">
+						<button class="qna_delete_btn btn btn-full" onclick="qna_delete();">문의삭제</button>
+					</li>
+				</ul>
 			</div>
         </div>
         
@@ -128,6 +134,17 @@ function back_qna(){
 }
 </script>
 <!-- 취소 버튼 click -->
+
+<!-- 삭제 버튼 click -->
+<script type="text/javascript">
+function qna_delete(){
+	var check = confirm("취소 하시겠습니까?");
+	if(check){
+		location.href="qnaDelete.do?qnano=${requestScope.qna.qnano }";
+	}
+}
+</script>
+<!-- 등록 버튼 click -->
 
 
 </html>

@@ -42,5 +42,9 @@
 	<update id="qnaUpdate" parameterType="Qna">
 		UPDATE QNA SET adminid = #{adminid}, qnareplycontent = #{qnareplycontent}, qnareplydate = default, qnareplyyn = 'Y' where qnano = #{qnano}
 	</update>
+	
+	<delete id="qnaDelete" parameterType="int">
+		DELETE QNA WHERE QNANO = #{qnano}
+	</delete>
 
 </mapper>

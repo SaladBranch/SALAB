@@ -1219,10 +1219,10 @@
     }
 
 	$(document).on("mouseup", ".minicolors-grid", function() {
-        modified();
        setTimeout(function(){
     	   Thumbnail();
        }, 500);
+       modified();
 	});
 	 
     $(document).on("keydown", ".obj-comp li", function(e) {

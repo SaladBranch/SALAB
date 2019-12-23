@@ -216,7 +216,7 @@
     	<div id="newFile" class="modalContent z-index1">
         	<div class="titleConfigure">Create PrivateFile</div>
            	<input id="userNo" type="hidden" value="${loginMember.userno}">
-            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeydown="activeEnter('atName')">
+            <input id="fileName" class="text-box block littleGap" type="text" value="Untitled" maxlength="20" onkeypress="if(event.keyCode==13) {newFile(); return false;}">
             <input class="" type="button" id="id-change-btn" value="New file" onclick="newFile();">
     	</div>
 	</div>
@@ -225,7 +225,7 @@
     	<div id="renameFile" class="modalContent z-index1">
         	<div class="titleConfigure">File Rename</div>
            	<input id="userNo2" type="hidden" value="${loginMember.userno}">
-            <input id="fileRename" class="text-box block littleGap" type="text" value=" " maxlength="20" onkeydown="activeEnter('atName')">
+            <input id="fileRename" class="text-box block littleGap" type="text" value=" " maxlength="20" onkeydown="if(event.keyCode==13) {renameFile(); return false;}">
             <input class="" type="button"  value="renameFile" onclick="renameFile();">
     	</div>
 	</div>

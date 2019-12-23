@@ -58,7 +58,9 @@ public class PrivateFileController {
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
 				"</div>"+
-				"<div id=\"clone-canvas\"></div>");
+				"<div id=\"clone-canvas\"></div>" +
+				"<div id=\"guide-h\" class=\"guide\"></div>\n" + 
+				"<div id=\"guide-v\" class=\"guide\"></div>");
 		page.setPagename("Untitled");
 		String sbase64 = encodeToString(request.getSession().getServletContext().getRealPath("/resources/thumbnail.txt"));
 		page.setThumbnail("<img src='"+sbase64+"'>");
@@ -106,7 +108,9 @@ public class PrivateFileController {
 		page.setContent("<div id='droppable' class='canvas ui-widget-content' data-background='#ffffff' data-grid='false' data-canvas='Desktop'>" + 
 				"<div id='multiselect'></div>" +
 				"</div>"+
-				"<div id=\"clone-canvas\"></div>");
+				"<div id=\"clone-canvas\"></div>" +
+				"<div id=\"guide-h\" class=\"guide\"></div>\n" + 
+				"<div id=\"guide-v\" class=\"guide\"></div>");
 		page.setPagename("Untitled");
 		page.setPageno(result + 1);
 		page.setThumbnail("<img src='"+sbase64+"'/>");
@@ -499,12 +503,16 @@ public class PrivateFileController {
 		MongoService mgService = new MongoService();
 		mv.setViewName( "jsonView" );
 		//뷰에서 넘겨준 파일넘버와 유저넘버로 파일의 모든 정보 검색
+		for(FileList fle : fileList) {
+			logger.info(fle.toString());
+		}
 		for(FileList f : fileList) {
 			if(f.getPt().equals("private")) {
 				PrivateFile pfile = new PrivateFile();
 				pfile.setUserno(f.getUserno());
 				pfile.setPfileno(f.getPfileno());
 				PrivateFile file = pfService.selectFile(pfile);
+				logger.info(file.toString());
 				file.setPfiletitle("Copy of "+ file.getPfiletitle());
 				//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
 				int result = pfService.fileCopy(file);
@@ -517,6 +525,7 @@ public class PrivateFileController {
 				
 				//페이지만들기위해 방금생성한 파일 넘버조회
 				PrivateFile file2 = pfService.createPage(file.getUserno());
+				logger.info(file2.toString());
 				//반복문 돌려서 아이디와 파일넘버만 바꿔서 인서트함
 				for(Page page : list) {
 					page.set_id(null);

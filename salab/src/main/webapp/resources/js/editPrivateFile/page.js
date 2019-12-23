@@ -330,7 +330,6 @@
     		thumblist.push({
     				thumb: $('.page-thumbnail:eq('+i+')').html()
     		});
-    		console.log(i, thumblist[i]);
     	}
     	
     	$.ajax({
@@ -364,7 +363,7 @@
 						'<div class="page">' +
     	                '<div class="page-top">' +
     	                    '<div class="page-thumbnail">' +
-    	                        '<img src="/salab/resources/img/whitebox.png">' +
+    	                        list[list.length-1].thumbnail +
     	                    '</div>'+
     	                '</div>' +
     	                '<div class="page-name">' + 
@@ -734,9 +733,9 @@
     
     function popup(){
     	
-    	var win_width = 1040;
-    	var height = 630;
-    	window.open('', 'popup', 'width='+win_width+', height=' + height + ', menubar=no, scrollbar=no');
+    	var win_width = 1440;
+    	var height = 850;
+    	window.open('', 'popup', 'height=' + screen.height + ',width=' + (screen.width - 10) + ', menubar=no, scrollbar=no');
     	
     	var form = document.createElement("form");
         form.setAttribute("method", "post");
@@ -779,6 +778,10 @@
             	$('#droppable').append(div);
             }
             reader.readAsDataURL(input.files[0]);
+            setTimeout(function(){
+            	Thumbnail();
+            }, 500);
+            modified();
         }
     }
     

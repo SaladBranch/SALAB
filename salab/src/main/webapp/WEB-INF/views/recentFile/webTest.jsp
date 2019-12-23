@@ -16,8 +16,8 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1200px;
-  max-height: 720px;
+  /* max-width: 1200px;
+  max-height: 720px; */
   position: relative;
   margin: auto;
 }
@@ -82,10 +82,12 @@ img {vertical-align: middle;}
 }
 
 .mySlides > img{
-	max-width: 1200px;
-	max-height: 720px;
-	width: auto;
-	height: auto;
+	/* max-width: 1200px;
+	max-height: 720px; */
+	/* width: auto;
+	height: auto; */
+	width: 100%;
+	height: 100%;
 }
 
 @-webkit-keyframes fade {
@@ -113,30 +115,41 @@ img {vertical-align: middle;}
 	  		<div class="text">${page.pagename }</div>
 		</div>
 		</c:forEach>
-		<a class="prev" href="javascript:" onclick="plusSlides(-1)">&#10094;</a>
-		<a class="next" href="javascript:" onclick="plusSlides(1)">&#10095;</a>
+		<a class="prev" href="javascript:" onclick="plusSlides(-1)" onkeypress="if(event.keyCode==37) {plusSlides(-1); return false;}">&#10094;</a>
+		<a class="next" href="javascript:" onclick="plusSlides(1)" onkeypress="if(event.keyCode==39) {plusSlides(1); return false;}">&#10095;</a>
 	</div>
+	<script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-var slideIndex = 1;
-showSlides(slideIndex);
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+	var slideIndex = 1;
+	showSlides(slideIndex);
+	function plusSlides(n) {
+	  showSlides(slideIndex += n);
+	}
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
+	$(document).on('keydown', function(e){
+		if(e.keyCode == 39){
+			plusSlides(1);
+		}
+		
+		if(e.keyCode == 37){
+			plusSlides(-1);
+		}
+	});
+	
+	function currentSlide(n) {
+	  showSlides(slideIndex = n);
+	}
 
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
-  }
-  slides[slideIndex-1].style.display = "block";  
-}
+	function showSlides(n) {
+	  var i;
+	  var slides = document.getElementsByClassName("mySlides");
+	  if (n > slides.length) {slideIndex = 1}    
+	  if (n < 1) {slideIndex = slides.length}
+	  for (i = 0; i < slides.length; i++) {
+	      slides[i].style.display = "none";  
+	  }
+	  slides[slideIndex-1].style.display = "block";  
+	}
 </script>
 </body>
 </html>

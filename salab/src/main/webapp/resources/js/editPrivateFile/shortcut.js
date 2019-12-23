@@ -203,8 +203,9 @@ function ungroupObject(){
         selectedObj = new Array();
         $group.children('.obj').each(function(){
             $(this).css({
-                left: Number($(this).css('left').replace('px', '')) + Number($group.css('left').replace('px', '')) + 'px',
-                top: Number($(this).css('top').replace('px', '')) + Number($group.css('top').replace('px', '')) + 'px'
+            	left: $(this).offset().left - $('#droppable').offset().left,
+            	top: $(this).offset().top - $('#droppable').offset().top,
+            	transform: 'rotate(' + (getRotateDegree($group) + getRotateDegree($(this)))+ 'deg)'
             });
             $(this).addClass('ui-selected');
             $(this).appendTo('#droppable');

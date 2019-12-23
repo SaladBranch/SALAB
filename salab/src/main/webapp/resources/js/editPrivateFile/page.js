@@ -527,14 +527,15 @@
         	var x = e.offsetX -8;
         	var y = e.offsetY -18;
         	
+        	console.log($('#my-profile').val());
         	var div = '<div class="memo" style="position: absolute; left: '+x+'px; top: '+y+'px" display: flex">' + 
         		'<i class="fas fa-map-marker-alt memo-icon"></i>' +
         		'<div class="memo-content">'+
         		'<div class="memo-userThumb">'+
                 '<div class="memo-info">'+
                 '<div class="user">'+
-                '<span style="width: 40px; height: 40px;"><image src="/salab/resources/img/default_profile.png" style="width:100%; height:100%;"></span>'+
-                '<span style="font-size: 15px; font-weight: bold; padding-left: 5px">ashashasasgarga</span>'+
+                '<span style="width: 40px; height: 40px;"><image src="'+$('#userprofile_r').val()+'" style="width:100%; height:100%;"></span>'+
+                '<span style="font-size: 15px; font-weight: bold; padding-left: 5px">'+$('#username').val()+'</span>'+
                 '</div>'+
                 '<div class="button">'+
                 '<button class="btn-ghost cancel">cancel</button>'+

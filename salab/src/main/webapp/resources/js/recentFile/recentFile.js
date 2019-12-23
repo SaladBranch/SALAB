@@ -606,22 +606,13 @@ $(document).on('keyup', '#search-text', function(){
 });
 
 $(document).on('multiSelected', '.file-container', function(){
-	var file = {
-			pfileno: $(this).siblings('.fileno').val(),
-			userno: $('#userNo').val(),
-			pfiletitle: $.trim($(this).find('.file-name').html()),
-			pt: $(this).siblings('.pt').val()
-		};
-	if($('.far.fa-trash-alt.trash').length){
-		file = {
-			pfileno: $(this).siblings('.fileno').val(),
-			userno: $(this).siblings('.userno').val(),
-			pfiletitle: $.trim($(this).find('.file-name').html()),
-			pt: $(this).siblings('.pt').val()
-		};
-	}
-	
-		fileList.push(file);
+	file = {
+		pfileno: $(this).siblings('.fileno').val(),
+		userno: $(this).siblings('.userno').val(),
+		pfiletitle: $.trim($(this).find('.file-name').html()),
+		pt: $(this).siblings('.pt').val()
+	};
+	fileList.push(file);
 		
 	if($('.far.fa-trash-alt.trash').length){
 		

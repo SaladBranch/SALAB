@@ -954,7 +954,14 @@
 	</div>
     </div>
     
-	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">    
+	<input type="file" id="imagePreview" onchange="readURL(this);" style="display: none;">  
+    <input type="hidden" value="${sessionScope.loginMember.username }" id="username">
+    <c:if test="${empty sessionScope.loginMember.userprofile_r}">
+		<input type="hidden" value="/salab/resources/img/default_profile.png" id="userprofile_r">
+	</c:if>
+	<c:if test="${!empty sessionScope.loginMember.userprofile_r}">
+		<input type="hidden" value="/salab/resources/userUpfiles/${sessionScope.loginMember.userprofile_r}" id="userprofile_r">
+	</c:if>
     <div class="context-menu"></div>
     <script type="text/javascript" src="/salab/vendors/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/salab/vendors/js/jquery-ui.js"></script>

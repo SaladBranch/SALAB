@@ -467,7 +467,6 @@
             '</ul>'+
             '</div>'+
 			'</div>');
-		
 		$($con).find('.button').html(
 				'<div class="file-options">'+
 	            '<div class="file-options-btn">⋮</div>'+
@@ -486,6 +485,7 @@
 	});
 
 	socket.on('memo', function(memo){
+
 		$('#droppable').append(memo);
 		
 	});

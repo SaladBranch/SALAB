@@ -527,7 +527,9 @@ public class PrivateFileController {
 				ProjectFile pfile = new ProjectFile();
 				pfile.setProjectno(f.getUserno());
 				pfile.setPrfileno(f.getPfileno());
+				logger.info("teamfile1 :: " + pfile.toString());
 				ProjectFile file = prfService.selectFile(pfile);
+				logger.info("teamfile2 :: " + file.toString());
 				file.setPrfiletitle("Copy of "+ file.getPrfiletitle());
 				//파일 타이틀의 접두사 붙여주고 파일넘버 시퀀스 처리해서 생성
 				int result = prfService.fileCopy(file);

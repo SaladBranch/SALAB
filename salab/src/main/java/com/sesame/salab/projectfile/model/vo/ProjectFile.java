@@ -13,13 +13,6 @@ public class ProjectFile implements java.io.Serializable{
 	
 	public ProjectFile() {}
 
-	@Override
-	public String toString() {
-		return "ProjectFile [prfileno=" + prfileno + ", projectno=" + projectno + ", prfilethumbnail=" + prfilethumbnail
-				+ ", prfiletitle=" + prfiletitle + ", prfilelastmodified=" + prfilelastmodified + ", prfilecreatedate="
-				+ prfilecreatedate + ", trashcan=" + trashcan + "]";
-	}
-
 	public ProjectFile(int prfileno, int projectno, String prfilethumbnail, String prfiletitle,
 			String prfilelastmodified, String prfilecreatedate, String trashcan) {
 		super();
@@ -88,9 +81,11 @@ public class ProjectFile implements java.io.Serializable{
 		this.trashcan = trashcan;
 	}
 
-	public static long getSerialversionuid() {
-		return SerialVersionUID;
+	@Override
+	public String toString() {
+		return "ProjectFile [prfileno=" + prfileno + ", projectno=" + projectno + ", prfilethumbnail=" + prfilethumbnail
+				+ ", prfiletitle=" + prfiletitle + ", prfilelastmodified=" + prfilelastmodified + ", prfilecreatedate="
+				+ prfilecreatedate + ", trashcan=" + trashcan + "]";
 	}
-
 	
 }

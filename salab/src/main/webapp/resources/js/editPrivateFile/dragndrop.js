@@ -124,6 +124,13 @@ function leftMouseListner(){
     			$(this).addClass("ui-selected");
     	        selectedObj.push($(this));
 
+    	        $('.right-side-bar .tab').each(function(){
+    	            $(this).removeClass('active-tab'); 
+    	        });
+    	        $('.text-tab').addClass('active-tab');
+    	        $('.figure-tab-content').hide();
+    	        $('.text-tab-content').fadeIn(200);
+    	        
     		}
 
     	}

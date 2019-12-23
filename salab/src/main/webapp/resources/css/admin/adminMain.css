@@ -41,7 +41,6 @@ body{
 .top-bar-logo{
     width: 230px;
     display: flex;
-    border-right: 1px solid #000;
     z-index: 5;
     background: #2c2c2c;
 }
@@ -467,7 +466,7 @@ body{
 	/* border: 1px solid #3cb371; */
 	margin: 0 auto;
 	margin-top: 80px;
-	width: 28%;
+	width: 420px;
 	height: 530px;
 	position: relative;
 	display: block;
@@ -520,7 +519,7 @@ body{
 }
 
 #in-id{
-	width: 95%;
+	width: 97%;
 	margin: 10px 5px;
 	height: 60px;
 	background: #e8eae9;
@@ -531,7 +530,7 @@ body{
 }
 
 #in-pass{
-	width: 95%;
+	width: 97%;
 	margin: 10px 5px;
 	height: 60px;
 	background: #e8eae9;

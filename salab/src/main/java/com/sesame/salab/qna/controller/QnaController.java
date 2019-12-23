@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sesame.salab.admin.model.vo.Admin;
 import com.sesame.salab.common.paging.model.vo.Paging;
 import com.sesame.salab.member.model.vo.Member;
+import com.sesame.salab.notice.model.vo.Notice;
 import com.sesame.salab.qna.model.service.QnaService;
 import com.sesame.salab.qna.model.vo.Qna;
 
@@ -80,6 +81,20 @@ public class QnaController {
 			mv.addObject("message", "1:1문의 상세 조회 실패");
 			mv.setViewName("common/error");
 		}
+		
+		return mv;
+	}
+	
+	//1:1문의 삭제
+	@RequestMapping(value="qnaDelete.do")
+	public ModelAndView qnaDeleteMethod(ModelAndView mv, Qna qna, @RequestParam(value="qnano") int qnano) {
+		int result = qnaService.qnaDelete(qnano);
+		
+		if(result <= 0) {
+	    	mv.setViewName("common/error");
+	    } else {
+	    	mv.setViewName("redirect:qnalist.do");
+	    }
 		
 		return mv;
 	}

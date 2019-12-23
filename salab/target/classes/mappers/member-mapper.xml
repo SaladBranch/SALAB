@@ -74,7 +74,19 @@
 	</update>
 	
 	<update id="memberUpdate" parameterType="Member">
-		UPDATE MEMBER SET USERLEVEL = #{userlevel} WHERE USERNO = #{userno}
+		UPDATE MEMBER 
+		<set>
+			<if test="userlevel == 'PREMIUM' and paymentdate == null">
+				USERLEVEL = #{userlevel}, PAYMENTDATE = (SELECT TO_DATE((SELECT SYSDATE FROM DUAL) + 30) FROM DUAL)
+			</if>
+			<if test="userlevel == 'PREMIUM' and paymentdate != null">
+				USERLEVEL = #{userlevel}, PAYMENTDATE = (SELECT TO_DATE((SELECT PAYMENTDATE FROM  MEMBER WHERE USERNO=#{userno})+ 30) FROM DUAL)
+			</if>
+			<if test="userlevel != 'PREMIUM'">
+				USERLEVEL = #{userlevel}, PAYMENTDATE = NULL
+			</if>
+		</set>
+		WHERE USERNO = #{userno}
 	</update>
 	<update id="changeToStandard" parameterType="int">
 				UPDATE MEMBER SET BILLINGKEY = NULL WHERE USERNO = #{userno}

@@ -612,7 +612,6 @@ $(function(){
         $focus.css('height', height);        
     }
 });
-
 //canvas sizing
 //color picker에 document에 사용된 색상들 추가하기
 function addUsedColor(){
@@ -710,7 +709,7 @@ function minicolorsAddMenu(target){
     		$(this).css('margin-left', '13px');
     });
 }
-$(document).on('mousedown', '#droppable', function(){
+$(adocument).on('mousedown', '#droppble', function(){
 	if($('.back-chk input').prop('checked')){
 		$('.canvas-colorpic').minicolors('settings', {
 			control: 'hue',

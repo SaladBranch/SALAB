@@ -486,7 +486,6 @@
 	});
 
 	socket.on('memo', function(memo){
-		console.log(memo);
 		$('#droppable').append(memo);
 		
 	});

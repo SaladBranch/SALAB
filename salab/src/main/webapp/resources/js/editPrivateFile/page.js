@@ -32,16 +32,19 @@
         	e.stopPropagation();
         	e.preventDefault();
         }).on('drop', function(e){
-        	e.preventDefault();
+        	var files = e.originalEvent.dataTransfer.files;
+        	var x = e.offsetX - 10;
+        	var y = e.offsetY - 30;
         	
-        	var files = e.originalEvent.dataTransfer.files; //드래그&드랍 항목
         	for(var i = 0; i < files.length; i++) {
         	var file = files[i];
-        	preview(file, size - 1); //미리보기 만들기
+        	preview(file, size - 1, x, y); 
         	}
+        	e.preventDefault();
+        	console.log('check');
         	setTimeout(function(){
-            	Thumbnail();
-            }, 500);
+        		Thumbnail();
+        	}, 500);
         });
     });
     
@@ -504,7 +507,7 @@
         	preview(file, size - 1, x, y); 
         	}
         	e.preventDefault();
-        		
+        	console.log('check');
         	setTimeout(function(){
         		Thumbnail();
         	}, 500);

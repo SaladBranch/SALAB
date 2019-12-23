@@ -54,7 +54,7 @@ function includeElement(X, Y, temp) {
     modified();
     setTimeout(function(){
     	Thumbnail();
-    }, 100);
+    }, 500);
     
 }
 function leftMouseListner(){
@@ -315,10 +315,10 @@ function addControl(){
             },
             stop: function (event, ui) {
                 $(this).css('cursor', 'default');
-                
+                console.log('check');
                 setTimeout(function(){
             		Thumbnail();
-            	}, 100);
+            	}, 500);
                 
                 //guides
                 $("#guide-v, #guide-h" ).hide();
@@ -335,9 +335,10 @@ function addControl(){
             },
             stop: function() {
             	formatChange();
+            	console.log('check');
             	setTimeout(function(){
             		Thumbnail();
-            	}, 100);
+            	}, 500);
             },
             wheelRotate: false
         });
@@ -370,7 +371,7 @@ function addControl(){
                     formatChange();
                     setTimeout(function(){
                 		Thumbnail();
-                	}, 100);
+                	}, 500);
                 }
             });
         }else{
@@ -400,10 +401,9 @@ function addControl(){
                 },
                 stop: function(){
                     formatChange();
-
                     setTimeout(function(){
                 		Thumbnail();
-                	}, 100);
+                	}, 500);
                 }
             });
         }
@@ -670,10 +670,9 @@ function initCanvasMiniColor(){
     });
     
     minicolorsAddMenu($('#canvas-background'));
-    
-    setTimeout(function(){
+    /*setTimeout(function(){
 		Thumbnail();
-	}, 100);
+	}, 100);*/
 }
 function initFigureMiniColor(){ 
     $('.colorView').minicolors({
@@ -786,11 +785,19 @@ $(function(){
                     width: width + 'px',
                     height: height + 'px'
                 });
+            	setTimeout(function(){
+        			Thumbnail();
+        		}, 500);
+            	modified();
             }else{
             	$('#droppable').css({
                     width: width + 'px',
                     height: height + 'px'
                 });
+            	setTimeout(function(){
+        			Thumbnail();
+        		}, 500);
+            	modified();
             }
             
             if(width < height){
@@ -818,16 +825,25 @@ $(function(){
     	$('.canvas-sizing .radio-label input').eq(1-index).prop('checked', false);
     	var width = Number($('#droppable').css('width').replace('px', ''));
     	var height = Number($('#droppable').css('height').replace('px', ''));
-    	if($(this).text() === 'portrait' && width > height)    
+    	if($(this).text() === 'portrait' && width > height) {
     		$('#droppable').css({
     			width: height + 'px',
     			height: width + 'px'
     		});
-    	else if($(this).text() === 'landscape' && height > width)
+    		setTimeout(function(){
+    			Thumbnail();
+    		}, 500);
+    		modified();
+    	}else if($(this).text() === 'landscape' && height > width) {
     		$('#droppable').css({
     			width: height + 'px',
     			height: width + 'px'
     		});
+    		setTimeout(function(){
+    			Thumbnail();
+    		}, 500);
+    		modified();
+    	}
 	});
     
     $('#custom-width input').on('focusout', function(){

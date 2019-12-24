@@ -715,7 +715,7 @@ function minicolorsAddMenu(target){
     		$(this).css('margin-left', '13px');
     });
 }
-$(adocument).on('mousedown', '#droppble', function(){
+$(document).on('mousedown', '#droppble', function(){
 	if($('.back-chk input').prop('checked')){
 		$('.canvas-colorpic').minicolors('settings', {
 			control: 'hue',

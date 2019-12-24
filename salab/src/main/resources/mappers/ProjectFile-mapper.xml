@@ -39,7 +39,7 @@
 	</insert>
 	
 	<select id="createPage" parameterType="int" resultType="ProjectFile">
-		SELECT * FROM (SELECT PRFILENO FROM PROJECTFILE WHERE PROJECTNO = #{projectno} ORDER BY PRFILELASTMODIFIED DESC) WHERE ROWNUM = 1
+		SELECT * FROM (SELECT PRFILENO FROM PROJECTFILE WHERE PROJECTNO = #{projectno} ORDER BY PRFILENO DESC) WHERE ROWNUM = 1
 	</select>
 	
 	<update id="changeLastModified" parameterType="ProjectFile">

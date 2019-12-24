@@ -715,7 +715,7 @@ function minicolorsAddMenu(target){
     		$(this).css('margin-left', '13px');
     });
 }
-$(adocument).on('mousedown', '#droppble', function(){
+$(document).on('mousedown', '#droppble', function(){
 	if($('.back-chk input').prop('checked')){
 		$('.canvas-colorpic').minicolors('settings', {
 			control: 'hue',
@@ -854,9 +854,17 @@ $(function(){
     
     $('#custom-width input').on('focusout', function(){
     	$('#droppable').css('width', $(this).val()+'px');
+    	setTimeout(function(){
+			Thumbnail();
+		}, 500);
+    	modified();
     });
     $('#custom-height input').on('focusout', function(){
     	$('#droppable').css('height', $(this).val()+'px');
+    	setTimeout(function(){
+			Thumbnail();
+		}, 500);
+    	modified();
     });
     if(Number($('#droppable').css('width').replace('px', '')) < Number($('#droppable').css('height').replace('px', ''))){
     	$('.canvas-sizing .radio-label input').eq(0).prop('checked', true);
@@ -999,6 +1007,7 @@ function showModal(index) {
 	$('#id-change-btn').attr('disabled', false);
 		$("#modal-rename").show();
 		$('#rename').val($('.plib-item-name:eq('+index+')').html());
+		$('#rename').attr('onkeypress', 'if(event.keyCode==13) {renameLib('+index+'); return false;}');
 		$('.rename-btn').attr('onclick', 'renameLib('+index+')');
 }
 

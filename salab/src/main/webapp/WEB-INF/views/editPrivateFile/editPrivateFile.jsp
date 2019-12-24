@@ -150,7 +150,7 @@
            			<li class="page-item">
             		<div class="page">
 	            		<div class="page-top">
-	            			<div class="page-thumbnail"></div>
+	            			<div class="page-thumbnail">${page.thumbnail }</div>
 	            			<span class="isModified"></span>
 	            		</div>
             			<div class="page-name"><input type="text" class="page-title" value="${page.pagename }"></div>
@@ -758,8 +758,6 @@
     
     <div class="canvas-container">
         ${pageList[0].content }
-        <div id="guide-h" class="guide"></div>
-	    <div id="guide-v" class="guide"></div>
     </div>
     
     <div class="right-side-bar">
@@ -948,7 +946,7 @@
     	<div id="renameLib" class="modalContent z-index1">
         	<div class="titleConfigure">Lib Rename</div>
            	<input id="userno" type="hidden" value="${loginMember.userno}">
-            <input id="rename" class="text-box block littleGap" type="text" value=" " maxlength="20" >
+            <input id="rename" class="text-box block littleGap" type="text" value=" " maxlength="20">
             <input class="rename-btn" type="button"  value="Lib Rename">
     	</div>
 	</div>
@@ -991,6 +989,7 @@
     	    	$('#clone-canvas').find('.obj').removeClass('ui-selected');
     			
         		var node = document.getElementById('clone-canvas');
+        		console.log($(node).height());
             	var canvas = document.createElement('canvas');
             	canvas.width = $(node).width();
             	canvas.height = $(node).height();

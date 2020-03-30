@@ -84,6 +84,16 @@ Tool을 능숙하게 사용하기 위해 숙달이 필요하다는 점이 있었
   + 파일 편집
 ![image](https://user-images.githubusercontent.com/44356083/77870885-9422ab80-727d-11ea-85ce-43bd4e92bc1e.png)
 
+  + 편집 상세(페이지, 컴포넌트, 라이브러리, 캔버스, 도형, 글자 편집)
+  <div>
+  <img width="150" height="450" src = "https://user-images.githubusercontent.com/44356083/77871843-4fe4da80-7280-11ea-8573-8387e937722d.png"></img>
+  <img width="150" height="450" src = "https://user-images.githubusercontent.com/44356083/77871951-95090c80-7280-11ea-9bcd-0ced3384ed7a.png"></img>
+  <img width="150" height="450" src = "https://user-images.githubusercontent.com/44356083/77871985-ac47fa00-7280-11ea-8d44-f6fc5470f8cf.png"></img><br>
+  <img width="150" height="450" src = "https://user-images.githubusercontent.com/44356083/77872088-ed400e80-7280-11ea-8b54-adb3aba8992a.png"></img>
+  <img width="150" height="450" src = "https://user-images.githubusercontent.com/44356083/77872133-0ea0fa80-7281-11ea-9e1f-89953f74e617.png"></img>
+  <img width="150" height="450" src = "https://user-images.githubusercontent.com/44356083/77872169-2a0c0580-7281-11ea-967b-f10a7abab10d.png"></img>
+  </div>
+
 
 ## 후기
   먼저 모두 처음으로 진행하는 스프링프로젝트에서 안되면 될때까지 모르는 것을 찾아가며 그리고 서로 의지하며 진행하였다는 점에 대해 가장 큰 감사의 인사를

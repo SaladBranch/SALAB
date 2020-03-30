@@ -56,19 +56,32 @@ Tool을 능숙하게 사용하기 위해 숙달이 필요하다는 점이 있었
   + 공동작업을 통해 생산성을 높인다.
   
 4.  대표 산출물
-  + ERD
-![image](https://user-images.githubusercontent.com/44356083/77869991-35f4c900-727b-11ea-8048-8c68b130ca12.png)
-  + Class 
-![image](https://user-images.githubusercontent.com/44356083/77870061-5fadf000-727b-11ea-872b-908c7a9612f1.png)
-  + 화면흐름도
-![image](https://user-images.githubusercontent.com/44356083/77870065-63417700-727b-11ea-889b-8b508e1285c0.png)
++ ERD
+  ![image](https://user-images.githubusercontent.com/44356083/77869991-35f4c900-727b-11ea-8048-8c68b130ca12.png)
+
+
++ Class 설계
+  ![image](https://user-images.githubusercontent.com/44356083/77870061-5fadf000-727b-11ea-872b-908c7a9612f1.png)
+
+
++ 화면흐름도
+  ![image](https://user-images.githubusercontent.com/44356083/77870065-63417700-727b-11ea-889b-8b508e1285c0.png)
+
 
 5. Screenshot
   + Main
 ![image](https://user-images.githubusercontent.com/44356083/77870271-e9f65400-727b-11ea-9d7e-ba68d9e2b561.png)
+
+
   + Sign Up / Login
 ![image](https://user-images.githubusercontent.com/44356083/77870314-04303200-727c-11ea-9270-a6e577dbf5e4.png)
+
+
   + 로그인 후 메인
 ![image](https://user-images.githubusercontent.com/44356083/77870761-39894f80-727d-11ea-8b95-285789b1e401.png)
+
+
   + 파일 편집
 ![image](https://user-images.githubusercontent.com/44356083/77870885-9422ab80-727d-11ea-85ce-43bd4e92bc1e.png)
+
+
